@@ -1,0 +1,137 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><link rel="stylesheet" href="fonts.css"><style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}html,body{margin:0}</style></head><body><title>Карта миров «Сбоя»</title>
+
+
+<script>document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});document.addEventListener("touchmove",e=>{if(e.touches.length>1)e.preventDefault()},{passive:false})</script><style>html,body{touch-action:pan-x pan-y;overscroll-behavior:none}header{display:none!important}body{padding-block:12px 28px!important}.hint{display:none}</style><style>
+/* Layout: phone-first column; 9:16 map with world medallions on an ellipse around the heart, details sheet below */
+:root{
+  --bg:#0a0718; --panel:#141026; --line:#2f2752; --fg:#f2ecff; --muted:#a99fcc; --dim:#6f6696;
+  --violet:#a875ff; --gold:#e8b85a; --bad:#ff6b7a;
+  --display:"Philosopher",Georgia,serif; --body:"Manrope",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+h1{margin:0;font-family:var(--display);font-size:30px;line-height:1.05;text-wrap:balance}
+.lead{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+
+.map{position:relative;width:100%;max-width:100%;aspect-ratio:940/1672;border-radius:18px;overflow:hidden;background:#05030d url(90ec6f2cd63b.webp) center/cover no-repeat;box-shadow:0 0 0 1px var(--line)}
+.map::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 30%,rgba(5,3,13,.35) 75%)}
+#threads{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.w{position:absolute;width:21%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;padding:0;border:0;background:none;cursor:pointer;z-index:2;font:inherit;color:inherit}
+.w .disc{position:absolute;inset:0;border-radius:50%;background-size:cover;background-position:center;box-shadow:0 0 0 2px var(--c),0 0 18px -2px var(--c),inset 0 0 18px rgba(0,0,0,.55);transition:transform .25s,filter .25s,box-shadow .25s}
+.w[data-k="cracked"] .disc{box-shadow:0 0 0 2px var(--c),0 0 10px -4px var(--c),inset 0 0 22px rgba(0,0,0,.7);filter:saturate(.7)}
+.w[data-k="cracked"] .disc::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(115deg,transparent 46%,rgba(255,255,255,.75) 47%,transparent 48.5%),linear-gradient(35deg,transparent 58%,rgba(255,255,255,.5) 59%,transparent 60%)}
+.w[data-k="none"] .disc{box-shadow:0 0 0 2px #4a4466,inset 0 0 30px rgba(0,0,0,.8);filter:grayscale(1) brightness(.45)}
+.w:hover .disc{transform:scale(1.05)}
+.w.on .disc{box-shadow:0 0 0 3px #fff,0 0 26px 2px var(--c),inset 0 0 18px rgba(0,0,0,.5)}
+.w:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.w .lbl{position:absolute;left:50%;top:86%;transform:translateX(-50%);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px;padding:3px 9px 4px;border-radius:9px;background:rgba(10,7,24,.82);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);backdrop-filter:blur(4px)}
+.w .lbl b{font-family:var(--display);font-size:clamp(10px,2.9vw,13px);line-height:1.1}
+.w .lbl small{font-size:clamp(8px,2.2vw,10px);color:var(--muted);line-height:1.1}
+.w .key{position:absolute;right:-2%;top:2%;width:26%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:rgba(10,7,24,.9);border:1px solid var(--c);font-size:clamp(9px,2.6vw,12px)}
+.w[data-k="none"] .key{border-color:#4a4466;color:var(--dim)}
+.heartbtn{position:absolute;left:50%;top:48.4%;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:0;background:none;cursor:pointer;z-index:2}
+.heartbtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.heartbtn.on{box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.power{position:absolute;left:50%;bottom:2.5%;transform:translateX(-50%);z-index:2;width:72%;display:flex;flex-direction:column;gap:5px;align-items:center;padding:8px 12px 10px;border-radius:12px;background:rgba(10,7,24,.78);border:1px solid var(--line);backdrop-filter:blur(4px)}
+.power span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.power span b{color:var(--fg);font-variant-numeric:tabular-nums;letter-spacing:0}
+.bar{width:100%;height:6px;border-radius:3px;background:#251e40;overflow:hidden}
+.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--violet),var(--bad));transition:width .4s}
+
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.sheet .tag{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.sheet .tag i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.sheet h2{margin:0;font-family:var(--display);font-size:22px;line-height:1.15;text-wrap:balance}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13.5px;line-height:1.45}
+dt{color:var(--dim);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+dd{margin:0;min-width:0}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1 1 0;min-width:84px;padding:9px 8px;border-radius:10px;border:1px solid var(--line);background:#1b1533;color:var(--muted);font:500 12.5px var(--body);cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--c);color:var(--fg);background:color-mix(in srgb,var(--c) 18%,#1b1533)}
+.seg button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.note{margin:0;font-size:12px;color:var(--dim);line-height:1.5}
+ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.45}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Клуб романтики · Выброс</div>
+    <h1>Карта миров</h1>
+    <p class="lead">Девять историй ведут к одному сердцу. Нажмите на мир, чтобы увидеть, какой там Изнанка и какой ключ героиня принесёт в финал. Состояние ключей можно переключать, это пример прохождения.</p>
+  </header>
+  <div class="map" id="map">
+    <svg id="threads" viewBox="0 0 100 177.87" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <button class="heartbtn" id="heart" aria-label="Сердце Изнанки, финал"></button>
+    <div class="power"><span>Сила Изнанки в финале · <b id="pw">0</b></span><div class="bar"><i id="pwbar"></i></div></div>
+  </div>
+  <section class="sheet" id="sheet" aria-live="polite"></section>
+</div>
+
+<script>
+const IMG=["c1bfd060e28a.webp","63a7e047e536.webp","fe6602eee840.webp","8ee40e1bb73a.webp","403e28b7373a.webp","af3e999d8bad.webp","5c0c1fe51ffb.webp","ba76a3aa47dd.webp","0afd3ced6512.webp"];
+const K={full:'Целый',cracked:'Треснувший',none:'Нет'};
+const worlds=[
+ {h:'Агния',s:'«Обет»',w:'Средневековье',bg:2,c:'#e8b85a',key:'Клятва',ic:'⚔',form:'Чёрный дракон и проклятие на короне; вселяется в советников.',beat:'Разорвать древний обет, который держит дракона. Мечом его не убить.',fav:'Принц Элиан и сэр Ровен (качели, ревность)',anchor:'Кристиан',use:'Удерживает Изнанку на месте в последнем ударе.'},
+ {h:'Катя Б.',s:'«Морок»',w:'Тёмная Русь',bg:1,c:'#e0484f',key:'Имя',ic:'ᛉ',form:'Мара, морок Нави: путает дороги и память.',beat:'Узнать её истинное имя и произнести у купальского огня.',fav:'Артур (без памяти) и Горислав; Велимир — друг',anchor:'Артур',use:'Делает Изнанку уязвимой: без имени её не ранить.'},
+ {h:'Рима',s:'«Нулевой пациент»',w:'Зомби-апокалипсис',bg:3,c:'#5fbf7f',key:'Сыворотка',ic:'✚',form:'Зараза: шёпот в головах заражённых, рой.',beat:'Найти первого носителя и сделать сыворотку.',fav:'Марк, Лео, Толя (эхо)',anchor:'нет, мир даёт сыворотку',use:'Отделяет Изнанку от вселённого, не убивая человека.'},
+ {h:'Света',s:'«Звезда»',w:'Космос',bg:4,c:'#cfe3ff',key:'Координаты',ic:'✦',form:'Аномалия: разлом, который глотает свет и сигналы.',beat:'Орион просчитывает её центр, корабль уходит из ловушки.',fav:'Кристиан (эхо), Орион (ИИ), Валера',anchor:'нет, мир даёт координаты',use:'Ведёт девочек к сердцу и держит портал для отхода.'},
+ {h:'Катя Бел.',s:'«Подвал»',w:'Киберпанк',bg:5,c:'#ff4fc3',key:'Глушилка',ic:'⌁',form:'Вирус, «призрак в сети»: вселяется через импланты.',beat:'Изолировать сегмент и опустить сеть города.',fav:'Рэйв и Адриан Вэйл (качели, ревность)',anchor:'Серёга-учитель',use:'Отрезает Изнанку от миров, которыми она питается.'},
+ {h:'Наташа Ш.',s:'«Тихая гавань»',w:'Пираты',bg:6,c:'#3fd6d0',key:'Компас',ic:'⚓',form:'Мёртвый штиль и корабль-призрак в тумане.',beat:'Перерезать якорную цепь призрака и найти ветер, которого нет на картах.',fav:'Капитан Ворон (при отказе — антагонист), Сайлас, Толя',anchor:'Толя',use:'Выбирает верный проход на пути к сердцу.'},
+ {h:'Полина',s:'«Хозяин»',w:'Нуар 1930-х',bg:7,c:'#ff5a4a',key:'Вспышка',ic:'◉',form:'Хозяин города, чьего лица никто не видел.',beat:'Вытащить его на свет: снимок со вспышкой и компромат в газету.',fav:'Винсент Кейн, Лука Морелли, Серёга-фильмы',anchor:'Серёга-фильмы',use:'Показывает фиолетовый отблеск в глазах: выдаёт подделку у сердца.'},
+ {h:'Катя З.',s:'«Уайтчепел»',w:'Викторианский Лондон',bg:0,c:'#e3a35a',key:'Улика',ic:'⌕',form:'Лондонский туман и Потрошитель-сосуд. Кто сосуд, решает случай.',beat:'Дедукция: доказать по уликам, кто сосуд.',fav:'Лорд Себастьян Грей, инспектор Томас Хейл',anchor:'Иван',use:'Подсвечивает оговорку эха: отличить настоящего парня от подделки.'},
+ {h:'Наташа Б.',s:'«Золотое сердце»',w:'Дикий Запад',bg:8,c:'#f0a050',key:'Золотой патрон',ic:'✷',form:'Проклятая жила и пыльная буря, сводящая город с ума.',beat:'Отлить патрон из золота жилы и выстрелить в сердце шахты.',fav:'Серёга-учитель (эхо); Марина и Наташа В. — дружба и флирт',anchor:'нет, мир даёт патрон и отряд города',use:'Последний выстрел, который разбивает сердце.'}
+];
+const keys=['full','full','cracked','full','none','full','cracked','full','full'];
+const CX=50,CY=47,RX=33,RY=29.5;
+const map=document.getElementById('map'),sheet=document.getElementById('sheet'),thr=document.getElementById('threads');
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const pos=worlds.map((o,i)=>{const a=(-90+i*40)*Math.PI/180;return[CX+RX*Math.cos(a),CY+RY*Math.sin(a)]});
+worlds.forEach((o,i)=>{
+  const b=document.createElement('button');b.className='w';b.dataset.i=i;
+  b.style.cssText=`left:${pos[i][0]}%;top:${pos[i][1]}%;--c:${o.c}`;
+  b.innerHTML=`<span class="disc" style="background-image:url(${IMG[o.bg]})"></span><span class="key" aria-hidden="true">${o.ic}</span><span class="lbl"><b>${esc(o.h)}</b><small>${esc(o.s)}</small></span>`;
+  map.appendChild(b);
+});
+const H=177.87;
+function draw(){
+  let s='';
+  worlds.forEach((o,i)=>{const k=keys[i];if(k==='none')return;
+    const x=pos[i][0],y=pos[i][1]*H/100,cx=CX,cy=CY*H/100;
+    const mx=(x+cx)/2+(cy-y)*.08,my=(y+cy)/2+(x-cx)*.08;
+    s+=`<path d="M${x} ${y} Q${mx} ${my} ${cx} ${cy}" fill="none" stroke="${o.c}" stroke-width="${k==='full'?.45:.3}" stroke-opacity="${k==='full'?.75:.45}" ${k==='cracked'?'stroke-dasharray="1.2 1.4"':''}/>`;
+  });
+  thr.innerHTML=s;
+  document.querySelectorAll('.w').forEach(b=>{b.dataset.k=keys[+b.dataset.i];b.setAttribute('aria-label',`${worlds[b.dataset.i].h}, ${worlds[b.dataset.i].s}, ключ: ${K[keys[b.dataset.i]].toLowerCase()}`)});
+  const p=keys.reduce((a,k)=>a+(k==='full'?0:k==='cracked'?1:2),0);
+  document.getElementById('pw').textContent=p+' из 18';
+  document.getElementById('pwbar').style.width=Math.max(4,p/18*100)+'%';
+}
+let cur=0;
+function show(i){
+  cur=i;
+  document.querySelectorAll('.w').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+  document.getElementById('heart').classList.toggle('on',i<0);
+  if(i<0){
+    const lost=worlds.filter((o,j)=>keys[j]==='none').map(o=>o.key);
+    sheet.style.removeProperty('--c');
+    sheet.innerHTML=`<div class="tag" style="--c:var(--violet)"><i></i>Финал</div><h2>Хрустальное сердце Изнанки</h2>
+    <ol><li>Сбор в лаборатории: итоги ключей и якорей.</li><li>Путь: Координаты и Компас ведут в лоскутный мир.</li><li>Распределение ролей по фронтам.</li><li>Искушение: остаться в идеальном мире.</li><li>Сердце: вытащить ребят, не попасться на подделку.</li><li>Удар: Клятва, Имя, Глушилка и Золотой патрон.</li></ol>
+    <p class="note">${lost.length?'В этом прохождении не хватает: '+esc(lost.join(', '))+'. На их месте придётся искать путь с жертвой.':'Все ключи на месте. Изнанка в финале слабее всего.'} Целый ключ не добавляет силы Изнанке, треснувший добавляет 1, отсутствующий 2.</p>`;
+    return;
+  }
+  const o=worlds[i];sheet.style.setProperty('--c',o.c);
+  sheet.innerHTML=`<div class="tag"><i></i>${esc(o.w)}</div><h2>${esc(o.h)} — ${esc(o.s)}</h2>
+  <dl><dt>Изнанка</dt><dd>${esc(o.form)}</dd><dt>Как одолеть</dt><dd>${esc(o.beat)}</dd><dt>Ключ</dt><dd><b>${esc(o.key)}</b>. ${esc(o.use)}</dd><dt>Фавориты</dt><dd>${esc(o.fav)}</dd><dt>Якорь</dt><dd>${esc(o.anchor)}</dd></dl>
+  <div class="seg" role="group" aria-label="Состояние ключа">${['full','cracked','none'].map(k=>`<button id="k-${k}" data-k="${k}" aria-pressed="${keys[i]===k}">${K[k]}</button>`).join('')}</div>
+  <p class="note">Хорошая концовка истории даёт целый ключ, средняя — треснувший, Тёмная — никакого.</p>`;
+}
+map.addEventListener('click',e=>{const b=e.target.closest('.w');if(b)show(+b.dataset.i);else if(e.target.closest('#heart'))show(-1)});
+sheet.addEventListener('click',e=>{const b=e.target.closest('.seg button');if(!b)return;keys[cur]=b.dataset.k;draw();show(cur)});
+draw();show(0);
+</script>
+</body></html>
