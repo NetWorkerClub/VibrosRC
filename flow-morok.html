@@ -1,0 +1,265 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><link rel="stylesheet" href="fonts.css"><style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}html,body{margin:0}</style></head><body><title>Схема выборов «Морока»</title>
+
+
+<script>document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});document.addEventListener("touchmove",e=>{if(e.touches.length>1)e.preventDefault()},{passive:false})</script><style>html,body{touch-action:pan-x pan-y;overscroll-behavior:none}header{display:none!important}body{padding-block:12px 28px!important}.hint{display:none}</style><style>
+/* Two views: the whole story as a sideways chart, and each chapter as a vertical chain of choices down to its ending */
+:root{
+  --bg:#0a0718; --panel:#141026; --line:#2f2752; --fg:#f2ecff; --muted:#a99fcc; --dim:#6f6696;
+  --violet:#9d7bff; --gold:#e8b85a; --red:#e0484f; --lock:#3a3358;
+  --display:"Philosopher",Georgia,serif; --body:"Manrope",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+h1{margin:2px 0 0;font-family:var(--display);font-size:30px;line-height:1.05}
+.lead{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.5;max-width:60ch}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tabs button{flex:none;border:1px solid var(--line);background:#141026;color:var(--fg);border-radius:999px;padding:8px 14px;font:600 13px var(--body);cursor:pointer}
+.tabs button.on{background:var(--gold);border-color:transparent;color:#1a1208}
+.tabs button.lk{opacity:.45}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px}
+.scroller{overflow-x:auto;border-radius:16px;box-shadow:0 0 0 1px var(--line);-webkit-overflow-scrolling:touch}
+.chart{position:relative;min-width:980px;width:100%;aspect-ratio:1672/940;background:#0b0820 url(206014ad3410.webp) center/100% 100% no-repeat}
+.chart svg{position:absolute;inset:0;width:100%;height:100%}
+.chart text{font-family:var(--body)}
+.node{cursor:pointer}.node:focus{outline:none}
+.node.sel .box{stroke:#fff;stroke-width:3}
+.hint{font-size:12px;color:var(--dim);margin:0}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;max-width:640px}
+.sheet .tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.sheet h2{margin:0;font-family:var(--display);font-size:22px;line-height:1.15}
+.sheet p{margin:0;font-size:14px;line-height:1.5}
+.st{font-size:12px;color:var(--dim)}
+/* chapter chain */
+.chain{position:relative;display:flex;flex-direction:column;gap:0;max-width:680px}
+.step{position:relative;padding:0 0 18px 30px}
+.step::before{content:"";position:absolute;left:9px;top:22px;bottom:-4px;width:2px;background:var(--line)}
+.step.done::before{background:linear-gradient(var(--gold),rgba(232,184,90,.25))}
+.step:last-child::before{display:none}
+.dot{position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);background:#120e24}
+.step.done .dot{border-color:var(--gold);background:radial-gradient(circle,#f6dda0 0 30%,#3a2a10 34%);box-shadow:0 0 12px rgba(232,184,90,.6)}
+.step.open .dot{border-color:var(--violet)}
+.sc{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.q{font-family:var(--display);font-size:19px;margin:2px 0 8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{border:1px solid var(--line);border-radius:14px;padding:9px 12px;background:#141026}
+.opt b{display:block;font-weight:600;font-size:14px}
+.opt small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px;line-height:1.4}
+.opt.pick{border-color:var(--gold);background:rgba(232,184,90,.12);box-shadow:0 0 0 1px rgba(232,184,90,.35)}
+.opt.pick b::before{content:"✓ ";color:var(--gold)}
+.opt.no{opacity:.55}
+.step.lock .opts{filter:blur(3px);opacity:.35;pointer-events:none}
+.step.lock .q::after{content:" 🔒";font-size:14px}
+.endc{margin-left:30px;border:1px solid var(--gold);border-radius:16px;padding:12px 14px;background:linear-gradient(135deg,rgba(232,184,90,.14),rgba(80,55,170,.12))}
+.endc.lock{border-color:var(--line);background:#120e24;color:var(--dim)}
+.endc h3{margin:0 0 4px;font-family:var(--display);font-size:20px}
+.endc p{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Катя Близнюк · Тёмная Русь</div>
+      <h1>«Морок» · схема выборов</h1>
+      <p class="lead">Золотом отмечен ваш путь. В главах видно, какой выбор к чему приводит. Варианты следующей главы загораются, когда вы до неё дойдёте.</p>
+    </div>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <div id="vAll">
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>Ваш путь</span>
+      <span><i style="background:var(--violet)"></i>Открыто</span>
+      <span><i style="background:var(--lock)"></i>Ещё впереди</span>
+    </div>
+    <div class="scroller"><div class="chart"><svg id="svg" viewBox="0 0 1672 940" role="img" aria-label="Схема развилок истории «Морок»"></svg></div></div>
+    <p class="hint">На телефоне схема листается пальцем вбок. Нажмите на узел.</p>
+    <section class="sheet" id="sheet" aria-live="polite"></section>
+  </div>
+  <div id="vCh" hidden></div>
+</div>
+
+<script>
+const PR=(()=>{try{return ((JSON.parse(localStorage.getItem('sboi_progress')||'{}').stories||{})[1])||{}}catch(e){return {}}})();
+const FL=n=>(PR['ch'+n]||{}).flags||null;          /* flags saved at the end of chapter n */
+const PTS=n=>(PR['ch'+n]||{}).pts||null;
+const DONE=n=>!!FL(n);
+const OPEN=n=>n===1||DONE(n-1);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const fav=p=>{if(!p)return null;const m=Math.max(p.A,p.G,p.V);if(m<4)return null;return p.A===m?'A':p.G===m?'G':'V'};
+
+/* ---------- chapters: steps → options (flag that marks the choice, what it leads to) ---------- */
+const CH=[
+ {n:1,name:'Ведьма из Скуфьина',steps:[
+  {sc:'Пробуждение',q:'Опоссум на груди',o:[
+   {t:'«Сначала репа, потом кризис личности»',f:'alf_fed',c:'Альфредослав запомнит. В главе 4 откроется амбар старосты.'},
+   {t:'«Кто я, где Артур?»',f:'!alf_fed',c:'Опоссум обижается. Ничего страшного.'}]},
+  {sc:'Утро в Скуфьине',q:'С кем поговорить в деревне',multi:true,o:[
+   {t:'Артур: «крабовая палочка»',f:'art_sea',c:'Артур +2. Вспышка памяти в главе 2.'},
+   {t:'Горислав: «Покажешь следы?»',f:'gor_tracks',c:'Горислав +2. В главе 2 он позовёт на болото по следам.'},
+   {t:'Велимир: «Расскажи про Навь»',f:'vel_nav',c:'Велимир +2. В главе 2 он вспомнит «тёплое» имя.'},
+   {t:'Максименко: дослушать песню',f:'max_tattoo',c:'Улика «Татуировка». На суде можно подставить Максименко.'},
+   {t:'Летописец: «Как кота звать?»',f:'echo_seen',c:'Летописец потеплеет в главе 2.'}]},
+  {sc:'Туман',q:'Дуняша зовёт ночью',o:[
+   {t:'Выйти на голос с фонарём',f:'went_out',c:'В главе 4 Дуняша спасёт из воды.'},
+   {t:'Запереть ставни',f:'stayed_in',c:'В главе 3 можно попросить у Дуняши прощения.'}]},
+  {sc:'Туман · QTE',q:'Фонарь',o:[
+   {t:'Удержала огонь',f:'brave',c:'Улика «Силуэт без лица». Мельник поверит.'},
+   {t:'Огонь погас',f:'found_at_body',c:'Катю найдут у тела. Обвинение на суде.'}]},
+  {sc:'Вилы и факелы',q:'Кто встанет рядом',o:[
+   {t:'Встать за спину Артура',f:'lean_art',c:'Артур +2.'},
+   {t:'Взять Горислава за руку',f:'lean_gor',c:'Горислав +2.'},
+   {t:'Попросить Велимира',f:'lean_vel',c:'Велимир +2.'},
+   {t:'Выйти к толпе самой',f:'alone',c:'Нужно убедить толпу самой.'}]},
+  {sc:'Вилы и факелы',q:'Что сказать толпе',o:[
+   {t:'«Голос был не её»',f:'miller_doubts',c:'Мельник засомневается и заступится на суде.'},
+   {t:'«Кровь чёрной станет»',f:'feared',c:'Деревня запомнит угрозу. Обвинение на суде.'}]},
+  {sc:'Ночь после',q:'С кем провести вечер',o:[
+   {t:'С Артуром на перевозе',f:'lodge_art',c:'Артур +1.'},{t:'В кузне у Горислава',f:'lodge_gor',c:'Горислав +1. Разговор о цепях.'},{t:'У Велимира на капище',f:'lodge_vel',c:'Велимир +1.'}]}],
+  end:f=>'Главный союзник: '+({A:'Артур',G:'Горислав',V:'Велимир'}[fav(PTS(1))]||'пока никто')+'.'},
+ {n:2,name:'Слепой',steps:[
+  {sc:'Утро после',q:'С кем идти на болото',o:[
+   {t:'С Артуром на лодке',f:'comp_A',c:'Артур +1.'},{t:'С Гориславом по следам',f:'comp_G',c:'Горислав +1. Рассказ про бабку.'},
+   {t:'С Велимиром',f:'comp_V',c:'Велимир +1. Он видел Мару в детстве.'},{t:'Одна с опоссумом',f:'alone_bog',c:'Пояс найдётся сам. Отразится на финале.'}]},
+  {sc:'Гать',q:'Разговор в пути',multi:true,o:[
+   {t:'Артуру: «на шее что-то красивее»',f:'art_flirt',c:'Артур это запомнит.'},
+   {t:'Гориславу: «туман уже приходил?»',f:'grandma',c:'В главе 3 Катя сама вспомнит бабкин тайник.'},
+   {t:'Гориславу: «я не та ведунья»',f:'gor_secret',c:'Горислав это запомнит.'},
+   {t:'Велимиру: «Какая она?»',f:'vel_saw',c:'Тёплое имя в разговоре у озера.'}]},
+  {sc:'Кикиморы',q:'Максименко тонет',o:[
+   {t:'Вытащить',f:'max_debt',c:'На Купале он отвлечёт старосту. На суде заступится.'},
+   {t:'Не спасать',f:'max_left',c:'Староста увидит Катю у воды.'}]},
+  {sc:'Кикиморы · QTE',q:'Кочки',o:[{t:'Добралась',f:'gat_ok',c:'+1 алмаз.'},{t:'Сорвалась',f:'gat_fail',c:'Мокрая до нитки.'}]},
+  {sc:'Летопись',q:'Свиток со стёртым именем',o:[
+   {t:'Унести тайком',f:'scroll_taken',c:'Улика на суде, но летописец назовёт воровкой.'},
+   {t:'Попросить одолжить',f:'scroll_lent',c:'Улика на суде без обвинения. Нужно сначала спросить про кота.'},
+   {t:'Запомнить и уйти',f:'!scroll_taken&!scroll_lent',c:'Свитка на суде не будет.'}]},
+  {sc:'Велимир у озера',q:'Цвет папоротника',o:[
+   {t:'Искать цветок вместе',f:'vel_kupala',c:'Короткий путь к цветку, но прыгать с Велимиром через костёр не выйдет, а значит, и метки не будет.'},
+   {t:'«Дальше я сама»',f:'!vel_kupala',c:'Цветок придётся ловить самой.'}]},
+  {sc:'Ночь на озере',q:'Артур у пристани',o:[
+   {t:'Прокатиться под луной',f:'night_art',c:'Артур +1.'},{t:'Домой к опоссуму',f:'night_home',c:'Если свиток с собой: имя короткое.'}]}],
+  end:f=>f.art_eyes?'Фаворит Горислав: у Артура загорелись фиолетовые глаза.':'Спутник главы: '+(f.comp_A?'Артур':f.comp_G?'Горислав':f.comp_V?'Велимир':'опоссум')+'.'},
+ {n:3,name:'Купала',steps:[
+  {sc:'Бабкин тайник',q:'Что взять',o:[
+   {t:'Кольцо',f:'ring',c:'На суде можно дать кольцо старосте: оно почернеет.'},
+   {t:'Ладанка',f:'ladanka',c:'Кощеи не смогут схватить.'}]},
+  {sc:'Праздник',q:'Кого навестить (две свечи)',multi:true,o:[
+   {t:'Девушкам погадать',f:'girls_like',c:'Девушки заступятся на суде.'},
+   {t:'Гориславу: «наковальня подождёт»',f:'kup_gor_yes',c:'Горислав +1.'},
+   {t:'Гориславу: «не люблю собак»',f:'kup_gor_dogs',c:'Горислав обижен.'}]},
+  {sc:'Прыжок через костёр',q:'С кем прыгать',o:[
+   {t:'С Артуром',f:'jump_A',c:'Артур +2. Если он фаворит: поцелуй и ночь у сетей.'},
+   {t:'С Гориславом',f:'jump_G',c:'Горислав +2. Если он фаворит: поцелуй и кузня.'},
+   {t:'С Велимиром',f:'jump_V',c:'Если прыжок чистый: метка на плече и сила Кати в главе 4.'},
+   {t:'С опоссумом',f:'jump_alf',c:'Деревня в шоке.'},{t:'Не прыгать',f:'skip_jump',c:'Больше времени на цветок.'}]},
+  {sc:'Прыжок · QTE',q:'Не разнимай рук',o:[{t:'Не разжала',f:'jump_ok',c:'+1 фавориту.'},{t:'Руки разомкнулись',f:'jump_fail',c:'Плохая примета: обвинение на суде.'}]},
+  {sc:'Цвет папоротника',q:'Поймай цвет',o:[
+   {t:'Цветок целый',f:'name_heard',c:'Имя Лады слышно целиком.'},{t:'Цветок помят',f:'name_half',c:'Слышно только «Ла…».'},{t:'Цветок истлел',f:'flash_0',c:'Имя придётся угадывать.'}]},
+  {sc:'Кощеи',q:'Бег сквозь туман',o:[
+   {t:'Ушла',f:'!kosh_fail',c:'Артур увозит на лодке. Без ладанки можно дважды оступиться.'},{t:'Схватили',f:'kosh_fail',c:'Третий промах без ладанки: Артур спасает, но ранен.'}]}],
+  end:f=>'Кровавая луна. Горислав обратился в зверя.'},
+ {n:4,name:'Суд',steps:[
+  {sc:'Кровавая ночь',q:'Что случилось ночью (по фавориту)',o:[
+   {t:'Фаворит Артур: битва с оборотнем',f:'gor_killed_art',c:'Артур убивает зверя топором. Дальше суд.'},
+   {t:'Фаворит Горислав: убийство оборотня',f:'gor_dead',c:'Жители убивают его вилами у Кати на руках. Дальше суд, в конце «Ревность».'},
+   {t:'Метка Велимира: костёр и сила',f:'dark_power',c:'Мара охватила деревню, суда нет. Катя пробуждает силу. Без ошибок — полный успех.'},
+   {t:'Одна без Велимира: костёр',f:'burned',c:'Катю сжигают. Концовка «Сожжена».'}]},
+  {sc:'Пока все в шоке',q:'Одно дело до суда',o:[
+   {t:'Амбар старосты',f:'shock_barn',c:'Сильнейшая улика. (Только в ветках Артура и Горислава.)'},{t:'Мельник',f:'shock_miller',c:'Мельник заступится.'},
+   {t:'Перевязать Артура',f:'arthur_healed',c:'Рана не испортит финал.'},{t:'Побыть дома',f:'shock_home',c:'Ничего для суда.'}]},
+  {sc:'Суд',q:'Итог суда',o:[
+   {t:'Кольцо почернело',f:'ring_win',c:'Староста разоблачён.'},{t:'Суд выигран',f:'trial_won',c:'Демьян смеётся, появляется Мара.'},
+   {t:'Суд проигран',f:'trial_lost',c:'Испытание водой.'},{t:'Подставила Максименко',f:'scapegoat',c:'Тёмный путь. Испытание водой ночью.'}]},
+  {sc:'Имя у огня',q:'Как её зовут',o:[{t:'Лада',f:'name_ok',c:'Ключ «Имя» целый.'},{t:'Другое имя',f:'name_wrong',c:'Ключ треснувший.'}]},
+  {sc:'Отпусти её · QTE',q:'Мара бьётся',o:[{t:'Удержала',f:'lada_free',c:'Лада свободна.'},{t:'Вырвалась',f:'fire_fail',c:'Ошибка для финала.'}]}],
+  end:f=>f.out_full?'Полный успех: Артур вспоминает всё.':f.out_partial?'Частичный успех: Артур с дырой в памяти.':f.out_lost?'Провал: Артур упущен.':f.out_cast?'Ревность: Катю выдёргивает в лабораторию.':f.out_burned?'Сожжена: Катю выдёргивает из огня в лабораторию.':'—'}
+];
+const has=(f,expr)=>expr.split('&').every(x=>x[0]==='!'?!f[x.slice(1)]:!!f[x]);
+function chView(c){
+  const f=FL(c.n),open=OPEN(c.n);let h=`<div class="chain">`;
+  c.steps.forEach(st=>{
+    const picked=f?st.o.filter(o=>has(f,o.f)):[];const cls=f&&picked.length?'done':open?'open':'lock';
+    h+=`<div class="step ${cls}"><i class="dot"></i><div class="sc">${esc(st.sc)}</div><div class="q">${esc(st.q)}</div><div class="opts">`;
+    st.o.forEach(o=>{const p=f&&has(f,o.f);h+=`<div class="opt ${p?'pick':f?'no':''}"><b>${esc(o.t)}</b><small>→ ${esc(o.c)}</small></div>`});
+    h+=`</div></div>`});
+  h+=`</div><div class="endc ${f?'':'lock'}"><div class="sc">Конец главы ${c.n}</div><h3>${esc(c.name)}</h3><p>${f?esc(c.end(f)):open?'Пройдите главу, чтобы увидеть, чем она кончится.':'Глава ещё не открыта.'}</p></div>`;
+  return h}
+
+/* ---------- the whole story ---------- */
+const N={
+ S:{x:120,y:470,t:'Ведунья из Скуфьина',d:'Катя просыпается в теле ведуньи. Пропадает Дуняша, к вечеру толпа идёт жечь ведьму.',kind:'start'},
+ A1:{x:330,y:200,t:'Глава 1: Артур',d:'Встала за спину Артура у крыльца.',c:1,w:f=>f.lean_art},
+ G1:{x:330,y:370,t:'Глава 1: Горислав',d:'Взяла Горислава за руку.',c:1,w:f=>f.lean_gor},
+ V1:{x:330,y:540,t:'Глава 1: Велимир',d:'Попросила Велимира сказать толпе, что он видит.',c:1,w:f=>f.lean_vel},
+ K1:{x:330,y:710,t:'Глава 1: сама',d:'Вышла к толпе одна.',c:1,w:f=>f.alone},
+ A2:{x:560,y:200,t:'Гать с Артуром',d:'На лодке через озеро.',c:2,w:f=>f.comp_A},
+ G2:{x:560,y:370,t:'Гать с Гориславом',d:'По босым следам.',c:2,w:f=>f.comp_G},
+ V2:{x:560,y:540,t:'Гать с Велимиром',d:'Он слышит то, чего не видно.',c:2,w:f=>f.comp_V},
+ K2:{x:560,y:710,t:'Гать одна',d:'Только опоссум рядом.',c:2,w:f=>f.alone_bog},
+ A3:{x:790,y:200,t:'Костёр с Артуром',d:'Прыжок через огонь, поцелуй, ночь у сетей.',c:3,w:f=>f.jump_A},
+ G3:{x:790,y:370,t:'Костёр с Гориславом',d:'Прыжок, поцелуй, кузня.',c:3,w:f=>f.jump_G},
+ V3:{x:790,y:540,t:'Костёр с Велимиром',d:'Метка на плече. Сила Кати.',c:3,w:f=>f.jump_V},
+ K3:{x:790,y:710,t:'Без пары',d:'С опоссумом или без прыжка.',c:3,w:f=>f.jump_alf||f.skip_jump},
+ NA:{x:1020,y:200,t:'Битва с оборотнем',d:'Фаворит Артур. Горислав-оборотень нападает на деревню, Артур убивает его топором.',c:4,w:f=>f.gor_killed_art},
+ NG:{x:1020,y:370,t:'Убийство оборотня',d:'Фаворит Горислав. Катя успокаивает зверя, жители убивают его вилами у неё на руках.',c:4,w:f=>f.gor_dead},
+ NV:{x:1020,y:540,t:'Костёр и сила',d:'Одна или с Велимиром (прыжок через костёр). Мара охватила деревню, Катю хотят сжечь без суда, но она пробуждает силу.',c:4,w:f=>f.dark_power},
+ NX:{x:1020,y:710,t:'Костёр',d:'Одна и без Велимира. Мара охватила деревню, Катю сжигают.',c:4,w:f=>f.burned},
+ T1:{x:1250,y:290,t:'Суд выигран',d:'Улики и свидетели. Староста смеётся, за ним появляется Мара.',c:4,w:f=>f.trial_won},
+ T2:{x:1250,y:620,t:'Испытание водой',d:'Катю топят с камнем на ногах. Спасает Артур, Дуняша или опоссум.',c:4,w:f=>f.trial_lost||f.scapegoat},
+ E1:{x:1500,y:170,t:'Полный успех',d:'Мара отпущена, Артур вспоминает всё.',kind:'end',tone:'good',c:4,w:f=>f.out_full},
+ E2:{x:1500,y:380,t:'Частичный',d:'Деревня спасена, у Артура дыра в памяти.',kind:'end',c:4,w:f=>f.out_partial},
+ E3:{x:1500,y:590,t:'Провал',d:'Артур упущен.',kind:'end',tone:'bad',c:4,w:f=>f.out_lost},
+ E5:{x:1250,y:790,t:'Сожжена',d:'Катя сгорает на костре, портал выдёргивает её в лабораторию. Артур упущен.',kind:'end',tone:'bad',c:4,w:f=>f.out_burned},
+ E4:{x:1500,y:790,t:'Ревность',d:'Горислав мёртв, Артур у наковальни. Катю выдёргивает в лабораторию.',kind:'end',tone:'bad',c:4,w:f=>f.out_cast}
+};
+const COLS=[[330,'Глава 1'],[560,'Глава 2'],[790,'Глава 3'],[1020,'Глава 4 · ночь'],[1250,'Глава 4 · суд'],[1500,'Концовка']];
+const PATH=['S'];for(const k in N){const n=N[k];if(n.c&&FL(n.c)&&n.w(FL(n.c)))PATH.push(k)}
+let sel='S';
+const svg=document.getElementById('svg'),sheet=document.getElementById('sheet');
+const st=k=>PATH.includes(k)?'path':(!N[k].c||OPEN(N[k].c))?'seen':'lock';
+function wrap(t,max){const w=t.split(' ');const out=[];let l='';for(const x of w){if((l+' '+x).trim().length>max&&l){out.push(l);l=x}else l=(l+' '+x).trim()}out.push(l);return out}
+const lockI=(x,y)=>`<g fill="none" stroke="#6f6696" stroke-width="2.4"><path d="M${x-6} ${y-2}v-6a6 6 0 0 1 12 0v6"/><rect x="${x-10}" y="${y-2}" width="20" height="15" rx="3" fill="#6f6696" fill-opacity=".35"/></g>`;
+const ORD=['S','1','2','3','N','T','E'];const col=k=>k==='S'?0:k[0]==='N'?4:k[0]==='T'?5:k[0]==='E'?6:+k[1];
+const LATE=[['NA','T1'],['NA','T2'],['NG','T1'],['NG','T2'],['NV','E1'],['NV','E2'],['NV','E3'],['NX','E5'],['T1','E1'],['T1','E2'],['T1','E3'],['T1','E4'],['T2','E2'],['T2','E3'],['T2','E4']];
+function edges(){const L=[];const keys=Object.keys(N).filter(k=>col(k)<=4);
+  keys.forEach(a=>keys.forEach(b=>{const ca=col(a),cb=col(b);if(cb!==ca+1)return;
+    if(ca===0||N[a].y===N[b].y||PATH.includes(a)&&PATH.includes(b)||(ca===3&&cb===4))L.push([a,b])}));return L.concat(LATE)}
+function draw(){
+  let s='<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1672" height="940"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  COLS.forEach(([x,t])=>s+=`<text x="${x}" y="92" text-anchor="middle" font-size="15" letter-spacing="2" fill="#a99fcc">${esc(t.toUpperCase())}</text>`);
+  edges().forEach(([a,b])=>{const A=N[a],B=N[b];const ax=A.x+(A.kind==='start'?38:95),bx=B.x-(B.kind==='end'?62:95);const m=(ax+bx)/2;
+    const both=PATH.includes(a)&&PATH.includes(b);const sa=st(a),sb=st(b);
+    const c=both?'#e8b85a':(sa!=='lock'&&sb!=='lock')?'rgba(157,123,255,.55)':'#3a3358';
+    s+=`<path d="M${ax} ${A.y} C${m} ${A.y} ${m} ${B.y} ${bx} ${B.y}" fill="none" stroke="${c}" stroke-width="${both?3.5:1.6}" ${c==='#3a3358'?'stroke-dasharray="4 6"':''} ${both?'filter="url(#glow)"':''}/>`});
+  for(const k in N){const n=N[k],S=st(k),lock=S==='lock';
+    const stroke=S==='path'?'#e8b85a':lock?'#3a3358':n.tone==='bad'?'#e0484f':'#9d7bff';
+    const fill=S==='path'?'rgba(232,184,90,.16)':lock?'rgba(30,25,52,.75)':'rgba(80,55,170,.28)';
+    let g=`<g class="node${sel===k?' sel':''}" data-k="${k}" tabindex="0" role="button">`;
+    if(n.kind==='start'){g+=`<circle class="box" cx="${n.x}" cy="${n.y}" r="38" fill="rgba(232,184,90,.25)" stroke="#e8b85a" stroke-width="2.5" filter="url(#glow)"/><text x="${n.x}" y="${n.y+7}" text-anchor="middle" font-size="22" fill="#f6dda0">✦</text><text x="${n.x}" y="${n.y+70}" text-anchor="middle" font-size="15" fill="#f2ecff">${esc(n.t)}</text>`}
+    else if(n.kind==='end'){const r=62,p=[0,1,2,3,4,5].map(i=>{const a=Math.PI/3*i-Math.PI/2;return(n.x+r*Math.cos(a)).toFixed(1)+','+(n.y+r*Math.sin(a)).toFixed(1)}).join(' ');
+      g+=`<polygon class="box" points="${p}" fill="${fill}" stroke="${stroke}" stroke-width="2.5" ${S==='path'?'filter="url(#glow)"':''}/>`;
+      if(lock)g+=lockI(n.x,n.y);else wrap(n.t,10).forEach((l,i,a)=>g+=`<text x="${n.x}" y="${n.y+6+(i-(a.length-1)/2)*20}" text-anchor="middle" font-size="16" font-weight="700" fill="#f2ecff">${esc(l)}</text>`)}
+    else{g+=`<rect class="box" x="${n.x-95}" y="${n.y-30}" width="190" height="60" rx="30" fill="${fill}" stroke="${stroke}" stroke-width="2.2" ${S==='path'?'filter="url(#glow)"':''}/>`;
+      if(lock)g+=lockI(n.x,n.y);else wrap(n.t,19).forEach((l,i,a)=>g+=`<text x="${n.x}" y="${n.y+6+(i-(a.length-1)/2)*19}" text-anchor="middle" font-size="15" fill="#f2ecff">${esc(l)}</text>`)}
+    s+=g+'</g>'}
+  svg.innerHTML=s}
+function show(k){sel=k;const n=N[k],S=st(k);draw();
+  if(S==='lock'){sheet.innerHTML=`<div class="tag">Ещё впереди</div><h2>Эта развилка в следующих главах</h2><p>Дойдите до главы ${n.c}, чтобы открыть её.</p>`;return}
+  sheet.innerHTML=`<div class="tag">${n.c?'Глава '+n.c:'Начало'}</div><h2>${esc(n.t)}</h2><p>${esc(n.d)}</p><div class="st">${S==='path'?'Ваш путь':'Открыто, но вы выбрали иначе или ещё не прошли'}</div>`}
+svg.addEventListener('click',e=>{const g=e.target.closest('.node');if(g)show(g.dataset.k)});
+
+/* ---------- tabs ---------- */
+const tabs=document.getElementById('tabs'),vAll=document.getElementById('vAll'),vCh=document.getElementById('vCh');
+const T=[['all','Вся история']].concat(CH.map(c=>['c'+c.n,'Глава '+c.n]));
+function tab(id){[...tabs.children].forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  if(id==='all'){vAll.hidden=false;vCh.hidden=true;show(sel)}else{vAll.hidden=true;vCh.hidden=false;vCh.innerHTML=chView(CH[+id.slice(1)-1])}}
+T.forEach(([id,t])=>{const b=document.createElement('button');b.dataset.id=id;b.textContent=t;if(id!=='all'&&!OPEN(+id.slice(1)))b.classList.add('lk');b.onclick=()=>tab(id);tabs.appendChild(b)});
+{const want=(window.__TAB||location.hash.slice(1)||'all');tab(T.some(t=>t[0]===want)?want:'all')}
+</script>
+</body></html>
