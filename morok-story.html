@@ -1215,7 +1215,7 @@ function qteFlash(cfg){return new Promise(res=>{
 /* ---------- QTE «Сквозь туман» (бег): кощеи выскакивают из тумана, свайп прочь ---------- */
 function qteRun(cfg){return new Promise(res=>{
   hideBox();MODE='qte';ST.qteAll++;
-  const q=$('qte'),N=cfg.n||6,frames=(cfg.frames||['fog_run1','fog_run2','fog_run3']).map(k=>A.bg[k]).filter(Boolean),kos=[1,2,3,4,5].map(i=>({u:UI('kosh'+i),f:({1:'r',2:'l',3:'c',4:'c',5:'l'})[i]})).filter(k=>k.u);
+  const q=$('qte'),N=cfg.n||6,frames=(cfg.frames||['fog_run1','fog_run2','fog_run3']).map(k=>A.bg[k]).filter(Boolean),kos=(cfg.kos?cfg.kos.map(k=>({u:k.u||((A.sp[k.sp]||{})[k.e||'neutral']),f:k.f||'c'})):[1,2,3,4,5].map(i=>({u:UI('kosh'+i),f:({1:'r',2:'l',3:'c',4:'c',5:'l'})[i]}))).filter(k=>k.u);
   q.innerHTML=`<div class="run"><img class="runbg" id="rbA" alt=""><img class="runbg" id="rbB" alt=""><img class="rkosh" id="rK" alt=""></div>
    <div class="qtime"><i></i></div><div class="qhint">${cfg.hint||'Сквозь туман'}</div><div class="qsub">${cfg.sub||'Свайп прочь от кощея'}</div>
    <div class="qhearts" id="qh"></div><div class="qarr" id="qarr"></div><div class="qres" id="qres"></div>`;
