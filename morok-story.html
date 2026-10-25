@@ -901,7 +901,7 @@ async function exec(c){
     case 'evidence':{const r=await evidenceUI(c);ST.defense=ST.defense||0;
       if(r.dark){ST.flags.scapegoat=1;return run(c.dark||[])}
       for(const it of r.picks){ST.defense+=it.w;ST.picked=(ST.picked||[]).concat(it.id);
-        await run([S.say('kat',it.say,it.w>0?'determined':'ironic')].concat(it.w>0?[]:[S.scr('Деревня смеётся: «Ведьмины карты и сказки!»')]))}
+        await run([S.say('kat',it.say,it.w>0?'determined':'ironic')].concat(it.w>0||c.mock===''?[]:[S.scr(c.mock||'Деревня смеётся: «Ведьмины карты и сказки!»')]))}
       if(!r.picks.length)await run([S.th('Нечего сказать. Я просто стою и смотрю на них.','sad')]);
       return}
     case 'qteFlash':{await qteRules('qteFlash',c);const n=await qteFlash(c);ST.flags['flash_'+n]=1;return run(n>=3?c.h3:n>=1?c.h12:c.h0)}
