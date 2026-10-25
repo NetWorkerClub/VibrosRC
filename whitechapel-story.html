@@ -775,7 +775,7 @@ window.GAME={
    if(window.STORY_CAST)s.cast=window.STORY_CAST(st);if(window.STORY_FACTS)s.facts=window.STORY_FACTS(st,ch,ch>=4);if(window.STORY_DECISIONS)s.decisions=window.STORY_DECISIONS(st);if(st.mind)s.mind=st.mind;s['ch'+ch]={pts:st.pts,flags:st.flags,clues:st.clues,mind:st.mind}})},
  exit(){try{stop()}catch(e){}try{parent.postMessage('sboi:story-exit','*')}catch(e){}}
 };
-</script><script>window.ASSETS={"bg":{"buck_row":"whitechapel-bg_buck_row.77bd0914.webp","buck_row_body":"whitechapel-bg_buck_row_body.ea9acc78.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.d12c56f4.webp","morgue":"whitechapel-bg_morgue.75f9a559.webp","room_hart":"whitechapel-bg_room_hart.ac38488b.webp","room_hart_night":"whitechapel-bg_room_hart_night.521f57b4.webp","ten_bells":"whitechapel-bg_ten_bells.65a6b9de.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.de2bf24a.webp","yard_office":"whitechapel-bg_yard_office.e490ca32.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.8f01eed3.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.79ae7578.webp","sad":"whitechapel-sp_hale_sad.d7a40dec.webp","stern":"whitechapel-sp_hale_stern.2788f500.webp"},"ivan":{"lost":"whitechapel-sp_ivan_lost.70db832d.webp","neutral":"whitechapel-sp_ivan_neutral.48ae2159.webp","tired":"whitechapel-sp_ivan_tired.207616c3.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp"},"tol":{"neutral":"whitechapel-sp_tol_neutral.006aafab.webp","pie":"whitechapel-sp_tol_pie.7a743bc1.webp","sad":"whitechapel-sp_tol_sad.126e09c7.webp","smile":"whitechapel-sp_tol_smile.6a751f87.webp","worried":"whitechapel-sp_tol_worried.95afe15b.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","map_clean":"whitechapel-ui_map_clean.22b2e86d.webp","item_glove":"whitechapel-ui_item_glove.54ff243c.webp","item_police_button":"whitechapel-ui_item_police_button.c0202101.webp","item_key":"whitechapel-ui_item_key.509bbe30.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
+</script><script>window.ASSETS={"bg":{"buck_row_body":"whitechapel-bg_buck_row_body.ea9acc78.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.27502b7a.webp","morgue":"whitechapel-bg_morgue.75f9a559.webp","room_hart":"whitechapel-bg_room_hart.ac38488b.webp","room_hart_night":"whitechapel-bg_room_hart_night.521f57b4.webp","ten_bells":"whitechapel-bg_ten_bells.65a6b9de.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.de2bf24a.webp","yard_office":"whitechapel-bg_yard_office.e490ca32.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.72e8df6e.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp","alley_crates":"whitechapel-bg_alley_crates.06f60fe4.webp","cg_w1_wake0":"whitechapel-bg_cg_w1_wake0.8f01eed3.webp"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.79ae7578.webp","sad":"whitechapel-sp_hale_sad.d7a40dec.webp","stern":"whitechapel-sp_hale_stern.2788f500.webp"},"ivan":{"lost":"whitechapel-sp_ivan_lost.70db832d.webp","neutral":"whitechapel-sp_ivan_neutral.48ae2159.webp","tired":"whitechapel-sp_ivan_tired.207616c3.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp"},"tol":{"neutral":"whitechapel-sp_tol_neutral.006aafab.webp","pie":"whitechapel-sp_tol_pie.7a743bc1.webp","sad":"whitechapel-sp_tol_sad.126e09c7.webp","smile":"whitechapel-sp_tol_smile.6a751f87.webp","worried":"whitechapel-sp_tol_worried.95afe15b.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","item_scalpel":"whitechapel-ui_item_scalpel.487b8c5c.webp","item_cleaver":"whitechapel-ui_item_cleaver.9bfc74bb.webp","map_clean":"whitechapel-ui_map_clean.22b2e86d.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
 const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const A=window.ASSETS||{bg:{},sp:{},kp:{}};
@@ -1758,10 +1758,14 @@ const SC1=[
  bg('cover',{t:10,z:1.02,y:40}),veil(0,1600),
  title('Уайтчепел','31 августа 1888 · 3:40',4200),
  veil(1,900),sfx('heart'),flash('#b89bff',900),
- bg('cg_w1_wake',{t:10,z:1.06,y:55}),eyes('open'),veil(0,10),
+ eyes('shut'),blur(16,0),bg('cg_w1_wake',{t:10,z:1.12,y:60}),veil(0,10),
+ eyes('open'),cam(50,1.06,55,2600,{ease:'ease-in-out'}),
  th('Холодно. Мокро. Камни под щекой… Брусчатка? Откуда в лаборатории брусчатка?','scared'),
  th('Последнее, что помню: фиолетовый свет. Кто-то кричит «держите кольцо». А потом — вот.','scared'),
  th('Платье до пят. Корсет. Плащ. Кто-то очень плохо пошутил — или я очень хорошо головой ударилась.','ironic'),
+ th('Там, в конце улицы… кто-то стоит? Смотрит на меня. Глаза… светятся?','scared'),
+ sfx('heart'),blur(6,300),bg('cg_w1_wake0',{t:400,z:1.06,y:55}),blur(0,500),
+ th('Моргнула — и никого. Только туман.','scared'),
  bg('buck_row_body',{t:900,cam:40,kat:62}),bars(0),mus('wc_fog',{fade:2}),amb('amb_rain',{vol:.55,fade:2}),
  scr('Узкая улица. Ворота конюшни, кирпичная стена склада, один газовый фонарь. Дождь. Пахнет навозом, углём и чем-то железным.'),
  scr('У ворот конюшни лежит женщина. Шляпка в луже.'),
@@ -2060,13 +2064,16 @@ const SC5=[
    {id:'x_fence',x:72,y:42,label:'доски забора целы — не перелезал'},
    {id:'x_lamp2',x:45,y:12,label:'фонарь ещё горит — светает'},
    {id:'x_puddle2',x:46,y:88,label:'лужа крови растеклась к стоку'},
-   {id:'h2_scalpel',x:70,y:86,label:'в луже — медицинский скальпель, ампутационный'}
+   {id:'h2_scalpel',x:54,y:73,label:'из кармана жертвы торчит ампутационный скальпель'},
+   {id:'h2_cleaver',x:25,y:21,label:'в пентаграмму воткнут мясницкий тесак'}
   ],time:'6:10',
-  pair:[['h2_same','h2_dust','d_same','Один и тот же убийца'],['h2_scalpel','h2_same','d_scalpel','Резали этим. Хирургический инструмент'],['h2_face','h2_arms','d_trust2','Опять не боролась. Подпустила, как первая'],['h2_pent','h2_drip','d_pent','Знак нарисовали заранее. Он ждал её здесь']]}),
+  pair:[['h2_same','h2_dust','d_same','Один и тот же убийца'],['h2_scalpel','h2_same','d_scalpel','Резали этим. Хирургический инструмент'],['h2_face','h2_arms','d_trust2','Опять не боролась. Подпустила, как первая'],['h2_pent','h2_drip','d_pent','Знак нарисовали заранее. Он ждал её здесь'],['h2_cleaver','h2_scalpel','d_tools','Тесак мясника и скальпель хирурга. Кто-то путает следы']]}),
  when(F('d_pent'),[...theory('t_ritual','пентаграмма… ритуал? тайное общество?'),
   th('Пентаграмма. Кровью. Заранее. Катя, это уже не маньяк — это ритуал. Или кто-то очень хочет, чтобы я так подумала.','eureka')]),
  vertex(2),
- th('Скальпель. Не мясницкий нож — хирургический. Хейл заворачивает его в платок.','scared'),
+ th('Скальпель в кармане у мёртвой. Не мясницкий нож — хирургический. А в двери — тесак мясника. Слишком много ножей для одного убийцы.','scared'),
+ scr('Хейл заворачивает скальпель в платок. Тесак выдёргивает из двери констебль.'),
+ fact('byk','у двери с пентаграммой — мясницкий тесак, как у забойщиков с рынка'),
  say('hale','Ампутационный. Такие есть в каждом морге. И в нашем тоже.','stern'),
  /* планёрка */
  scr('Полдень. Ярд. Эбберлайн требует имя.'),
@@ -2111,7 +2118,8 @@ const SC5=[
    say('abb','Хейл прав. Но и мисс права. Работайте.')]}
  ],'Кого назвать?'),
  hide(),
- bg('hanbury_yard',{t:700,cam:50,kat:40}),mus('wc_theme',{fade:2}),
+ bg('alley_crates',{t:700,cam:50,kat:40}),mus('wc_theme',{fade:2}),
+ scr('Вечер. Переулок за рынком. Из-за ящиков выныривает Грач.'),
  show('rook','shard',62),
  say('rook','Мисс! Мисс-консультант! Под ней было, под тётенькой. Светится. Я не брал, честно. Почти.'),
  hide('rook'),bg('cg_w1_shard',{t:600,z:1.04,y:50}),
@@ -2121,7 +2129,7 @@ const SC5=[
  th('Кто-то охотится не за женщинами. Кто-то охотится за этим.','scared'),
  th('Положу в карман. Пусть греет.','determined'),
  hide(),veil(1,1200),
- end({h:'Конец главы 1',p:'Кожаный фартук',clues:17})
+ end({h:'Конец главы 1',p:'Кожаный фартук',clues:18})
 ];
 
 window.SCENES=[
@@ -2170,7 +2178,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const vib=ms=>{try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
 const NAMES={kat:'Катя',hale:'Хейл',tol:'Толя',seb:'Себастьян',ivan:'Иван',krn:'Крейн',byk:'Бык',rook:'Грач',mol:'Молли',abb:'Эбберлайн'};
 const CAST_NAME={hale:'Инспектор Томас Хейл',tol:'Доктор Толбот (Толя)',seb:'Лорд Себастьян Грей',ivan:'Иван',krn:'Мистер Элиас Крейн',byk:'Бык',mol:'Молли Кейн',rook:'Грач'};
-const ITEM={h_link:'item_link',s_pin:'item_hairpin',a_lamp:'item_magnifier'};
+const ITEM={h_link:'item_link',s_pin:'item_hairpin',a_lamp:'item_magnifier',h2_scalpel:'item_scalpel',h2_cleaver:'item_cleaver'};
 const itemImg=id=>{const u=ITEM[id]&&(A.ui||{})[ITEM[id]];return u?`<img class="it" alt="" src="${u}">`:''};
 const spr=(ch,e)=>(((A.sp||{})[ch]||{})[e||'neutral'])||(((A.sp||{})[ch]||{}).neutral)||'';
 
