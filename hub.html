@@ -847,14 +847,15 @@ function drawDrawer(){
   const realH=(dSel==='all'||dSel==='real')?`<div class="plate red">Особый отдел · пропавшие</div>`+REAL.map((g,i)=>`<button class="fold real" data-r="${i}" style="z-index:${i+1}"><span class="tab" style="left:${(i%3)*27}%">наши ребята</span><span class="bk">${fStain(g.n,'ok',i)}</span><span class="lab"><span class="nm"><span class="no">ОСОБОЕ ДЕЛО № ${String(i+1).padStart(2,'0')}</span><b>${esc(g.n)}</b></span><span class="stamp lost">пропал</span></span>${g.pen?`<span class="pen">${esc(g.pen)}</span>`:''}</button>`).join('')+'<div style="height:30px"></div>':'';
   if(dSel==='real'){$('dCount').textContent=REAL.length+' папок';$('drawer').innerHTML=realH;return}
   $('drawer').innerHTML=realH+(dList.length?`<div class="plate">Картотека · дела № 01–${String(dList.length).padStart(2,'0')}</div>`+dList.map((d,k)=>{const[n,role,stt]=d.r;const tabL=(k%3)*27;
-    return `<button class="fold" data-k="${k}" style="z-index:${k+1}"><span class="tab" style="left:${tabL}%">${esc(STORIES[d.s][0])}</span><span class="bk">${fStain(n,stt,k)}</span>${(PEN[n]||{}).f?`<span class="pen${(PEN[n]||{}).r?' red':''}">${(PEN[n]).f}</span>`:''}<span class="lab"><span class="nm"><span class="no">ДЕЛО № ${String(k+1).padStart(2,'0')} · ${esc(role)}</span><b>${esc(n)}</b></span><span class="stamp ${stt}">${stt==='ok'?'жив':stt==='dead'?'мёртв':'предан'}</span></span></button>`}).join('')
+    return `<button class="fold" data-k="${k}" style="z-index:${k+1}"><span class="tab" style="left:${tabL}%">${esc(STORIES[d.s][0])}</span><span class="bk">${fStain(n,stt,k)}</span>${(PEN[n]||{}).f?`<span class="pen${(PEN[n]||{}).r?' red':''}">${(PEN[n]).f}</span>`:''}<span class="lab"><span class="nm"><span class="no">ДЕЛО № ${CASE(k)} · ${esc(role)}</span><b>${esc(n)}</b></span><span class="stamp ${stt}">${stt==='ok'?'жив':stt==='dead'?'мёртв':'предан'}</span></span></button>`}).join('')
     :`<div class="note" style="padding:20px 0">${dSel==='all'?'Папки героев появятся, когда вы встретите их в историях.':'«'+esc(STORIES[dSel][0])+'» ещё не начата. Папки появятся, когда вы встретите персонажей.'}</div>`);
 }
 $('dChips').innerHTML=`<button data-d="all" aria-pressed="true">Все истории</button><button data-d="real" aria-pressed="false">Наши ребята</button>`+STORIES.map((s,i)=>`<button data-d="${i}" aria-pressed="false">${esc(s[0])}</button>`).join('');
 $('dChips').onclick=e=>{const b=e.target.closest('[data-d]');if(!b)return;dSel=b.dataset.d==='all'||b.dataset.d==='real'?b.dataset.d:+b.dataset.d;$('dChips').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));drawDrawer()};
+const CASE=k=>{const d=dList[k];const n=dList.slice(0,k+1).filter(x=>x.s===d.s).length;return STORIES[d.s][0][0].toUpperCase()+'-'+String(n).padStart(2,'0')};
 function openFolder(k){
   dIdx=k;const d=dList[k];const[n,role,stt,att,rom]=d.r;const ini=n.split(/[\s-]+/).map(w=>w[0]).join('').slice(0,2);
-  $('ofT').textContent=n;$('ofS').textContent='Дело № '+String(k+1).padStart(2,'0')+' · '+STORIES[d.s][0];const no=String(k+1).padStart(2,'0');
+  $('ofT').textContent=n;const no=CASE(k);$('ofS').textContent='Дело № '+no+' · '+STORIES[d.s][0];
   const facts=((PS(d.s).facts||{})[n]||FACTS[n]||[]).map(([f,l])=>l?`<p class="fact locked"><span class="red" aria-hidden="true">${esc(f)}</span><em>${esc(l)}</em></p>`:`<p class="fact">${esc(f)}</p>`).join('');
   const att2=att>=60?'доверяет':att>=20?'симпатизирует':att>-20?'нейтрально':att>-60?'насторожен':'враждебен';
   $('pages').innerHTML=
