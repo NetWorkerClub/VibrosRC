@@ -988,7 +988,7 @@ function panoScene(cfg){return new Promise(async res=>{
   let busy=false;
   const mk=(s,cls)=>{const b=document.createElement('button');b.className='spot '+cls;b.style.left=s.x+'%';b.style.top=s.y+'%';
     if(cls==='talk'){const u=s.ch&&(A.sp[s.ch]||{})[s.e||'neutral'];
-      if(s.ch){b.classList.add('who');b.style.height=(s.h||20)+'%';b.innerHTML=(u?'<img alt="" src="'+u+'">':SIL[(CH[s.ch]||{}).sil||'person'])+'<b>'+s.label+'</b>';if(s.anim)b.classList.add('a-'+s.anim);if(s.z)b.style.zIndex=s.z;
+      if(s.ch){b.classList.add('who');b.style.height=(s.h||20)+'%';b.innerHTML=(u?'<img alt="" src="'+u+'">':SIL[(CH[s.ch]||{}).sil||'person'])+'<b>'+s.label+'</b>';if(s.anim)b.classList.add('a-'+s.anim);if(s.z)b.style.zIndex=s.z;if(s.clip){const ic=b.querySelector('img');if(ic)ic.style.clipPath='inset(0 0 '+s.clip+'% 0)'}
       if(s.frames){const fr=s.frames.map(k=>(A.sp[s.ch]||{})[k]).filter(Boolean);if(fr.length>1){let i=0;const im2=b.querySelector('img');const h=setInterval(()=>{if(!b.isConnected){clearInterval(h);return}i=(i+1)%fr.length;im2.src=fr[i]},s.ms||1400)}}
       const im=b.querySelector('img');if(im){const fx=()=>{if(im.naturalWidth)b.style.aspectRatio=im.naturalWidth+'/'+im.naturalHeight};im.complete?fx():im.onload=fx}}
       else b.innerHTML='<i></i><b>'+s.label+'</b>'}b.setAttribute('aria-label',s.label||'');inn.appendChild(b);return b};
