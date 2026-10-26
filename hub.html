@@ -463,6 +463,138 @@ button[data-fs]:disabled{opacity:.45;cursor:default}
   <div class="toast" id="toast"></div>
 </div>
 
+<script>/* ===== Доска расследования v2: фиксированная раскладка по схеме автора =====
+   Карточки висят на своих местах и появляются по мере прохождения историй (BX[n].on).
+   Фильтр по истории: выбранная история ярко, остальные полупрозрачные. */
+(function(){
+const LAY={"W":3548,"H":1774,"cards":{"3":{"img":"board-3.faa7b3ed.webp","x":711.9,"y":211.7,"w":854,"h":522,"rot":-1.2,"pin":[1093.1,234.4]},"1":{"img":"board-1.c7261ac8.webp","x":355.0,"y":161.8,"w":232,"h":238,"rot":-2.09,"pin":[481.9,170.9]},"5":{"img":"board-5.c34b81b2.webp","x":1842.8,"y":264.0,"w":297,"h":433,"rot":-2.57,"pin":[1994.7,283.8]},"6":{"img":"board-6.620d9f7b.webp","x":2262.6,"y":162.1,"w":208,"h":253,"rot":-0.81,"pin":[2338.5,175.4]},"7":{"img":"board-7.379456af.webp","x":2771.7,"y":176.2,"w":322,"h":405,"rot":0.04,"pin":[2887.8,199.4]},"8":{"img":"board-8.7666c13a.webp","x":204.7,"y":317.1,"w":240,"h":366,"rot":-0.4,"pin":[293.2,338.1]},"10":{"img":"board-10.a2baa0b7.webp","x":3165.7,"y":371.8,"w":216,"h":288,"rot":-2.46,"pin":[3268.5,383.9]},"11":{"img":"board-11.643a0c88.webp","x":1462.2,"y":627.3,"w":193,"h":200,"rot":1.96,"pin":[1536.0,637]},"12":{"img":"board-12.5bb98b72.webp","x":2575.9,"y":338.0,"w":243,"h":246,"rot":-1.66,"pin":[2707.0,348.2]},"13":{"img":"board-13.9824ac79.webp","x":2380.1,"y":409.4,"w":202,"h":205,"rot":2.69,"pin":[2486.0,418]},"15":{"img":"board-15.136890b4.webp","x":2762.7,"y":490.0,"w":251,"h":263,"rot":-0.62,"pin":[2924.6,504.0]},"17":{"img":"board-17.8090f6f8.webp","x":512.1,"y":529.4,"w":274,"h":427,"rot":-2.72,"pin":[680.7,548.5]},"18":{"img":"board-18.99c4ba0f.webp","x":315.0,"y":713.2,"w":172,"h":224,"rot":-1.26,"pin":[382.0,725]},"20":{"img":"board-20.a51c4699.webp","x":1237.9,"y":714.0,"w":120,"h":238,"rot":-2.29,"pin":[1290.4,725.6]},"22":{"img":"board-22.ff1769e8.webp","x":2159.1,"y":580.7,"w":186,"h":254,"rot":1.9,"pin":[2233.3,591.7]},"23":{"img":"board-23.243e40fc.webp","x":2430.9,"y":598.9,"w":253,"h":241,"rot":0.49,"pin":[2568.1,610.7]},"24":{"img":"board-24.9152047b.webp","x":2955.3,"y":700.1,"w":311,"h":211,"rot":-0.77,"pin":[3115.3,711]},"25":{"img":"board-25.f21fee61.webp","x":3148.3,"y":794.3,"w":205,"h":234,"rot":-2.62,"pin":[3222.1,803.6]},"26":{"img":"board-26.6a501ea0.webp","x":235.7,"y":869.6,"w":356,"h":295,"rot":-1.76,"pin":[433.5,881.4]},"27":{"img":"board-27.0c12a0e9.webp","x":728.6,"y":932.6,"w":299,"h":208,"rot":-0.43,"pin":[861.3,944]},"28":{"img":"board-28.a0f1187a.webp","x":1126.9,"y":901.2,"w":253,"h":224,"rot":0,"pin":[1259.9,915]},"29":{"img":"board-29.9836252e.webp","x":2144.3,"y":752.4,"w":330,"h":263,"rot":-0.28,"pin":[2289.4,766.9]},"30":{"img":"board-30.ba493718.webp","x":2654.8,"y":713.6,"w":225,"h":325,"rot":1.77,"pin":[2781.4,729.0]},"31":{"img":"board-31.7bdeb0ab.webp","x":3015.6,"y":982.1,"w":216,"h":203,"rot":-1.54,"pin":[3128.5,993]},"32":{"img":"board-32.f26cd88e.webp","x":1000.5,"y":1036.0,"w":315,"h":252,"rot":0.15,"pin":[1193.6,1049.2]},"35":{"img":"board-35.15f9d84b.webp","x":175.4,"y":1119.4,"w":235,"h":187,"rot":1.38,"pin":[277.5,1130]},"36":{"img":"board-36.fd2d1aea.webp","x":1407.1,"y":974.3,"w":863,"h":485,"rot":2.88,"pin":[1737.0,983.7]},"38":{"img":"board-38.1fa75b5f.webp","x":2380.4,"y":946.9,"w":354,"h":250,"rot":-0.49,"pin":[2585.0,959.2]},"40":{"img":"board-40.68183461.webp","x":2503.1,"y":1186.0,"w":134,"h":234,"rot":-2.09,"pin":[2569.7,1196.4]},"41":{"img":"board-41.4589703e.webp","x":2744.0,"y":1186.0,"w":123,"h":234,"rot":-2.76,"pin":[2812.3,1196.4]},"43":{"img":"board-43.40113374.webp","x":297.6,"y":1270.1,"w":423,"h":285,"rot":1.59,"pin":[518.6,1281.8]},"44":{"img":"board-44.d6197e30.webp","x":605.0,"y":1236.9,"w":190,"h":187,"rot":2.25,"pin":[688.9,1246]},"45":{"img":"board-45.e27ab49a.webp","x":786.7,"y":1249.8,"w":221,"h":169,"rot":1.17,"pin":[903.5,1260]},"46":{"img":"board-46.6461555a.webp","x":790.9,"y":1364.9,"w":327,"h":252,"rot":0.48,"pin":[950.1,1377.4]},"47":{"img":"board-47.49f40096.webp","x":1382.1,"y":1319.9,"w":226,"h":342,"rot":2.04,"pin":[1527.1,1336.0]},"48":{"img":"board-48.07f4953c.webp","x":1680.7,"y":1440.6,"w":265,"h":226,"rot":-0.16,"pin":[1826.3,1453]},"2":{"img":"board-2.550ebc20.webp","x":1310.6,"y":136.4,"w":140,"h":140,"rot":-7.03,"pin":[1390.2,141]},"9":{"img":"board-9.8d099b19.webp","x":509.1,"y":406.6,"w":140,"h":140,"rot":2.35,"pin":[600.7,417]},"14":{"img":"board-14.80a91fcb.webp","x":2652.8,"y":524.1,"w":140,"h":140,"rot":5.15,"pin":[2712.9,531]},"16":{"img":"board-16.4195d149.webp","x":324.6,"y":629.9,"w":140,"h":140,"rot":-1.83,"pin":[402.0,640]},"21":{"img":"board-21.44b705c5.webp","x":1672.7,"y":702.3,"w":230,"h":230,"rot":-7.64,"pin":[1784.7,702.6],"corners":[[1688.2,718.2],[1885.8,718.2],[1688.2,915.8],[1885.8,915.8]]},"33":{"img":"board-33.de7c44bf.webp","x":706.3,"y":1099.8,"w":140,"h":140,"rot":-5.31,"pin":[758.6,1106]},"34":{"img":"board-34.98aa9dd9.webp","x":426.4,"y":1099.8,"w":140,"h":140,"rot":-7.06,"pin":[509.1,1104]},"39":{"img":"board-39.4a67f68d.webp","x":2824.6,"y":1099.8,"w":140,"h":140,"rot":-5.93,"pin":[2882.9,1106]},"49":{"empty":1,"x":2589.222222222222,"y":1393.026178010471,"w":152.66666666666697,"h":93.98952879581157},"50":{"empty":1,"x":2856.388888888889,"y":1393.026178010471,"w":165.3888888888887,"h":78.32460732984305},"19":{"empty":1,"x":897.1666666666666,"y":688.1047120418848,"w":254.44444444444468,"h":93.98952879581157},"4":{"empty":1,"x":1431.5,"y":312.14659685863876,"w":356.2222222222222,"h":305.46596858638736},"51":{"empty":1,"x":3136.277777777778,"y":1416.5235602094242,"w":101.77777777777783,"h":78.32460732984282},"42":{"empty":1,"x":2945.4444444444443,"y":1252.041884816754,"w":165.3888888888887,"h":101.82198952879571}},"edges":[[1,8],[1,3],[3,5],[5,6],[6,7],[7,10],[10,24],[8,9],[3,11],[11,21],[11,17],[17,16],[17,18],[17,27],[16,18],[11,13],[13,12],[12,14],[13,23],[21,29],[21,36],[21,20],[21,22],[22,23],[23,24],[24,25],[29,30],[30,38],[38,39],[39,40],[39,41],[39,42],[25,31],[26,27],[27,28],[28,36],[26,35],[35,43],[43,46],[46,47],[47,48],[36,48],[32,27],[45,46],[19,11],[20,28],[15,10],[43,44],[33,32],[34,35],[2,3]]};
+const S0=0,S1=1,KN=2,NP=3,SP=4,CY=5,PI=6,NO=7,WE=8;
+let PRX={stories:{}};const PS=i=>((PRX.stories||{})[i])||{};
+const D=i=>{const s=PS(i);return s.state==='done'?4:Math.max(0,(s.chapter||1)-1)};
+const DONE=i=>PS(i).state==='done';
+const ANY=()=>[0,1,2,3,4,5,6,7,8].some(i=>D(i)>=1),ANYDONE=()=>[0,1,2,3,4,5,6,7,8].some(DONE);
+/* n: [история, условие появления, заголовок, текст] */
+const BX={
+ 1:[S0,()=>D(S0)>=3,'Протокол ложи','Записи тайного собрания и масонский знак. Ложа «Рассвет» знает больше, чем говорит.'],
+ 2:[S0,()=>D(S0)>=4,'From Hell?','Письмо «Из ада» и половина почки. Кто его прислал?'],
+ 3:[S0,()=>D(S0)>=1,'Карта Уайтчепела','Места убийств. Линии звезды появляются по мере расследования.'],
+ 5:[WE,()=>D(WE)>=1,'Wanted: dead or alive','Картёжник с сигарой. Награда — пять тысяч.'],
+ 6:[WE,()=>D(WE)>=2,'Камень Солнца','Страница из дневника экспедиции: ацтекский календарь.'],
+ 7:[KN,()=>D(KN)>=1,'Гобелен пророчества','Дракон сжигает королевство. Против него — один рыцарь.'],
+ 8:[S0,()=>D(S0)>=3,'Замок','Готический замок под красным небом. Лорд Себастьян Грей.'],
+ 9:[S0,()=>D(S0)>=2,'Vampire?','Не отражается в зеркалах. Бокал без отпечатков.'],
+ 10:[KN,()=>D(KN)>=2,'Меч','Клинок с горящими рунами из рыцарской хроники.'],
+ 11:[S1,()=>D(S1)>=2,'Осколок','Фиолетовый кристалл падает с неба.'],
+ 12:[S1,()=>D(S1)>=2,'Зверь','В полнолуние кто-то в Скуфьине перестаёт быть человеком.'],
+ 13:[S1,()=>D(S1)>=2,'Кощеи','Тени с вёдрами в тумане у болота.'],
+ 14:[S1,()=>D(S1)>=3,'Red Moon?','Под красной луной Изнанка сильнее.'],
+ 15:[KN,()=>D(KN)>=1,'Лист из книги','Вырванная страница с охранным кругом.'],
+ 16:[S0,()=>D(S0)>=2,'Killer? Butcher?','Мясник или хирург? Тесак и скальпель на одном месте.'],
+ 17:[S0,()=>D(S0)>=1,'Второе зверство','The Illustrated Police News, 8 сентября 1888.'],
+ 18:[S0,()=>D(S0)>=1,'Тесак','Мясницкий тесак в пентаграмме на двери.'],
+ 20:[S1,()=>D(S1)>=1,'Император','Карта расклада: власть, сгнившая изнутри.'],
+ 21:[-1,ANY,'?','Что такое Изнанка? Что случилось в лаборатории в ночь взрыва?'],
+ 22:[CY,()=>D(CY)>=1,'Кибердека YA','Рекламный плакат мегакорпорации YA.'],
+ 23:[CY,()=>D(CY)>=2,'Сандевистан','Схема имплантата позвоночника в двух проекциях.'],
+ 24:[CY,()=>D(CY)>=1,'Машина YA','Опергруппа YA над неоновым городом.'],
+ 25:[CY,()=>D(CY)>=1,'YA','Неоновый знак мегакорпорации.'],
+ 26:[NO,()=>D(NO)>=2,'Ноты','«Nightfall Serenade», 1948.'],
+ 27:[NO,()=>D(NO)>=1,'Меловой контур','Снимок с места преступления. Шляпа осталась на асфальте.'],
+ 28:[S0,()=>D(S0)>=2,'Отпечатки','Чистый и кровавый. Совпадут ли?'],
+ 29:[NP,()=>D(NP)>=1,'Формула','Кандидат AV-47 — лекарство от вируса?'],
+ 30:[NP,()=>D(NP)>=2,'Антидот YA','Инструкция к автоинъектору YA Biomed.'],
+ 31:[NO,()=>D(NO)>=2,'Дирижабль','Чертёж модели 1934-A.'],
+ 32:[NO,()=>D(NO)>=1,'План склада','Лист 3 из 4. На нём кровь.'],
+ 33:[NO,()=>D(NO)>=2,'Traitor?','Кто сдал план Хозяину?'],
+ 34:[PI,()=>D(PI)>=1,'Find?','Что ищет капитан Наташа?'],
+ 35:[PI,()=>D(PI)>=2,'Знак навигатора','Руническая стрелка. Такая же была в Скуфьине.'],
+ 36:[SP,()=>D(SP)>=1,'Чертёж портала','SBOY / PORTAL. Кольцо, капсула, стабилизатор.'],
+ 38:[NP,()=>D(NP)>=1,'Заражённый','Карантинная зона. Не пересекать.'],
+ 39:[-1,ANYDONE,'Who?','Проявления Изнанки в разных мирах.'],
+ 40:[S1,()=>DONE(S1),'Мара','Дух бледный. Остерегайся.'],
+ 41:[S0,()=>DONE(S0),'Потрошитель','Цилиндр, саквояж и фиолетовые глаза.'],
+ 43:[PI,()=>D(PI)>=1,'Карта сокровищ','Остров в форме черепа. Красный крест.'],
+ 44:[PI,()=>D(PI)>=1,'Роза ветров','Тридцать два румба.'],
+ 45:[PI,()=>D(PI)>=1,'Флаг Наташи','Череп с розой и две сабли.'],
+ 46:[PI,()=>D(PI)>=2,'Звёздная карта','Siderum ordo, A.D. 1718.'],
+ 47:[SP,()=>D(SP)>=1,'Станция','Последнее фото до потери связи.'],
+ 48:[SP,()=>D(SP)>=2,'Звезда','Красное солнце станции.']
+};
+window.BOARD2={BX,LAY};
+const MAPV={1:[73.5,33],2:[45.5,13.5],3:[66,84],4:[31,77],5:[23,44.5]},MAPL=[[2,3],[3,5],[5,1],[1,4],[4,2]];
+const CSS=`
+.bx{position:relative;height:100%;display:flex;flex-direction:column;background:#0a0710}
+.bx-chips{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;flex:none;scrollbar-width:none}
+.bx-chips::-webkit-scrollbar{display:none}
+.bx-chip{flex:none;border:1px solid rgba(255,235,200,.25);background:rgba(255,255,255,.05);color:#f3eadb;border-radius:99px;padding:7px 13px;font:600 13px Manrope,sans-serif}
+.bx-chip b{opacity:.6;font-weight:600;margin-left:4px}
+.bx-chip.on{background:#e8c25a;color:#140d08;border-color:transparent}
+.bx-sc{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior:contain}
+.bx-sc::-webkit-scrollbar{display:none}
+.bx-cork{position:relative;height:100%;aspect-ratio:2/1;background:#2a1a0e var(--board) center/100% 100% no-repeat;transition:height .3s}
+.bx.zoom .bx-cork{height:180%}
+.bx-c{position:absolute;transform-origin:50% 50%;filter:drop-shadow(.3vh .5vh .6vh rgba(0,0,0,.65));transition:opacity .35s,filter .35s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bx-c img{display:block;width:100%;height:100%}
+.bx-c.dim{opacity:.3;filter:grayscale(.85) brightness(.7)}
+.bx-map{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bx-map line{stroke:#a50f19;stroke-width:.55;stroke-linecap:round;opacity:.9}
+.bx-map circle{fill:#8b0d14;stroke:#f4ecd8;stroke-width:.35}
+.bx-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bx-svg path{fill:none;stroke:#b4141e;stroke-width:3;filter:drop-shadow(0 2px 1px rgba(0,0,0,.5));transition:opacity .35s}
+.bx-pin{position:absolute;width:.65%;aspect-ratio:1;margin:-.325% 0 0 -.325%;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 35% 30%,#ffd0d0 0 12%,#c0202a 20% 62%,#5a060c 100%);box-shadow:.15vh .35vh .3vh rgba(0,0,0,.55);transition:opacity .35s}
+.bx-pin.dim{opacity:.35}
+.bx-empty{position:absolute;left:0;right:0;top:40%;text-align:center;font:400 28px "Caveat",cursive;color:#f3e2c0;text-shadow:0 2px 6px #000;padding:0 30px}
+.bx-z{position:absolute;right:14px;bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,235,200,.35);background:rgba(10,7,16,.75);color:#f3eadb;font:700 20px Manrope,sans-serif}
+.bx-sheet{position:absolute;inset:0;z-index:20;display:none;align-items:flex-end;background:rgba(5,3,2,.65)}
+.bx-sheet.on{display:flex}
+.bx-sheet>div{width:100%;max-height:85%;overflow:auto;background:#f2ead9;color:#2a2018;border-radius:18px 18px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom) + 18px)}
+.bx-sheet img{display:block;max-width:92%;max-height:52vh;margin:0 auto 12px;filter:drop-shadow(2px 5px 6px rgba(0,0,0,.4))}
+.bx-sheet h3{margin:0 0 4px;font:400 32px/1 "Caveat",cursive}
+.bx-sheet .w{font:700 11px Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;opacity:.65;margin-bottom:8px}
+.bx-sheet p{margin:0 0 8px;font:400 15px/1.45 Georgia,serif}
+.bx-sheet button{margin-top:10px;width:100%;padding:12px;border:0;border-radius:12px;background:#2a2018;color:#f2ead9;font:600 15px Manrope,sans-serif}
+`;
+function mount(el,o){
+  if(!document.getElementById('bx-css')){const st=document.createElement('style');st.id='bx-css';st.textContent=CSS;document.head.appendChild(st)}
+  PRX=o.pr||PRX;const W=LAY.W,H=LAY.H,C=LAY.cards,names=o.names||[];
+  const vis=Object.keys(BX).map(Number).filter(n=>C[n]&&!C[n].empty&&BX[n][1]());
+  const seen=new Set(o.seen||[]);
+  el.innerHTML='';const root=document.createElement('div');root.className='bx';el.appendChild(root);
+  const stories=[...new Set(vis.map(n=>BX[n][0]).filter(s=>s>=0))];
+  const chips=document.createElement('div');chips.className='bx-chips';root.appendChild(chips);
+  const mk=(id,t,c)=>{const b=document.createElement('button');b.className='bx-chip';b.dataset.id=id;b.innerHTML=t+'<b>'+c+'</b>';b.onclick=()=>setA(id);chips.appendChild(b)};
+  mk('all','Все улики',vis.length);stories.forEach(s=>mk(s,names[s]||'',vis.filter(n=>BX[n][0]===s).length));
+  const sc=document.createElement('div');sc.className='bx-sc';root.appendChild(sc);
+  const cork=document.createElement('div');cork.className='bx-cork';sc.appendChild(cork);
+  const pc=(v,t)=>(v/t*100)+'%';const items={},pins={};
+  vis.sort((a,b)=>(a===36?-1:0)-(b===36?-1:0)).forEach(n=>{const c=C[n];const d=document.createElement('div');d.dataset.n='bx'+n;d.className='bx-c';
+    d.style.cssText=`left:${pc(c.x,W)};top:${pc(c.y,H)};width:${pc(c.w,W)};height:${pc(c.h,H)};transform:rotate(${-c.rot}deg);z-index:${n===36?2:n===21?40:10+(n%17)}`;
+    d.innerHTML='<img alt="" src="'+c.img+'">';
+    if(n===3){const m=(o.mind&&o.mind.map)||{v:[]};const vs=m.v||[];
+      d.insertAdjacentHTML('beforeend','<svg class="bx-map" viewBox="0 0 100 100" preserveAspectRatio="none">'+MAPL.filter(([a,b])=>vs.includes(a)&&vs.includes(b)).map(([a,b])=>`<line x1="${MAPV[a][0]}" y1="${MAPV[a][1]}" x2="${MAPV[b][0]}" y2="${MAPV[b][1]}"/>`).join('')+vs.filter(v=>MAPV[v]).map(v=>`<circle cx="${MAPV[v][0]}" cy="${MAPV[v][1]}" r="1.1"/>`).join('')+'</svg>')}
+    d.onclick=()=>sheet(n);cork.appendChild(d);items[n]=d});
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','bx-svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('preserveAspectRatio','none');svg.style.zIndex=60;cork.appendChild(svg);
+  const pt=(n,o2)=>{if(n!==21)return C[n].pin;const cs=C[21].corners;return cs.reduce((b,q)=>(q[0]-o2[0])**2+(q[1]-o2[1])**2<(b[0]-o2[0])**2+(b[1]-o2[1])**2?q:b)};
+  const paths=[];(LAY.edges||[]).forEach(([a,b])=>{if(!items[a]||!items[b])return;const p1=pt(a,C[b].pin||[0,0]),p2=pt(b,C[a].pin||[0,0]);
+    const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2+Math.abs(p2[0]-p1[0])*.04+20;const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',`M${p1[0]} ${p1[1]} Q${mx} ${my} ${p2[0]} ${p2[1]}`);svg.appendChild(p);paths.push({p,a,b})});
+  vis.forEach(n=>{const q=n===21?C[21].corners:[C[n].pin];q.forEach(([x,y])=>{const i=document.createElement('i');i.className='bx-pin';i.style.left=pc(x,W);i.style.top=pc(y,H);i.style.zIndex=70;cork.appendChild(i);(pins[n]=pins[n]||[]).push(i)})});
+  if(!vis.length)cork.insertAdjacentHTML('beforeend','<div class="bx-empty">Доска пока пустая.<br>Улики появятся, когда ты найдёшь их в историях.</div>');
+  const z=document.createElement('button');z.className='bx-z';z.textContent='⤢';z.setAttribute('aria-label','Приблизить');z.onclick=()=>{const fx=(sc.scrollLeft+sc.clientWidth/2)/sc.scrollWidth,fy=(sc.scrollTop+sc.clientHeight/2)/Math.max(1,sc.scrollHeight);root.classList.toggle('zoom');requestAnimationFrame(()=>{sc.scrollLeft=fx*sc.scrollWidth-sc.clientWidth/2;sc.scrollTop=fy*sc.scrollHeight-sc.clientHeight/2})};root.appendChild(z);
+  const sh=document.createElement('div');sh.className='bx-sheet';root.appendChild(sh);
+  function sheet(n){const c=C[n],b=BX[n];sh.innerHTML=`<div><img alt="" src="${c.img}"><h3>${b[2]}</h3><div class="w">${b[0]>=0?(names[b[0]]||''):'Сбой'}</div><p>${b[3]}</p><button>Закрыть</button></div>`;sh.classList.add('on');sh.querySelector('button').onclick=()=>sh.classList.remove('on')}
+  sh.onclick=e=>{if(e.target===sh)sh.classList.remove('on')};
+  function setA(id){chips.querySelectorAll('.bx-chip').forEach(b=>b.classList.toggle('on',b.dataset.id===String(id)));
+    const on=n=>id==='all'||BX[n][0]===+id||BX[n][0]<0;
+    vis.forEach(n=>{items[n].classList.toggle('dim',!on(n));(pins[n]||[]).forEach(p=>p.classList.toggle('dim',!on(n)))});
+    paths.forEach(({p,a,b})=>p.style.opacity=(on(a)&&on(b))?1:.12);
+    if(id!=='all'){const f=vis.filter(n=>BX[n][0]===+id);if(f.length){const xs=f.map(n=>C[n].x+C[n].w/2);const cx=xs.reduce((a,b)=>a+b,0)/xs.length;sc.scrollTo({left:cx/W*sc.scrollWidth-sc.clientWidth/2,behavior:'smooth'})}}}
+  setA('all');requestAnimationFrame(()=>{sc.scrollLeft=(sc.scrollWidth-sc.clientWidth)/2});
+  return {count:vis.length,total:Object.keys(BX).length};
+}
+window.Board2={mount};
+})();
+</script>
 <script>/* ===== Выброс · доска расследования (модуль для хаба) =====
    Пробковая доска, на которой улики всех миров висят вперемешку: фотографии, вырезки, вещи,
    записки, красные нитки. Сверху фильтр по сеттингу: выбранный мир подсвечивается и выходит
@@ -728,7 +860,11 @@ const CB_COL=['#8fa3c7','#d0643f','#e8b85a','#5fbf7f','#cfe3ff','#c45cf0','#3fd6
 const CB_ART={morok:{"cl_crystal": {"kind": "item", "img": "morok-ui_clue_crystal.e18ac28b.webp"}, "cl_ripper": {"kind": "item", "img": "morok-ui_clue_ripper2.e21424b6.webp"}, "cl_emperor": {"kind": "card", "img": "morok-ui_clue_emperor.2459e42c.webp"}, "cl_mara_true": {"kind": "item", "img": "morok-ui_clue_mara_true.5923c141.webp"}, "cl_shirt": {"kind": "scrap", "img": "morok-ui_clue_scrap.a25a7dae.webp", "note": "Таких рубах у неё много. Во всех сундуках."}}};
 /* the board keeps only what leads to the Underside; the rest of a story's clues stay in the story */
 const CB_KEEP={morok:["cl_crystal", "cl_ripper", "cl_emperor", "cl_mara_true", "cl_shirt"]};
-function mountCB(){const bk=PR.clueBook||{};const clues=Object.keys(bk).filter(id=>{const c=bk[id];if(!c||!/^cl_/.test(id))return false;const sid=CB_IDS[c.s]||'morok';return CB_KEEP[sid]?CB_KEEP[sid].includes(id):!!(c.t&&c.t!==id)}).map(id=>{const c=bk[id],sid=CB_IDS[c.s]||'morok',a=(CB_ART[sid]||{})[id]||{};
+function mountCB(){const all={};Object.keys(PR.stories||{}).forEach(i=>{const m=(PR.stories[i]||{}).mind;if(m)all[i]=m});
+  const r=window.Board2.mount($('cbWrap'),{pr:PR,names:STORIES.map(x=>x[0]),mind:all[0],seen:PR.boardSeen||[]});
+  $('bCount').textContent=r.count+' из '+r.total;
+  try{const o=JSON.parse(localStorage.getItem('sboi_progress')||'{}');o.boardSeen=[...document.querySelectorAll('#cbWrap .bx-c')].map(d=>d.dataset.n);localStorage.setItem('sboi_progress',JSON.stringify(o))}catch(e){}}
+function mountCB_old(){const bk=PR.clueBook||{};const clues=Object.keys(bk).filter(id=>{const c=bk[id];if(!c||!/^cl_/.test(id))return false;const sid=CB_IDS[c.s]||'morok';return CB_KEEP[sid]?CB_KEEP[sid].includes(id):!!(c.t&&c.t!==id)}).map(id=>{const c=bk[id],sid=CB_IDS[c.s]||'morok',a=(CB_ART[sid]||{})[id]||{};
   return {id,setting:sid,title:c.t||id,text:c.b||'',ch:c.ch,kind:a.kind||'note',img:a.img||null,note:a.note||''}});
   $('bCount').textContent=clues.length+' улик';
   window.ClueBoard.mount($('cbWrap'),{settings:STORIES.map((st,i)=>({id:CB_IDS[i],name:st[0],color:CB_COL[i]})),clues,links:[],active:'all'})}
