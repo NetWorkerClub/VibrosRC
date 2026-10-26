@@ -769,6 +769,21 @@ body{font-family:var(--text);display:flex;justify-content:center;align-items:cen
 .wcStar button.pick{background:#8b0d14}
 
 .wcMap .v circle{r:1.8px}.wcMap svg .v text{font-size:5px;fill:#f4ecd8;paint-order:stroke;stroke:#1f160f;stroke-width:1px}
+
+/* --- дедукция v3 --- */
+.wcHead,.wcHint{transition:opacity .8s,transform .8s}
+.wcScan.calm .wcHead,.wcScan.calm .wcHint{opacity:0;transform:translateY(-8px);pointer-events:none}
+.wcThought{position:absolute;left:0;z-index:6;white-space:nowrap;font:500 30px Caveat,cursive;color:#e9e2d2;text-shadow:0 2px 6px #000;pointer-events:none;animation:wcFly var(--d,1.7s) cubic-bezier(.25,.6,.35,1) forwards}
+.wcThought s{text-decoration-color:#e0473f;text-decoration-thickness:2px}
+.wcThought.rtl{animation-name:wcFlyR}
+@keyframes wcFly{0%{transform:translateX(-30%) scale(.9);opacity:0;filter:blur(6px)}20%{opacity:1;filter:blur(0)}60%{opacity:.85;filter:blur(1px)}100%{transform:translateX(105vw) scale(1.15);opacity:0;filter:blur(10px)}}
+@keyframes wcFlyR{0%{transform:translateX(105vw) scale(.9);opacity:0;filter:blur(6px)}20%{opacity:1;filter:blur(0)}60%{opacity:.85;filter:blur(1px)}100%{transform:translateX(-40%) scale(1.15);opacity:0;filter:blur(10px)}}
+.wcBig{transform:scale(1.25);filter:blur(8px);transition:transform .45s cubic-bezier(.2,.9,.3,1.2),opacity .35s,filter .45s}
+.wcBig.on{transform:none;filter:none}
+.wcBig.gone{transform:translateY(-14px) scale(.96);filter:blur(6px)}
+.wcBig span{display:inline}
+.wcBig i{display:block;height:2px;margin:6px auto 0;width:0;background:#e0473f;box-shadow:0 0 8px #e0473f;transition:width .6s .25s}
+.wcBig.on i{width:60%}
 @font-face{font-family:"WC Display";src:url(whitechapel-font_pfsc.89b12e62.woff) format("woff");font-display:block}#title h1,#home h1{font-family:"WC Display",serif!important;letter-spacing:.03em!important;font-size:40px!important;font-weight:700}#title h1{text-transform:none;font-size:min(40px,8.2vw)!important}</style></head>
 <body>
 <div id="stage">
@@ -817,7 +832,7 @@ window.GAME={
    if(window.STORY_CAST)s.cast=window.STORY_CAST(st);if(window.STORY_FACTS)s.facts=window.STORY_FACTS(st,ch,ch>=4);if(window.STORY_DECISIONS)s.decisions=window.STORY_DECISIONS(st);if(st.mind)s.mind=st.mind;s['ch'+ch]={pts:st.pts,flags:st.flags,clues:st.clues,mind:st.mind}})},
  exit(){try{stop()}catch(e){}try{parent.postMessage('sboi:story-exit','*')}catch(e){}}
 };
-</script><script>window.ASSETS={"bg":{"buck_row_body":"whitechapel-bg_buck_row_body.4646419b.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.0dd97b32.webp","morgue":"whitechapel-bg_morgue.477a53a3.webp","room_hart":"whitechapel-bg_room_hart.e3694c4a.webp","room_hart_night":"whitechapel-bg_room_hart_night.8c44c36f.webp","ten_bells":"whitechapel-bg_ten_bells.8f3cf678.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.e7616df4.webp","yard_office":"whitechapel-bg_yard_office.63a6dc29.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.72e8df6e.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp","alley_crates":"whitechapel-bg_alley_crates.06f60fe4.webp","cg_w1_wake0":"whitechapel-bg_cg_w1_wake0.8f01eed3.webp","buck_row":"whitechapel-bg_buck_row.77bd0914.webp","alley_lamps":"whitechapel-bg_alley_lamps.901dc403.webp"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.79ae7578.webp","sad":"whitechapel-sp_hale_sad.d7a40dec.webp","stern":"whitechapel-sp_hale_stern.2788f500.webp"},"ivan":{"lost":"whitechapel-sp_ivan_lost.70db832d.webp","neutral":"whitechapel-sp_ivan_neutral.48ae2159.webp","tired":"whitechapel-sp_ivan_tired.207616c3.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp"},"tol":{"neutral":"whitechapel-sp_tol_neutral.006aafab.webp","pie":"whitechapel-sp_tol_pie.7a743bc1.webp","sad":"whitechapel-sp_tol_sad.126e09c7.webp","smile":"whitechapel-sp_tol_smile.6a751f87.webp","worried":"whitechapel-sp_tol_worried.95afe15b.webp"},"ripper":{"neutral":"whitechapel-sp_ripper_neutral.cd582aed.webp","bag":"whitechapel-sp_ripper_bag.090a69f0.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","item_scalpel":"whitechapel-ui_item_scalpel.487b8c5c.webp","item_cleaver":"whitechapel-ui_item_cleaver.9bfc74bb.webp","map_clean":"whitechapel-ui_map_clean.391d98ab.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
+</script><script>window.ASSETS={"bg":{"buck_row_body":"whitechapel-bg_buck_row_body.4646419b.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.0dd97b32.webp","morgue":"whitechapel-bg_morgue.477a53a3.webp","room_hart":"whitechapel-bg_room_hart.e3694c4a.webp","room_hart_night":"whitechapel-bg_room_hart_night.8c44c36f.webp","ten_bells":"whitechapel-bg_ten_bells.8f3cf678.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.e7616df4.webp","yard_office":"whitechapel-bg_yard_office.63a6dc29.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.72e8df6e.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp","alley_crates":"whitechapel-bg_alley_crates.06f60fe4.webp","cg_w1_wake0":"whitechapel-bg_cg_w1_wake0.8f01eed3.webp","buck_row":"whitechapel-bg_buck_row.77bd0914.webp","alley_lamps":"whitechapel-bg_alley_lamps.901dc403.webp"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.79ae7578.webp","sad":"whitechapel-sp_hale_sad.d7a40dec.webp","stern":"whitechapel-sp_hale_stern.2788f500.webp"},"ivan":{"lost":"whitechapel-sp_ivan_lost.70db832d.webp","neutral":"whitechapel-sp_ivan_neutral.48ae2159.webp","tired":"whitechapel-sp_ivan_tired.207616c3.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp"},"tol":{"neutral":"whitechapel-sp_tol_neutral.006aafab.webp","pie":"whitechapel-sp_tol_pie.7a743bc1.webp","sad":"whitechapel-sp_tol_sad.126e09c7.webp","smile":"whitechapel-sp_tol_smile.6a751f87.webp","worried":"whitechapel-sp_tol_worried.95afe15b.webp","neutralv":"whitechapel-sp_tol_neutralv.75f6c18c.webp","smilev":"whitechapel-sp_tol_smilev.ff04d262.webp","worriedv":"whitechapel-sp_tol_worriedv.9b487cdb.webp","sadv":"whitechapel-sp_tol_sadv.7dde7e0b.webp"},"ripper":{"neutral":"whitechapel-sp_ripper_neutral.cd582aed.webp","bag":"whitechapel-sp_ripper_bag.090a69f0.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","item_scalpel":"whitechapel-ui_item_scalpel.487b8c5c.webp","item_cleaver":"whitechapel-ui_item_cleaver.9bfc74bb.webp","map_clean":"whitechapel-ui_map_clean.391d98ab.webp","dos_krn":"whitechapel-ui_dos_krn.643c9196.webp","dos_tol":"whitechapel-ui_dos_tol.e09c8458.webp","dos_ivan":"whitechapel-ui_dos_ivan.bdbe9262.webp","dos_mol":"whitechapel-ui_dos_mol.491f6eb8.webp","dos_rook":"whitechapel-ui_dos_rook.968f2ac6.webp","dos_abb":"whitechapel-ui_dos_abb.6a3552f2.webp","dos_hale":"whitechapel-ui_dos_hale.2e868c2f.webp","dos_seb":"whitechapel-ui_dos_seb.29389518.webp","dos_byk":"whitechapel-ui_dos_byk.6df46b3b.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
 const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const A=window.ASSETS||{bg:{},sp:{},kp:{}};
@@ -1883,13 +1898,13 @@ const SC2=[
  scan({on:'hale',e:'neutral',ally:true,hint:'Каким человеком кажется Хейл?',need:3,
   spots:[
    {id:'a_eyes',x:46,y:9,label:'глаза красные — не спит ночами',alts:['плакал?','простыл?','пьёт?']},
-   {id:'a_pension',x:33,y:46,label:'из кармана торчит прошение о пенсии вдове констебля',alts:['письмо даме?','счёт из паба?']},
+   {id:'a_crease',x:40,y:76,label:'стрелки на брюках как по линейке — военная выправка',alts:['чистоплотность?','педант?','жена гладит?']},
    {id:'a_chain',x:68,y:38,label:'на цепочке жетон констебля — не свой',alts:['трофей?','подарок?']},
    {id:'a_hat',x:55,y:4,label:'котелок старый, но вычищен',alts:['модник?','скупой?']},
    {id:'a_shoes',x:27,y:95,label:'ботинки стоптаны — много ходит пешком, сам в обходах',alts:['беден?','без кэба?']}
   ],
-  pair:[['a_eyes','a_shoes','d_good','Он живёт этой работой'],['a_pension','a_chain','d_kind','Помнит погибших. Добр к тем, кого никто не замечает']]}),
- ally('hale','глаза красные — не спит'),ally('hale','сам ходит в обходы'),ally('hale','хлопочет о пенсии вдове констебля'),
+  pair:[['a_eyes','a_shoes','d_good','Он живёт этой работой'],['a_crease','a_chain','d_kind','Служил. Помнит своих и держит слово']]}),
+ ally('hale','глаза красные — не спит'),ally('hale','сам ходит в обходы'),ally('hale','военная выправка — служил'),
  th('Хороший полицейский. Таких в любом веке по пальцам пересчитать.','tender'),
  say('hale','Морг через двор. Доктор у нас… своеобразный. Предупреждаю заранее.'),
  hide(),veil(1,500),
@@ -1899,12 +1914,12 @@ const SC2=[
  say('tol','Не смотрите так. Пирог свежий. А она — нет. Разные вещи.'),
  th('…Толя?! Толя, который в лаборатории съел мой обед и сказал, что это был эксперимент?','scared'),
  say('kat','Толя?','scared'),
- show('tol','smile',56),
+ show('tol','smilev',56),
  say('tol','Доктор Толбот, мисс. Но «Толя» мне нравится больше. Звучит как имя, которое шепчут.'),
  th('Он меня не помнит. Совсем. Как будто меня и не было.','sad'),
  choice([
   {t:'Подыграть флирту.',then:[pts({T:1}),say('kat','Шепчут обычно на свиданиях, доктор. А у нас труп.','ironic'),say('tol','Для меня это одно и то же. Шучу. Наполовину.')]},
-  {t:'«Давайте к делу».',then:[show('tol','neutral',56),say('tol','Скучная. Но умная, видно. Ладно, смотрите.')]}
+  {t:'«Давайте к делу».',then:[show('tol','neutralv',56),say('tol','Скучная. Но умная, видно. Ладно, смотрите.')]}
  ]),
  /* QTE «Разрез»: провести линию по пунктиру анатомической схемы */
  WC('cut',{img:'anatomy',ok:[set('cut_ok')],fail:[set('cut_fail')]},[
@@ -1915,8 +1930,8 @@ const SC2=[
  ...deduce('d_hand','Убийца знает анатомию'),
  trait(1),
  /* стоп-кадр 2 — Толя (подозреваемый главы) */
- show('tol','neutral',56),
- scan({on:'tol',e:'neutral',hint:'Что не так с доктором?',need:3,
+ show('tol','neutralv',56),
+ scan({on:'tol',e:'neutralv',hint:'Что не так с доктором?',need:3,
   spots:[
    {id:'t_apron',x:46,y:66,label:'на кожаном фартуке свежая кровь',alts:['негигиеничен?','только что резал?']},
    {id:'t_scalpel',x:18,y:52,label:'в кармане фартука — ампутационный скальпель',alts:['инструменты разбросаны?','забыл убрать?']},
@@ -1931,7 +1946,7 @@ const SC2=[
  ...theory('t_leather','доктор из морга — «Кожаный фартук»?'),
  show('kat','eureka',22),
  th('Газеты ищут «Кожаный фартук». А вот он, в кожаном фартуке, со скальпелем и пирогом. Катя, это слишком просто. Или как раз нет?','eureka'),
- show('tol','worried',56),
+ show('tol','worriedv',56),
  say('tol','И ещё. Под ногтями у неё пыль. Фиолетовая. Я такой химии не знаю. А я знаю почти всю.'),
  th('Фиолетовая. Как свет в ночь взрыва.','scared'),
  ...deduce('cl_dust','Фиолетовая пыль под ногтями жертвы'),
@@ -2209,7 +2224,7 @@ window.STORY_CAST=st=>{const p=st.pts||{},f=st.flags||{},c=v=>Math.max(-100,Math
   ['Молли Кейн','подруга, информатор','ok',f.met_molly?50:20,null,'mol'],
   ['Грач','мальчишка из паба','ok',60,null,'rook']
  ];
- return R.map(r=>{const u=ph(r[5],'neutral');return r.slice(0,5).concat([u,6,260])})};
+ return R.map(r=>{const q=(A.ui||{})['dos_'+r[5]];const u=q||ph(r[5],'neutral');return r.slice(0,5).concat(q?[u,50,100]:[u,6,260])})};
 
 /* факты для досье (Чертоги / хаб): берутся из ST.mind */
 window.STORY_FACTS=st=>{const m=st.mind||{};return {facts:m.facts||{},allies:m.allies||{},finds:m.finds||[],deduce:m.deduce||[],theory:m.theory||[],profile:m.profile||[],map:m.map||{v:[],ray:[]}}};
@@ -2240,8 +2255,14 @@ const spr=(ch,e)=>(((A.sp||{})[ch]||{})[e||'neutral'])||(((A.sp||{})[ch]||{}).ne
    Кнопок нет: когда найдены все пары и набрано need, стоп-кадр отпускает сам. */
 function clockTick(){try{const c=ac();if(!c)return;const t=c.currentTime,b=c.createBuffer(1,c.sampleRate*.05|0,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/(c.sampleRate*.004));
   const s=c.createBufferSource();s.buffer=b;const f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=2600;f.Q.value=3;const g=c.createGain();g.gain.value=.9;s.connect(f).connect(g).connect(c.destination);s.start(t)}catch(e){}}
+const LOC={yard_office:'Скотленд-Ярд',morgue:'Морг',buck_row_body:'Бакс-роу',buck_row:'Бакс-роу',hanbury_yard:'Ханбери-стрит',ten_bells:'Десять колоколов',ten_bells_b:'Десять колоколов',room_hart:'Комнаты миссис Харт',room_hart_night:'Комнаты миссис Харт'};
 function scanUI(c){return new Promise(async res=>{
-  hideBox();const S=stage();S.classList.add('wcFreeze');vib(30);
+  hideBox();const S=stage();
+  /* вход сценой: Катя задумалась, камера едет к человеку, потом кадр замирает */
+  const camBack=[typeof CAMX==='number'?CAMX:50,typeof CAMZ==='number'?CAMZ:1,typeof CAMY==='number'?CAMY:50];
+  try{katSwap('deduce')}catch(_){}
+  if(c.on&&SPR[c.on]&&SPR[c.on].classList.contains('on')){await wait(350);try{await cam(+SPR[c.on].dataset.x||50,950,1.32,28,'ease-in-out')}catch(_){}}
+  S.classList.add('wcFreeze');vib(30);
   const prevMu=(typeof MU!=='undefined'&&MU.name)||'';try{music('wc_deduce',{fade:.6})}catch(_){}
   const box=el('div','wcScan');S.appendChild(box);let field=box,sc=null;
   /* стоп-кадр человека: он один крупно по центру, точки — в % его фигуры; тап — камера наезжает, читает, отъезжает */
@@ -2249,16 +2270,17 @@ function scanUI(c){return new Promise(async res=>{
   if(P){S.classList.add('wcOn');box.classList.add('person');const cur=c.e?spr(c.on,c.e):((SPR[c.on]&&SPR[c.on].querySelector('img'))?SPR[c.on].querySelector('img').src:spr(c.on));
     field=el('div','wcPerson');const im=new Image();im.alt='';im.src=cur||spr(c.on);field.appendChild(im);box.appendChild(field);
     const fitP=()=>{const h=S.clientHeight*.8;field.style.height=h+'px';field.style.width=Math.round(h*((im.naturalWidth/im.naturalHeight)||.35))+'px'};if(im.complete&&im.naturalWidth)fitP();else im.onload=fitP}
-  else{try{katSwap('deduce')}catch(_){}}
   if(c.bg&&(A.bg||{})[c.bg]){box.classList.add('img');sc=el('div','wcScroll');const inn=el('div','wcField');const im=new Image();im.alt='';im.src=A.bg[c.bg];inn.appendChild(im);sc.appendChild(inn);box.appendChild(sc);field=inn;
     const fit=()=>{const h=S.clientHeight;inn.style.height=h+'px';inn.style.width=Math.round(h*((im.naturalWidth/im.naturalHeight)||16/9))+'px';
       const xs=(c.spots||[]).filter(s=>!s.hidden).map(s=>s.x);const cx=xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:(typeof CAMX==='number'?CAMX:50);requestAnimationFrame(()=>{sc.scrollLeft=inn.clientWidth*cx/100-sc.clientWidth/2;fitSvg()})};
     if(im.complete&&im.naturalWidth)fit();else im.onload=fit}
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','wcLines');field.appendChild(svg);
-  const place=((document.getElementById('chap')||{}).textContent||'').split('·').pop().trim();
+  const place=c.place||LOC[c.bg]||LOC[typeof bgCur==='string'?bgCur:'']||((document.getElementById('chap')||{}).textContent||'').split('·').pop().trim();
   box.appendChild(el('div','wcHead',`<span>Дедукция${place?' · '+esc(place):''}</span><b><i></i>${esc(c.time||'')}</b>`));
   const skip=el('button','wcSkip','Дальше →');box.appendChild(skip);skip.onclick=e=>{e.stopPropagation();if(!busy)finishNow()};
   box.appendChild(el('div','wcHint',esc(c.hint||'Что ты видишь?')));
+  /* шапка и вопрос — коротко, потом уходят, чтобы не закрывать лица */
+  setTimeout(()=>box.classList.add('calm'),2600);
   const out=el('div','wcDed');box.appendChild(out);
   const T=setInterval(clockTick,1000);clockTick();
   const got=new Set(),pairs=(c.pair||[]).map(p=>({a:p[0],b:p[1],id:p[2],t:p[3],done:false}));let n=0,closing=false,busy=false;
@@ -2271,11 +2293,19 @@ function scanUI(c){return new Promise(async res=>{
     if(!ST.clues.includes(p.id)){ST.clues.push(p.id);ST.clueInfo=ST.clueInfo||{};ST.clueInfo[p.id]={t:p.t,b:''}}
     flash(p.t);sfx('ok');vib(40);await wait(700)}};
   const labs=[];
-  const place2=(L,x,y)=>{/* подпись над-справа от точки, без наложений */let lx=x+14,ly=y-44;const w=L.offsetWidth,h=L.offsetHeight;const v0=sc?sc.scrollLeft+8:8,v1=sc?sc.scrollLeft+sc.clientWidth-8:FW()-8;if(lx+w>v1)lx=x-14-w;if(lx<v0)lx=v0;if(lx+w>v1)lx=Math.max(v0,v1-w);
-    for(let k=0;k<8;k++){if(!labs.some(r=>lx<r[0]+r[2]&&lx+w>r[0]&&ly<r[1]+r[3]&&ly+h>r[1]))break;ly+=(k%2?-1:1)*(h+6)*(k+1)}
-    ly=Math.max(field===box?110:90,Math.min(FH()-150,ly));L.style.left=lx+'px';L.style.top=ly+'px';labs.push([lx,ly,w,h]);return [lx+(lx<x?w:0),ly+h]};
+  const place2=(L,x,y)=>{/* подпись вокруг точки: перебираем места по кругу, без наложений и в пределах видимой части */
+    const w=L.offsetWidth,h=L.offsetHeight;const v0=sc?sc.scrollLeft+8:8,v1=sc?sc.scrollLeft+sc.clientWidth-8:FW()-8,t0=118,t1=FH()-160;
+    const ov=(a,b)=>Math.max(0,Math.min(a[0]+a[2],b[0]+b[2])-Math.max(a[0],b[0]))*Math.max(0,Math.min(a[1]+a[3],b[1]+b[3])-Math.max(a[1],b[1]));
+    let best=null,bp=1e18;
+    for(const r of [40,64,92,124,160,200])for(const ang of [-60,-120,-30,-150,0,180,30,150,60,120,-90,90]){const ca=Math.cos(ang*Math.PI/180),sa=Math.sin(ang*Math.PI/180);
+      let lx=x+ca*r-(ca<-.2?w:ca<.2?w/2:0),ly=y+sa*r-h/2;const off=Math.max(0,v0-lx)+Math.max(0,lx+w-v1)+Math.max(0,t0-ly)+Math.max(0,ly+h-t1);
+      lx=Math.min(Math.max(lx,v0),v1-w);ly=Math.min(Math.max(ly,t0),t1);const R0=[lx-6,ly-4,w+12,h+8];
+      let pen=labs.reduce((a,b)=>a+ov(R0,b),0)*60+Object.values(dot).reduce((a,[dx,dy])=>a+(dx>lx-10&&dx<lx+w+10&&dy>ly-10&&dy<ly+h+10?2000:0),0)+r*2;
+      if(pen<bp){bp=pen;best=[lx,ly]}if(pen<=r*2)break}
+    const [lx,ly]=best;L.style.left=lx+'px';L.style.top=ly+'px';labs.push([lx,ly,w,h]);
+    return [Math.min(Math.max(x,lx),lx+w),Math.min(Math.max(y,ly),ly+h)]};
   const finishNow=()=>{if(closing)return;finish(0)};
-  const finish=async(d=2000)=>{if(closing)return;closing=true;clearTimeout(idle);skip.remove();await wait(d);clearInterval(T);if(prevMu)try{music(prevMu,{fade:1.4})}catch(_){}box.classList.add('out');S.classList.remove('wcFreeze');S.classList.remove('wcOn');await wait(380);box.remove();res()};
+  const finish=async(d=2000)=>{if(closing)return;closing=true;clearTimeout(idle);skip.remove();await wait(d);clearInterval(T);if(prevMu)try{music(prevMu,{fade:1.4})}catch(_){}box.classList.add('out');S.classList.remove('wcFreeze');S.classList.remove('wcOn');await wait(380);box.remove();if(P)try{await cam(camBack[0],750,camBack[1],camBack[2],'ease-in-out')}catch(_){}res()};
   /* отпускает сам: все видимые детали отмечены — через 2 с; пары собраны и 7 с тишины — тоже */
   let idle=0;const vis=(c.spots||[]).filter(s=>!s.hidden).map(s=>s.id);
   const check=()=>{if(vis.every(id=>got.has(id))){finish();return}clearTimeout(idle);if(n>=(c.need||2)&&pairs.every(p=>p.done))idle=setTimeout(finish,7000)};
@@ -2284,9 +2314,10 @@ function scanUI(c){return new Promise(async res=>{
     b.onclick=async e=>{e.stopPropagation();if(got.has(s.id)||closing||busy)return;got.add(s.id);n++;b.classList.add('got');clockTick();vib(20);
       const x=FW()*s.x/100,y=FH()*s.y/100;dot[s.id]=[x,y];
       if(P){busy=true;field.style.transformOrigin=s.x+'% '+s.y+'%';field.classList.add('zoom');await wait(450);
-        const B=el('div','wcBig'+(c.ally?' ally':''));box.appendChild(B);
-        for(const a of (s.alts||[])){B.innerHTML='<s>'+esc(a)+'</s>';B.classList.add('on');clockTick();await wait(650);B.classList.remove('on');await wait(160)}
-        B.textContent=s.label;B.classList.add('on','fin');await wait(1700);B.classList.remove('on');field.classList.remove('zoom');await wait(500);B.remove();
+        const al=s.alts||[];al.forEach((a,i)=>setTimeout(()=>{const t=el('div','wcThought'+(i%2?' rtl':''),'<s>'+esc(a)+'</s>');t.style.top=(30+((i*17+s.y)%34))+'%';t.style.setProperty('--d',(1.5+Math.random()*.5)+'s');box.appendChild(t);clockTick();setTimeout(()=>t.remove(),2300)},i*380));
+        await wait(al.length*380+(al.length?700:0));
+        const B=el('div','wcBig'+(c.ally?' ally':''),'<span>'+esc(s.label)+'</span><i></i>');box.appendChild(B);requestAnimationFrame(()=>B.classList.add('on','fin'));
+        await wait(1900);B.classList.remove('on');B.classList.add('gone');field.classList.remove('zoom');await wait(500);B.remove();
         const dt=el('i','wcDot');dt.style.left=s.x+'%';dt.style.top=s.y+'%';field.appendChild(dt);
         if(s.flag)ST.flags[s.flag]=1;busy=false;await tryPairs();check();return}
       const it=itemImg(s.flag||s.id);if(it){const pop=el('div','wcPop',it);pop.style.left=x+'px';pop.style.top=y+'px';field.appendChild(pop);setTimeout(()=>pop.classList.add('out'),1300);setTimeout(()=>pop.remove(),1800)}
