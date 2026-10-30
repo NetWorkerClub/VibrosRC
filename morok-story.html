@@ -661,7 +661,12 @@ const SFX={
  tick(){const c=ac();if(!c)return;const t=c.currentTime,os=c.createOscillator(),g=c.createGain();os.frequency.value=880;env(g,t,.001,.05,.15);os.connect(g).connect(c.destination);os.start(t);os.stop(t+.08)},
  ok(){const c=ac();if(!c)return;[523,659,784].forEach((f,k)=>{const t=c.currentTime+k*.08,os=c.createOscillator(),g=c.createGain();os.type='triangle';os.frequency.value=f;env(g,t,.01,.5,.25);os.connect(g).connect(c.destination);os.start(t);os.stop(t+.6)})}
 };
-function sfx(n,a){try{SFX[n]&&SFX[n](a)}catch(e){}}
+function sfx(n,a){try{if(SFX[n])return SFX[n](a);if((A.mu||{})[n])return shotSnd(n,a)}catch(e){}}
+/* one-shot sound file from ASSETS.mu: {vol,rate,dur} — plays over music, does not stop voices */
+async function shotSnd(n,o={}){const b=await muBuf(n);if(!b||!AC)return null;const t=AC.currentTime,g=AC.createGain();g.gain.value=o.vol!=null?o.vol:.8;g.connect(AC.destination);
+  const s=AC.createBufferSource();s.buffer=b;s.playbackRate.value=o.rate||1;s.connect(g);const off=o.off||0;s.start(t,off);
+  if(o.dur){const e=t+o.dur;g.gain.setValueAtTime(g.gain.value,Math.max(t,e-.25));g.gain.linearRampToValueAtTime(0,e);s.stop(e+.05)}
+  return {s,g,stop(){try{const t2=AC.currentTime;g.gain.cancelScheduledValues(t2);g.gain.setValueAtTime(g.gain.value,t2);g.gain.linearRampToValueAtTime(0,t2+.12);s.stop(t2+.15)}catch(e){}}}}
 /* ---------- music: looping tracks with crossfades ---------- */
 const MU={buf:{},cur:null,name:'',vol:.55};
 async function muBuf(n){if(MU.buf[n])return MU.buf[n];const src=(A.mu||{})[n];if(!src||!ac())return null;
@@ -797,7 +802,8 @@ function onStageTap(e){
   if(typing){typing();return}
   if(tapRes){const r=tapRes;tapRes=null;r()}}
 function typeText(el,text){return new Promise(res=>{el.textContent='';let i=0;const sp=window.TXT_SPEED||24;
-  const done=()=>{clearInterval(h);el.textContent=text;typing=null;res()};typing=done;
+  let ts=null;const TS=window.TYPE_SFX;if(TS&&TS.length&&text.length>6){const k=TS[Math.random()*TS.length|0];shotSnd(k,{vol:window.TYPE_VOL||.3,rate:1+Math.random()*.45,off:Math.random()*2,dur:Math.min(4.5,text.length*sp/1000+.1)}).then(h=>{ts=h;if(i>=text.length&&h)h.stop()})}
+  const done=()=>{clearInterval(h);if(ts)ts.stop();el.textContent=text;typing=null;res()};typing=done;
   const h=setInterval(()=>{i+=1;el.textContent=text.slice(0,i);if(i>=text.length)done()},sp)})}
 async function line(kind,who,text,emo,o={}){
   MODE='dlg';const box=$('box'),nm=$('name'),tx=$('txt'),pt=$('portrait');
@@ -1353,7 +1359,7 @@ function qteBreath(cfg){return new Promise(res=>{
   q.classList.add('on');
   const ai=$('qai'),ri=$('qri');let taps=0,done=false,t0=0,raf=0;
   function fin(ok){if(done)return;done=true;cancelAnimationFrame(raf);q.onpointerdown=null;
-    const r=$('qres');r.textContent=ok?'Узел поддался':'Воздух кончился';r.className='qres on'+(ok?'':' bad');
+    const r=$('qres');r.textContent=ok?(cfg.okT||'Узел поддался'):(cfg.failT||'Воздух кончился');r.className='qres on'+(ok?'':' bad');
     if(ok){ST.qteOk++;ST.diamonds++;sfx('ok')}else sfx('hit');
     setTimeout(()=>{q.classList.remove('on');q.innerHTML='';MODE='';if(ok)toast('+1 алмаз',1800);res(ok)},1500)}
   function tick(now){if(done)return;const k=1-(now-t0)/TW;ai.style.transform='scaleX('+Math.max(0,k)+')';if(k<=0)return fin(false);raf=requestAnimationFrame(tick)}

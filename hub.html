@@ -521,7 +521,7 @@ const BX={
  48:[SP,()=>D(SP)>=2,'Звезда','Красное солнце станции.']
 };
 window.BOARD2={BX,LAY};
-const MAPV={1:[73.5,33],2:[45.5,13.5],3:[66,84],4:[31,77],5:[23,44.5]},MAPL=[[2,3],[3,5],[5,1],[1,4],[4,2]];
+const MAPV={1:[73.5,33],2:[23.5,43],3:[65,84],4:[44,12],5:[30,77]},MAPL=[[2,3],[3,5],[5,1],[1,4],[4,2]];
 const CSS=`
 .bx{position:relative;height:100%;display:flex;flex-direction:column;background:#0a0710}
 .bx-chips{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;flex:none;scrollbar-width:none}
@@ -571,7 +571,7 @@ function mount(el,o){
     d.style.cssText=`left:${pc(c.x,W)};top:${pc(c.y,H)};width:${pc(c.w,W)};height:${pc(c.h,H)};transform:rotate(${-c.rot}deg);z-index:${n===36?2:n===21?40:10+(n%17)}`;
     d.innerHTML='<img alt="" src="'+c.img+'">';
     if(n===3){const m=(o.mind&&o.mind.map)||{v:[]};const vs=m.v||[];
-      d.insertAdjacentHTML('beforeend','<svg class="bx-map" viewBox="0 0 100 100" preserveAspectRatio="none">'+MAPL.filter(([a,b])=>vs.includes(a)&&vs.includes(b)).map(([a,b])=>`<line x1="${MAPV[a][0]}" y1="${MAPV[a][1]}" x2="${MAPV[b][0]}" y2="${MAPV[b][1]}"/>`).join('')+vs.filter(v=>MAPV[v]).map(v=>`<circle cx="${MAPV[v][0]}" cy="${MAPV[v][1]}" r="1.1"/>`).join('')+'</svg>')}
+      d.insertAdjacentHTML('beforeend','<svg class="bx-map" viewBox="0 0 100 100" preserveAspectRatio="none">'+(m.links||[]).map(k=>k.split('-').map(q=>q==='h'?5:+q)).filter(([a,b])=>MAPV[a]&&MAPV[b]).map(([a,b])=>`<line x1="${MAPV[a][0]}" y1="${MAPV[a][1]}" x2="${MAPV[b][0]}" y2="${MAPV[b][1]}"/>`).join('')+vs.filter(v=>MAPV[v]).map(v=>`<circle cx="${MAPV[v][0]}" cy="${MAPV[v][1]}" r="1.1"/>`).join('')+'</svg>')}
     d.onclick=()=>sheet(n);cork.appendChild(d);items[n]=d});
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','bx-svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.setAttribute('preserveAspectRatio','none');svg.style.zIndex=60;cork.appendChild(svg);
   const pt=(n,o2)=>{if(n!==21)return C[n].pin;const cs=C[21].corners;return cs.reduce((b,q)=>(q[0]-o2[0])**2+(q[1]-o2[1])**2<(b[0]-o2[0])**2+(b[1]-o2[1])**2?q:b)};
