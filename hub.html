@@ -477,7 +477,7 @@ const ANY=()=>[0,1,2,3,4,5,6,7,8].some(i=>D(i)>=1),ANYDONE=()=>[0,1,2,3,4,5,6,7,
 const BX={
  1:[S0,()=>D(S0)>=3,'Протокол ложи','Записи тайного собрания и масонский знак. Ложа «Рассвет» знает больше, чем говорит.'],
  2:[S0,()=>D(S0)>=4,'From Hell?','Письмо «Из ада» и половина почки. Кто его прислал?'],
- 3:[S0,()=>D(S0)>=1,'Карта Уайтчепела','Места убийств. Линии звезды появляются по мере расследования.'],
+ 3:[S0,()=>D(S0)>=1,'Карта Уайтчепела','Места убийств. Отметки появляются по мере расследования.'],
  5:[WE,()=>D(WE)>=1,'Wanted: dead or alive','Картёжник с сигарой. Награда — пять тысяч.'],
  6:[WE,()=>D(WE)>=2,'Камень Солнца','Страница из дневника экспедиции: ацтекский календарь.'],
  7:[KN,()=>D(KN)>=1,'Гобелен пророчества','Дракон сжигает королевство. Против него — один рыцарь.'],
@@ -742,7 +742,7 @@ const NEWCLUES=PR.clues.some(id=>!PR.seen.includes(id));
 let AVAIL={};fetch('files.json',{cache:'no-cache'}).then(r=>r.json()).then(m=>{AVAIL=m.stories||{}}).catch(()=>{});
 // zones in lab image px (1536x1024): x0,y0,x1,y1
 const Z=[
- {id:'gallery',name:'Галерея',x:[0,328,152,655],sub:'Бонусные арты за алмазы · мини-игры скоро'},
+ {id:'gallery',name:'Аркада',x:[0,328,152,655],sub:'Аркадный автомат и бонусные арты'},
  {id:'dossier',name:'Досье',x:[122,356,515,668],sub:'Все, кого вы встретили в историях'},
  {id:'portal',name:'Истории',below:true,x:[590,170,930,690],sub:'Девять миров, порядок любой'},
  {id:'board',name:'Расследование',x:[812,318,1142,540],sub:'Улики о ночи взрыва',isNew:NEWCLUES},
@@ -806,7 +806,7 @@ function body(id){
     const own=s==='all'?'<div class="rowi"><span>Улики на доске</span><small>'+Object.keys(PR.clueBook||{}).length+'</small></div>':(CAST[s]?'<div class="rowi"><span>Улики из этой истории</span><small>'+Object.values(PR.clueBook||{}).filter(c=>c.s===s).length+'</small></div>':empty(s));
     return chips('board',true)+own+'<div class="rowi"><span>Узел 1 · Вспышка</span><small>после 3 историй</small></div><div class="rowi"><span>Узел 2 · За минуту до</span><small>после 6 историй</small></div><div class="rowi"><span>Узел 3 · Кто был в лаборатории</span><small>после 9 историй</small></div>';
   }
-  if(id==='gallery')return chips('gallery',true)+'<div class="cards">'+[3,3,5,5,8,8].map((c,i)=>`<div class="lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Арт ${i+1}<b>${c} алмазов</b></div>`).join('')+'</div>'+(((PS(1).chapter||1)>=2||DONE(1))?'<div class="grp">Морок · мини-игры</div>'+[['QTE «Донеси огонь»',0],['QTE «Искры на крышу»',1],['Мини-игра «Расклад»',2]].map(([n,i])=>`<button class="sbtn" data-mini="morok#mini=${i}"><span>${n}</span><small>сыграть ещё раз</small></button>`).join(''):'<div class="rowi"><span>Мини-игры</span><small>откроются после первой главы</small></div>')+'<div class="note">Алмазы даются за успешные QTE. За них открываются бонусные арты.</div>';
+  if(id==='gallery')return '<div class="grp">Аркадный автомат</div>'+ARC.map(a=>`<button class="sbtn" data-arc="${a[0]}"><span>${a[1]}</span><small>${a[2]}</small></button>`).join('')+chips('gallery',true)+'<div class="cards">'+[3,3,5,5,8,8].map((c,i)=>`<div class="lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Арт ${i+1}<b>${c} алмазов</b></div>`).join('')+'</div>'+(((PS(1).chapter||1)>=2||DONE(1))?'<div class="grp">Морок · мини-игры</div>'+[['QTE «Донеси огонь»',0],['QTE «Искры на крышу»',1],['Мини-игра «Расклад»',2]].map(([n,i])=>`<button class="sbtn" data-mini="morok#mini=${i}"><span>${n}</span><small>сыграть ещё раз</small></button>`).join(''):'<div class="rowi"><span>Мини-игры</span><small>откроются после первой главы</small></div>')+'<div class="note">Алмазы даются за успешные QTE. За них открываются бонусные арты.</div>';
 }
 let openId=null;
 function open(id){
@@ -822,6 +822,7 @@ $('close').onclick=close;$('scrim').onclick=close;
 addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-z]');if(b){const z=Z.find(q=>q.id===b.dataset.z);if(b.parentElement.id==='quick')glide((z.x[0]+z.x[2])/2);open(z.id);return}
+  const ar=e.target.closest('[data-arc]');if(ar){openArc(ar.dataset.arc);return}
   const mg=e.target.closest('[data-mini]');if(mg){try{parent.postMessage('sboi:story:'+mg.dataset.mini,'*')}catch(_){}return}
   const s=e.target.closest('[data-s]');if(s){const t=$('toast');const si=+s.dataset.s,nm=STORIES[si][0],g=AVAIL[FS_IDS[si]];t.textContent=g&&g.files&&g.files.length?'Портал открывается: «'+nm+'»':'«'+nm+'» ещё в пути. История скоро появится в портале.';if(g&&g.files&&g.files.length)setTimeout(()=>{try{parent.postMessage('sboi:story:'+FS_IDS[si],'*')}catch(e){}},900);t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
 });
@@ -1119,6 +1120,8 @@ $('shB').addEventListener('click',e=>{if(openId!=='settings')return;const S=getS
 $('shB').addEventListener('input',e=>{const r=e.target.closest('[data-rg]');if(!r||openId!=='settings')return;const S=getS();S[r.dataset.rg]=+r.value;putS(S);r.nextElementSibling.textContent=r.value+(r.dataset.rg==='text'?'':'%')});
 $('gear').onclick=()=>{conf=null;saveOpen=false;saveMsg='';open('settings')};
 /* ---------- full-screen viewers: Изнанка map and branch chart ---------- */
+const ARC=[['rima','Римма: Последний коридор','Нулевой пациент · тир'],['natasha','Чёрные воды','Тихая гавань · путь к Острову Черепа'],['neon','Neon Run: Drift','Подвал · Катя Белокрылина']];
+function openArc(k){const a=ARC.find(q=>q[0]===k);$('vT').textContent=a[1];$('vS').textContent=a[2];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=a[1];f.allow='autoplay; fullscreen';f.src='arcade-'+k+'.html';$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
 const VIEWS={map:['Карта Изнанки','девять ключей к сердцу','map.html'],flow:['Схема развилок','Морок · Катя Близнюк','flow-morok.html']};
 function openView(k,tab){const v=VIEWS[k];$('vT').textContent=v[0];$('vS').textContent=v[1];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=v[0];
   f.src=v[2]+(tab?'#'+tab:'');$('vBody').appendChild(f);close();$('viewer').classList.add('on')}

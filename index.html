@@ -114,6 +114,7 @@ button[data-fs]:disabled{opacity:.45;cursor:default}
 .rg{display:grid;grid-template-columns:92px 1fr 40px;align-items:center;gap:10px;font-size:13.5px}
 .rg input{accent-color:var(--gold);width:100%}
 .rg span:last-child{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px}
+#plPow{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:5;background:#050507}
 #prolog{position:absolute;inset:0;z-index:45;background:radial-gradient(ellipse at 50% 35%,#1a1233,#05030a 70%);display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));gap:16px}
 .pl-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 .pl-top button{font:inherit;color:var(--muted);background:none;border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer;letter-spacing:.08em}
@@ -143,7 +144,7 @@ button[data-fs]:disabled{opacity:.45;cursor:default}
   <div class="scrim"></div>
 
   <div class="top">
-    <span class="chip" id="ver">v1.0.43</span>
+    <span class="chip" id="ver">v1.0.44</span>
     <span class="chip" id="prof">…</span>
   </div>
 
@@ -509,10 +510,12 @@ function openHub(){mPlay('hub');
   setTimeout(()=>{w.hidden=false;requestAnimationFrame(()=>w.classList.add('on'));paused=true;$('replay').hidden=true},360);
 }
 function closeHub(now){if($('prolog').hidden)mPlay('start');const w=$('hubWrap');paused=false;$('replay').hidden=false;w.classList.remove('on');setTimeout(()=>{w.hidden=true},now?0:500);go('sMenu')}
-const PL=['7 марта, 23:40. Лаборатория на окраине города.','Полгода парни собирали портал, чтобы вернуть вас из мира «Клуба романтики». Сегодня вы наконец дома.','Кто-то уже открыл шампанское. Кто-то спорит, кто завтра моет колбы. Артур в третий раз проверяет, закрыт ли контур.','А потом портал включается сам. Второй раз. Раньше срока.','Вспышка. Звон стекла. Тишина.','Когда вы открываете глаза, лаборатория лежит в руинах. Парней нет. В центре гудит портал, и в нём по очереди мелькают девять чужих миров.'];
+const PL=['7 марта, 23:40. Лаборатория на окраине города.','Полгода парни собирали портал, чтобы вернуть вас из мира «Клуба романтики». Сегодня вы наконец дома.','Кто-то уже открыл шампанское. Кто-то спорит, кто завтра моет колбы. Артур в третий раз проверяет, закрыт ли контур.','А потом портал включается сам. Второй раз. Раньше срока.','Вспышка. Звон стекла. Тишина.','Когда вы открываете глаза, лаборатория лежит в руинах. Парней нет. В центре гудит портал, и в нём по очереди мелькают девять чужих миров.','Свет мигает и гаснет. Портал держится на аварийном щите, цепь питания разорвана. Если её не собрать, проход закроется навсегда.'];
 let plI=0;
-function plDone(){try{localStorage.setItem('sboi_prologue','1')}catch(e){}$('prolog').hidden=true;menuSub();openHub()}
-function plStep(){if(plI>=PL.length){plDone();return}const p=document.createElement('p');p.textContent=PL[plI];const box=$('plText');box.querySelectorAll('p').forEach(x=>x.classList.add('dim'));box.appendChild(p);while(box.children.length>3)box.removeChild(box.firstChild);plI++;$('plNext').textContent=plI>=PL.length?'В лабораторию':'Дальше'}
+function plDone(){const pw=$('plPow');if(pw)pw.remove();try{localStorage.setItem('sboi_prologue','1')}catch(e){}$('prolog').hidden=true;menuSub();openHub()}
+function plStep(){if(plI>=PL.length){plPower();return}const p=document.createElement('p');p.textContent=PL[plI];const box=$('plText');box.querySelectorAll('p').forEach(x=>x.classList.add('dim'));box.appendChild(p);while(box.children.length>3)box.removeChild(box.firstChild);plI++;$('plNext').textContent=plI>=PL.length?'Восстановить питание':'Дальше'}
+function plPower(){const f=document.createElement('iframe');f.id='plPow';f.title='Цепь питания';f.src='prolog-power.html';$('prolog').appendChild(f)}
+addEventListener('message',e=>{if(e.data==='sboi:power-ok'){const f=$('plPow');if(f)f.remove();plDone()}});
 $('plNext').onclick=plStep;$('plSkip').onclick=plDone;
 function prologDone(){try{return localStorage.getItem('sboi_prologue')==='1'}catch(e){return false}}
 function menuSub(){$('mSub').textContent=prologDone()?'лаборатория':'пролог'}
