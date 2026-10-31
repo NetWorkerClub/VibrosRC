@@ -3344,7 +3344,7 @@ const SC4=[
   s=>run((((window.ASSETS||{}).bg||{}).cg_w3_lodge_knives)?[hide(),mus(null,{fade:.3}),bg('cg_w3_lodge_knives',{tr:'black',z:1.04,y:50,kb:'in'}),sfx('heart'),shake(),vib(120)]:[])
  ],[
   /* сами / с Толей / с Хейлом: подглядываем за ритуалом из-за колонны */
-  sfx('sfx_hide',{vol:.8}),scr('Катя прячется за колонной.'),
+  scr('Катя прячется за колонной.'),
   when(F('lodge_tol'),[scr('Толя дышит ей в затылок так громко, что хочется его придушить.')]),
   when(F('lodge_hale'),[scr('Хейл остался у лестницы — сторожить выход.')]),
   hide(),bg('cg_w3_ritual',{tr:'black',z:1.03,y:46}),
@@ -3674,7 +3674,7 @@ const SC3=[
    fail:[set('wounded'),scr('Ручка бьёт Катю по плечу. Плечо горит. Но дверь ещё держится.')]}),
   sfx('whoosh'),shake(),vib(200),flash('#ffffff',300),
   scr('Удары стихают. Тишина.'),
-  sfx('whoosh'),hide(),bg('cg_w4_window',{tr:'black',z:1.03,y:50,kb:'in'}),shake(),vib(200),
+  sfx('sfx_hide',{vol:1}),hide(),bg('cg_w4_window',{tr:'black',z:1.03,y:50,kb:'in'}),shake(),vib(200),
   scr('Звон стекла. Окно! В раме — рука в перчатке, рукав серого пальто, блеск латунной цепочки.'),
   find('h_window','В разбитом окне — рукав серого пальто и латунная цепочка'),
   say('kat','Молли! В дверь! Сейчас!','determined'),
