@@ -8,7 +8,7 @@ self.addEventListener('fetch',e=>{
   const fresh=r.mode==='navigate'||/\.(html|json|webmanifest)$/.test(u.pathname)||u.pathname.endsWith('/');
   if(fresh){
     e.respondWith(fetch(r).then(res=>{if(res.ok&&!u.search){const cp=res.clone();caches.open(C).then(c=>c.put(u.href,cp))}return res})
-      .catch(()=>caches.match(u.href,{ignoreSearch:true}).then(m=>m||caches.match(new URL('./',location.href).href))));
+      .catch(()=>caches.match(u.href,{ignoreSearch:true}).then(m=>m||caches.match(new URL('index.html',location.href).href).then(x=>x||caches.match(new URL('./',location.href).href)))));
     return}
   e.respondWith(caches.match(r,{ignoreSearch:true}).then(m=>m||fetch(r).then(res=>{if(res.ok){const cp=res.clone();caches.open(C).then(c=>c.put(r,cp))}return res})));
 });

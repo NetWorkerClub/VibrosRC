@@ -2,7 +2,7 @@
  "name": "Клуб романтики: Выброс",
  "short_name": "Клуб романтики: Выброс",
  "lang": "ru",
- "start_url": "./",
+ "start_url": "index.html",
  "scope": "./",
  "display": "standalone",
  "orientation": "portrait",
