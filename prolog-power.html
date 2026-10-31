@@ -28,7 +28,7 @@ body{display:flex;align-items:center;justify-content:center;font-family:Consolas
 .win small{font-size:calc(var(--u)*3.4);opacity:.8}
 .win .btn{position:static;transform:none}
 @media (prefers-reduced-motion:reduce){.rot,.rot img.on,.win{transition:none}}
-</style></head>
+</style><style id="noSel">*{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent!important}html,body{touch-action:manipulation;overscroll-behavior:none}</style><script>document.addEventListener("selectstart",e=>e.preventDefault());document.addEventListener("contextmenu",e=>e.preventDefault());document.addEventListener("dblclick",e=>e.preventDefault(),{passive:false})</script></head>
 <body>
 <div class="game" id="G">
   <div class="hud"><span id="mv">Ходы: 0</span><span id="pc">Контуры: 0/3</span></div>

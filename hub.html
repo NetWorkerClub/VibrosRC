@@ -227,7 +227,7 @@ body{font-family:var(--body)}
 .vtile i{font-style:normal;font-size:11.5px;color:var(--muted)}
 .vtile:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .viewer{position:absolute;inset:0;z-index:30;background:#0a0718;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s}
-.viewer.on{opacity:1;pointer-events:auto}
+.viewer.on{opacity:1;pointer-events:auto}.viewer{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .vhead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:calc(6px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 6px max(16px, env(safe-area-inset-left, 0px))}
 .vbody{flex:1;position:relative;min-height:0}
 .vbody iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -1121,7 +1121,7 @@ $('shB').addEventListener('input',e=>{const r=e.target.closest('[data-rg]');if(!
 $('gear').onclick=()=>{conf=null;saveOpen=false;saveMsg='';open('settings')};
 /* ---------- full-screen viewers: Изнанка map and branch chart ---------- */
 const ARC=[['rima','Римма: Последний коридор','Нулевой пациент · тир'],['natasha','Чёрные воды','Тихая гавань · путь к Острову Черепа'],['neon','Neon Run: Drift','Подвал · Катя Белокрылина']];
-function openArc(k){const a=ARC.find(q=>q[0]===k);$('vT').textContent=a[1];$('vS').textContent=a[2];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=a[1];f.allow='autoplay; fullscreen';f.src='arcade-'+k+'.html';$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
+function openArc(k){const a=ARC.find(q=>q[0]===k);$('vT').textContent=a[1];$('vS').textContent=a[2];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=a[1];f.allow='autoplay; fullscreen';f.src='arcade-'+k+'.html'+(k==='natasha'&&DONE(6)?'?done=1':'');$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
 const VIEWS={map:['Карта Изнанки','девять ключей к сердцу','map.html'],flow:['Схема развилок','Морок · Катя Близнюк','flow-morok.html']};
 function openView(k,tab){const v=VIEWS[k];$('vT').textContent=v[0];$('vS').textContent=v[1];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=v[0];
   f.src=v[2]+(tab?'#'+tab:'');$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
