@@ -8,7 +8,7 @@
 html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;-webkit-user-select:none;user-select:none;overscroll-behavior:none}
 body{display:flex;align-items:center;justify-content:center}
 canvas{height:100%;max-width:100%;aspect-ratio:9/16;touch-action:none;background:#000;display:block}
-</style></head><body>
+</style><style id="noSel">*{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent!important}html,body{touch-action:manipulation;overscroll-behavior:none}</style><script>document.addEventListener("selectstart",e=>e.preventDefault());document.addEventListener("contextmenu",e=>e.preventDefault());document.addEventListener("dblclick",e=>e.preventDefault(),{passive:false})</script></head><body>
 <canvas id="c"></canvas>
 <script>
 /* звук: взмах, разрез, удар (WebAudio), фоновая музыка из ?mu= */
