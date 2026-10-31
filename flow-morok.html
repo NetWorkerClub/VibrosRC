@@ -261,5 +261,6 @@ function tab(id){[...tabs.children].forEach(b=>b.classList.toggle('on',b.dataset
   if(id==='all'){vAll.hidden=false;vCh.hidden=true;show(sel)}else{vAll.hidden=true;vCh.hidden=false;vCh.innerHTML=chView(CH[+id.slice(1)-1])}}
 T.forEach(([id,t])=>{const b=document.createElement('button');b.dataset.id=id;b.textContent=t;if(id!=='all'&&!OPEN(+id.slice(1)))b.classList.add('lk');b.onclick=()=>tab(id);tabs.appendChild(b)});
 {const want=(window.__TAB||location.hash.slice(1)||'all');tab(T.some(t=>t[0]===want)?want:'all')}
+{const e=PATH.find(k=>N[k].kind==='end');if(e&&!window.__TAB){show(e);const sc=document.querySelector('.scroller');if(sc)setTimeout(()=>{sc.scrollLeft=sc.scrollWidth},50)}}
 </script>
 </body></html>

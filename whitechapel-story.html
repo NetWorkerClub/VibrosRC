@@ -3,7 +3,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#07050f">
 <title>Уайтчепел</title>
-<link rel="stylesheet" href="fonts.css"><style>@font-face{font-family:"Ruslan Display";src:url(morok-ruslan.287f6184.woff) format("woff");font-display:block}</style><style>
+<link rel="stylesheet" href="fonts.css"><style>@font-face{font-family:"Ruslan Display";src:url(morok-ruslan.287f6184.woff) format("woff");font-display:block}#flowOv{position:fixed;inset:0;z-index:200;background:#0a0718;display:flex;flex-direction:column}#flowOv iframe{flex:1;border:0;width:100%}#flowOv .btn{margin:10px auto calc(env(safe-area-inset-bottom) + 12px);flex:none}
+</style><style>
 :root{--night:#07050f;--ink:#f3eeff;--muted:#b9b0d6;--dim:#7f75a6;--gold:#e8b85a;--violet:#a98bff;--panel:rgba(12,9,22,.86);--line:rgba(232,184,90,.35);
 --disp:"Philosopher",Georgia,serif;--text:"PT Serif",Georgia,serif;--ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -1035,6 +1036,50 @@ body{font-family:var(--text);display:flex;justify-content:center;align-items:cen
 .wcWaltz.vid .hearts{bottom:calc(env(safe-area-inset-bottom) + 64px)}
 .wcWaltz .wmiss{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 36px);text-align:center;color:#d9534f;font:700 16px Manrope,sans-serif;letter-spacing:4px}
 .wcWaltz.vid.slip .wv{filter:blur(3px) brightness(.7)}
+
+/* 1.0.50b: подставки и стекло из ассетов */
+.wcFlasks .rack{display:flex!important;flex-direction:column;align-items:center;gap:calc(var(--th) * .12);width:auto!important;top:53%!important;transform:translate(-50%,-50%)!important}
+.wcFlasks .row{position:relative;width:var(--rw);aspect-ratio:1403/589;margin-top:calc(var(--th) - var(--rw) * .29)}
+.wcFlasks .row .rk,.wcFlasks .row .rkf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+.wcFlasks .row .rk{z-index:0;filter:brightness(.8)}
+.wcFlasks .row .rkf{z-index:3;filter:brightness(.8)}
+.wcFlasks .row .fl,.wcFlasks .row .fl:nth-child(4){position:absolute;z-index:2;bottom:calc(100% - 69%);width:calc(var(--rw) * .13);height:var(--th);margin-left:calc(var(--rw) * -.065);padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;transition:transform .38s cubic-bezier(.3,.7,.3,1);transform-origin:50% 10%}
+.wcFlasks .row .fl::after{display:none}
+.wcFlasks .row .fl.sel{transform:translateY(calc(var(--th) * -.16))}
+.wcFlasks .row .fl.pour{z-index:6}
+.wcFlasks .row .fl .gl{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;object-fit:fill}
+.wcFlasks .row .fl .liq{position:absolute;left:11%;right:11%;top:18%;bottom:2.2%;border-radius:0 0 999px 999px / 0 0 18px 18px;overflow:hidden;z-index:1}
+.wcFlasks .row .fl .ck{position:absolute;z-index:3;left:50%;top:-4%;width:118%;transform:translate(-50%,-60%) scale(.6);opacity:0;transition:opacity .3s,transform .4s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.wcFlasks .row .fl.full .ck{opacity:1;transform:translate(-50%,-30%) scale(1)}
+.wcFlasks .row .fl.full .gl{filter:drop-shadow(0 0 6px rgba(232,194,90,.7))}
+.wcFlasks .row .fl.hasv .liq{filter:drop-shadow(0 0 8px rgba(176,124,255,.7))}
+.wcFlasks .row .fl.full.hasv .gl{filter:drop-shadow(0 0 12px #b07cff) drop-shadow(0 0 24px rgba(155,92,255,.6))}
+.wcFlasks .row .fl.no{animation:fno .3s}
+
+/* 1.0.51: побег от газа */
+.wcGas{background:#08050c;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}
+.wcGas .gbg{position:absolute;inset:0;background:center/cover no-repeat;filter:brightness(.55) saturate(.8);animation:gshake 1.6s ease-in-out infinite}
+@keyframes gshake{50%{transform:scale(1.03) translateY(-1%)}}
+.wcGas .gfog{position:absolute;inset:0;background:linear-gradient(rgba(130,70,220,.75),rgba(90,40,170,.25) 45%,rgba(0,0,0,0) 70%);opacity:.25;pointer-events:none}
+.wcGas .lanes{position:absolute;left:5%;right:5%;top:20%;bottom:6%;display:flex;justify-content:space-around;pointer-events:none}
+.wcGas .lanes i{width:1px;background:linear-gradient(transparent,rgba(232,194,90,.25),transparent)}
+.wcGas .gk{position:absolute;top:62%;height:24%;transform:translateX(-50%);transition:left .16s ease-out;filter:drop-shadow(0 6px 10px #000);z-index:3;pointer-events:none}
+.wcGas.cough .gk{filter:drop-shadow(0 0 16px #b07cff) brightness(1.3);animation:fno .4s}
+.wcGas.cough .gfog{opacity:.95!important}
+.wcGas .gc{position:absolute;width:38%;height:auto;aspect-ratio:1008/1792;max-height:30%;object-fit:cover;mix-blend-mode:screen;opacity:.95;pointer-events:none;z-index:4;-webkit-mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 45%,transparent 72%);mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 45%,transparent 72%)}
+.wcGas .gtrk{position:absolute;left:12%;right:12%;top:calc(env(safe-area-inset-top) + 178px);height:6px;border-radius:3px;background:rgba(244,236,216,.18);z-index:5}
+.wcGas .gtrk i{position:absolute;inset:0;border-radius:3px;background:#e8c25a;transform-origin:0 50%;transform:scaleX(0)}
+.wcGas .gtrk b{position:absolute;right:0;top:10px;font:600 11px Manrope,sans-serif;color:#e8c25a;letter-spacing:.06em}
+.wcGas .hearts{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 28px);display:flex;justify-content:center;gap:10px;z-index:5}
+.wcGas .hearts i{width:14px;height:14px;border-radius:50%;background:#9fdc7c;box-shadow:0 0 6px #9fdc7c}
+.wcGas .hearts i.no{background:#5a2a7a;box-shadow:none}
+.wcGas .qh,.wcGas .qs{z-index:5;text-shadow:0 2px 8px #000}
+.wcGas .burst{position:absolute;left:50%;top:40%;width:90%;transform:translate(-50%,-50%) scale(.3);opacity:0;mix-blend-mode:screen;pointer-events:none;z-index:6}
+.wcGas .burst.go{animation:gburst 1.1s ease-out forwards}
+@keyframes gburst{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}25%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
+
+.wcWhite{position:absolute;inset:0;z-index:80;background:#fff;opacity:0;transition:opacity 1.4s ease;pointer-events:none}.wcWhite.on{opacity:1}
+#stage.whiteOn #ui{z-index:95!important}#stage.whiteOn #box,#stage.whiteOn #box *{color:#1a1208}#stage.whiteOn #box{background:rgba(255,255,255,.6);border-color:rgba(0,0,0,.15)}
 @font-face{font-family:"WC Display";src:url(whitechapel-font_pfsc.89b12e62.woff) format("woff");font-display:block}#title h1,#home h1{font-family:"WC Display",serif!important;letter-spacing:.03em!important;font-size:40px!important;font-weight:700}#title h1{text-transform:none;font-size:min(40px,8.2vw)!important}</style></head>
 <body>
 <div id="stage">
@@ -1061,7 +1106,7 @@ body{font-family:var(--text);display:flex;justify-content:center;align-items:cen
   <div class="grid chaps" id="hChaps"></div>
   <button class="btn gold" id="hStart">Начать главу<small>с самого начала</small></button>
   <button class="btn" id="hCont" style="display:none">Продолжить<small></small></button>
-  <div class="lbl">Сцены</div><div class="grid" id="hScenes"></div>
+  
   <div class="lbl">QTE и мини-игры</div><div class="grid" id="hMini"></div>
   <button class="btn" id="hBack">← К главам</button>
   <button class="btn" id="hLab" style="display:none;margin-top:10px">В лабораторию</button>
@@ -1083,7 +1128,7 @@ window.GAME={
    if(window.STORY_CAST)s.cast=window.STORY_CAST(st);if(window.STORY_FACTS)s.facts=window.STORY_FACTS(st,ch,ch>=4);if(window.STORY_DECISIONS)s.decisions=window.STORY_DECISIONS(st);if(st.mind)s.mind=st.mind;s['ch'+ch]={pts:st.pts,flags:st.flags,clues:st.clues,mind:st.mind}})},
  exit(){try{stop()}catch(e){}try{parent.postMessage('sboi:story-exit','*')}catch(e){}}
 };
-</script><script>window.ASSETS={"bg":{"buck_row_body":"whitechapel-bg_buck_row_body.4ede32d6.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.de1e4cd2.webp","morgue":"whitechapel-bg_morgue.5ec3dd03.webp","room_hart":"whitechapel-bg_room_hart.db98ee56.webp","room_hart_night":"whitechapel-bg_room_hart_night.9b445372.webp","ten_bells":"whitechapel-bg_ten_bells.77155115.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.42c86226.webp","yard_office":"whitechapel-bg_yard_office.4bf6dbef.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.72e8df6e.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp","alley_crates":"whitechapel-bg_alley_crates.e18fe141.webp","cg_w1_wake0":"whitechapel-bg_cg_w1_wake0.8f01eed3.webp","buck_row":"whitechapel-bg_buck_row.77bd0914.webp","alley_lamps":"whitechapel-bg_alley_lamps.2f6db385.webp","bridge_night":"whitechapel-bg_bridge_night.c3052628.webp","yard_fog":"whitechapel-bg_yard_fog.6729e6f4.webp","office_dark":"whitechapel-bg_office_dark.5b7a0394.webp","cells":"whitechapel-bg_cells.6590150b.webp","mirror_gallery":"whitechapel-bg_mirror_gallery.f7cc80e4.webp","lab_street":"whitechapel-bg_lab_street.9a83794a.webp","tunnel":"whitechapel-bg_tunnel.7e0d24ca.webp","alley_cart":"whitechapel-bg_alley_cart.ba926d38.webp","run_alley":"whitechapel-bg_run_alley.c3c2b3e6.webp","ballroom":"whitechapel-bg_ballroom.14fa3686.webp","corner_lamp":"whitechapel-bg_corner_lamp.95c0f2ee.webp","run_crates":"whitechapel-bg_run_crates.6d9b4f15.webp","arch_cab":"whitechapel-bg_arch_cab.b0a491f5.webp","cult_hall":"whitechapel-bg_cult_hall.593a6ac7.webp","westminster":"whitechapel-bg_westminster.e4176b65.webp","room_poor":"whitechapel-bg_room_poor.9e710f19.webp","furnace":"whitechapel-bg_furnace.f97f6520.webp","room_wrecked":"whitechapel-bg_room_wrecked.8a0e3fc2.webp","library":"whitechapel-bg_library.63ca1163.webp","slaughter_fall":"whitechapel-bg_slaughter_fall.333325db.webp","slaughter":"whitechapel-bg_slaughter.b3a65e07.webp","cg_w3_ball_tol":"whitechapel-bg_cg_w3_ball_tol.fddc6451.webp","cg_w3_ball_seb":"whitechapel-bg_cg_w3_ball_seb.91c11e41.webp","cg_w3_ball_hale":"whitechapel-bg_cg_w3_ball_hale.6a51c663.webp","cg_w2_ivan_knife":"whitechapel-bg_cg_w2_ivan_knife.8898f86c.webp","cg_w2_ivan_cell":"whitechapel-bg_cg_w2_ivan_cell.43d95cc7.webp","cg_w4_ivan_ring":"whitechapel-bg_cg_w4_ivan_ring.882c9ede.webp","cg_w4_seb_vamp":"whitechapel-bg_cg_w4_seb_vamp.e0a051bd.webp","cg_w4_rip_half":"whitechapel-bg_cg_w4_rip_half.74e2d663.webp","cg_w4_ivan_hooks":"whitechapel-bg_cg_w4_ivan_hooks.1f95f380.webp","cg_w4_ivan_kat":"whitechapel-bg_cg_w4_ivan_kat.b037f71f.webp","cg_w4_portal":"whitechapel-bg_cg_w4_portal.b313cc96.webp","cg_w2_keyhole":"whitechapel-bg_cg_w2_keyhole.dc7d1941.webp","cg_w4_hat_ruins":"whitechapel-bg_cg_w4_hat_ruins.8d8b2e62.webp","cg_w3_glove_ring":"whitechapel-bg_cg_w3_glove_ring.80890013.webp","cg_w3_chair_door":"whitechapel-bg_cg_w3_chair_door.0be91753.webp","cg_w4_tol_pie":"whitechapel-bg_cg_w4_tol_pie.c7bca39b.webp","cg_w4_seb_hand":"whitechapel-bg_cg_w4_seb_hand.3d050319.webp","cg_w4_seb_kiss":"whitechapel-bg_cg_w4_seb_kiss.a83d3187.webp","cg_w4_rip_reveal":"whitechapel-bg_cg_w4_rip_reveal.767f0060.webp","cg_w4_rip_claws":"whitechapel-bg_cg_w4_rip_claws.78325b1e.webp","cg_w3_run_door":"whitechapel-bg_cg_w3_run_door.57016c48.webp","cg_w4_tol_scalpel":"whitechapel-bg_cg_w4_tol_scalpel.62f7e3c2.webp","cg_w2_byk_dead":"whitechapel-bg_cg_w2_byk_dead.e5a15a7f.webp","cg_cult_a":"whitechapel-bg_cg_cult_a.0b9a3e42.webp","cg_w3_rift":"whitechapel-bg_cg_w3_rift.fb56fe64.webp","alley_fog_light":"whitechapel-bg_alley_fog_light.981f8dfc.webp","cult_hall2":"whitechapel-bg_cult_hall2.c6cf64d5.webp","yard_window":"whitechapel-bg_yard_window.a19d4d7a.webp","berner":"whitechapel-bg_berner.f1e9ed17.webp","berner_body":"whitechapel-bg_berner_body.039b0a38.webp","goulston_wall":"whitechapel-bg_goulston_wall.4c1b69ac.webp","goulston_wiped":"whitechapel-bg_goulston_wiped.1337bc65.webp","lab_bench":"whitechapel-bg_lab_bench.d5a4a21b.webp","lab_corner":"whitechapel-bg_lab_corner.ca5b1489.webp","mayfair_street":"whitechapel-bg_mayfair_street.544a28c4.webp","millers_inside":"whitechapel-bg_millers_inside.a34d5479.webp","mitre_body":"whitechapel-bg_mitre_body.dced441c.webp","sheet_spare":"whitechapel-bg_sheet_spare.95c2bb4d.webp","telegraph":"whitechapel-bg_telegraph.6ce8adfc.webp","whitechapel_day":"whitechapel-bg_whitechapel_day.cd8a3db3.webp","yard_exterior":"whitechapel-bg_yard_exterior.c1f2adad.webp","cg_w1_hanbury_find":"whitechapel-bg_cg_w1_hanbury_find.3646ca3c.webp","cg_w2_berner_find":"whitechapel-bg_cg_w2_berner_find.39c4575b.webp","cg_w2_drawer_open":"whitechapel-bg_cg_w2_drawer_open.225b2dd7.webp","cg_w2_dress_box":"whitechapel-bg_cg_w2_dress_box.9beb61ac.webp","cg_w2_flasks_done":"whitechapel-bg_cg_w2_flasks_done.f3df6197.webp","cg_w2_flasks_tol":"whitechapel-bg_cg_w2_flasks_tol.27bc0628.webp","cg_w2_kat_notes":"whitechapel-bg_cg_w2_kat_notes.074753ab.webp","cg_w3_chalk_hand":"whitechapel-bg_cg_w3_chalk_hand.c7bc0a1c.webp","cg_w3_gas_face":"whitechapel-bg_cg_w3_gas_face.a0380c0a.webp","cg_w3_hale_erase":"whitechapel-bg_cg_w3_hale_erase.3de22aa3.webp","cg_w3_krn_box":"whitechapel-bg_cg_w3_krn_box.f5df683f.webp","cg_w3_lodge_door":"whitechapel-bg_cg_w3_lodge_door.55505335.webp","cg_w3_lodge_gas":"whitechapel-bg_cg_w3_lodge_gas.3212788a.webp","cg_w3_ritual":"whitechapel-bg_cg_w3_ritual.10d83c8a.webp","cg_w4_ambush":"whitechapel-bg_cg_w4_ambush.ff5e2238.webp","cg_w4_dark_end":"whitechapel-bg_cg_w4_dark_end.4d25019e.webp","cg_w4_gallows":"whitechapel-bg_cg_w4_gallows.5751658e.webp","cg_w4_gallows_hale":"whitechapel-bg_cg_w4_gallows_hale.f7eb8485.webp","cg_w4_hale_cell":"whitechapel-bg_cg_w4_hale_cell.f377b016.webp","cg_w4_hale_door":"whitechapel-bg_cg_w4_hale_door.cff17cf9.webp","cg_w4_kat_alone":"whitechapel-bg_cg_w4_kat_alone.d3e5fca9.webp","ballroom_th":"whitechapel-bg_ballroom_th.95a27178.webp","cg_w2_mirror":"whitechapel-bg_cg_w2_mirror.b2833f70.webp","waltz_v":"whitechapel-bg_waltz_v.4b25c311.mp4"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp","shock":"whitechapel-sp_abb_shock.24599202.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp","parcel":"whitechapel-sp_byk_parcel.48a00de9.webp","walk":"whitechapel-sp_byk_walk.de5d34f2.webp","angry":"whitechapel-sp_byk_angry.305d2ed7.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp","calm":"whitechapel-sp_cst_calm.d5b87c1b.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.acc871e2.webp","sad":"whitechapel-sp_hale_sad.f2778429.webp","stern":"whitechapel-sp_hale_stern.8110fed2.webp","frac":"whitechapel-sp_hale_frac.d9132c75.webp"},"ivan":{"chained":"whitechapel-sp_ivan_chained.fa44474a.webp","lost":"whitechapel-sp_ivan_lost.86cba4f9.webp","mug":"whitechapel-sp_ivan_mug.1df4f53d.webp","neutral":"whitechapel-sp_ivan_neutral.37530051.webp","sad":"whitechapel-sp_ivan_sad.bc045456.webp","smile":"whitechapel-sp_ivan_smile.13bdcbfe.webp","tired":"whitechapel-sp_ivan_sad.bc045456.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp","torn2":"whitechapel-sp_kat_torn2.376716f8.webp","ball":"whitechapel-sp_kat_ball.5ae25978.webp","ball_scared":"whitechapel-sp_kat_ball_scared.823614c4.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp","cult":"whitechapel-sp_krn_cult.97b5a35e.webp","hat":"whitechapel-sp_krn_hat.9d04e187.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp","worried":"whitechapel-sp_luc_worried.7d1fdf10.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp","shawl_scared":"whitechapel-sp_mol_shawl_scared.a3173a27.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp","scared":"whitechapel-sp_rook_scared.ccdd89b9.webp","shout":"whitechapel-sp_rook_shout.8dcf5c62.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp","kneel_blood":"whitechapel-sp_seb_kneel_blood.e042e782.webp","vamp_claws":"whitechapel-sp_seb_vamp_claws.d6d68a0d.webp"},"tol":{"cry":"whitechapel-sp_tol_cry.d121f548.webp","flask":"whitechapel-sp_tol_flask.6a33dfef.webp","neutral":"whitechapel-sp_tol_neutral.034d1e4f.webp","neutralv":"whitechapel-sp_tol_neutralv.1e0165f0.webp","pie":"whitechapel-sp_tol_pie.7549173e.webp","sad":"whitechapel-sp_tol_sad.6e5f6462.webp","sadv":"whitechapel-sp_tol_sadv.ba08cfef.webp","smile":"whitechapel-sp_tol_smile.96937346.webp","smilev":"whitechapel-sp_tol_smilev.ccd7c044.webp","worried":"whitechapel-sp_tol_worried.b58196fa.webp","worriedv":"whitechapel-sp_tol_worriedv.62524293.webp","tubes":"whitechapel-sp_tol_tubes.d991e3de.webp","frac":"whitechapel-sp_tol_frac.c2c196f9.webp"},"ripper":{"neutral":"whitechapel-sp_ripper_neutral.cd582aed.webp","bag":"whitechapel-sp_ripper_bag.090a69f0.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","item_scalpel":"whitechapel-ui_item_scalpel.487b8c5c.webp","item_cleaver":"whitechapel-ui_item_cleaver.9bfc74bb.webp","map_clean":"whitechapel-ui_map_clean.391d98ab.webp","dos_krn":"whitechapel-ui_dos_krn.643c9196.webp","dos_tol":"whitechapel-ui_dos_tol.e09c8458.webp","dos_ivan":"whitechapel-ui_dos_ivan.bdbe9262.webp","dos_mol":"whitechapel-ui_dos_mol.491f6eb8.webp","dos_rook":"whitechapel-ui_dos_rook.968f2ac6.webp","dos_abb":"whitechapel-ui_dos_abb.6a3552f2.webp","dos_hale":"whitechapel-ui_dos_hale.2e868c2f.webp","dos_seb":"whitechapel-ui_dos_seb.29389518.webp","dos_byk":"whitechapel-ui_dos_byk.6df46b3b.webp","paper_envelope_rose":"whitechapel-ui_paper_envelope_rose.2240743f.webp","news_police_1":"whitechapel-ui_news_police_1.e19d0fcd.webp","eng_constables2":"whitechapel-ui_eng_constables2.8f18849c.webp","crowd_ball":"whitechapel-ui_crowd_ball.aba8552b.webp","eng_writing":"whitechapel-ui_eng_writing.84592eea.webp","hand_c1":"morok-ui_hand_c1.8c932dc3.webp","hand_c2":"morok-ui_hand_c2.68e6ba08.webp","hand_c3":"morok-ui_hand_c3.332a8d3e.webp","hand_u1":"morok-ui_hand_u1.e9647558.webp","hand_u2":"morok-ui_hand_u2.580a9822.webp","hand_u3":"morok-ui_hand_u3.806938c6.webp","rip_sketch_1":"whitechapel-ui_rip_sketch_1.d499dcbc.webp","rip_sketch_2":"whitechapel-ui_rip_sketch_2.c7c06826.webp","rip_sketch_3":"whitechapel-ui_rip_sketch_3.e8bac6e9.webp","rip_sketch_4":"whitechapel-ui_rip_sketch_4.16d799ba.webp","rip_sketch_5":"whitechapel-ui_rip_sketch_5.36c6403b.webp","rip_sketch_6":"whitechapel-ui_rip_sketch_6.9aeeb9c0.webp","qte_jack":"whitechapel-qte_jack.html","crowd_lodge":"whitechapel-ui_crowd_lodge.b4438cea.webp","crowd_lodge2":"whitechapel-ui_crowd_lodge2.841142fd.webp","fx_gas":"whitechapel-ui_fx_gas.7fcb6305.webp","fx_gas2":"whitechapel-ui_fx_gas2.aad30369.webp","fx_gas_vial":"whitechapel-ui_fx_gas_vial.a12236a0.webp","qte_lock_bg":"whitechapel-ui_qte_lock_bg.32dd9351.webp","qte_lock_pick":"whitechapel-ui_qte_lock_pick.318c6aac.webp","qte_lock_tension":"whitechapel-ui_qte_lock_tension.f2708d19.webp","qte_pin_body":"whitechapel-ui_qte_pin_body.ce23812d.webp","qte_pin_spring":"whitechapel-ui_qte_pin_spring.8916848d.webp","run_byk":"whitechapel-ui_run_byk.d255b78d.webp","run_far":"whitechapel-ui_run_far.2c3bd558.jpg","run_fog":"whitechapel-ui_run_fog.a45e7828.jpg","run_gh0":"whitechapel-ui_run_gh0.a9775416.webp","run_gh1":"whitechapel-ui_run_gh1.5551bdf6.webp","run_gh2":"whitechapel-ui_run_gh2.27e95492.webp","run_gh3":"whitechapel-ui_run_gh3.137777a7.webp","run_gh4":"whitechapel-ui_run_gh4.0f6db3b9.webp","run_kat":"whitechapel-ui_run_kat.8b62bec9.webp","run_kat_jump_down":"whitechapel-ui_run_kat_jump_down.8a8c1e13.webp","run_kat_jump_up":"whitechapel-ui_run_kat_jump_up.c15b06ac.webp","run_mid":"whitechapel-ui_run_mid.b6bef0ad.webp","run_near":"whitechapel-ui_run_near.f685bff0.webp","run_ob_barrel":"whitechapel-ui_run_ob_barrel.48296bfd.webp","run_ob_cart":"whitechapel-ui_run_ob_cart.4022a8bc.webp","run_ob_crates":"whitechapel-ui_run_ob_crates.c7d424fc.webp","run_ob_dog":"whitechapel-ui_run_ob_dog.dbe1783b.webp","print_a":"whitechapel-ui_print_a.16f076e6.webp","print_b":"whitechapel-ui_print_b.f40fcdec.webp","print_c":"whitechapel-ui_print_c.aff59432.webp","print_red":"whitechapel-ui_print_red.45f59061.webp","print_match":"whitechapel-ui_print_match.f3be8bbe.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3","rift":"morok-mus_rift.6229cd02.mp3","voice_rift_zub":"morok-mus_voice_rift_zub.37e5bb49.mp3","voice_rift_bliz":"morok-mus_voice_rift_bliz.62bd749a.mp3","wc_finale":"whitechapel-mus_wc_finale.e917409f.mp3","wc_tol":"whitechapel-mus_wc_tol.1926b2dd.mp3","wc_lodge":"whitechapel-mus_wc_lodge.fe564f79.mp3","wc_bal":"whitechapel-mus_wc_bal.77ad17a6.mp3","wc_seb":"whitechapel-mus_wc_seb.bc826b7a.mp3","wc_end":"whitechapel-mus_wc_end.b53d3fe2.mp3","wc_chase":"whitechapel-mus_wc_chase.40ba24ca.mp3","wc_dread":"whitechapel-mus_wc_dread.c662fe0e.mp3","wc_vamp":"whitechapel-mus_wc_vamp.b4b9ebe9.mp3","wc_mask":"whitechapel-mus_wc_mask.60c7ac7d.mp3","amb_rain":"whitechapel-mus_amb_rain.b307852f.mp3","amb_pub":"whitechapel-mus_amb_pub.a780be05.mp3","amb_crowd":"whitechapel-mus_amb_crowd.de85f837.mp3","amb_drip":"whitechapel-mus_amb_drip.b521016f.mp3","amb_fire":"whitechapel-mus_amb_fire.6f276c99.mp3","amb_clock":"whitechapel-mus_amb_clock.0f0d92cf.mp3","sfx_whistle":"whitechapel-mus_sfx_whistle.9691d6f6.mp3","sfx_hooves":"whitechapel-mus_sfx_hooves.f3cdd836.mp3","sfx_bigben":"whitechapel-mus_sfx_bigben.b9182c43.mp3","sfx_heartbeat":"whitechapel-mus_sfx_heartbeat.94453ef0.mp3","sfx_rats":"whitechapel-mus_sfx_rats.355e3060.mp3","sfx_chain1":"whitechapel-mus_sfx_chain1.27c585ec.mp3","sfx_chain2":"whitechapel-mus_sfx_chain2.af81dc7b.mp3","sfx_inhale1":"whitechapel-mus_sfx_inhale1.8a6f9c2f.mp3","sfx_inhale2":"whitechapel-mus_sfx_inhale2.9631d2b3.mp3","quill1":"whitechapel-mus_quill1.16876b76.mp3","quill2":"whitechapel-mus_quill2.1270c673.mp3","quill3":"whitechapel-mus_quill3.4d8fbac3.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
+</script><script>window.ASSETS={"bg":{"buck_row_body":"whitechapel-bg_buck_row_body.4ede32d6.webp","hanbury_yard":"whitechapel-bg_hanbury_yard.de1e4cd2.webp","morgue":"whitechapel-bg_morgue.5ec3dd03.webp","room_hart":"whitechapel-bg_room_hart.db98ee56.webp","room_hart_night":"whitechapel-bg_room_hart_night.9b445372.webp","ten_bells":"whitechapel-bg_ten_bells.77155115.webp","ten_bells_b":"whitechapel-bg_ten_bells_b.42c86226.webp","yard_office":"whitechapel-bg_yard_office.4bf6dbef.webp","cg_w1_shard":"whitechapel-bg_cg_w1_shard.4050a106.webp","cg_w1_wake":"whitechapel-bg_cg_w1_wake.72e8df6e.webp","cg_w1_walk_hale":"whitechapel-bg_cg_w1_walk_hale.51824815.webp","cg_w1_walk_seb":"whitechapel-bg_cg_w1_walk_seb.001694e5.webp","cg_w1_walk_tol":"whitechapel-bg_cg_w1_walk_tol.21ce8e37.webp","cover":"whitechapel-bg_cover.d49562f4.webp","alley_crates":"whitechapel-bg_alley_crates.e18fe141.webp","cg_w1_wake0":"whitechapel-bg_cg_w1_wake0.8f01eed3.webp","buck_row":"whitechapel-bg_buck_row.77bd0914.webp","alley_lamps":"whitechapel-bg_alley_lamps.2f6db385.webp","bridge_night":"whitechapel-bg_bridge_night.c3052628.webp","yard_fog":"whitechapel-bg_yard_fog.eccf2efb.webp","office_dark":"whitechapel-bg_office_dark.5b7a0394.webp","cells":"whitechapel-bg_cells.6590150b.webp","mirror_gallery":"whitechapel-bg_mirror_gallery.f7cc80e4.webp","lab_street":"whitechapel-bg_lab_street.9a83794a.webp","tunnel":"whitechapel-bg_tunnel.7e0d24ca.webp","alley_cart":"whitechapel-bg_alley_cart.ba926d38.webp","run_alley":"whitechapel-bg_run_alley.c3c2b3e6.webp","ballroom":"whitechapel-bg_ballroom.14fa3686.webp","corner_lamp":"whitechapel-bg_corner_lamp.95c0f2ee.webp","run_crates":"whitechapel-bg_run_crates.6d9b4f15.webp","arch_cab":"whitechapel-bg_arch_cab.b0a491f5.webp","cult_hall":"whitechapel-bg_cult_hall.4c8f3e10.webp","westminster":"whitechapel-bg_westminster.e4176b65.webp","room_poor":"whitechapel-bg_room_poor.9e710f19.webp","furnace":"whitechapel-bg_furnace.f97f6520.webp","room_wrecked":"whitechapel-bg_room_wrecked.8a0e3fc2.webp","library":"whitechapel-bg_library.822bd472.webp","slaughter_fall":"whitechapel-bg_slaughter_fall.333325db.webp","slaughter":"whitechapel-bg_slaughter.b3a65e07.webp","cg_w3_ball_tol":"whitechapel-bg_cg_w3_ball_tol.fddc6451.webp","cg_w3_ball_seb":"whitechapel-bg_cg_w3_ball_seb.91c11e41.webp","cg_w3_ball_hale":"whitechapel-bg_cg_w3_ball_hale.6a51c663.webp","cg_w2_ivan_knife":"whitechapel-bg_cg_w2_ivan_knife.8898f86c.webp","cg_w2_ivan_cell":"whitechapel-bg_cg_w2_ivan_cell.43d95cc7.webp","cg_w4_ivan_ring":"whitechapel-bg_cg_w4_ivan_ring.882c9ede.webp","cg_w4_seb_vamp":"whitechapel-bg_cg_w4_seb_vamp.e0a051bd.webp","cg_w4_rip_half":"whitechapel-bg_cg_w4_rip_half.74e2d663.webp","cg_w4_ivan_hooks":"whitechapel-bg_cg_w4_ivan_hooks.1f95f380.webp","cg_w4_ivan_kat":"whitechapel-bg_cg_w4_ivan_kat.b037f71f.webp","cg_w4_portal":"whitechapel-bg_cg_w4_portal.b313cc96.webp","cg_w2_keyhole":"whitechapel-bg_cg_w2_keyhole.dc7d1941.webp","cg_w4_hat_ruins":"whitechapel-bg_cg_w4_hat_ruins.8d8b2e62.webp","cg_w3_glove_ring":"whitechapel-bg_cg_w3_glove_ring.80890013.webp","cg_w3_chair_door":"whitechapel-bg_cg_w3_chair_door.0be91753.webp","cg_w4_tol_pie":"whitechapel-bg_cg_w4_tol_pie.c7bca39b.webp","cg_w4_seb_hand":"whitechapel-bg_cg_w4_seb_hand.3d050319.webp","cg_w4_seb_kiss":"whitechapel-bg_cg_w4_seb_kiss.a83d3187.webp","cg_w4_rip_reveal":"whitechapel-bg_cg_w4_rip_reveal.767f0060.webp","cg_w4_rip_claws":"whitechapel-bg_cg_w4_rip_claws.78325b1e.webp","cg_w3_run_door":"whitechapel-bg_cg_w3_run_door.57016c48.webp","cg_w4_tol_scalpel":"whitechapel-bg_cg_w4_tol_scalpel.62f7e3c2.webp","cg_w2_byk_dead":"whitechapel-bg_cg_w2_byk_dead.e5a15a7f.webp","cg_cult_a":"whitechapel-bg_cg_cult_a.0b9a3e42.webp","cg_w3_rift":"whitechapel-bg_cg_w3_rift.fb56fe64.webp","alley_fog_light":"whitechapel-bg_alley_fog_light.981f8dfc.webp","cult_hall2":"whitechapel-bg_cult_hall2.c6cf64d5.webp","yard_window":"whitechapel-bg_yard_window.a19d4d7a.webp","berner":"whitechapel-bg_berner.f1e9ed17.webp","berner_body":"whitechapel-bg_berner_body.dc36b323.webp","goulston_wall":"whitechapel-bg_goulston_wall.1a8f3252.webp","goulston_wiped":"whitechapel-bg_goulston_wiped.9bc8a972.webp","lab_bench":"whitechapel-bg_lab_bench.d5a4a21b.webp","lab_corner":"whitechapel-bg_lab_corner.ca5b1489.webp","mayfair_street":"whitechapel-bg_mayfair_street.544a28c4.webp","millers_inside":"whitechapel-bg_millers_inside.a34d5479.webp","mitre_body":"whitechapel-bg_mitre_body.9aba6ef8.webp","sheet_spare":"whitechapel-bg_sheet_spare.95c2bb4d.webp","telegraph":"whitechapel-bg_telegraph.6ce8adfc.webp","whitechapel_day":"whitechapel-bg_whitechapel_day.5769f51a.webp","yard_exterior":"whitechapel-bg_yard_exterior.d2351290.webp","cg_w1_hanbury_find":"whitechapel-bg_cg_w1_hanbury_find.3646ca3c.webp","cg_w2_berner_find":"whitechapel-bg_cg_w2_berner_find.39c4575b.webp","cg_w2_drawer_open":"whitechapel-bg_cg_w2_drawer_open.225b2dd7.webp","cg_w2_dress_box":"whitechapel-bg_cg_w2_dress_box.9beb61ac.webp","cg_w2_flasks_done":"whitechapel-bg_cg_w2_flasks_done.f3df6197.webp","cg_w2_flasks_tol":"whitechapel-bg_cg_w2_flasks_tol.27bc0628.webp","cg_w2_kat_notes":"whitechapel-bg_cg_w2_kat_notes.074753ab.webp","cg_w3_chalk_hand":"whitechapel-bg_cg_w3_chalk_hand.c7bc0a1c.webp","cg_w3_gas_face":"whitechapel-bg_cg_w3_gas_face.a0380c0a.webp","cg_w3_hale_erase":"whitechapel-bg_cg_w3_hale_erase.3de22aa3.webp","cg_w3_krn_box":"whitechapel-bg_cg_w3_krn_box.f5df683f.webp","cg_w3_lodge_door":"whitechapel-bg_cg_w3_lodge_door.55505335.webp","cg_w3_lodge_gas":"whitechapel-bg_cg_w3_lodge_gas.3212788a.webp","cg_w3_ritual":"whitechapel-bg_cg_w3_ritual.10d83c8a.webp","cg_w4_ambush":"whitechapel-bg_cg_w4_ambush.ff5e2238.webp","cg_w4_dark_end":"whitechapel-bg_cg_w4_dark_end.4d25019e.webp","cg_w4_gallows":"whitechapel-bg_cg_w4_gallows.5751658e.webp","cg_w4_gallows_hale":"whitechapel-bg_cg_w4_gallows_hale.f7eb8485.webp","cg_w4_hale_cell":"whitechapel-bg_cg_w4_hale_cell.f377b016.webp","cg_w4_hale_door":"whitechapel-bg_cg_w4_hale_door.cff17cf9.webp","cg_w4_kat_alone":"whitechapel-bg_cg_w4_kat_alone.d3e5fca9.webp","ballroom_th":"whitechapel-bg_ballroom_th.95a27178.webp","cg_w2_mirror":"whitechapel-bg_cg_w2_mirror.b2833f70.webp","waltz_v":"whitechapel-bg_waltz_v.4b25c311.mp4","waltz_h":"whitechapel-bg_waltz_h.2a19e934.mp4","waltz_t":"whitechapel-bg_waltz_t.5362a979.mp4","cg_w2_cab":"whitechapel-bg_cg_w2_cab.b716d2e6.webp","cells_ivan":"whitechapel-bg_cells_ivan.814f0c9f.webp","cg_w3_parcel":"whitechapel-bg_cg_w3_parcel.7ffe2dd1.webp","millers_court":"whitechapel-bg_millers_court.0b9f1d87.webp","cg_w3_lodge_knives":"whitechapel-bg_cg_w3_lodge_knives.b67d9871.webp","cg_w4_kat_dead":"whitechapel-bg_cg_w4_kat_dead.e0d3d591.webp","cg_w4_seb_gone":"whitechapel-bg_cg_w4_seb_gone.ebf2eef5.webp","cg_w4_cuff":"whitechapel-bg_cg_w4_cuff.d35fc485.webp","cg_w4_window":"whitechapel-bg_cg_w4_window.dd924e81.webp"},"sp":{"abb":{"grumpy":"whitechapel-sp_abb_grumpy.c4737b7f.webp","neutral":"whitechapel-sp_abb_neutral.acbbbea1.webp","shock":"whitechapel-sp_abb_shock.24599202.webp"},"byk":{"butcher":"whitechapel-sp_byk_butcher.e7f0a0fe.webp","neutral":"whitechapel-sp_byk_neutral.26b3c439.webp","parcel":"whitechapel-sp_byk_parcel.48a00de9.webp","walk":"whitechapel-sp_byk_walk.de5d34f2.webp","angry":"whitechapel-sp_byk_angry.305d2ed7.webp"},"cst":{"neutral":"whitechapel-sp_cst_neutral.c0ba7137.webp","calm":"whitechapel-sp_cst_calm.d5b87c1b.webp"},"hale":{"neutral":"whitechapel-sp_hale_neutral.acc871e2.webp","sad":"whitechapel-sp_hale_sad.f2778429.webp","stern":"whitechapel-sp_hale_stern.8110fed2.webp","frac":"whitechapel-sp_hale_frac.d9132c75.webp"},"ivan":{"chained":"whitechapel-sp_ivan_chained.fa44474a.webp","lost":"whitechapel-sp_ivan_lost.86cba4f9.webp","mug":"whitechapel-sp_ivan_mug.1df4f53d.webp","neutral":"whitechapel-sp_ivan_neutral.37530051.webp","sad":"whitechapel-sp_ivan_sad.bc045456.webp","smile":"whitechapel-sp_ivan_smile.13bdcbfe.webp","tired":"whitechapel-sp_ivan_sad.bc045456.webp"},"kat":{"determined":"whitechapel-sp_kat_determined.e921d292.webp","eureka":"whitechapel-sp_kat_eureka.5a95b076.webp","ironic":"whitechapel-sp_kat_ironic.a496d1e3.webp","neutral":"whitechapel-sp_kat_neutral.172b809e.webp","sad":"whitechapel-sp_kat_sad.d4a01dc9.webp","scared":"whitechapel-sp_kat_scared.f21edc20.webp","tears":"whitechapel-sp_kat_tears.41375770.webp","tender":"whitechapel-sp_kat_tender.677e290e.webp","deduce":"whitechapel-sp_kat_deduce.e33c1988.webp","torn2":"whitechapel-sp_kat_torn2.376716f8.webp","ball":"whitechapel-sp_kat_ball.5ae25978.webp","ball_scared":"whitechapel-sp_kat_ball_scared.823614c4.webp"},"krn":{"neutral":"whitechapel-sp_krn_neutral.5ef4661a.webp","cult":"whitechapel-sp_krn_cult.97b5a35e.webp","hat":"whitechapel-sp_krn_hat.9d04e187.webp"},"luc":{"neutral":"whitechapel-sp_luc_neutral.f332914c.webp","worried":"whitechapel-sp_luc_worried.7d1fdf10.webp"},"mol":{"neutral":"whitechapel-sp_mol_neutral.242b241c.webp","scared":"whitechapel-sp_mol_scared.e8ecb378.webp","smile":"whitechapel-sp_mol_smile.5fc00ff8.webp","shawl_scared":"whitechapel-sp_mol_shawl_scared.a3173a27.webp"},"rook":{"grin":"whitechapel-sp_rook_grin.14408f88.webp","neutral":"whitechapel-sp_rook_neutral.4390f13a.webp","shard":"whitechapel-sp_rook_shard.be92bcd2.webp","scared":"whitechapel-sp_rook_scared.ccdd89b9.webp","shout":"whitechapel-sp_rook_shout.8dcf5c62.webp"},"seb":{"cold":"whitechapel-sp_seb_cold.c6e2be1d.webp","glass":"whitechapel-sp_seb_glass.8036f615.webp","neutral":"whitechapel-sp_seb_neutral.f4bb08c3.webp","smile":"whitechapel-sp_seb_smile.d0359851.webp","kneel_blood":"whitechapel-sp_seb_kneel_blood.e042e782.webp","vamp_claws":"whitechapel-sp_seb_vamp_claws.d6d68a0d.webp"},"tol":{"cry":"whitechapel-sp_tol_cry.d121f548.webp","flask":"whitechapel-sp_tol_flask.6a33dfef.webp","neutral":"whitechapel-sp_tol_neutral.034d1e4f.webp","neutralv":"whitechapel-sp_tol_neutralv.1e0165f0.webp","pie":"whitechapel-sp_tol_pie.7549173e.webp","sad":"whitechapel-sp_tol_sad.6e5f6462.webp","sadv":"whitechapel-sp_tol_sadv.ba08cfef.webp","smile":"whitechapel-sp_tol_smile.96937346.webp","smilev":"whitechapel-sp_tol_smilev.ccd7c044.webp","worried":"whitechapel-sp_tol_worried.b58196fa.webp","worriedv":"whitechapel-sp_tol_worriedv.62524293.webp","tubes":"whitechapel-sp_tol_tubes.70693179.webp","frac":"whitechapel-sp_tol_frac.c2c196f9.webp","bag":"whitechapel-sp_tol_bag.15ddb3eb.webp"},"ripper":{"neutral":"whitechapel-sp_ripper_neutral.cd582aed.webp","bag":"whitechapel-sp_ripper_bag.090a69f0.webp"}},"ui":{"crowd_hanbury":"whitechapel-ui_crowd_hanbury.5d382df6.webp","news_police_2":"whitechapel-ui_news_police_2.8f548edf.webp","ui_anatomy":"whitechapel-ui_ui_anatomy.097b9079.webp","item_link":"whitechapel-ui_item_link.74f7b292.webp","item_hairpin":"whitechapel-ui_item_hairpin.b9a63ee9.webp","item_magnifier":"whitechapel-ui_item_magnifier.836580f8.webp","item_scalpel":"whitechapel-ui_item_scalpel.487b8c5c.webp","item_cleaver":"whitechapel-ui_item_cleaver.9bfc74bb.webp","map_clean":"whitechapel-ui_map_clean.391d98ab.webp","dos_krn":"whitechapel-ui_dos_krn.643c9196.webp","dos_tol":"whitechapel-ui_dos_tol.e09c8458.webp","dos_ivan":"whitechapel-ui_dos_ivan.bdbe9262.webp","dos_mol":"whitechapel-ui_dos_mol.491f6eb8.webp","dos_rook":"whitechapel-ui_dos_rook.968f2ac6.webp","dos_abb":"whitechapel-ui_dos_abb.6a3552f2.webp","dos_hale":"whitechapel-ui_dos_hale.2e868c2f.webp","dos_seb":"whitechapel-ui_dos_seb.29389518.webp","dos_byk":"whitechapel-ui_dos_byk.6df46b3b.webp","paper_envelope_rose":"whitechapel-ui_paper_envelope_rose.2240743f.webp","news_police_1":"whitechapel-ui_news_police_1.e19d0fcd.webp","eng_constables2":"whitechapel-ui_eng_constables2.a4285b01.webp","crowd_ball":"whitechapel-ui_crowd_ball.aba8552b.webp","eng_writing":"whitechapel-ui_eng_writing.7ab2a593.webp","hand_c1":"morok-ui_hand_c1.8c932dc3.webp","hand_c2":"morok-ui_hand_c2.68e6ba08.webp","hand_c3":"morok-ui_hand_c3.332a8d3e.webp","hand_u1":"morok-ui_hand_u1.e9647558.webp","hand_u2":"morok-ui_hand_u2.580a9822.webp","hand_u3":"morok-ui_hand_u3.806938c6.webp","rip_sketch_1":"whitechapel-ui_rip_sketch_1.d499dcbc.webp","rip_sketch_2":"whitechapel-ui_rip_sketch_2.c7c06826.webp","rip_sketch_3":"whitechapel-ui_rip_sketch_3.e8bac6e9.webp","rip_sketch_4":"whitechapel-ui_rip_sketch_4.16d799ba.webp","rip_sketch_5":"whitechapel-ui_rip_sketch_5.36c6403b.webp","rip_sketch_6":"whitechapel-ui_rip_sketch_6.9aeeb9c0.webp","qte_jack":"whitechapel-qte_jack.html","crowd_lodge":"whitechapel-ui_crowd_lodge.b4438cea.webp","crowd_lodge2":"whitechapel-ui_crowd_lodge2.841142fd.webp","fx_gas":"whitechapel-ui_fx_gas.7fcb6305.webp","fx_gas2":"whitechapel-ui_fx_gas2.aad30369.webp","fx_gas_vial":"whitechapel-ui_fx_gas_vial.a12236a0.webp","qte_lock_bg":"whitechapel-ui_qte_lock_bg.32dd9351.webp","qte_lock_pick":"whitechapel-ui_qte_lock_pick.318c6aac.webp","qte_lock_tension":"whitechapel-ui_qte_lock_tension.f2708d19.webp","qte_pin_body":"whitechapel-ui_qte_pin_body.ce23812d.webp","qte_pin_spring":"whitechapel-ui_qte_pin_spring.8916848d.webp","run_byk":"whitechapel-ui_run_byk.d255b78d.webp","run_far":"whitechapel-ui_run_far.2c3bd558.jpg","run_fog":"whitechapel-ui_run_fog.a45e7828.jpg","run_gh0":"whitechapel-ui_run_gh0.a9775416.webp","run_gh1":"whitechapel-ui_run_gh1.5551bdf6.webp","run_gh2":"whitechapel-ui_run_gh2.27e95492.webp","run_gh3":"whitechapel-ui_run_gh3.137777a7.webp","run_gh4":"whitechapel-ui_run_gh4.0f6db3b9.webp","run_kat":"whitechapel-ui_run_kat.8b62bec9.webp","run_kat_jump_down":"whitechapel-ui_run_kat_jump_down.8a8c1e13.webp","run_kat_jump_up":"whitechapel-ui_run_kat_jump_up.c15b06ac.webp","run_mid":"whitechapel-ui_run_mid.b6bef0ad.webp","run_near":"whitechapel-ui_run_near.f685bff0.webp","run_ob_barrel":"whitechapel-ui_run_ob_barrel.48296bfd.webp","run_ob_cart":"whitechapel-ui_run_ob_cart.4022a8bc.webp","run_ob_crates":"whitechapel-ui_run_ob_crates.c7d424fc.webp","run_ob_dog":"whitechapel-ui_run_ob_dog.dbe1783b.webp","print_a":"whitechapel-ui_print_a.16f076e6.webp","print_b":"whitechapel-ui_print_b.f40fcdec.webp","print_c":"whitechapel-ui_print_c.aff59432.webp","print_red":"whitechapel-ui_print_red.45f59061.webp","print_match":"whitechapel-ui_print_match.f3be8bbe.webp","flask_glass":"whitechapel-ui_flask_glass.043784a6.webp","flask_cork":"whitechapel-ui_flask_cork.4f961aa6.webp","flask_rack":"whitechapel-ui_flask_rack.895bacb4.webp","from_hell_page":"whitechapel-ui_from_hell_page.b798208b.webp"},"mu":{"wc_theme":"whitechapel-mus_wc_theme.58b848e2.mp3","wc_deduce":"whitechapel-mus_wc_deduce.2ec27a98.mp3","wc_morgue":"whitechapel-mus_wc_morgue.a50b2b0c.mp3","wc_fog":"whitechapel-mus_wc_fog.eb68b715.mp3","wc_pub":"whitechapel-mus_wc_pub.276b3457.mp3","wc_hale":"whitechapel-mus_wc_hale.8b50f39e.mp3","rift":"morok-mus_rift.6229cd02.mp3","voice_rift_zub":"morok-mus_voice_rift_zub.37e5bb49.mp3","voice_rift_bliz":"morok-mus_voice_rift_bliz.62bd749a.mp3","wc_finale":"whitechapel-mus_wc_finale.e917409f.mp3","wc_tol":"whitechapel-mus_wc_tol.1926b2dd.mp3","wc_lodge":"whitechapel-mus_wc_lodge.fe564f79.mp3","wc_bal":"whitechapel-mus_wc_bal.77ad17a6.mp3","wc_seb":"whitechapel-mus_wc_seb.bc826b7a.mp3","wc_end":"whitechapel-mus_wc_end.b53d3fe2.mp3","wc_chase":"whitechapel-mus_wc_chase.40ba24ca.mp3","wc_dread":"whitechapel-mus_wc_dread.c662fe0e.mp3","wc_vamp":"whitechapel-mus_wc_vamp.b4b9ebe9.mp3","wc_mask":"whitechapel-mus_wc_mask.60c7ac7d.mp3","amb_rain":"whitechapel-mus_amb_rain.b307852f.mp3","amb_pub":"whitechapel-mus_amb_pub.a780be05.mp3","amb_crowd":"whitechapel-mus_amb_crowd.de85f837.mp3","amb_drip":"whitechapel-mus_amb_drip.b521016f.mp3","amb_fire":"whitechapel-mus_amb_fire.6f276c99.mp3","amb_clock":"whitechapel-mus_amb_clock.0f0d92cf.mp3","sfx_whistle":"whitechapel-mus_sfx_whistle.9691d6f6.mp3","sfx_hooves":"whitechapel-mus_sfx_hooves.f3cdd836.mp3","sfx_bigben":"whitechapel-mus_sfx_bigben.b9182c43.mp3","sfx_heartbeat":"whitechapel-mus_sfx_heartbeat.94453ef0.mp3","sfx_rats":"whitechapel-mus_sfx_rats.355e3060.mp3","sfx_chain1":"whitechapel-mus_sfx_chain1.27c585ec.mp3","sfx_chain2":"whitechapel-mus_sfx_chain2.af81dc7b.mp3","sfx_inhale1":"whitechapel-mus_sfx_inhale1.8a6f9c2f.mp3","sfx_inhale2":"whitechapel-mus_sfx_inhale2.9631d2b3.mp3","quill1":"whitechapel-mus_quill1.16876b76.mp3","quill2":"whitechapel-mus_quill2.1270c673.mp3","quill3":"whitechapel-mus_quill3.4d8fbac3.mp3","sfx_lockclick":"whitechapel-mus_sfx_lockclick.5ef880f5.mp3","sfx_lockopen":"whitechapel-mus_sfx_lockopen.f318d8e8.mp3","sfx_hide":"whitechapel-mus_sfx_hide.b3bf2f18.mp3"},"font":{"pfsc":"whitechapel-font_pfsc.89b12e62.woff"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
 const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const A=window.ASSETS||{bg:{},sp:{},kp:{}};
@@ -1953,6 +1998,13 @@ function endScreen(cfg){return new Promise(res=>{hideBox();MODE='end';const e=$(
   <button class="btn${cfg.next?'':' gold'}" style="margin-top:${cfg.next?10:22}px" id="endOk">Вернуться в лабораторию</button>`;
   e.classList.add('on');const fin=()=>{e.classList.remove('on');try{localStorage.setItem(SAVE_KEY+'_done','1')}catch(_){}};
   $('endOk').onclick=()=>{fin();if(window.GAME)GAME.end(ST);res()};
+  /* финал истории: показать схему развилок с пройденным путём */
+  if(cfg.flow){const open=()=>{try{if(window.GAME&&GAME.prog)GAME.prog((o,x)=>{x['ch'+(window.CHAPTER||4)]={pts:ST.pts,flags:ST.flags,clues:ST.clues,mind:ST.mind}})}catch(_){}
+      let ov=document.getElementById('flowOv');if(ov)ov.remove();ov=document.createElement('div');ov.id='flowOv';
+      ov.innerHTML='<iframe title="Схема развилок" src="'+cfg.flow+'#all"></iframe><button class="btn gold" id="flowX">Закрыть схему</button>';
+      document.body.appendChild(ov);$('flowX').onclick=()=>ov.remove()};
+    const b=document.createElement('button');b.className='btn';b.style.marginTop='10px';b.innerHTML='Схема развилок<small>какой путь привёл к этой концовке</small>';b.onclick=open;$('endOk').before(b);
+    setTimeout(open,1500)}
   if(cfg.next)$('endNext').onclick=()=>{fin();if(window.GAME&&GAME.save)GAME.save(ST);location.hash='#ch='+cfg.next+'&start';location.reload()}})}
 
 /* ---------- rules card before a QTE: the player reads the rules, then taps «Начать» ---------- */
@@ -1981,6 +2033,8 @@ function qteRules(kind,c){return new Promise(res=>{c=c||{};const d=QRULES[kind]|
 /* ---------- save / scenes ---------- */
 function save(i){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scene:i,st:ST}))}catch(e){}}
 function snap(i){try{const o=JSON.parse(localStorage.getItem(SAVE_KEY+'_snap')||'{}');o[i]=ST;localStorage.setItem(SAVE_KEY+'_snap',JSON.stringify(o))}catch(e){}}
+/* сцена из списка: состояние последнего прохождения. Не дошёл до неё — берём самую позднюю сцену до неё; ничего нет — перенос из прошлой главы, и только потом пресет */
+function sceneState(i){for(let k=i;k>=0;k--){const v=snapOf(k);if(v)return v}const s=ST0();const carried=Object.keys(s.flags||{}).length>0;return carried?s:(window.PRESET?window.PRESET(i):s)}
 function snapOf(i){try{return (JSON.parse(localStorage.getItem(SAVE_KEY+'_snap')||'{}'))[i]||null}catch(e){return null}}
 function load(){try{return JSON.parse(localStorage.getItem(SAVE_KEY)||'null')}catch(e){return null}}
 async function resetStage(){try{muStop(.6)}catch(e){}try{voStop();amb(null,{fade:.5})}catch(e){}$('rules')&&$('rules').classList.remove('on');hideBox();$('choices').classList.remove('on');$('qte').classList.remove('on');$('qte').innerHTML='';$('tarot').classList.remove('on');$('pano').classList.remove('on');$('candles').classList.remove('on');$('panoHint').classList.remove('on');fog(0);$('stage').classList.remove('sepia');$('veil').style.opacity=0;Object.values(SPR).forEach(d=>d.remove());for(const k in SPR)delete SPR[k];{const V=$('bgV');if(V){V.classList.remove('on');try{V.pause()}catch(e){}}}$('bgA').classList.remove('on');$('bgB').classList.remove('on');$('bgA').style.filter=$('bgB').style.filter='';$('world').style.filter='';const cl=$('crowdL');if(cl)cl.innerHTML='';$('stage').classList.remove('bars');CAMZ=1;CAMY=50;lastWho='';lineN=0;$('lidT').style.height=$('lidB').style.height='0%'}
@@ -1989,6 +2043,8 @@ async function play(from=0,st,only){
   RULES_SEEN={};const my=++playing;GEN=my;ABORT=0;if(st)ST=JSON.parse(JSON.stringify(st));else if(from===0)ST=ST0();
   await resetStage();$('home').style.display='none';
   const SC=window.SCENES;
+  /* новое прохождение с начала главы: старые снимки сцен больше не про него */
+  if(from===0&&!only){try{localStorage.removeItem(SAVE_KEY+'_snap')}catch(e){}}
   try{for(let i=from;i<SC.length;i++){if(my!==playing)return;save(i);if(!only)snap(i);$('chap').textContent=SC[i].tag||'';await run(SC[i].steps);if(only)break}}
   catch(e){if(e.message!=='abort')console.error(e)}
   if(my===playing){await resetStage();showHome()}}
@@ -2007,7 +2063,7 @@ function initUI(){
   $('mHome').onclick=()=>{$('menu').classList.remove('on');stop();setTimeout(()=>{resetStage();showHome()},50)};
   $('hStart').onclick=()=>{$('home').classList.remove('chapsel');if(window.GAME)GAME.start();try{localStorage.removeItem(SAVE_KEY)}catch(e){}play(0)};
   $('hCont').onclick=()=>{const sv=load();if(sv)play(sv.scene,sv.st)};
-  const g=$('hScenes');window.SCENES.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=(i+1)+'. '+s.name;b.onclick=()=>play(i,snapOf(i)||(window.PRESET&&window.PRESET(i)),false);g.appendChild(b)});
+  const g=$('hScenes');if(g)window.SCENES.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=(i+1)+'. '+s.name;b.onclick=()=>play(i,sceneState(i),false);g.appendChild(b)});
   (function(){const cp=$('hChaps');if(!cp)return;let st={};try{st=((JSON.parse(localStorage.getItem('sboi_progress')||'{}').stories||{})[SIDX])||{}}catch(x){}
     const reach=st.state==='done'?4:Math.max(1,st.chapter||1);const names=window.CHAP_NAMES||['Ведьма из Скуфьина','Слепой','Купала','Суд'];
     names.forEach((nm,i)=>{const n=i+1,b=document.createElement('button');b.className='btn chap'+(n===window.CHAPTER?' sel':'');const open=n<=reach;
@@ -2063,7 +2119,7 @@ H.letter=o=>Object.assign({c:'wc_letter'},o);
 H.fav=st=>{const p=st.pts||{},m=Math.max(p.T||0,p.S||0,p.H||0);if(m<4)return null;return (p.T||0)===m?'T':(p.S||0)===m?'S':'H'};
 H.isFav=k=>st=>H.fav(st)===k;
 /* сколько улик против Хейла собрано */
-H.HALE=['h_dry','h_link','h_room','h_journal','h_crown','h_chalk','h_45min','h_nocab','h_first','h_telegram','h_oven','ring_rot',
+H.HALE=['h_dry','h_link','h_room','h_journal','h_crown','h_chalk','h_45min','h_first','h_telegram','h_oven','ring_dark','h_window','h_cuff','h_blame_abb',
   /* 1.0.47: улики, которые дают развилки */ 'h_escort','h_posts','h_report','h_kidnap','h_friend'];
 H.haleEv=st=>H.HALE.filter(k=>st.flags[k]).length;
 /* сколько ошибок прощает финальное QTE: уклонение, Ярд, ранение */
@@ -2649,7 +2705,7 @@ const SC1=[
  hide(),veil(1,800),
  /* утро, Ярд */
  bg('yard_office',{t:10,cam:50,kat:14}),veil(0,800),mus('wc_hale',{fade:2}),amb('amb_rain',{vol:.2}),
- show('hale','neutral',62),show('abb','neutral',86),show('tol','neutral',38),
+ show('hale','neutral',62),show('abb','neutral',86),show('tol','bag',38),
  scr('Утро. Ярд. Доктора Толбота привели на допрос. Катя просит сравнить его пальцы с кровавым отпечатком на воротнике первой жертвы.'),
  say('abb','Отпечатки пальцев? Мисс, это даже не наука, это салонный фокус.'),
  say('hale','Фокус или нет, а сэр Френсис Гальтон на этом статью пишет. Пусть попробует.'),
@@ -2831,7 +2887,7 @@ const SC3=[
   {t:'Танец с доктором Толботом.',then:[set('dance_T'),pts({T:2}),hide(),bg('cg_w3_ball_tol',{tr:'black',z:1.03,y:50})]},
   {t:'Танец с инспектором Хейлом.',then:[set('dance_H'),pts({H:2}),hide(),bg('cg_w3_ball_hale',{tr:'black',z:1.03,y:50})]}
  ],'С кем вальс?'),
- s=>run([{c:'wc_waltz',vid:s.flags.dance_S?'waltz_v':null,bg:s.flags.dance_S?'cg_w3_ball_seb':s.flags.dance_T?'cg_w3_ball_tol':'cg_w3_ball_hale',n:s.flags.dance_S?6:8,allow:2,hint:'Вальс',sub:'Он ведёт. Шаг туда, куда стрелка, — в такт',
+ s=>run([{c:'wc_waltz',vid:s.flags.dance_S?'waltz_v':s.flags.dance_T?'waltz_t':'waltz_h',bg:s.flags.dance_S?'cg_w3_ball_seb':s.flags.dance_T?'cg_w3_ball_tol':'cg_w3_ball_hale',n:6,allow:2,hint:'Вальс',sub:'Он ведёт. Шаг туда, куда стрелка, — в такт',
   ok:[set('waltz_ok'),scr('Зал расступается. Кто-то даже аплодирует.'),
    when(F('dance_S'),[say('seb','Вы танцуете так, будто знаете, куда я поведу. Опасное качество.')]),
    when(F('dance_T'),[say('tol','Я вам ни разу не отдавил ногу! Это рекорд. Это надо записать.','smile')]),
@@ -2885,7 +2941,7 @@ const SC3=[
  th('Почему убивают девушек? Это его рук дело?','ball_scared'),
  th('Досье. В Ярде есть дело лорда Грея — я видела папку с гербом у Эбберлайна. Надо его прочитать. Сегодня же.','determined'),
  scr('Катя тихо уходит с бала, не прощаясь. На лестнице теряет шпильку и не возвращается за ней.'),
- hide(),bg('arch_cab',{tr:'black',cam:50}),mus('wc_fog',{fade:1.5}),
+ hide(),bg('cg_w2_cab',{tr:'black',z:1.03,y:50}),mus('wc_fog',{fade:1.5}),
  scr('У ворот — первый попавшийся кэб. Катя подбирает подол и запрыгивает внутрь, пока кучер не успел слезть с козел.'),
  say('kat','Уайтчепел. Быстрее, пожалуйста.','determined'),
  th('Полночь. Бал. Сбежала, не попрощавшись. Не хватает только туфельки на лестнице.','ironic'),
@@ -3047,15 +3103,13 @@ const SC1=[
  bg('cells',{t:10,cam:60,kat:30}),veil(0,900),mus('wc_hale',{fade:2,vol:.7}),amb('amb_drip',{vol:.4}),
  title('Участок на Леман-стрит','30 сентября · 1:20'),
  scr('Камеры участка на Леман-стрит. Сырость, решётки, коптящая лампа.'),
- hide(),bg('cg_w2_ivan_cell',{tr:'black',z:1.03,y:46}),
+ hide(),bg('cells_ivan',{tr:'black',cam:72}),
  scr('Иван стоит у решётки, вцепившись в прутья. Смотрит вверх, в узкое окно, где ничего нет.'),
  warm(2),
- sfx('sfx_chain1',{vol:.7}),say('ivan','Кольцо… держать… надо держать…'),
- say('kat','Ваня. Это я. Катя.','tears'),
- say('ivan','…Зубкова?','sad'),
- th('Он сказал «Зубкова». Он вспомнил фамилию. Значит, он там, внутри. Просто дверь закрыта.','tears'),
- fact('ivan','за решёткой бормочет «кольцо… держать» и узнаёт фамилию Кати'),
- bg('cells',{t:600,cam:60,kat:30}),show('ivan','chained',66),
+ sfx('sfx_chain1',{vol:.7}),say('ivan','Что же тут происходит?..','lost'),
+ th('Он спрашивает сам себя. Не меня. Как будто проснулся в чужой жизни.','tears'),
+ fact('ivan','за решёткой не понимает, где он и что происходит'),
+ bg('cells_ivan',{t:600,cam:72,kat:22}),
  th('Каждую ночь он «выключается» и куда-то идёт. Его ведут. Как… как спящего агента. Его включают по ночам!','eureka'),
  ...theory('t_sleeper','Иван — спящий агент, его включают по ночам'),
  scr('Катя просит дежурного дать ей кружку, из которой Иван пил воду. Сажа, лист бумаги, лупа.'),
@@ -3093,22 +3147,17 @@ const SC1=[
  hide('hale'),
  /* констебль между делом */
  show('cst','calm',70),
- say('cst','Мисс, вы с инспектором? Передайте ему, что я записал всё для отчёта. Его с полуночи никто не видел — я спрашивал по постам.'),
- say('cst','И ещё. Он тогда, на Бакс-роу, сказал «взял кэб от участка». Так кэбов в ту ночь на Бакс-роу не было. Я узнавал у извозчиков. Для отчёта, мисс. Для порядка.'),
- find('h_45min','С полуночи Хейла никто не видел'),find('h_nocab','Кэбов на Бакс-роу в ту ночь не было'),
- th('Ну, обход. Он всегда в обходе. Пешком, без кэба, мозоли от фонаря. Всё сходится.','neutral'),
+ say('cst','Мисс, а вы с инспектором были? А то мы его с полуночи не могли найти.'),
+ find('h_45min','С полуночи Хейла никто не мог найти'),
+ th('Ну, обход. Он всегда в обходе. Всё сходится.','neutral'),
  hide(),veil(1,800)
 ];
 
 /* ======================= СЦЕНА 2 · Митр-сквер → Гоулстон-стрит ======================= */
 const SC2=[
  paper('eng_constables2','Двойное событие','Две жертвы за одну ночь. Свистки констеблей слышал весь Уайтчепел','Лондон, 30 сентября 1888'),
- bg('mitre_body',{t:10,cam:50,kat:30}),veil(0,800),mus('wc_fog',{fade:2}),amb('amb_rain',{vol:.4}),
+  when(F('mitre_late'),[bg('yard_fog',{t:10,cam:50,kat:30})],[bg('mitre_body',{t:10,cam:50,kat:30})]),veil(0,800),mus('wc_fog',{fade:2}),amb('amb_rain',{vol:.4}),
  title('Митр-сквер','30 сентября · 1:50'),
- scr('Митр-сквер. Пустая площадь, туман по колено, один фонарь. Тело уже под простынёй. Констебли курят у стены, руки дрожат.'),
- show('hale','neutral',70),
- say('hale','Он успел. За сорок пять минут — через весь район. Мимо трёх постов.'),
- hide('hale'),
  when(F('mitre_late'),[
   scr('Катя добирается до Митр-сквер пешком, через сорок минут. Тело уже унесли. Констебли натоптали, фонарь потушили.'),
   th('Опоздала. Половины не увижу. Спасибо, гордость.','sad'),
@@ -3119,9 +3168,13 @@ const SC2=[
    {id:'m_wet',x:22,y:72,label:'под простынёй камни сухие — лежит с начала дождя… нет, с конца'},
    {id:'m_steps',x:80,y:88,label:'следы ведут в сторону Гоулстон-стрит'}
   ],
-  pair:[['m_print','m_steps','d_print_full','Полный кровавый отпечаток. Теперь есть с чем сравнивать']]})
+  pair:[['m_print','m_steps','d_print_full','Полный кровавый отпечаток. Теперь есть с чем сравнивать']]}),
  ],[
- scan({bg:'yard_fog',hint:'Он торопился. Что он оставил?',need:3,
+ scr('Митр-сквер. Туман по колено, один фонарь. Тело ещё лежит на камнях. Констебли курят у стены, руки дрожат.'),
+ show('hale','neutral',70),
+ say('hale','Он успел. За сорок пять минут — через весь район. Мимо трёх постов.'),
+ hide('hale'),
+ scan({bg:'mitre_body',hint:'Он торопился. Что он оставил?',need:3,
   spots:[
    {id:'m_print',x:58,y:78,label:'полный кровавый отпечаток на камне — ладонью оперся',alts:['чужой?','старый?']},
    {id:'m_apron',x:38,y:84,label:'нет куска фартука жертвы — унёс с собой'},
@@ -3145,6 +3198,8 @@ const SC2=[
   ok:[set('recall_ok'),ray(4),scr('Катя успевает. Слова — и рядом, у самого края, маленькая фиолетовая стрелка, выжженная в кирпиче.'),
    find('ray4_note','Стрелка-подпалина у меловой надписи')],
   fail:[set('recall_fail'),scr('Слова расплываются в памяти. Остаётся только ощущение: рядом было что-то ещё. Что-то фиолетовое.')]},[]),
+ say('kat','«Евреи — не те люди, что будут обвинены»… Бессмыслица. В это время евреев считали виновниками просто так. Это уловка.','determined'),
+ th('Кто-то хочет, чтобы толпа смотрела не туда.','determined'),
  hide(),bg('cg_w3_hale_erase',{tr:'black',z:1.03,y:46}),
  scr('Хейл сам стирает надпись рукавом и ладонью. Широко, тщательно, до последней буквы.'),
  hide(),bg('cg_w3_chalk_hand',{t:600,z:1.04,y:50}),
@@ -3169,7 +3224,11 @@ const SC2=[
  blur(0,900),mus('wc_fog',{fade:1.5}),
  bg('alley_crates',{t:600,cam:50,kat:30}),show('byk','parcel',64),
  say('byk','Тихо, тихо, мисс! Я ж только посыльный. Велели отнести — несу, а что внутри — не моё дело.'),
- scr('В свёртке — перстень с глазом и фиолетовый камень. Камень светится.'),
+ say('kat','Открывай.','determined'),
+ scr('Бык нехотя разворачивает свёрток.'),
+ hide(),bg('cg_w3_parcel',{tr:'black',z:1.03,y:50}),
+ scr('Внутри, на чёрном бархате, — перстень с глазом и фиолетовый камень. Камень светится.'),
+ bg('alley_crates',{t:500,cam:50,kat:30}),show('byk','parcel',64),
  warm(2),
  say('byk','Ложа. «Рассвет». Я раньше на старой бойне туши рубил, теперь им ношу — тела на похороны, коробки, письма. Я ничего не знаю, мисс, клянусь матерью!'),
  secret('byk'),fact('byk','тайна: носит посылки ложе «Рассвет»'),fact('byk','раньше рубил туши на старой бойне'),
@@ -3199,9 +3258,11 @@ const SC2=[
 
 /* ======================= СЦЕНА 3 · Разлом (узел 1 «Вспышка») ======================= */
 const SC3=[
- bg('corner_lamp',{t:10,cam:50,kat:30}),veil(0,600),mus('wc_fog',{fade:1}),
- scr('Хейл уводит Быка в участок. Грач убегает к рынку. Катя остаётся одна на Гоулстон-стрит — мокрая стена, стёртая надпись, фонарь.'),
- th('Три ночи без сна. Иван в камере, ложа, лорд-вампир, лорд-мэр. Ещё немного — и я начну разговаривать с фонарями.','ironic'),
+ bg('goulston_wiped',{t:10,cam:50,kat:50}),veil(0,600),mus('wc_fog',{fade:1}),
+ scr('Грач убегает к рынку. Катя остаётся одна на Гоулстон-стрит — мокрая стена, стёртая надпись, фонарь.'),
+ th('Три часа ночи. Иван в камере, какая-то ложа, странный лорд, голодный туман.','sad'),
+ when(F('hale_lied'),[th('И обиженный инспектор.','sad')]),
+ th('Нужно что-то делать. Особенно с собой: я уже не знаю, какая из теорий правда, а какая бред. Тут все сумасшедшие.','ironic'),
  mus('rift',{fade:.4,vol:.95}),sfx('heart'),shake(),vib(80),flash('#b89bff',700),glitch(500),
  scr('Капли дождя замирают в воздухе. Фонарь перестаёт мигать. Посреди улицы трескается сама реальность.'),
  hide(),bg('cg_w3_rift',{t:10,z:1.06,y:50,kb:'in'}),glitch(300),
@@ -3213,7 +3274,7 @@ const SC3=[
  voice('voice_rift_bliz',{duck:.3}),say('Катя Близнюк (из разлома)','Катя, там, у тебя! Не верь ему! Он водит тебя за нос!'),
  flash('#ffffff',600),shake(),
  clue('c8','НЕ ДОВЕРЯЙ ЕМУ','<p>Крик из разлома. Голос Кати Близнюк: «Не верь ему! Он водит тебя за нос!»</p>'),
- bg('corner_lamp',{t:500,cam:50,kat:30}),mus('wc_fog',{fade:1.4}),
+ bg('goulston_wiped',{t:500,cam:50,kat:50}),mus('wc_fog',{fade:1.4}),
  scr('Капли падают. Фонарь снова мигает. Улица пустая, будто ничего не было.'),
  th('«Не верь ему». Кому — ему?','scared'),trait(9),
  choice([
@@ -3231,52 +3292,92 @@ const SC3=[
 ];
 
 /* ======================= СЦЕНА 4 · Ложа «Рассвет» ======================= */
+const ROM_S=st=>fav(st)==='S'||(st.pts.S||0)>=4;
 const SC4=[
  bg('library',{t:10,cam:50,kat:30}),veil(0,800),mus('wc_theme',{fade:2,vol:.7}),amb('amb_fire',{vol:.4}),
  title('Мэйфэр','3 октября · 23:00'),
- when(F('byk_debt'),[
-  show('byk','neutral',66),
-  say('byk','Мисс. Долг. Под особняком Грея есть ход. Ложа собирается в полночь. Я вас проведу, а дальше — сами.'),
-  hide('byk')
- ],[
+ when(ROM_S,[
   show('seb','neutral',66),
   say('seb','Вы ищете ложу. Я знаю, где она. Я сам член — по договору, а не по любви.'),
   say('seb','Пойдёмте. Держитесь за моей спиной и ничего не трогайте.'),
-  hide('seb')
+  hide('seb'),set('lodge_seb')
+ ],[
+  when(F('byk_debt'),[
+   show('byk','neutral',66),
+   say('byk','Мисс. Долг. Под особняком Грея есть ход. Ложа собирается в полночь. Я вас проведу, а дальше — сами.'),
+   hide('byk')
+  ],[
+   th('Перстни с глазом, посылки для ложи, особняк Грея. Если ложа где-то и собирается — то здесь.','determined')
+  ]),
+  when(isFav('T'),[show('tol','worried',66),say('tol','Я с вами. Не спорьте. Если там режут — нужен тот, кто умеет зашивать.'),hide('tol'),set('lodge_tol')]),
+  when(isFav('H'),[show('hale','neutral',66),say('hale','Одну я вас туда не пущу. Я буду в двух шагах. Тихо.'),hide('hale'),set('lodge_hale')])
  ]),
  when(s=>s.flags.prog_shakespeare&&(s.pts.S||0)>=3,[
   th('«Люблю читать Шекспира». Программка с бала. Это была подсказка.','eureka'),
   scr('Катя ведёт пальцем по корешкам. Шекспир, том «Макбет». Она тянет книгу на себя — внутри шкафа что-то щёлкает.'),
   pts({S:1}),set('shakespeare_door')
+ ],[
+  when(s=>!s.flags.lodge_seb,[scr('Катя простукивает полки, пока один из томов не поддаётся. Внутри шкафа что-то щёлкает.')])
  ]),
  hide(),bg('cg_w3_lodge_door',{tr:'black',z:1.03,y:50}),
  scr('Книжный шкаф поворачивается на петлях. За ним — каменная лестница вниз и золотые знаки на арке. Снизу тянет свечным воском.'),
  bg('cult_hall',{t:900,cam:50,kat:28}),mus('wc_lodge',{fade:1.2}),amb('amb_drip',{vol:.3}),
  scr('Подземный зал. Золотой круг на полу, фиолетовое свечение над алтарём. Люди в мантиях.'),
- hide(),{c:'wc_group',img:'crowd_lodge2',x:50,y:58.5,h:30},
- say('krn','Мисс Зубкова. Я надеялся, что вы придёте. Камни всегда приводят друг к другу.'),
- say('krn','Ложа «Рассвет» собирает Камни Рассвета. Они дают видения. Власть над тем, что люди считают реальным. Лорд-мэр видел свои видения — и подписал всё, что нам было нужно.'),
- say('kat','Вы забираете камни из мёртвых девушек. Ваши «благотворительные похороны».','determined'),
- when(F('rift_lodge'),[
-  say('kat','Кто ваш «друг»? Голос из… неважно. Мне сказали не верить вам. Значит, вы знаете, кому верить нельзя.','determined'),
-  say('krn','Друг приходит ночью, лица не показывает. Серое пальто, котелок — как у половины Лондона. Пахнет карболкой. И сажей.'),
-  find('h_friend','«Друг» ложи: серое пальто, котелок, пахнет карболкой и сажей'),
-  th('Серое пальто и котелок. Пол-Лондона. Карболка — каждый, кто бывает в морге. Ничего не сужает.','neutral')
+ when(F('lodge_seb'),[
+  /* романтическая ветка Грея: Крейн принимает гостью и показывает шкатулку */
+  hide(),{c:'wc_group',img:'crowd_lodge2',x:50,y:58.5,h:30},
+  say('krn','Мисс Зубкова. Я надеялся, что вы придёте. Камни всегда приводят друг к другу.'),
+  say('krn','Ложа «Рассвет» собирает Камни Рассвета. Они дают видения. Власть над тем, что люди считают реальным. Лорд-мэр видел свои видения — и подписал всё, что нам было нужно.'),
+  say('kat','Вы забираете камни из мёртвых девушек. Ваши «благотворительные похороны».','determined'),
+  when(F('rift_lodge'),[
+   say('kat','Кто ваш «друг»? Мне сказали не верить вам. Значит, вы знаете, кому верить нельзя.','determined'),
+   say('krn','Друг приходит ночью, лица не показывает. Серое пальто, котелок — как у половины Лондона. Пахнет карболкой. И сажей.'),
+   find('h_friend','«Друг» ложи: серое пальто, котелок, пахнет карболкой и сажей'),
+   th('Серое пальто и котелок. Пол-Лондона. Карболка — каждый, кто бывает в морге. Ничего не сужает.','neutral')
+  ]),
+  hide(),bg('cg_w3_krn_box',{tr:'black',z:1.03,y:50}),
+  scr('Крейн открывает чёрную шкатулку. На бархате — дюжина фиолетовых кристаллов. Под каждым — бирка с именем.'),
+  say('krn','Мы их не убиваем. Нам их… приносит друг. Он находит, мы забираем. Честный обмен.'),
+  say('krn','А мел на Гоулстон-стрит видели? Удобно. Пусть толпа ищет чужаков, а не нас.'),
+  bg('cult_hall',{t:600,cam:50,kat:28}),{c:'wc_group',img:'crowd_lodge2',x:50,y:58.5,h:30},
+  scr('Из-за спин мантий кто-то шипит: «Она видела шкатулку». Блестят кинжалы.'),
+  s=>run((((window.ASSETS||{}).bg||{}).cg_w3_lodge_knives)?[hide(),mus(null,{fade:.3}),bg('cg_w3_lodge_knives',{tr:'black',z:1.04,y:50,kb:'in'}),sfx('heart'),shake(),vib(120)]:[])
+ ],[
+  /* сами / с Толей / с Хейлом: подглядываем за ритуалом из-за колонны */
+  sfx('sfx_hide',{vol:.8}),scr('Катя прячется за колонной.'),
+  when(F('lodge_tol'),[scr('Толя дышит ей в затылок так громко, что хочется его придушить.')]),
+  when(F('lodge_hale'),[scr('Хейл остался у лестницы — сторожить выход.')]),
+  hide(),bg('cg_w3_ritual',{tr:'black',z:1.03,y:46}),
+  scr('В центре круга — мистер Крейн. Он поднимает фиолетовый осколок над серебряной чашей. Мантии вокруг опускаются на колени.'),
+  say('krn','Братья. Ещё один Камень Рассвета. Друг принёс его этой ночью. Скоро их хватит, чтобы открыть дверь.'),
+  say('krn','А надпись на Гоулстон-стрит — пусть толпа ищет чужаков, а не нас. Полиция уже стёрла, газеты дорисуют.'),
+  th('Значит, мел — их подсказка толпе. Или подсказка «друга».','determined'),
+  when(F('rift_lodge'),[
+   say('krn','Друг просил передать: приходить будет так же — ночью, в сером пальто. И чтобы никто не смел спрашивать его имя.'),
+   find('h_friend','«Друг» ложи: ходит ночью в сером пальто, имя спрашивать запрещено'),
+   th('Серое пальто. Пол-Лондона.','neutral')
+  ]),
+  th('Перстни с глазом, осколки, «дверь». Секта. Настоящая.','scared'),
+  sfx('knock',{vol:.6}),shake(),
+  scr('Под ногой Кати скрипит половица. Сотня свечей вздрагивает разом.'),
+  bg('cult_hall',{t:400,cam:50,kat:28}),{c:'wc_group',img:'crowd_lodge2',x:50,y:58.5,h:30},
+  say('krn','У нас гостья. Взять её.'),
+  s=>run((((window.ASSETS||{}).bg||{}).cg_w3_lodge_knives)?[hide(),mus(null,{fade:.3}),bg('cg_w3_lodge_knives',{tr:'black',z:1.04,y:50,kb:'in'}),sfx('heart'),shake(),vib(120)]:[]),
+  scr('Мантии поднимаются. Из рукавов — кинжалы. Полукругом, шаг за шагом, они идут к колонне.'),
+  th('Бежать некуда. Сзади стена.','scared')
  ]),
  trait(11),
- hide(),bg('cg_w3_krn_box',{tr:'black',z:1.03,y:50}),
- scr('Крейн открывает чёрную шкатулку. На бархате — дюжина фиолетовых кристаллов. Под каждым — бирка с именем.'),
- say('krn','Мы их не убиваем. Нам их… приносит друг. Он находит, мы забираем. Честный обмен.'),
- bg('cg_w3_ritual',{t:700,z:1.03,y:46}),
- scr('Он поднимает камень над серебряной чашей. Мантии опускаются на колени. Свет течёт по золотому кругу, как вода.'),
- bg('cult_hall',{t:700,cam:50,kat:28}),{c:'wc_group',img:'crowd_lodge2',x:50,y:58.5,h:30},
- secret('krn'),fact('krn','тайна: магистр ложи «Рассвет»; забирает камни из тел через похороны'),fact('krn','камни ему «приносит друг»'),
- scr('Над алтарём что-то хлопает. Склянка лопается, и по залу ползёт фиолетовый дым.'),
- say('krn','Что это?! Кто принёс это сюда?!','neutral'),
- hide(),bg('cg_w3_lodge_gas',{tr:'black',z:1.03,y:46}),
- scr('Мантии бегут, падают, сбивают свечи. Фиолетовая дымка ползёт по полу к Кате.'),
- sfx('sfx_inhale2',{vol:.9}),qteBreath({need:20,time:7000,hint:'Газ страха',sub:'Тапай, чтобы не вдохнуть',okT:'Не вдохнула',failT:'Пыль в лёгких',
-  ok:[set('breath_ok'),scr('Катя зажимает рот рукавом и не дышит. Дым проходит мимо, как волна.')],
+ secret('krn'),fact('krn','магистр ложи «Рассвет»; собирает фиолетовые камни'),fact('krn','камни ему «приносит друг»'),
+ /* вылетает вампир */
+ hide(),mus('wc_vamp',{fade:.6}),bg('cg_w4_seb_vamp',{tr:'black',z:1.04,y:44}),shake(),vib(160),
+ scr('Чёрная тень падает с галереи. Себастьян. Глаза красные, на руках когти. Первого с кинжалом он отшвыривает, как куклу.'),
+ scr('Кольцо на пальце Кати чернеет — холодной чернотой, как иней. И через секунду сходит.'),
+ bg('cult_hall',{t:500,cam:50,kat:28}),
+ say('krn','Грей! Договор!..','neutral'),
+ scr('Крейн разбивает о пол склянку. По залу ползёт фиолетовый дым.'),
+ sfx('sfx_inhale2',{vol:.9}),
+ {c:'wc_gas',bg:'cult_hall',dur:18,lives:3,hint:'Газ страха',sub:'Беги к лестнице. Свайп или тап влево-вправо — уходи от клубов дыма',
+  ok:[set('breath_ok'),scr('Катя вылетает на лестницу, зажимая рот рукавом. Дым остаётся внизу.')],
   fail:[set('nightmare'),
    blur(8,600),glitch(500),mus('rift',{fade:.4,vol:.8}),
    hide(),bg('cg_w4_ivan_ring',{tr:'black',z:1.05,y:50,kb:'in'}),
@@ -3288,34 +3389,28 @@ const SC4=[
    when(isFav('S'),[show('seb','neutral',62),say('seb','Катя. Вернитесь. Я держу вас.')]),
    when(isFav('H'),[show('hale','neutral',62),say('hale','Мисс Зубкова! Я здесь. Я всегда рядом.')]),
    when(st=>!fav(st),[th('Никто не держит. Я выплываю сама. Как всегда.','sad')]),
-   hide()]}),
- bg('cult_hall',{t:600,cam:50,kat:28}),
- scr('Мантии разбегаются. Кто-то кричит. Из темноты на Катю бросается фигура в капюшоне — с ножом.'),
- hide(),mus('wc_vamp',{fade:.6}),bg('cg_w4_seb_vamp',{tr:'black',z:1.04,y:44}),shake(),vib(160),
- scr('Её закрывают. Себастьян. Глаза красные, на руках когти. Он отшвыривает нападавшего, как куклу.'),
- scr('Кольцо на пальце Кати чернеет — холодной чернотой, как иней. И через секунду сходит.'),
- bg('cult_hall',{t:600,cam:50,kat:28}),show('seb','vamp_claws',64),
+   hide()]},
+ bg('library',{t:600,cam:50,kat:30}),mus('wc_vamp',{fade:1}),amb('amb_fire',{vol:.4}),show('seb','vamp_claws',64),
  say('kat','Я ЗНАЛА. Вампир! Я знала с первого дня!','eureka'),
  say('seb','Вы знали и смеялись над собой. Это было мило.','neutral'),
- secret('seb'),fact('seb','тайна раскрыта: вампир. Девушки давали ему кровь за плату'),fact('seb','закрыл Катю собой в зале ложи'),
+ secret('seb'),fact('seb','вампир. Девушки давали ему кровь за плату'),fact('seb','закрыл Катю собой в зале ложи'),
  say('kat','Полли и Энни. Ваши «гостьи».','determined'),
  say('seb','Мои доноры. Я платил и никого не трогал без спроса. Я их не убивал.'),
- say('seb','Договор ложи запечатал мне рот. Имя убийцы я сказать не могу. Физически. Язык не повернётся.'),
- fact('seb','знает, кто такой Потрошитель, но связан договором'),
  when(F('rift_seb'),[
   say('seb','И да. Вы решили, что я «вожу вас за нос». Я слышал, как вы это сказали фонарю.','cold'),
-  pts({S:-1}),
-  say('seb','Обидно. Поэтому скажу больше, чем стоило бы. Он всегда приходит первым. Подумайте, кто приходит первым.','cold'),
-  find('h_first','Себастьян: «Он всегда приходит первым»'),
-  th('…Первым.','scared')
+  pts({S:-1})
  ]),
- when(st=>!st.flags.rift_seb&&(st.pts.S||0)>=3,[
-  say('seb','Но одно скажу. Он всегда приходит первым.'),
-  find('h_first','Себастьян: «Он всегда приходит первым»'),
-  th('…Первым.','scared')
- ]),
- scr('Отпечаток Крейна Катя снимает с его же перстня. Не совпадает. А в ночь на тридцатое Крейн был здесь, при двадцати свидетелях в мантиях.'),
- fact('krn','отпечаток не совпал; алиби на 30 сентября'),
+ say('seb','Договор с ложей не дал мне возможности раскрыть свою сущность. Но одно я вам подскажу.'),
+ say('seb','Ваш интерес приходит раньше.','cold'),
+ find('h_first','Себастьян: «Ваш интерес приходит раньше»'),
+ fact('seb','знает, кто Потрошитель, но связан договором с ложей'),
+ th('…Раньше. Раньше кого? Раньше полиции?','scared'),
+ hide('seb'),
+ scr('На ступенях валяется серебряная чаша Крейна. Катя заворачивает её в платок.'),
+ WC('prints',{cand:[{n:'Крейн',t:'whorl',s:7}],target:{t:'loop',s:5},answer:-1,sub:'Отпечаток с чаши Крейна. Совпадает?',
+  ok:[th('Завиток. А на воротнике — петля. Не он.','determined')],
+  fail:[th('Не совпадает. Крейн не резал сам.','determined')]},[]),
+ fact('krn','отпечаток не совпал с кровавым'),
  hide(),veil(1,800)
 ];
 
@@ -3370,10 +3465,12 @@ const SC5=[
   th('Я хотела поймать Ивана. А поймала тех, кто ловит Ивана. Цепочка… у пол-Лондона цепочки.','scared'),
   set('saw_kidnap')
  ],[
-  scr('А ночью Грач колотит в дверь миссис Харт.')
+  veil(1,600),bg('room_hart_night',{t:10,cam:50,kat:34}),veil(0,600),amb('amb_clock',{vol:.35}),
+  title('У миссис Харт','5 октября · 2:10'),
+  scr('Ночь. Катя уже засыпает, когда в дверь кто-то колотит кулаком.')
  ]),
  show('rook','scared',62),
- say('rook','Мисс! Бармена увели! Двое, в плащах, лиц не видно! Он шёл сам, как во сне, а они его под руки!'),
+ say('rook','Мисс! Бармена увели! Только что! Стоял за стойкой, кальян чистил — и вдруг пошёл. Сам, как во сне. А у двери двое в плащах подхватили его под руки!'),
  say('rook','Кальян опять тёплый!','scared'),
  th('Его забрали. Того, кто держит дверь. Кто-то закрывает дверь.','scared'),
  hide(),
@@ -3393,21 +3490,29 @@ window.PRESET=i=>({pts:{T:3,S:4,H:2},flags:{walk_H:1,hale_print:1,told_truth:1,h
 window.MINI=[
  {name:'QTE «Погоня»',steps:[bg('run_alley',{t:600}),mus('wc_chase'),{c:'wc_chase',dur:40,ok:[scr('Догнала.')],fail:[scr('Ушёл.')]}]},
  {name:'«Запомни надпись»',steps:[bg('corner_lamp',{t:600}),mus('wc_deduce'),WC('recall',{ok:[scr('Запомнила.')],fail:[scr('Слова расплылись.')]},[])]},
- {name:'QTE «Дыхание»',steps:[bg('cult_hall',{t:600}),mus('wc_lodge'),qteBreath({need:20,time:7000,hint:'Газ страха',sub:'Тапай, чтобы не вдохнуть',ok:[scr('Не вдохнула.')],fail:[scr('Пыль в лёгких.')]})]}
+ {name:'QTE «Побег от газа»',steps:[bg('cult_hall',{t:600}),mus('wc_lodge'),{c:'wc_gas',bg:'cult_hall',dur:18,lives:3,ok:[scr('Выбралась.')],fail:[scr('Пыль в лёгких.')]}]}
 ];
 window.STORY_CAST=C1.STORY_CAST;
 })();
-</script><script>__C[3]={SCENES:window.SCENES,PRESET:window.PRESET,MINI:window.MINI,CHARS:window.CHARS,STORY_CAST:window.STORY_CAST};</script><script>/* ===== Уайтчепел · Глава 4 «Из ада» (октябрь – 9 ноября 1888) — по библии v4 =====
-   Твист: убийца — инспектор Хейл. Концовки: полная / частичная / провал (+ вариант Хейла-фаворита). */
+</script><script>__C[3]={SCENES:window.SCENES,PRESET:window.PRESET,MINI:window.MINI,CHARS:window.CHARS,STORY_CAST:window.STORY_CAST};</script><script>/* ===== Уайтчепел · Глава 4 «Из ада» (октябрь – 9 ноября 1888) — v1.0.51 =====
+   Порядок: морг → печь (если Толя пускает) → дома кружка Хейла → Чертоги и Молли (стук в дверь)
+   → утро: полиция (обвинение) ИЛИ бойня (спасти Ивана).
+   Концовки: «Засада» (обвинила Хейла и убедила/угадала место), «Из ада» (бойня, полная),
+   «Обвал» (бойня, частичная), «Провал» (бойня, бой проигран), «Тёмная» (фаворит Хейл, взяла его руку),
+   «Ошибка» (обвинила не того: казнь/исчезновение → Хейл приходит ночью → смерть Кати). */
 (()=>{
 const C1=window.__C[1];
 window.CHARS=Object.assign({},C1.CHARS,{ivan:{name:'Иван',tall:.99},tol:{name:'Толя',tall:.97},krn:{name:'Крейн',tall:1.0},byk:{name:'Бык',tall:1.12},hale:{name:'Хейл',tall:1.02}});
 const {bg,say,th,scr,show,hide,choice,when,set,pts,clue,wait,flash,veil,shake,title,sfx,voice,amb,mus,cam,blur,bars,glitch,vib,evidence,qteShake,end}=S;
 const {F,NF,M,fact,ally,find,deduce,theory,trait,vertex,ray,secret,scrap,yard,WC,scan,paper,mind,warm,fav,isFav,haleEv,rays,fightAllow}=WCH;
-const PRINT=s=>!!(s.flags.hale_print||s.flags.hale_print2);
-const ALT=s=>s.flags.acc_wrong||s.flags.dark_end||s.flags.ambush;
-const FULL=s=>!ALT(s)&&s.flags.molly_saved&&!s.flags.lair_late&&(haleEv(s)>=4||PRINT(s))&&!s.flags.fight_lost;
-const FAIL=s=>!ALT(s)&&((s.flags.lair_late&&s.flags.fight_lost)||(haleEv(s)<2&&!PRINT(s)));
+const SEP=s=>!!s.flags.hale_lied;                       /* расследуют порознь */
+const TOL_OK=s=>!s.flags.acc_tol||!!s.flags.tol_sorry;  /* с Толей нормальные отношения */
+const MATCH=F('print_match');
+/* хорошие концовки: белая вспышка — Катю выносит в лабораторию с осколком */
+const WHITE=[sfx('whoosh'),s=>{const w=document.createElement('div');w.className='wcWhite';const sg=document.getElementById('stage')||document.body;sg.appendChild(w);sg.classList.add('whiteOn');requestAnimationFrame(()=>w.classList.add('on'));window.__wcWhite=w},wait(1600),
+ scr('Белый свет. Ни Лондона, ни тумана. Только тишина — и тёплый осколок в ладони.'),
+ th('Лаборатория. Я дома. С осколком.','determined'),s=>{const w=window.__wcWhite;if(w){w.classList.remove('on');setTimeout(()=>{w.remove();const sg=document.getElementById('stage');sg&&sg.classList.remove('whiteOn')},900)}}];
+const FULL=s=>s.flags.fight_won&&s.flags.hale_wavers&&s.flags.molly_saved;
 
 /* ======================= СЦЕНА 1 · «Из ада» ======================= */
 const SC1=[
@@ -3415,36 +3520,40 @@ const SC1=[
  title('Уайтчепел','Глава 4 · Из ада',3600),
  veil(1,700),
  paper('eng_writing','«Из ада»','Председатель комитета бдительности получил посылку: письмо и половину человеческой почки','Лондон, 16 октября 1888'),
- bg('morgue',{t:10,cam:45,kat:22}),veil(0,800),mus('wc_morgue',{fade:1.5}),amb('amb_drip',{vol:.4}),
+ bg('morgue',{t:10,cam:45,kat:22}),veil(0,800),mus('wc_morgue',{fade:1.5}),amb(null),
  title('Морг','17 октября'),
- show('tol','flask',58),
+ show('tol','neutral',58),
  scr('Письмо подписано «Из ада». К нему приложена половина почки в винном спирте.'),
- say('tol','Мисс, смотрите. Ткань человеческая, да. Но вот тут…'),
- scr('В разрезе — крошечная фиолетовая искра. Как песчинка, в которой горит лампа.'),
+ say('tol','Мисс, смотрите. Ткань человеческая, да. Но вот тут, по краю разреза…'),
+ scr('Вокруг разреза — тонкий налёт фиолетовой пыли. Та самая, из-под ногтей первых жертв.'),
  warm(2),
- say('tol','Осколок. Он вынимает их. Из всех. Я думал — он режет женщин. А он… добывает.','sad'),
+ say('tol','Пыль. Она была внутри. Он вынимает её. Из всех. Я думал — он режет женщин. А он… добывает.','sad'),
  th('Не женщин. Носителей. Тех, в кого попали брызги выброса. Он охотится за осколками.','determined'),
  th('…А самый большой осколок в этом городе — я.','scared'),
  hide('tol'),
  sfx('whoosh'),show('hale','neutral',62),
- say('hale','Мисс Зубкова. Слышал про посылку. Вы бледная. Обопритесь.'),
+ when(SEP,[
+  say('hale','Мисс, опять вы тут. Здравствуйте.','stern'),
+  say('hale','Я слышал про посылку. Вам бы домой. Вы бледная.')
+ ],[
+  say('hale','Мисс Зубкова, доброе утро. Слышал про посылку. Вы бледная. Обопритесь.')
+ ]),
  scr('Он протягивает руку в перчатке. Катя берёт её — машинально, как сто раз до этого.'),
  hide(),bg('cg_w3_glove_ring',{tr:'black',z:1.06,y:50}),shake(),
- scr('Кольцо на её пальце чернеет. Не холодом, как у Себастьяна. Гнилью. Чернота расползается по металлу, как плесень, — и не сходит.'),
- scr('Осколок в кармане обжигает бедро.'),
- find('ring_rot','Кольцо чернеет гнилью от руки Хейла'),
- th('Нет. Нет-нет-нет. Это от морга. От формалина. От почки. От чего угодно.','scared'),
+ scr('Кольцо на её пальце темнеет. А осколок в кармане теплеет — как рядом с Толей. Как рядом с Иваном.'),
+ find('ring_dark','Кольцо темнеет от руки Хейла, осколок теплеет'),
+ th('Как рядом с Толей и Ваней… Инспектор тоже носитель?','scared'),
  bg('morgue',{t:500,cam:45,kat:22}),show('hale','neutral',62),
  say('hale','Что с вами?'),
- say('kat','Ничего. Голова кружится. Пыль.','scared'),
+ say('kat','Ничего. Голова кружится. Формалин.','scared'),
  hide('hale'),
  when(F('h_telegram_sent'),[
+  bg('room_hart_night',{t:700,cam:50,kat:50}),
   scr('Вечером мальчишка с почты приносит телеграмму. Из Манчестера.'),
-  bg('room_hart_night',{t:700,cam:50,kat:34}),
   scr('«Лорд Грей в Манчестере не значится. Был случай в морге, 1887: студент-медик Т. Хейл ранен осколком при вскрытии неизвестной, найденной в фиолетовом свете. Вскоре оставил медицину».'),
   find('h_telegram','Телеграмма: студент-медик Т. Хейл, ранен осколком, 1887'),
   clue('cl_telegram','Телеграмма из Манчестера','<p>«Был случай в морге, 1887: студент-медик Т. Хейл ранен осколком при вскрытии неизвестной, найденной в фиолетовом свете».</p>'),
-  th('Студент-медик. Знает анатомию. Т. Хейл.','scared')
+  th('Студент-медик. Знает анатомию. Ранен осколком. Т. Хейл.','scared')
  ]),
  when(F('byk_given'),[
   bg('alley_lamps',{t:700,cam:50,kat:30}),
@@ -3456,260 +3565,366 @@ const SC1=[
  hide(),veil(1,800)
 ];
 
-/* ======================= СЦЕНА 2 · Чертоги: твист ======================= */
+/* ======================= СЦЕНА 2 · Печь морга → кружка ======================= */
+const SC2=[
+ bg('morgue',{t:10,cam:45,kat:22}),veil(0,800),mus('wc_morgue',{fade:1.5}),amb(null),
+ title('Морг','20 октября · вечер'),
+ th('«Найди ответ в своей печи!» Я кричала это ей. Через трещину. А у меня самой печь под носом — крематорий под моргом.','determined'),
+ when(TOL_OK,[
+  show('tol','neutral',62),
+  say('kat','Толя, можно мне посмотреть пепел в крематории? Мне нужно. Очень.','determined'),
+  say('tol','В печи? Ночью? Мисс, вы иногда пугаете меня больше покойников.'),
+  say('tol','…Ладно. Пойдёмте. Только я с вами — там ступеньки скользкие.','smile'),
+  set('oven_ok'),
+  when(s=>!SEP(s),[scr('В дверях морга их догоняет Хейл: «Я с вами. Если там улики — они мои по должности».'),set('oven_hale')])
+ ],[
+  show('tol','sad',62),
+  say('kat','Толя, можно мне посмотреть пепел в крематории?','neutral'),
+  say('tol','После того как вы назвали меня на планёрке? Нет, мисс. Простите. Нет.','sad'),
+  hide('tol'),
+  th('Сама виновата. Печь осталась без меня.','sad')
+ ]),
+ when(F('oven_ok'),[
+  hide(),bg('furnace',{t:900,cam:50,kat:30}),mus('wc_deduce',{fade:2}),amb('amb_fire',{vol:.45}),
+  title('Подвал морга','20 октября · 23:00'),
+  scr('Катя разгребает золу кочергой. Пепел, кости, пуговицы. И что-то, что не сгорело до конца.'),
+  scr('Оплавленный ампутационный скальпель. И запонка — латунная, с гербом Столичной полиции.'),
+  find('h_oven','В печи: оплавленный скальпель Толи и полицейская запонка'),
+  clue('cl_oven','Находка в печи морга','<p>Оплавленный ампутационный скальпель. Запонка с гербом Столичной полиции.</p>'),
+  show('tol','worried',30),
+  say('tol','Это… мой скальпель! Тот, что пропал в сентябре! Я думал, его украли на сувенир…','worried'),
+  hide('tol'),
+  th('Запонка полицейского. Как она сюда попала? Неужели у Потрошителя связи в полиции?','scared'),
+  th('Его кто-то покрывает!','eureka'),
+  ...theory('t_cover','Потрошителя кто-то покрывает в полиции'),
+  when(F('oven_hale'),[
+   show('hale','stern',70),
+   say('hale','Запонка старшего чина. Такие выдают инспекторам и выше.','stern'),
+   say('hale','Эбберлайн на прошлой неделе жаловался, что потерял запонку. Я не хочу так думать, мисс. Но я обязан.','sad'),
+   find('h_blame_abb','Хейл первым указал на Эбберлайна'),
+   ...theory('t_abb','Эбберлайн — тот, кто покрывает убийцу'),
+   th('Эбберлайн? Начальник отдела? Тогда понятно, почему он так держится за «Кожаный фартук».','determined'),
+   hide('hale')
+  ]),
+  trait(4)
+ ]),
+ hide(),veil(1,700),
+ bg('room_hart_night',{t:10,cam:50,kat:50}),veil(0,700),mus('rift',{fade:1,vol:.5}),amb('amb_clock',{vol:.35}),
+ title('У миссис Харт','21 октября · ночь'),
+ th('Домой. Подумать. Сложить всё, пока голова не лопнула.','determined'),
+ when(F('hale_print'),[
+  scr('На полке — жестяная кружка. Та, с моста. «Сентиментально, мисс Зубкова. Оставляйте».'),
+  choice([
+   {t:'Снять с кружки отпечатки и сравнить с кровавым.',then:[
+    scr('Сажа, лист бумаги, лупа. Рядом — копия кровавой ладони с Митр-сквер.'),
+    WC('prints',{cand:[{n:'Кружка с моста',t:'loop',s:5}],target:{t:'loop',s:5},answer:0,sub:'Кровавый отпечаток и кружка Хейла. Совпадает?',
+     ok:[set('print_match'),th('Петля, дельта, три точки. Совпадает. Полностью.','tears')],
+     fail:[th('Нет, руки дрожат. Ещё раз… Совпадает. Это его рука.','tears'),set('print_match')]},[]),
+    clue('cl_mug','Отпечаток с кружки','<p>Кружка инспектора Хейла с моста. Отпечаток совпал с кровавым.</p>')]},
+   {t:'Не трогать. Это просто кружка.',then:[th('Это просто кружка. Подарок. Не хочу.','sad')]}
+  ],'Кружка Хейла')
+ ]),
+ hide(),veil(1,700)
+];
+
+/* ======================= СЦЕНА 3 · Чертоги и Молли ======================= */
+const SC3=[
+ bg('room_hart_night',{t:10,cam:50,kat:50}),veil(0,800),mus('wc_deduce',{fade:2}),amb('amb_rain',{vol:.35}),
+ title('У миссис Харт','8 ноября · 23:00'),
+ hide(),bg('cg_w2_kat_notes',{tr:'black',z:1.03,y:50}),
+ scr('Свеча, дождь в окне. Катя раскладывает на полу всё подряд — записки, газеты, отпечатки, каждое «чьё?».'),
+ th('Кто он. И где ударит в следующий раз. Два вопроса. Всего два.','determined'),
+ WC('mind',{tab:'map',need:'pred',hint:'Где он ударит в следующий раз? Соедини точки и отметь место.'},[st=>{M(st).map.pred=M(st).map.pred||'miller'}]),
+ bg('room_hart_night',{t:500,cam:50,kat:50}),
+ sfx('knock'),wait(500),sfx('knock'),shake(),vib(60),
+ th('Стук. В полночь.','scared'),
+ show('mol','shawl_scared',66),
+ say('mol','Кэти… это я. Можно? Я ненадолго.','scared'),
+ say('mol','Мне страшно. Столько девочек. Полли, Энни, Лиз, Кейт… Я по улице иду и считаю, кто следующая.','scared'),
+ say('mol','Я просто… поговорить пришла. Не прогоняй.'),
+ warm(3),
+ scr('Осколок в кармане теплеет. Сильно. Как рядом с Толей. Как рядом с Хейлом.'),
+ th('Молли тоже носитель. Молли — следующая?','scared'),
+ th('…Или она — убийца? Нет. Нет. Она дрожит. Она пришла ко мне.','determined'),
+ fact('mol','носитель: осколок теплеет рядом с ней'),
+ when(s=>(M(s).map||{}).pred==='h',[th('Моя карта сказала: мой дом. Пятая вершина. Значит, он придёт сюда. За ней. Или за мной.','determined')],
+  [th('Моя карта сказала: не здесь. Значит, здесь безопаснее?','determined')]),
+ choice([
+  {t:'Оставить Молли у себя на ночь.',then:[set('molly_here'),
+   say('kat','Ночуешь здесь. Не спорь. Пожалуйста.','determined'),
+   say('mol','Ты опять говоришь так, будто знаешь, что будет.','scared'),
+   show('luc','worried',30),say('luc','Деточка, я запру внизу. И стул под дверь поставлю. Я в газетах читала, как надо.'),hide('luc')]},
+  {t:'Отправить Молли ночевать к себе на Миллерс-корт и запереться.',then:[set('molly_away'),set('molly_home'),
+   say('kat','Иди домой, Молли. Запрись. Никому не открывай. Утром я приду.','determined'),
+   say('mol','Хорошо, Кэти. Как скажешь.','neutral')]},
+  {t:'Отвести Молли в «Десять колоколов» — там людно.',then:[set('molly_away'),set('molly_pub'),
+   say('kat','В пабе всю ночь люди. Там он не тронет. Грач присмотрит.','determined'),
+   say('mol','В пабе я и так полжизни сижу. Ладно.','smile')]}
+ ],'Как помочь Молли?'),
+ hide('mol'),
+ when(F('molly_here'),[
+  hide(),bg('cg_w3_chair_door',{tr:'black',z:1.03,y:50}),mus('wc_dread',{fade:1.5}),
+  scr('Стул под дверной ручкой. Свеча. Две девушки и одна старушка со скалкой.'),
+  title('У миссис Харт','9 ноября · 3:00'),
+  scr('Третий час ночи. На лестнице — шаги. Тяжёлые, ровные, как на обходе. Ручка двери медленно поворачивается.'),
+  sfx('knock'),shake(),wait(300),sfx('knock'),shake(),vib(120),wait(250),sfx('knock'),shake(),mus('wc_chase',{fade:.5}),
+  qteShake({bg:'cg_w3_chair_door',n:7,allow:2,hint:'Удержи дверь',sub:'Свайпай по стрелке — дверь ходит ходуном',
+   rules:['Кто-то ломится в дверь.','Свайпай туда, куда показывает стрелка, чтобы удержать её.','Две ошибки прощаются.'],
+   ok:[scr('Дверь трещит, но стул держит.')],
+   fail:[set('wounded'),scr('Ручка бьёт Катю по плечу. Плечо горит. Но дверь ещё держится.')]}),
+  sfx('whoosh'),shake(),vib(200),flash('#ffffff',300),
+  scr('Удары стихают. Тишина.'),
+  sfx('whoosh'),hide(),bg('cg_w4_window',{tr:'black',z:1.03,y:50,kb:'in'}),shake(),vib(200),
+  scr('Звон стекла. Окно! В раме — рука в перчатке, рукав серого пальто, блеск латунной цепочки.'),
+  find('h_window','В разбитом окне — рукав серого пальто и латунная цепочка'),
+  say('kat','Молли! В дверь! Сейчас!','determined'),
+  hide(),bg('cg_w3_run_door',{tr:'black',z:1.03,y:46}),shake(),
+  scr('Пока он лезет в окно, девушки выдёргивают стул и вылетают в дверь — по лестнице, на улицу, под дождь. Миссис Харт кричит на весь квартал.'),
+  scr('За спиной — тишина. Он не гонится. Он не любит шума.'),
+  set('molly_saved'),fact('mol','спасена: ночевала у Кати, сбежали через дверь'),
+  bg('room_wrecked',{t:900,cam:50,kat:50}),mus('wc_fog',{fade:1.5}),
+  title('У миссис Харт','9 ноября · утро'),
+  scr('Утро. Комната разгромлена. Осколки стекла, щепки, погасшая свеча. И фиолетовый дым под потолком, который тает, как не было.'),
+  show('kat','torn2',50),
+  th('Он был здесь. Он пришёл за ней. Или за мной. А Молли… Молли жива.','torn2'),
+  when(s=>(M(s).map||{}).pred==='h',[th('Моя карта не ошиблась. Пятая вершина.','determined'),set('star_ok')])
+ ]),
+ when(F('molly_away'),[
+  hide(),veil(1,900),
+  bg('millers_court',{t:10,cam:50}),veil(0,1200),mus('wc_dread',{fade:2}),amb('amb_rain',{vol:.4}),
+  title('Миллерс-корт','9 ноября · утро'),
+  when(F('molly_pub'),[scr('Молли не дошла до паба. Грач ждал её до закрытия. Её нашли утром — у её же двери, на Миллерс-корт.')],
+   [scr('Утром хозяин стучится за квартирной платой. Дверь не заперта.')]),
+  scr('Зелёная шаль на пороге. Фиолетовый свет из щели двери, который тает на глазах.'),
+  th('Я её отправила. Я сама. Своими словами.','tears'),
+  set('molly_dead'),fact('mol','погибла 9 ноября на Миллерс-корт'),
+  when(s=>(M(s).map||{}).pred==='miller',[th('Миллерс-корт. Я отметила его на карте. И всё равно отправила её туда.','tears')])
+ ]),
+ /* развилка: полиция или бойня */
+ st=>{st.flags.rays=rays(st)},
+ when(s=>rays(s)>=3,[th('Лучи-подпалины смотрят в одну точку. Центр звезды — старая бойня у Ханбери. Там Ваня.','eureka'),set('lair_exact')],
+  [th('Ваню увели. Куда — не знаю. Лучей мало. Центр где-то у рынка… или у бойни.','sad')]),
+ choice([
+  {t:'Идти в Скотленд-Ярд: назвать убийцу.',then:[set('go_yard')]},
+  {t:'Идти на бойню: найти и спасти Ивана.',then:[set('go_lair')]}
+ ],'Что дальше?'),
+ hide(),veil(1,700)
+];
+
+/* ======================= СЦЕНА 4 · Скотленд-Ярд: обвинение ======================= */
+const CHAIN={
+ byk:[[s=>1,'Бойня. Тесак. Кожаный фартук. Он рубил туши двадцать лет — резать умеет.'],
+  [s=>((M(s).facts||{}).byk||[]).some(x=>String(x).includes('журнале')),'«Б. — доставка тел» в журнале морга. В ночь, когда пропал скальпель.'],
+  [s=>s.flags.byk_debt||s.flags.byk_given,'Носил посылки ложе. Камни. Тела на похороны.'],
+  [s=>1,'Скальпель в печи — его носил в морг кто-то, кто возит тела. Это он.']],
+ ivan:[[s=>1,'Бернер-стрит. Иван сидел у тела с ножом в руке.'],
+  [F('t_sleeper'),'Каждую ночь он «выключается» и куда-то уходит. Его ведут — или он ведёт сам.'],
+  [F('d_ivan_alibi'),'Алиби на Митр-сквер? Значит, есть сообщник. Резал другой, а Ваня держал фонарь.'],
+  [s=>1,'Он исчез ровно перед последней ночью. Как будто знал.']],
+ tol:[[s=>1,'Кожаный фартук. Анатомия. Пирог над трупом — и ни капли брезгливости.'],
+  [F('h_oven'),'Его скальпель в печи. Сам жёг улики там, где режет мёртвых.'],
+  [s=>1,'Фиолетовая пыль на пальцах. Подвал с колбами. Записка: «Три пробирки пыли мистеру Грею».'],
+  [s=>1,'Он изучает пыль — значит, знает, где искать носителей.']],
+ krn:[[s=>1,'Ложа «Рассвет». Перстни с глазом. Камни из мёртвых девушек.'],
+  [s=>1,'«Благотворительные похороны» — так они забирают тела, пока никто не смотрит.'],
+  [s=>1,'Кинжалы в подземном зале. Газ страха. Мел на Гоулстон-стрит — «пусть толпа ищет чужаков».'],
+  [s=>1,'«Друг» приносит камни — а может, друг и есть Крейн.']],
+ seb:[[s=>1,'Полли и Энни — его «гостьи». Он платил им за кровь.'],
+  [s=>1,'Нет отражения. Бокал без отпечатков и ледяной. Письма «Ваш С.».'],
+  [s=>1,'Он знает имя убийцы — и молчит. Удобный договор.'],
+  [F('h_first'),'«Ваш интерес приходит раньше». Подсказка — или насмешка?']]
+};
+const NAMES={byk:'Бык',ivan:'Иван',tol:'Доктор Толбот',krn:'Мистер Крейн и ложа',seb:'Лорд Себастьян Грей'};
 const TWIST=[
- [F('h_link'),'«Звено цепочки — чьё?» Латунное. У Хейла на жилете цепочка. В ней одно звено новее остальных.'],
- [s=>s.flags.h_dry&&s.flags.h_nocab,'«Пальто почти сухое». «Взял кэб от участка». Кэбов не было. Он не приехал. Он не уходил.'],
- [F('h_dry'),'Сухое пальто на Бакс-роу. Он стоял под навесом. Ждал.'],
- [F('h_room'),'«Тихий дом». Он сам выбрал мне комнату. Пятая вершина звезды. Он поселил меня в ловушку.'],
+ [F('h_link'),'«Звено цепочки — чьё?» Латунное. У Хейла на жилете цепочка. В ней два звена новее остальных.'],
+ [F('h_dry'),'Сухое пальто на Бакс-роу. Он не приехал. Он стоял под навесом и ждал.'],
+ [F('h_room'),'«Тихий дом». Он сам выбрал мне комнату. Пятая вершина звезды.'],
  [F('h_journal'),'Журнал морга. Хейл, 7 сентября, 23:40. За ночь до того, как пропал скальпель Толи.'],
  [F('h_crown'),'Корона на письме. Не дворец. Водяной знак Столичной полиции. Бумага из Ярда.'],
+ [s=>s.flags.h_chalk&&s.flags.h_report,'Почерк в его отчёте. Тот же наклон, что у мела на Гоулстон-стрит. Он сам это написал — и сам героически стёр.'],
  [F('h_chalk'),'Мел на пальцах. Он стёр надпись — и стрелку рядом с ней.'],
- [F('h_45min'),'Сорок пять минут его никто не видел. Ровно столько нужно, чтобы дойти до Митр-сквер.'],
- [F('h_first'),'«Он всегда приходит первым». Он не приходил. Он там был.'],
- [F('h_telegram'),'Манчестер. Студент-медик. Осколок.'],
- [F('ring_rot'),'Кольцо гниёт от его руки. Не холод вампира. Изнанка.'],
- [F('d_pent'),'Пентаграмма на Ханбери. Потёки засохли раньше лужи — её нарисовали заранее. Чтобы я искала ложу. И я искала.'],
+ [F('h_45min'),'С полуночи его никто не мог найти. Ровно столько нужно, чтобы дойти до Митр-сквер.'],
+ [F('h_first'),'«Ваш интерес приходит раньше». Он не приходил первым. Он там уже был.'],
+ [F('h_telegram'),'Манчестер. Студент-медик. Ранен осколком.'],
+ [F('ring_dark'),'Кольцо темнеет от его руки, осколок теплеет. Он — носитель.'],
+ [F('h_oven'),'Запонка в печи. Полицейская.'],
+ [F('h_blame_abb'),'И это он первым сказал: «Эбберлайн». Он направил меня на начальника.'],
  [F('h_escort'),'«Меня полицейский проводит. Добрый, по имени зовёт». Полли пошла с ним сама.'],
  [F('h_posts'),'Посты облав расписывал он. Он знал каждую дыру в обходах — потому что сам их оставлял.'],
- [F('h_report'),'«Прибыл в 3:45». Нил свистнул в 3:50. Он записал, что пришёл раньше свистка. Сам. Педант.'],
+ [F('h_report'),'«Прибыл в 3:45». Нил свистнул в 3:50. Он записал, что пришёл раньше свистка.'],
  [F('h_kidnap'),'Латунная цепочка под плащом того, кто увёл Ивана.'],
- [F('h_friend'),'«Серое пальто, котелок, карболка и сажа». Карболка — морг. Сажа — печь.']
+ [F('h_friend'),'Серое пальто. «Друг» ложи.'],
+ [F('h_window'),'Рукав серого пальто в моём окне. И латунная цепочка.'],
+ [MATCH,'Кружка с моста. Отпечаток совпал. Это его рука на камне Митр-сквер.']
 ];
-const SC2=[
- bg('furnace',{t:10,cam:50,kat:30}),veil(0,900),mus('wc_deduce',{fade:2}),amb('amb_fire',{vol:.45}),
- title('Подвал морга','20 октября · 3:00'),
- th('«Найди ответ в своей печи!» Я кричала это ей. Через трещину. Про её печь.','determined'),
- th('А у меня самой печь под носом. Крематорий при морге. Здесь жгут тех, кого не забрали родные.','eureka'),
- scr('Катя разгребает золу кочергой. Пепел, кости, пуговицы. И что-то, что не сгорело до конца.'),
- scr('Оплавленный скальпель с клеймом мастерской Толи. И запонка — латунная, с гербом Столичной полиции.'),
- find('h_oven','В печи: оплавленный скальпель Толи и полицейская запонка'),
- clue('cl_oven','Находка в печи морга','<p>Оплавленный ампутационный скальпель Толи. Запонка с гербом Столичной полиции.</p>'),
- th('Скальпель. Запонка. Полиция. Ну конечно. Он же правша, режет левой. Он же знает анатомию. Он же знает маршруты констеблей.','scared'),
- trait(4),
- /* дактилоскопия */
- when(PRINT,[
-  scr('Катя достаёт из саквояжа жестяную кружку — ту, с моста. «Сентиментально, мисс Зубкова. Оставляйте».'),
-  WC('prints',{cand:[{n:'Толя',t:'loop',s:4},{n:'Иван',t:'arch',s:11},{n:'Крейн',t:'whorl',s:7},{n:'Хейл',t:'loop',s:5}],target:{t:'loop',s:5},answer:3,
-   ok:[set('print_match'),th('Петля, дельта, три точки. Совпадает. Полностью.','tears')],
-   fail:[th('Нет, руки дрожат. Ещё раз. …Хейл. Это Хейл.','tears'),set('print_match')]},[])
- ],[
-  scr('Отпечатка Хейла у Кати нет. Есть чашка в комнатах миссис Харт — он пил там чай позавчера.'),
-  choice([
-   {t:'Снять отпечаток с его чашки сейчас.',then:[set('hale_print2'),yard(-1),
-    bg('room_hart',{t:600,cam:50,kat:30}),
-    scr('Сажа, бумага, лупа. Совпадает. И тут в дверь стучат.'),
-    show('hale','neutral',66),
-    say('hale','Мисс? Что это у вас, сажа? Вы что-то нашли?','neutral'),
-    say('kat','Пыль. Просто пыль.','scared'),
-    say('hale','Вы опять мне врёте, мисс Зубкова.','stern'),
-    hide('hale'),set('print_match')]},
-   {t:'Не рисковать.',then:[th('Если он заметит — всё. Обойдусь без отпечатка.','sad')]}
-  ],'Отпечаток Хейла')
+const HALE_ITEMS=st=>[
+ {id:'print_match',t:'Отпечаток',b:'кружка с моста совпала',w:2,say:'Отпечаток с его кружки совпадает с кровавой ладонью на Митр-сквер.'},
+ {id:'h_cuff',t:'Запонка',b:'на манжете Хейла её нет',w:2,say:'Запонка из печи — его. Посмотрите на его левый манжет.'},
+ {id:'h_oven',t:'Печь морга',b:'скальпель и запонка',w:1,say:'Скальпель Толи и полицейская запонка в печи. Кто-то жёг улики там, где режут мёртвых.'},
+ {id:'h_blame_abb',t:'«Это Эбберлайн»',b:'он первым указал на вас',w:1,say:'Это он первым назвал ваше имя у печи. Он направлял меня на вас.'},
+ {id:'h_window',t:'Окно',b:'серое пальто и цепочка',w:1,say:'В моё окно лез человек в сером пальто с латунной цепочкой.'},
+ {id:'h_45min',t:'С полуночи',b:'никто не мог найти',w:1,say:'В ночь двойного убийства его с полуночи не могли найти. Спросите Нила.'},
+ {id:'h_telegram',t:'Телеграмма',b:'Манчестер, 1887',w:1,say:'Манчестер. Студент-медик Т. Хейл. Ранен осколком.'},
+ {id:'h_report',t:'Его отчёт',b:'«прибыл в 3:45»',w:1,say:'Он записал, что прибыл до свистка Нила.'},
+ {id:'h_escort',t:'«Полицейский проводит»',b:'последний вечер Полли',w:1,say:'Полли пошла с полицейским, который звал её по имени.'},
+ {id:'h_crown',t:'Корона на бумаге',b:'водяной знак полиции',w:1,say:'Второе письмо написано на бумаге Ярда.'},
+ {id:'h_link',t:'Звено цепочки',b:'с Бакс-роу',w:1,say:'Звено от его цепочки лежало у первой жертвы.'},
+ {id:'h_journal',t:'Журнал морга',b:'7 сентября, 23:40',w:1,say:'Он был в морге в ночь, когда пропал скальпель.'},
+ {id:'t_seb_blood',t:'Теория: лорд-извращенец',b:'гостьи и кровь',w:0,say:'Лорд Грей… нет. Не лорд.'},
+ {id:'t_abb',t:'Теория: Эбберлайн',b:'запонка старшего чина',w:0,say:'Это вы покрываете убийцу! …Нет. Простите.'}
+].filter(x=>st.flags[x.id]);
+const SC4=[when(F('go_yard'),[
+ bg('yard_exterior',{t:10,cam:50,kat:30}),veil(0,800),mus('wc_hale',{fade:2,vol:.7}),amb('amb_rain',{vol:.3}),
+ title('Скотленд-Ярд','9 ноября · полдень'),
+ bg('yard_office',{t:700,cam:50,kat:14}),amb('amb_clock',{vol:.3}),
+ show('abb','neutral',86),when(s=>!SEP(s),[show('hale','neutral',62)]),
+ say('abb','Мисс Зубкова. У вас лицо человека, который пришёл назвать имя.'),
+ when(s=>s.flags.h_oven&&!SEP(s),[
+  scr('Хейл поправляет манжет.'),
+  hide(),bg('cg_w4_cuff',{tr:'black',z:1.04,y:50}),
+  scr('На левом — пустая петля. Запонки нет. На правом — латунная, с короной Столичной полиции.'),
+  bg('yard_office',{t:500,cam:50,kat:14}),show('abb','neutral',86),
+  find('h_cuff','На левом манжете Хейла нет запонки'),
+  th('Запонка из печи. Нет. Пожалуйста, нет.','scared')
  ]),
- hide(),bg('cg_w2_kat_notes',{tr:'black',z:1.03,y:50}),mus('rift',{fade:1,vol:.6}),amb('amb_clock',{vol:.4}),
- scr('Ночь. Свеча, дождь в окне. Катя выписывает всё подряд — каждое «чьё?», каждое «просто пальто».'),
- bg('office_dark',{t:800,cam:50,kat:34}),
- title('Чертоги','Дела. Всё, что я не замечала'),
- th('Дела. Немые находки. «Чьё?» «Просто пуговица». «Просто пальто».','determined'),
- ...TWIST.map(([p,t])=>when(p,[glitch(200),sfx('tick'),th(t,'scared')])),
- th('Хватит собирать. Пора назвать имя. Одно. Если ошибусь — повесят не того.','determined'),
+ hide('hale'),
+ th('Цепочка. Одна цепочка, в которой сходится всё. Кого я назову?','determined'),
  choice([
-  {t:'Хейл.',then:[set('acc_hale')]},
-  {t:'Лорд Грей. Кровопийца.',then:[set('acc_wrong'),set('acc_seb')]},
-  {t:'Крейн. Ложа «Рассвет».',then:[set('acc_wrong'),set('acc_krn')]},
-  {t:'Бык. Мясник с бойни.',hideIf:s=>!!s.flags.byk_dead,then:[set('acc_wrong'),set('acc_byk')]}
+  {t:'Бык.',hideIf:s=>!!s.flags.byk_dead,then:[set('acc_byk4')]},
+  {t:'Иван.',then:[set('acc_ivan4')]},
+  {t:'Доктор Толбот.',then:[set('acc_tol4')]},
+  {t:'Крейн и ложа «Рассвет».',then:[set('acc_krn4')]},
+  {t:'Лорд Себастьян Грей.',then:[set('acc_seb4')]},
+  {t:'Инспектор Хейл.',hideIf:s=>!s.flags.print_match,then:[set('acc_hale4')]},
+  {t:'Не знаю. Улик мало.',then:[set('acc_none4')]}
  ],'Кто Потрошитель?'),
- when(F('acc_wrong'),[
-  hide(),bg('yard_exterior',{t:800,cam:50,kat:30}),title('Скотленд-Ярд','21 октября'),
-  show('abb','neutral',66),
-  when(F('acc_seb'),[say('kat','Лорд Себастьян Грей. Кровь, девушки, «гостьи». Это он.','determined')]),
-  when(F('acc_krn'),[say('kat','Элиас Крейн. Ложа забирает камни из тел. Им нужны трупы — и они их делают.','determined')]),
-  when(F('acc_byk'),[say('kat','Бык. Бойня, тесак, фартук. Он носит для ложи тела.','determined')]),
-  say('abb','Наконец-то что-то, что примет суд. Мотив, связь, свидетели. Хорошая работа, мисс.'),
-  say('abb','Ордер будет к вечеру.'),
-  hide('abb'),
-  th('Почему мне не легче?','sad'),
-  hide(),veil(1,800)
+ /* цепочки по каждому подозреваемому */
+ ...Object.keys(CHAIN).map(k=>when(F('acc_'+k+'4'),[
+  hide(),bg('cg_w2_kat_notes',{tr:'black',z:1.03,y:50}),mus('rift',{fade:1,vol:.6}),
+  title('Чертоги','Цепочка: '+NAMES[k]),
+  ...CHAIN[k].map(([p,t])=>when(p,[glitch(150),sfx('tick'),th(t,'determined')])),
+  th('Всё сходится. Почти всё. Остальное — объяснится.','determined'),
+  bg('yard_office',{t:600,cam:50,kat:14}),show('abb','neutral',80),mus('wc_hale',{fade:1}),
+  say('kat',NAMES[k]+'. Это он.','determined'),
+  say('abb','Мотив, связь, улики. Это примет суд. Хорошая работа, мисс.'),
+  set('acc_wrong')
+ ])),
+ when(F('acc_none4'),[
+  say('kat','Я… не знаю. Ни одна цепочка не замыкается. Улик мало.','sad'),
+  say('abb','Честно. Редкость. Принесите мне доказательства — тогда поговорим.','grumpy'),
+  th('Значит, сама. Бойня. Ваня.','determined'),
+  set('go_lair'),set('lair_late')
  ]),
- when(F('acc_hale'),[
- st=>{const m=M(st);m.allies.hale_flip=1},
- scr('Карточка «Хейл — хороший полицейский» переворачивается.'),
- th('«Глаза красные — не спит ночами». Все убийства — ночью.','tears'),
- th('«Сам ходит в обходы». Знает маршруты констеблей.','tears'),
- th('«Знает каждую девушку по имени». Они ему доверяли. Он подходил — и они не кричали.','tears'),
- th('«Заплатил за мою комнату». Сам выбрал вершину.','tears'),
- when(F('dance_H'),[th('Я танцевала с ним вальс.','tears')]),
- th('Я искала заговор. А убийца держал мне фонарь.','sad'),
- st=>{st.flags.hale_ev=haleEv(st);if((M(st)||{}).hale_sus)st.flags.hale_sus=1},
- when(F('hale_sus'),[th('Я ведь сама завела на него карточку. После разлома. И отложила: «бред, это же Хейл».','tears')]),
- show('abb','shock',66),
- say('kat','Инспектор Эбберлайн. Это Хейл. Это он.','determined'),
- say('abb','Хейл?! Мисс… Хейл — лучший человек в этом здании. Отпечатки, кольца, пепел… Суд это не примет. Я это не приму.'),
- say('abb','Если вы правы — возьмите его с поличным. Если нет — я сам вас арестую.'),
-  st=>{if(st.flags.acc_none)st.flags.yard=(st.flags.yard||0)+1},
- when(s=>(s.flags.yard||0)>=1,[
-  say('abb','…Вы ни разу не врали мне в глаза, мисс. И ни разу не ошиблись с тем, что видели сами. Я пойду за вами. С людьми. Тихо.'),
-  set('abb_backup')
- ],[
-  when(s=>s.flags.lie_twice||s.flags.hale_lied||s.flags.hale_print2,[
-   say('abb','Вы мне врали, мисс. Не раз. Я не поведу людей за тем, кто врёт.','grumpy'),
-   th('Сама виновата. Пойду без Ярда.','sad')
+ when(F('acc_hale4'),[
+  hide(),bg('cg_w2_kat_notes',{tr:'black',z:1.03,y:50}),mus('rift',{fade:1,vol:.6}),
+  title('Чертоги','Цепочка: инспектор Хейл'),
+  st=>{const m=M(st);m.allies.hale_flip=1},
+  scr('Карточка «Хейл — хороший полицейский» переворачивается.'),
+  ...TWIST.map(([p,t])=>when(p,[glitch(200),sfx('tick'),th(t,'scared')])),
+  when(F('dance_H'),[th('Я танцевала с ним вальс.','tears')]),
+  th('Я искала заговор. А убийца держал мне фонарь.','sad'),
+  bg('yard_office',{t:600,cam:50,kat:14}),show('abb','shock',80),mus('wc_hale',{fade:1}),
+  say('kat','Инспектор Эбберлайн. Это Хейл.','determined'),
+  say('abb','Хейл?! Мисс… Хейл — лучший человек в этом здании. Докажите. Здесь и сейчас.','shock'),
+  st=>{st.defense=0},
+  evidence({title:'Убедить Эбберлайна',sub:'Выложи до четырёх улик против Хейла.',picks:4,mock:'',items:HALE_ITEMS}),
+  when(s=>(s.defense||0)>=4,[
+   say('abb','…Запонка. Отпечаток. Манчестер. Господи.','shock'),
+   say('abb','Хорошо. Я пойду за вами. С людьми. Тихо. Где он ударит?','grumpy'),
+   set('abb_backup')
   ],[
-   say('abb','Догадки, кольца, пепел. Я не поведу людей за догадками. Принесите мне его — тогда поверю.','grumpy'),
-   th('Значит, без Ярда.','sad')
+   say('abb','Это не доказательства, мисс. Это догадки. Я не арестую лучшего инспектора за догадки.','grumpy'),
+   say('kat','Тогда давайте поймаем его с поличным. Засада. Я знаю, где он будет.','determined'),
+   say('abb','…Одна ночь. Одно место. Ошибётесь — больше ко мне не приходите.','grumpy')
+  ]),
+  choice([
+   {t:'Старая бойня у Ханбери — центр звезды. Там Иван, якорь.',then:[set('trap_lair')]},
+   {t:'Миллерс-корт.',then:[set('trap_wrong')]},
+   {t:'Мой дом у миссис Харт.',then:[set('trap_wrong')]}
+  ],'Где засада?'),
+  when(s=>s.flags.trap_lair&&(s.flags.abb_backup||s.flags.lair_exact),[set('abb_backup'),set('ambush'),
+   say('abb','Бойня. Ладно. Мои люди будут там к ночи.'),
+   th('Лучи сходятся в бойне. Он придёт туда — за Ваней.','determined')
+  ],[
+   when(F('trap_lair'),[say('abb','Бойня? Почему бойня? У вас нет ни одной улики про бойню. Нет, мисс.','grumpy')],
+    [say('abb','Ладно. Поставлю двоих. Если он не придёт — это ваша последняя ночь в этом здании.','grumpy')]),
+   th('Значит, без Ярда. Бойня. Ваня. Сама.','sad'),
+   set('go_lair'),set('lair_late')
   ])
  ]),
  hide(),veil(1,800)
- ])
-];
+])];
 
-/* ======================= СЦЕНА 3 · Ловушка будущего, 9 ноября ======================= */
-const HANG=[
+/* ======================= Ошибка: казнь → Хейл ночью ======================= */
+const WRONG=[
  hide(),bg('cg_w4_gallows',{tr:'black',z:1.03,y:46}),veil(0,900),mus('wc_dread',{fade:2}),
- title('Ньюгейт','8 ноября · рассвет'),
- when(F('acc_byk'),[scr('Быка вешают на рассвете. Он не кричит. Только ищет глазами в толпе кого-то — и находит Катю.'),fact('byk','повешен по обвинению Кати')]),
- when(F('acc_seb'),[scr('Лорда Грея судят за неделю. Он не спорит: договор не даёт ему назвать имя, даже чтобы спастись. Солнце встаёт раньше, чем падает люк.'),fact('seb','казнён по обвинению Кати; так и не назвал имя')]),
- when(F('acc_krn'),[scr('Крейна вешают на рассвете. Ложа молчит. Шкатулка с камнями исчезает из Ярда в ту же ночь.'),fact('krn','повешен по обвинению Кати')]),
+ title('Ньюгейт','16 ноября · рассвет'),
+ when(F('acc_byk4'),[scr('Быка вешают на рассвете. Он не кричит. Только ищет глазами в толпе кого-то — и находит Катю.'),fact('byk','повешен по обвинению Кати')]),
+ when(F('acc_ivan4'),[scr('Ивана находят на старой бойне — в цепях, без памяти. «Сообщник ложи, держал фонарь». Его вешают через неделю. Он до конца смотрит на Катю так, будто пытается вспомнить её имя.'),set('ivan_dead'),fact('ivan','повешен по обвинению Кати')]),
+ when(F('acc_tol4'),[scr('Доктора Толбота вешают на рассвете. Он не спорит. Только шепчет: «Пиццу… я так и не узнал, что это».'),fact('tol','повешен по обвинению Кати')]),
+ when(F('acc_krn4'),[scr('Крейна вешают на рассвете. Ложа молчит. Шкатулка с камнями исчезает из Ярда в ту же ночь.'),fact('krn','повешен по обвинению Кати')]),
+ when(F('acc_seb4'),[hide(),bg('cg_w4_seb_gone',{tr:'black',z:1.03,y:50}),scr('Констебли приходят за лордом Греем к ночи. Особняк пуст. Камины холодные, зеркала завешены. Лорд Себастьян Грей исчез из Лондона.'),fact('seb','исчез из Лондона после обвинения Кати')]),
  bg('cg_w4_gallows_hale',{t:900,z:1.03,y:46}),
  say('hale','Вы молодец, мисс. Всё кончилось. Теперь можно спать спокойно.'),
- th('Его рука у меня на плече. Тёплая. Почему мне так холодно?','scared'),
- when(F('ring_rot'),[scr('Кольцо на пальце снова чернеет. Гнилью.')]),
+ scr('Его рука у неё на плече. Кольцо на пальце снова темнеет.'),
+ th('Почему мне так холодно?','scared'),
  veil(1,700),
- bg('room_hart_night',{t:10,cam:50,kat:34}),veil(0,800),amb('amb_clock',{vol:.4}),
- title('Комнаты миссис Харт','9 ноября · 3:00'),
+ bg('room_hart_night',{t:10,cam:50,kat:50}),veil(0,800),amb('amb_clock',{vol:.4}),
+ title('У миссис Харт','17 ноября · 3:00'),
  scr('Убийства кончились — так пишут газеты. Катя всё равно не спит.'),
  sfx('whoosh'),scr('Ручка двери медленно поворачивается.'),
  hide(),bg('cg_w4_hale_door',{tr:'black',z:1.03,y:46}),mus('wc_mask',{fade:.8}),
  say('hale','Не спится, мисс? Мне тоже. Осталась одна. Последняя. Самый большой осколок.'),
- th('Не того. Я повесила не того.','tears'),
- set('out_hang'),fact('hale','Потрошитель; остался безнаказанным'),
- hide(),veil(1,1400),
- end({h:'Конец истории «Уайтчепел»',p:'Повешение',clues:12})
-];
-const AMBUSH=[
- scr('Но в этот раз Катя не одна. За шкафом, в темноте, сидят Эбберлайн и двое констеблей. Она сама их позвала — на свою вершину.'),
- scr('Третий час ночи. Шаги на лестнице. Ручка двери медленно поворачивается.'),
- sfx('whoosh'),hide(),bg('cg_w4_ambush',{tr:'black',z:1.03,y:46}),shake(),vib(160),mus('wc_chase',{fade:.4}),
- scr('Фонари вспыхивают с двух сторон. «Ни с места, Хейл!» Револьвер Эбберлайна смотрит ему в лоб.'),
- set('ambush'),set('molly_saved'),
- fact('mol','спасена: засаду в комнате Кати устроил Эбберлайн'),
- hide(),veil(1,700),
- hide(),bg('cg_w4_hale_cell',{tr:'black',z:1.03,y:46}),veil(0,800),mus('wc_hale',{fade:1.5}),
- title('Скотленд-Ярд, камера','9 ноября · утро'),
- scr('Он снимает котелок. Потом — улыбку. Под ней ничего нет. Только фиолетовый отсвет в глазу.'),
- say('hale','Вы опоздали, мисс. Я — только руки. Якорь держится на честном слове. К ночи дверь откроется — со мной или без меня.'),
- secret('hale'),fact('hale','Потрошитель; взят с поличным в комнате Кати'),
- th('Якорь. Ваня. Бойня. Надо успеть до ночи.','determined')
-];
-const SC3=[
- when(F('acc_wrong'),HANG),
- when(NF('acc_wrong'),[
- bg('room_hart_night',{t:10,cam:50,kat:34}),veil(0,800),mus('wc_dread',{fade:2}),amb('amb_clock',{vol:.4}),
- title('Комнаты миссис Харт','8 ноября · 23:00'),
- th('Девятое ноября. Миллерс-корт. Мэри Джейн Келли. Последняя, самая страшная. Я помню. Я это знаю.','determined'),
- show('mol','shawl_scared',64),
- say('mol','Кэти, ты чего меня к себе притащила? Я живу на Миллерс-корт, мне домой надо, там хозяин за комнату…'),
- say('kat','Сегодня ты ночуешь здесь. Не спорь. Пожалуйста.','determined'),
- say('mol','Ты опять говоришь как будто знаешь, что будет.','scared'),
- show('luc','worried',30),
- say('luc','Деточка, я запру внизу. И стул под дверь поставлю. Я в газетах читала, как надо.'),
- hide(),
- hide(),bg('cg_w3_chair_door',{tr:'black',z:1.03,y:50}),
- scr('Стул под дверной ручкой. Свеча. Две девушки и одна старушка со скалкой.'),
- bg('room_hart_night',{t:600,cam:50,kat:34}),
- /* карта: где он ударит */
- when(F('told_truth'),[
-  show('hale','neutral',66),
-  say('hale','Мисс. Вы же знаете будущее. Девятое ноября, Миллерс-корт, верно? Я поставлю там людей. А вы идите со мной — вы мне нужны на месте.'),
-  th('Он знает, что я знаю. Он сам мне подсказывает адрес. Слишком удобно.','scared'),
-  hide('hale')
- ]),
- th('История говорит: Миллерс-корт. А карта в Чертогах? Где он ударит?','determined'),
- when(s=>!((M(s).map||{}).pred),[
-  th('Я так и не решила. Пора. Сейчас.','scared'),
-  WC('mind',{tab:'map',need:'pred',hint:'Нужно предсказать следующее убийство. Соедини точки как считаешь нужным и отметь место.'},[st=>{M(st).map.pred='miller'}])
- ],[
-  WC('mind',{tab:'map',hint:'Твоё предсказание отмечено. Можно передумать, пока не поздно.'},[])
- ]),
- when(s=>(M(s).map||{}).pred==='h',[
-  st=>{M(st).map.v.includes(5)||M(st).map.v.push(5)},set('star_ok'),
-   th('Пятая вершина — дом миссис Харт. Здесь. Он придёт сюда. Он поселил меня в вершину.','eureka'),
-   scr('Третий час ночи. На лестнице — шаги. Тяжёлые, ровные, как на обходе. Ручка двери медленно поворачивается.'),
-   when(F('abb_backup'),AMBUSH,[
-   sfx('whoosh'),shake(),mus('wc_chase',{fade:.5}),
-   qteShake({bg:'room_hart_night',n:7,allow:2,hint:'Удержи дверь',sub:'Свайпай по стрелке',
-    rules:['Кто-то ломится в дверь.','Свайпай туда, куда показывает стрелка, чтобы удержать её.','Две ошибки прощаются.'],
-    ok:[set('molly_saved'),
-     hide(),bg('cg_w3_run_door',{tr:'black',z:1.03,y:46}),shake(),vib(160),
-     scr('Дверь трещит, щепки летят во все стороны, но стул держит. Катя хватает Молли — и обе вылетают через чёрный ход под дождь.'),
-     scr('За спиной — тишина. Он не гонится. Он не любит шума.'),
-     fact('mol','спасена: Катя спрятала её у себя и вывела через чёрный ход')],
-    fail:[set('molly_saved'),set('door_broke'),
-     scr('Дверь поддаётся. Свеча гаснет. Катя вслепую тянет Молли к окну — и они вываливаются на крышу сарая.'),
-     scr('Обе живы. Молли в синяках, Катя с рассечённой щекой. Миссис Харт кричит на весь квартал. Он уходит.'),
-     fact('mol','спасена, хотя дверь не выдержала')]}),
-   bg('room_wrecked',{t:900,cam:50,kat:30}),
-   scr('Утро. Комната разгромлена. На полу — погасшая свеча и щепки. И фиолетовый дым под потолком, который тает, как не было.'),
-   show('kat','torn2',30),
-   th('Он был здесь. Он пришёл за мной. А Молли… Молли жива.','torn2')
-   ])
- ],[set('star_fail'),set('molly_dead'),
-   st=>{M(st).map.v.includes(5)||M(st).map.v.push(5)},
-   th('Я выбрала. Пойду туда, а Молли пусть сидит здесь, за стулом.','determined'),
-   bg('room_poor',{t:800,cam:50,kat:30}),
-   when(s=>M(s).map.pred==='miller',[scr('Миллерс-корт, комната тринадцать. Пусто. Тихо. Он здесь не был. И не собирался.')],[scr('Катя ждёт там, где отметила на карте. До рассвета. Пусто. Тихо. Он здесь не был. И не собирался.')]),
-   th('Пусто. Пусто! Почему пусто?..','scared'),
-   bg('room_wrecked',{t:900,cam:50,kat:30}),
-   scr('Когда Катя возвращается, дверь в её комнату выломана. Стул в щепки. Свеча на полу.'),
-   show('luc','worried',62),
-   say('luc','Деточка… Он пришёл в три. Я слышала. Я ничего… я не смогла…'),
-   th('Молли. Он пришёл в мою комнату. Он знал, что я уйду.','tears'),
-   fact('mol','погибла в комнате Кати, пока Катя искала убийцу на Миллерс-корт'),
-   hide('luc')]),
- /* центр звезды */
- st=>{st.flags.rays=rays(st);if(rays(st)<3)st.flags.lair_late=1},
- when(s=>!s.flags.lair_late,[
-  th('Лучи. Каждая стрелка-подпалина смотрит в одну точку. Центр звезды. Старая бойня у Ханбери.','eureka'),
-  set('lair_exact')
- ],[
-  th('Лучей слишком мало. Центр где-то… у рынка? У бойни? У реки? Мы потеряем часы.','sad'),
-  scr('Полдня уходит на то, чтобы обойти три подвала. В третьем — следы. Свежие.')
- ]),
- hide(),veil(1,800)
- ])
+ th('Не того. Я назвала не того.','tears'),
+ veil(1,1600),amb(null),mus(null,{fade:1.5}),
+ hide(),bg('cg_w4_kat_dead',{t:10,z:1.03,y:50}),veil(0,2200),
+ scr('Утром миссис Харт находит дверь открытой.'),
+ set('out_hang'),set('kat_dead'),fact('hale','Потрошитель; остался безнаказанным'),
+ hide(),veil(1,1600),
+ end({h:'Конец истории «Уайтчепел»',p:'Ошибка',clues:12,flow:'flow-whitechapel.html'})
 ];
 
-/* ======================= СЦЕНА 4 · Логово ======================= */
-const SC4=[when(NF('acc_wrong'),[
+/* ======================= СЦЕНА 5 · Бойня ======================= */
+const SC5=[when(s=>!s.flags.acc_wrong,[
  hide(),bg('cg_w4_kat_alone',{tr:'black',z:1.03,y:46}),veil(0,900),mus('wc_fog',{fade:2,vol:.9}),
  title('Старая бойня','9 ноября · ночь'),
- scr('Ржавые ворота бойни. Фонарь в руке. Никого вокруг.'),
- th('Я никого не позвала. Это моя дверь. Мой выброс. Мой Ваня.','determined'),
- bg('tunnel',{t:900,cam:50,kat:30}),mus('wc_fog',{fade:2,vol:.9}),amb('amb_drip',{vol:.5}),sfx('sfx_rats',{vol:.5,dur:5}),
+ when(F('lair_late'),[scr('Полдня уходит на то, чтобы обойти три подвала у рынка. В третьем — следы. Свежие. Ночь уже наступила.')]),
+ scr('Ржавые ворота бойни. Фонарь в руке.'),
+ when(F('ambush'),[scr('За воротами, в темноте, — Эбберлайн и четверо констеблей. Тихо, как мыши.')]),
+ bg('tunnel',{t:900,cam:50,kat:30}),amb('amb_drip',{vol:.5}),sfx('sfx_rats',{vol:.5,dur:5}),
  title('Под бойней','9 ноября · ночь'),
- when(F('byk_debt'),[
+ when(s=>s.flags.byk_debt&&!s.flags.byk_dead,[
   show('byk','neutral',66),
-  say('byk','Долг, мисс. Последний. Лаз под бойней — вот здесь, за решёткой. Я там туши рубил двадцать лет. Дальше не пойду.'),
+  say('byk','Долг, мисс. Последний. Лаз под бойней — вот здесь, за решёткой. Дальше не пойду.'),
   hide('byk'),set('byk_hatch')
  ]),
- when(isFav('T'),[sfx('whoosh'),scr('За спиной — торопливые шаги и звяканье склянок.'),show('tol','neutral',62),say('tol','Вы правда думали, что я отпущу вас одну? Скальпель у меня новый. Не спрашивайте.'),hide('tol'),set('comp_tol')]),
- when(isFav('S'),[sfx('whoosh'),scr('Из темноты — шорох крыльев. Он просто оказывается рядом.'),show('seb','cold',62),say('seb','Договор запрещает мне назвать имя. Он ничего не говорит о том, чтобы его убить.'),hide('seb'),set('comp_seb')]),
- when(s=>!fav(s),[show('rook','neutral',70),say('rook','Мисс! Я за вами от самого рынка. Я тут каждую крысу знаю. Ну, почти каждую.'),hide('rook'),set('comp_rook')]),
- when(isFav('H'),[th('Одна. Единственный, кого я бы позвала, — там, внизу. И он меня ждёт.','sad')]),
+ when(s=>!s.flags.ambush,[
+  when(isFav('T'),[sfx('whoosh'),scr('За спиной — торопливые шаги и звяканье склянок.'),show('tol','neutral',62),say('tol','Вы правда думали, что я отпущу вас одну? Скальпель у меня новый. Не спрашивайте.'),hide('tol'),set('comp_tol')]),
+  when(isFav('S'),[sfx('whoosh'),scr('Из темноты — шорох крыльев. Он просто оказывается рядом.'),show('seb','cold',62),say('seb','Договор запрещает мне назвать имя. Он ничего не говорит о том, чтобы его остановить.'),hide('seb'),set('comp_seb')]),
+  when(s=>!fav(s),[show('rook','neutral',70),say('rook','Мисс! Я за вами от самого рынка. Я тут каждую крысу знаю. Ну, почти каждую.'),hide('rook'),set('comp_rook')]),
+  when(isFav('H'),[th('Одна. Единственный, кого я бы позвала, — там, внизу. И он меня ждёт.','sad')])
+ ]),
  bg('slaughter',{t:900,cam:50,kat:30}),mus('wc_finale',{fade:1.2}),
  scr('Старая бойня. Крюки, цепи, кафель в бурых разводах. Посреди зала воздух треснул, и из трещины бьёт фиолетовая молния.'),
  hide(),bg('cg_w4_ivan_hooks',{tr:'black',z:1.03,y:46}),
  sfx('sfx_chain2',{vol:.8}),scr('Иван висит на цепях, руки на крюках. Он держит. Даже без сознания он держит эту дверь.'),
  th('Якорь. Он якорь. Пока он держит — она не распахнётся.','tears'),
  bg('slaughter',{t:600,cam:50,kat:30}),
+ /* засада: Хейл приходит за якорем — и попадает к Эбберлайну */
  when(F('ambush'),[
-  scr('Хозяина здесь нет — он в камере Ярда. Но трещина гудит, и Изнанка бьётся в ней, как зверь в клетке. Ей нужен Ваня. Последний якорь.'),
+  scr('Третий час ночи. Шаги на лестнице. Тяжёлые, ровные, как на обходе.'),
+  show('hale','neutral',66),
+  say('hale','Мисс Зубкова. Вы всё-таки нашли.'),
+  sfx('whoosh'),hide(),bg('cg_w4_ambush',{tr:'black',z:1.03,y:46}),shake(),vib(160),mus('wc_chase',{fade:.4}),
+  scr('Фонари вспыхивают с трёх сторон. «Ни с места, Хейл!» Револьвер Эбберлайна смотрит ему в лоб.'),
+  secret('hale'),fact('hale','Потрошитель; взят с поличным на бойне'),
+  bg('slaughter',{t:600,cam:50,kat:30}),
+  scr('Хейла уводят. Но трещина гудит, и Изнанка бьётся в ней, как зверь в клетке. Ей нужен Ваня. Последний якорь.'),
   th('Кольцо. Прижать к трещине. Сейчас.','determined'),
   s=>run([qteShake({bg:'slaughter',n:7,allow:2,hint:'Закрой дверь',sub:'Свайпай по стрелке — прижми кольцо к трещине',
    rules:['Трещина рвётся наружу.','Свайпай по стрелке, чтобы удержаться и прижать к ней кольцо.','Две ошибки прощаются.'],
    ok:[set('fight_won'),scr('Кольцо касается света. Чернота уходит из металла в трещину — и трещина сжимается до ровной фиолетовой нити.')],
-   fail:[set('wounded'),scr('Удар света отбрасывает Катю на кафель. Но цепи Ивана уже лопнули — и он сам падает на кольцо.'),set('fight_won')]})])
+   fail:[set('wounded'),set('fight_won'),scr('Удар света отбрасывает Катю на кафель. Но цепи Ивана уже лопнули — и он сам падает на кольцо.')]})])
  ]),
  when(NF('ambush'),[
  show('hale','neutral',66),
@@ -3719,8 +3934,9 @@ const SC4=[when(NF('acc_wrong'),[
  scr('Половина его лица заливается фиолетовым светом. Глаз горит.'),
  say('hale','Я чищу свой мир. Вы все здесь гости. Непрошенные. Занозы чужого мира в теле моего Лондона.'),
  say('hale','Полли, Энни, Лиз, Кейт. Всех вас выбросило сюда, как сор. А ты — самый большой осколок. Ты — последняя.'),
+ when(F('molly_saved'),[say('hale','Молли ты у меня из рук вынула. Ничего. После тебя — её.')],[say('hale','Молли была тёплая. Как ты.')]),
  say('hale','Когда я закончу с якорем и с тобой, дверь закроется. И мой мир снова станет моим.'),
- secret('hale'),fact('hale','Потрошитель'),
+ secret('hale'),fact('hale','Потрошитель; признался на бойне'),
  when(isFav('H'),[
   say('hale','Ты была лучшим, что я чувствовал в этом городе. Мне жаль. Правда.'),
   th('Он не врёт. Вот что самое страшное. Он не врёт.','tears'),
@@ -3731,29 +3947,10 @@ const SC4=[when(NF('acc_wrong'),[
   ],'Его рука')
  ]),
  when(NF('dark_end'),[
- /* суд один на один */
  say('kat','Это не ты чистишь. Это оно. Изнанка. Она вселилась в тебя в Манчестере, через порез. И она не закрывает дверь — она тобой её открывает.','determined'),
  st=>{st.defense=0},
- evidence({title:'Один на один',sub:'Выложи до четырёх улик. Пусть он услышит правду.',picks:4,mock:'',
-  items:st=>[
-   {id:'print_match',t:'Отпечаток',b:'кружка с моста совпала',w:2,say:'Твой отпечаток на Митр-сквер. Петля, дельта, три точки. Твой.'},
-   {id:'h_oven',t:'Печь морга',b:'скальпель и запонка',w:1,say:'Скальпель Толи и твоя запонка в печи. Ты жёг улики там, где мы резали мёртвых.'},
-   {id:'h_nocab',t:'Кэбов не было',b:'пальто сухое',w:1,say:'Ты не приезжал на Бакс-роу. Ты оттуда не уходил.'},
-   {id:'h_45min',t:'Сорок пять минут',b:'никто не видел',w:1,say:'Сорок пять минут тебя никто не видел. Ровно до Митр-сквер.'},
-   {id:'h_telegram',t:'Телеграмма',b:'Манчестер, 1887',w:1,say:'Манчестер. Студент-медик. Порез об осколок.'},
-   {id:'ring_rot',t:'Кольцо',b:'гниёт от твоей руки',w:1,say:'Кольцо гниёт от твоей руки. Это не ты. Это оно.'},
-   {id:'h_room',t:'Тихий дом',b:'пятая вершина',w:1,say:'Ты сам поселил меня в вершину звезды.'},
-   {id:'h_link',t:'Звено цепочки',b:'с Бакс-роу',w:1,say:'Звено от твоей цепочки лежало в луже у первой.'},
-   {id:'h_escort',t:'«Полицейский проводит»',b:'последний вечер Полли',w:1,say:'Полли пошла с тобой сама. Ты звал её по имени.'},
-   {id:'h_report',t:'Твой отчёт',b:'«прибыл в 3:45»',w:1,say:'Ты сам записал: пришёл за пять минут до свистка.'},
-   {id:'h_kidnap',t:'Цепочка',b:'у похитителя Ивана',w:1,say:'Я видела цепочку под плащом. Твою.'},
-   {id:'rift_none',t:'«Не верь ему»',b:'голос из разлома',w:1,say:'Мне сказали не верить ему. Я не поверила никому. Даже тебе. И правильно.'},
-   {id:'hale_sus',t:'Твоя карточка',b:'в Чертогах с октября',w:1,say:'Я завела на тебя карточку ещё в октябре. Просто боялась её открыть.'},
-   {id:'t_seb_blood',t:'Теория: кровопийца',b:'красные чернила',w:0,say:'Лорд Грей… нет. Не лорд.'},
-   {id:'t_palace',t:'Теория: дворец',b:'корона на бумаге',w:0,say:'Корона… дворец… нет, это был водяной знак полиции.'}
-  ].filter(x=>st.flags[x.id])}),
- st=>{st.flags.trial=(st.defense||0)},
- when(s=>(s.defense||0)>=4||(PRINT(s)&&(s.defense||0)>=2),[
+ evidence({title:'Один на один',sub:'Выложи до четырёх улик. Пусть он услышит правду.',picks:4,mock:'',items:HALE_ITEMS}),
+ when(s=>(s.defense||0)>=4||(s.flags.print_match&&(s.defense||0)>=2),[
   set('hale_wavers'),
   say('hale','…Манчестер. Девушка в фиолетовом свете. Я помню, как порезался. А дальше… дальше будто не я.','sad'),
   scr('На секунду фиолетовый свет в его глазу гаснет. На секунду он просто усталый человек в котелке.'),
@@ -3761,30 +3958,29 @@ const SC4=[when(NF('acc_wrong'),[
  ],[
   say('hale','Слова. Догадки. Заговоры. Вы всегда любили заговоры, мисс. Я вам их подкидывал, а вы радовались.','neutral')
  ]),
- /* превращение и бой */
  hide(),bg('cg_w4_rip_reveal',{tr:'black',z:1.03,y:46}),glitch(400),shake(),
  scr('Свет возвращается и затапливает его целиком. Пальто рвётся. Из рукавов лезут когти.'),
  hide(),bg('cg_w4_rip_claws',{t:900,z:1.03,y:46}),vib(200),
- when(isFav('S'),[hide(),bg('cg_w4_seb_vamp',{t:500,z:1.03,y:44}),scr('Себастьян бросается первым. Когти против когтей.'),show('seb','kneel_blood',62),say('seb','Катя… кольцо. Бей кольцом.'),hide('seb')]),
- when(isFav('T'),[hide(),bg('cg_w4_tol_scalpel',{t:500,z:1.03,y:46}),scr('Толя встаёт между Катей и тварью. В руке — новый скальпель. Губы трясутся, рука нет.'),say('tol','Я патологоанатом! Я знаю, где у тебя сухожилия!')]),
+ when(F('comp_seb'),[hide(),bg('cg_w4_seb_vamp',{t:500,z:1.03,y:44}),scr('Себастьян бросается первым. Когти против когтей.'),show('seb','kneel_blood',62),say('seb','Катя… кольцо. Бей кольцом.'),hide('seb')]),
+ when(F('comp_tol'),[hide(),bg('cg_w4_tol_scalpel',{t:500,z:1.03,y:46}),scr('Толя встаёт между Катей и тварью. В руке — новый скальпель. Губы трясутся, рука нет.'),say('tol','Я патологоанатом! Я знаю, где у тебя сухожилия!')]),
+ when(F('comp_rook'),[scr('Грач швыряет в тварь фонарь. Стекло брызжет, масло вспыхивает. Секунда — но Кате её хватает.')]),
  when(F('byk_hatch'),[scr('Из лаза с рёвом вылетает Бык с тесаком — передумал. Долги, мисс, долги.')]),
  {c:'wc_jack',n:8,mu:'wc_finale',
   ok:[set('dodge_ok'),scr('Катя уходит от когтей раз за разом. Он слишком большой, слишком быстрый — и слишком уверен в себе. Он открывается.')],
   fail:[set('wounded'),shake(),vib(200),scr('Когти рвут рукав и плечо. Катя падает на кафель — но кольцо всё ещё на пальце.')]},
  mus('wc_finale',{fade:.6}),
- when(F('abb_backup'),[sfx('sfx_whistle',{vol:.8}),scr('Сверху — свистки. Люди Эбберлайна спускаются по лестницам бойни. Тварь оборачивается на шум.')]),
  when(F('wounded'),[th('Плечо горит. Рука еле держит кольцо.','scared')]),
- s=>run([qteShake({bg:'slaughter',n:8,allow:fightAllow(s),hint:'Кольцо',sub:'Свайпай по стрелке — прижми кольцо к нему',
-  rules:['Тварь бросается на Катю.','Свайпай по стрелке, чтобы увернуться и прижать кольцо к нему.','Две ошибки прощаются.'],
+ s=>run([qteShake({bg:'slaughter',n:8,allow:Math.max(1,fightAllow(s)-(s.flags.lair_late?1:0)),hint:'Кольцо',sub:'Свайпай по стрелке — прижми кольцо к нему',
+  rules:['Тварь бросается на Катю.','Свайпай по стрелке, чтобы увернуться и прижать кольцо к нему.','Ошибки прощаются, но не все.'],
   ok:[set('fight_won'),scr('Кольцо касается его груди. Чернота уходит из металла — в него. Он кричит голосом, в котором два голоса.')],
-  fail:[set('fight_lost'),scr('Удар отбрасывает Катю к стене. Кольцо звенит по кафелю. Тварь поворачивается к Ивану.')]})]),
+  fail:[set('fight_lost'),scr('Удар отбрасывает Катю к стене. Кольцо звенит по кафелю. Тварь поворачивается к Ивану.')]})])
  ])
  ]),
  hide(),veil(1,700)
 ])];
 
-/* ======================= СЦЕНА 5 · Концовки ======================= */
-const SC5=[when(NF('acc_wrong'),[
+/* ======================= СЦЕНА 6 · Концовки бойни ======================= */
+const SC6=[when(F('acc_wrong'),WRONG,[
  when(F('dark_end'),[
   set('out_dark'),hide(),bg('cg_w4_dark_end',{tr:'black',z:1.03,y:46}),veil(0,700),mus('wc_mask',{fade:1}),
   scr('Трещина распахивается. Он держит её за руку — тёплую, живую — и глаза у него фиолетовые, как дым в склянке.'),
@@ -3792,7 +3988,7 @@ const SC5=[when(NF('acc_wrong'),[
   th('Я столько искала заговор. А это была просто рука. Протянутая. Вовремя.','tears'),
   fact('hale','ушёл в разлом вместе с Катей'),fact('ivan','остался на крюках; якорь брошен'),
   hide(),veil(1,1400),
-  end({h:'Конец истории «Уайтчепел»',p:'Тёмная',clues:12})
+  end({h:'Конец истории «Уайтчепел»',p:'Тёмная',clues:12,flow:'flow-whitechapel.html'})
  ]),
  when(F('ambush'),[
   set('out_ambush'),bg('slaughter',{t:10,cam:50,kat:30}),veil(0,500),mus('wc_end',{fade:2}),
@@ -3804,7 +4000,8 @@ const SC5=[when(NF('acc_wrong'),[
   scr('Из трещины на ладонь Кати падает фиолетовый кристалл — тёплый, ровный, как сердце. Ключ.'),
   set('key_whitechapel'),fact('ivan','спасён; вспомнил Катю'),
   bg('yard_exterior',{t:900,cam:50,kat:30}),show('abb','neutral',66),
-  say('abb','Хейл молчит. Сидит в камере и смотрит в стену. Свет из глаза ушёл этой ночью — в тот же час, когда вы были на бойне.'),
+  say('abb','Хейл молчит. Сидит в камере и смотрит в стену. Свет из глаза ушёл этой ночью — в тот же час, когда вы закрыли трещину.'),
+  when(F('molly_saved'),[say('abb','И передайте рыжей: пусть живёт спокойно. Её показания пригодятся.')]),
   say('abb','Суд будет закрытым. Правду напишут только в одном отчёте. В моём.'),
   hide('abb'),fact('hale','взят с поличным; Изнанка покинула его в камере'),
   when(isFav('T'),[mus('wc_tol',{fade:1.5}),bg('westminster',{t:900,cam:50,kat:30}),show('tol','smile',62),say('tol','Пицца. Я обещал пиццу. Я до сих пор не знаю, что это, но я готов.','smile'),hide('tol')]),
@@ -3812,19 +4009,19 @@ const SC5=[when(NF('acc_wrong'),[
   hide(),bg('cg_w4_portal',{tr:'black',z:1.03,y:46}),
   scr('Через неделю в подвале бойни открывается проход. Ровный, тихий, без молний. За ним пахнет лабораторией — пылью, кофе и озоном.'),
   th('Домой. С ключом. С Ваней.','determined'),
+  ...WHITE,
   hide(),veil(1,1400),
-  end({h:'Конец истории «Уайтчепел»',p:'Засада',clues:12})
+  end({h:'Конец истории «Уайтчепел»',p:'Засада',clues:12,flow:'flow-whitechapel.html'})
  ]),
  when(s=>!s.flags.dark_end&&!s.flags.ambush,[
  bg('slaughter_fall',{t:10,cam:50,kat:30}),veil(0,500),mus('rift',{fade:.6}),shake(),
  when(FULL,[
   set('out_full'),
   scr('Изнанка выходит из Хейла, как дым из погасшей лампы. Тварь съёживается в человека. Человек падает на колени.'),
-  sfx('whoosh'),show('abb','shock',80),
+  sfx('sfx_whistle',{vol:.8}),show('abb','shock',80),
   say('abb','Хейл?.. Господи. Хейл.'),
-  when(F('abb_backup'),[scr('Эбберлайн с констеблями стоит в дверях. Он видел всё: когти, свет, кольцо. И лицо своего лучшего инспектора.')],
-   [scr('Эбберлайн прибегает на шум, когда всё кончено. Он видит только Хейла на коленях и Катю с кольцом. И молчит очень долго.'),
-    say('abb','Я не поверил вам. Простите. Я… напишу в отчёте правду. Сколько смогу.','shock')]),
+  scr('Эбберлайн прибегает на шум, когда всё кончено. Он видит Хейла на коленях, Катю с кольцом и трещину, которая гаснет. И молчит очень долго.'),
+  say('abb','Я не поверил бы вам. Простите. Я… напишу в отчёте правду. Сколько смогу.','shock'),
   hide('abb'),
   sfx('sfx_chain1',{vol:.8}),scr('Цепи лопаются. Иван падает Кате на руки — тяжёлый, тёплый, живой.'),
   hide(),bg('cg_w4_ivan_kat',{tr:'black',z:1.03,y:46}),mus('wc_end',{fade:2}),
@@ -3842,14 +4039,16 @@ const SC5=[when(NF('acc_wrong'),[
   sfx('sfx_bigben',{vol:.5}),scr('Через неделю в подвале бойни открывается проход. Ровный, тихий, без молний. За ним пахнет лабораторией — пылью, кофе и озоном.'),
   th('Домой. С ключом. С Ваней.','determined')
  ]),
- when(s=>!FULL(s)&&!FAIL(s),[
+ when(s=>s.flags.fight_won&&!FULL(s),[
   set('out_partial'),
-  scr('Бойня рушится. Балки, крюки, кирпич. Катя тащит Ивана к лазу, сама не зная, откуда силы.'),
+  scr('Кольцо касается его — и трещина вздрагивает. Из портала бьёт всплеск энергии, фиолетовый, слепящий. Бойня начинает рушиться.'),
+  scr('Балки, крюки, кирпич. Катя тащит Ивана к лазу, сама не зная, откуда силы.'),
   scr('Хейл остаётся внутри. Последнее, что она видит, — как он стоит под падающей крышей, без котелка, и смотрит на свет.'),
   hide(),bg('cg_w4_hat_ruins',{tr:'black',z:1.03,y:50}),mus('wc_hale',{fade:2}),
   scr('Утром констебли выносят из руин тело под брезентом. На камнях — котелок.'),
   scr('Газеты пишут: «Инспектор Хейл погиб, преследуя Потрошителя». Лондон хоронит его героем.'),
   th('Правду знаю только я. И Ваня, когда вспомнит.','sad'),
+  when(F('molly_dead'),[th('И Молли. Молли бы знала.','tears')]),
   fact('ivan','спасён'),fact('hale','погиб под обрушением; Лондон считает его героем'),
   set('hale_dead_hero'),
   when(isFav('H'),[th('И я до сих пор не знаю, что было правдой — его чай или его нож.','tears')]),
@@ -3858,7 +4057,7 @@ const SC5=[when(NF('acc_wrong'),[
   say('kat','Вспомнишь. Я подожду.','tender'),
   hide()
  ]),
- when(FAIL,[
+ when(F('fight_lost'),[
   set('out_fail'),mus('wc_dread',{fade:1}),
   scr('Тварь доходит до Ивана первой. Цепи звенят и обрываются. Якорь падает.'),
   set('ivan_dead'),
@@ -3870,22 +4069,24 @@ const SC5=[when(NF('acc_wrong'),[
   fact('ivan','якорь потерян. Возможно, удастся вернуть после узла 2'),fact('hale','ушёл в разлом'),
   set('hale_escaped')
  ]),
+ ...WHITE,
  hide(),veil(1,1400),
- end({h:'Конец истории «Уайтчепел»',p:'Из ада',clues:12})
+ end({h:'Конец истории «Уайтчепел»',p:'Из ада',clues:12,flow:'flow-whitechapel.html'})
  ])
 ])];
 
 window.SCENES=[
  {name:'«Из ада»',tag:'Глава 4 · Из ада',steps:SC1},
  {name:'Печь',tag:'Глава 4 · Печь',steps:SC2},
- {name:'9 ноября',tag:'Глава 4 · Ловушка',steps:SC3},
- {name:'Бойня',tag:'Глава 4 · Логово',steps:SC4},
- {name:'Финал',tag:'Глава 4 · Финал',steps:SC5}
+ {name:'Молли',tag:'Глава 4 · Молли',steps:SC3},
+ {name:'Скотленд-Ярд',tag:'Глава 4 · Обвинение',steps:SC4},
+ {name:'Бойня',tag:'Глава 4 · Логово',steps:SC5},
+ {name:'Финал',tag:'Глава 4 · Финал',steps:SC6}
 ];
-window.PRESET=i=>({pts:{T:3,S:5,H:2},flags:{hale_print:1,told_truth:1,has_shard:1,h_dry:1,h_link:1,h_room:1,h_journal:1,h_crown:1,h_chalk:1,h_45min:1,h_nocab:1,h_first:1,ray_1:1,ray_2:1,ray_3:1,ray_4:1,h_telegram_sent:1,byk_debt:1},clues:[],choices:0,qteOk:0,qteAll:0,diamonds:0,path:[]});
+window.PRESET=i=>({pts:{T:3,S:5,H:2},flags:{hale_print:1,told_truth:1,has_shard:1,h_dry:1,h_link:1,h_room:1,h_journal:1,h_crown:1,h_chalk:1,h_45min:1,h_first:1,ray_1:1,ray_2:1,ray_3:1,ray_4:1,h_telegram_sent:1,byk_debt:1},clues:[],choices:0,qteOk:0,qteAll:0,diamonds:0,path:[]});
 window.MINI=[
  {name:'«Пентаграмма»',steps:[bg('office_dark',{t:600}),mus('wc_deduce'),WC('star',{ok:[scr('Звезда сходится на доме миссис Харт.')],fail:[scr('История подвела.')]},[])]},
- {name:'QTE «Дверь»',steps:[bg('room_hart_night',{t:600}),mus('wc_chase'),qteShake({bg:'room_hart_night',n:7,allow:2,hint:'Удержи дверь',sub:'Свайпай по стрелке',ok:[scr('Дверь выдержала.')],fail:[scr('Дверь поддалась.')]})]},
+ {name:'QTE «Дверь»',steps:[bg('cg_w3_chair_door',{t:600}),mus('wc_chase'),qteShake({bg:'cg_w3_chair_door',n:7,allow:2,hint:'Удержи дверь',sub:'Свайпай по стрелке',ok:[scr('Дверь выдержала.')],fail:[scr('Дверь поддалась.')]})]},
  {name:'QTE «Уклонение» (Джек)',steps:[bg('slaughter',{t:600}),{c:'wc_jack',n:8,mu:'wc_finale',ok:[scr('Выстояла.')],fail:[scr('Не уцелела.')]}]},
  {name:'QTE «Кольцо»',steps:[bg('slaughter',{t:600}),mus('wc_finale'),qteShake({bg:'slaughter',n:8,allow:2,hint:'Кольцо',sub:'Свайпай по стрелке',ok:[scr('Кольцо коснулось его.')],fail:[scr('Отбросило к стене.')]})]}
 ];
@@ -3894,6 +4095,8 @@ window.STORY_CAST=st=>{const base=C1.STORY_CAST(st),f=st.flags||{};
  const row=k=>base.find(r=>r[0].indexOf(k)>=0);
  const h=row('Хейл');if(h&&(f.out_full||f.out_partial||f.out_fail)){h[1]='инспектор Ярда · Потрошитель';h[2]=f.out_partial?'dead':'betray';h[3]=-90;h[4]=f.conf_H?20:0}
  const iv=row('Иван');if(iv&&f.ivan_dead){iv[2]='dead';iv[1]='бармен · якорь, потерян в разломе'}else if(iv&&(f.out_full||f.out_partial)){iv[1]='бармен · якорь: держит проход изнутри';iv[3]=80}
+ const tl=row('Толя')||row('Толбот');if(tl&&f.acc_tol4&&f.out_hang){tl[2]='dead';tl[1]='патологоанатом · повешен по обвинению Кати'}
+ const sb=row('Себастьян')||row('Грей');if(sb&&f.acc_seb4&&f.out_hang){sb[1]='лорд · исчез из Лондона'}
  const mo=row('Молли');if(mo&&f.molly_dead){mo[2]='dead';mo[1]='подруга · погибла 9 ноября'}
  const by=row('Бык');if(by&&f.byk_dead){by[2]='dead';by[1]='вышибала · найден мёртвым'}else if(by&&f.byk_debt){by[3]=30;by[1]='вышибала · знал лаз в бойню'}
  const kr=row('Крейн');if(kr&&(f.out_full||f.out_partial||f.out_fail)){kr[1]='магистр ложи «Рассвет»'}
@@ -4045,6 +4248,7 @@ function paperUI(c){return new Promise(async res=>{
   /* лист собран потоком: шапка → дата → заголовок → подзаголовок → гравюра (нижняя часть картинки, где нет напечатанного текста) */
   hideBox();const S=stage();const p=el('div','wcPaper');const u=(A.ui||{})[c.img];
   p.innerHTML=`<div class="sheet"><div class="mast">The Illustrated Police News</div><div class="date"><span>No. 1,284</span><span>${esc(c.date||'London, 1888')}</span><span>One Penny</span></div><div class="head">${esc(c.head||'')}</div>${c.sub?`<div class="sub">${esc(c.sub)}</div>`:''}${u?`<div class="pic"><img alt="" src="${u}"></div>`:''}</div><div class="tap">нажмите, чтобы продолжить</div>`;
+  const pim=p.querySelector('.pic img');if(pim){const fx=()=>{if(pim.naturalWidth>pim.naturalHeight){pim.parentNode.style.aspectRatio=pim.naturalWidth+'/'+pim.naturalHeight;pim.style.objectPosition='50% 50%'}};if(pim.complete)fx();else pim.onload=fx}
   S.appendChild(p);sfx('whoosh');requestAnimationFrame(()=>p.classList.add('on'));await wait(900);
   p.onclick=async()=>{p.classList.remove('on');await wait(400);p.remove();res()}})}
 
@@ -4190,6 +4394,7 @@ function lockUI(c){return new Promise(res=>{
     st.forEach((s,i)=>{if(!s.set&&!(down&&mode==='hold'&&i===cur))s.h=Math.max(0,s.h-dt*.9)});draw();requestAnimationFrame(loop)};requestAnimationFrame(loop);
   const fall=(i,over)=>{st[i].h=0;err++;vib(90);sfx('hit');L.classList.add('slip');setTimeout(()=>L.classList.remove('slip'),250);hearts();if(over)mode='stuck';
     if(err>allow){done=true;qEnd(q,false,c,res)}};
+  W.__lockSolve=()=>{if(done)return;st.forEach(x=>{x.set=true;x.h=x.need});done=true;L.classList.add('open');setTimeout(()=>qEnd(q,true,c,res),300)};
   q.addEventListener('contextmenu',e=>e.preventDefault());
   q.onpointerdown=e=>{if(done)return;e.preventDefault();try{q.setPointerCapture(e.pointerId)}catch(_){}down=true;mode='hold';x0=e.clientX;px0=px};
   q.onpointermove=e=>{if(!down||done)return;const dx=e.clientX-x0;if(mode!=='drag'&&Math.abs(dx)>12){mode='drag';if(!st[cur].set)st[cur].h=0}
@@ -4197,10 +4402,38 @@ function lockUI(c){return new Promise(res=>{
   q.onpointerup=q.onpointercancel=()=>{if(!down||done)return;down=false;const m=mode;mode='';
     if(m==='drag'){cur=nearest(px);px=SX[cur];pick.classList.add('snap');setTimeout(()=>pick.classList.remove('snap'),150);return}
     if(m!=='hold')return;const s=st[cur];if(s.set||s.h<.03)return;
-    if(Math.abs(s.h-s.need)<=TOL){s.set=true;s.h=s.need;sfx('tick');vib(25);hearts();
-      if(st.every(x=>x.set)){done=true;L.classList.add('open');setTimeout(()=>qEnd(q,true,c,res),800)}}
+    if(Math.abs(s.h-s.need)<=TOL){s.set=true;s.h=s.need;sfx('sfx_lockclick');vib(25);hearts();
+      if(st.every(x=>x.set)){done=true;L.classList.add('open');setTimeout(()=>sfx('sfx_lockopen'),250);setTimeout(()=>qEnd(q,true,c,res),1000)}}
     else fall(cur)};
   draw();
+})}
+
+/* «Побег от газа» (wc_gas): три дорожки, сверху ползут клубы фиолетового газа. Свайп или тап влево/вправо — Катя меняет дорожку.
+   Добежать до лестницы (c.dur секунд); c.lives касаний газа — провал. */
+function gasUI(c){return new Promise(res=>{
+  const U=k=>(A.ui||{})[k]||'',bgu=(A.bg||{})[c.bg||'cult_hall']||'',DUR=c.dur||18,LIVES=c.lives||3,LX=[20,50,80];
+  const q=qWrap('wcGas',`<div class="gbg" style="background-image:url('${bgu}')"></div><div class="gfog"></div>
+    <div class="qh">${esc(c.hint||'Газ страха')}</div><div class="qs">${esc(c.sub||'Беги к лестнице. Свайп или тап влево-вправо — уходи от клубов дыма')}</div>
+    <div class="lanes"><i></i><i></i><i></i></div><img class="gk" alt="" draggable="false" src="${spr('kat','scared')}"><div class="gtrk"><i></i><b>лестница</b></div><div class="hearts"></div>
+    <img class="burst" alt="" src="${U('fx_gas_vial')}">`);
+  const K=q.querySelector('.gk'),bar=q.querySelector('.gtrk i'),H=q.querySelector('.hearts'),fog=q.querySelector('.gfog');
+  let lane=1,hits=0,done=false,cl=[],last=0,t0=0,nextSpawn=1.2,inv=0;
+  const hearts=()=>{H.innerHTML=[...Array(LIVES)].map((_,i)=>`<i class="${i<hits?'no':''}"></i>`).join('')};hearts();
+  const place=()=>{K.style.left=LX[lane]+'%'};place();
+  const spawn=(ln,el)=>{const g=document.createElement('img');g.className='gc';g.alt='';g.src=U(Math.random()<.5?'fx_gas':'fx_gas2');g.style.left=LX[ln]+'%';q.appendChild(g);cl.push({ln,y:-30,el:g,v:(28+el*22)*(0.9+Math.random()*.2),r:Math.random()*40-20})};
+  const end=ok=>{if(done)return;done=true;cl.forEach(x=>x.el.remove());qEnd(q,ok,c,res)};
+  const loop=t=>{if(done)return;if(!t0){t0=t;last=t}const dt=Math.min(.05,(t-last)/1000);last=t;const el=(t-t0)/1000,p=el/DUR;
+    bar.style.transform='scaleX('+Math.min(1,p)+')';fog.style.opacity=.25+p*.5;
+    if(el>nextSpawn&&el<DUR-1.4){const free=Math.random()*3|0;const two=p>.5&&Math.random()<.3;[0,1,2].filter(l=>l!==free).sort(()=>Math.random()-.5).slice(0,two?2:1).forEach(l=>spawn(l,p));nextSpawn=el+Math.max(.8,1.3-p*.5)}
+    cl.forEach(x=>{x.y+=x.v*dt;x.el.style.top=x.y+'%';x.el.style.transform=`translate(-50%,-50%) rotate(${x.r+x.y*.4}deg)`;
+      if(!x.hit&&x.ln===lane&&x.y>69&&x.y<83&&el>inv){x.hit=true;hits++;inv=el+.7;hearts();vib(120);sfx('hit');q.classList.add('cough');setTimeout(()=>q.classList.remove('cough'),450);if(hits>=LIVES)end(false)}});
+    cl=cl.filter(x=>{if(x.y>125){x.el.remove();return false}return true});
+    if(el>=DUR)return end(true);requestAnimationFrame(loop)};
+  let sx=0;q.onpointerdown=e=>{sx=e.clientX};
+  q.onpointerup=e=>{if(done)return;const dx=e.clientX-sx;const r=q.getBoundingClientRect();const d=Math.abs(dx)>30?Math.sign(dx):(e.clientX<r.left+r.width/2?-1:1);
+    const n=Math.max(0,Math.min(2,lane+d));if(n!==lane){lane=n;place();sfx('tick')}};
+  setTimeout(()=>{q.querySelector('.burst').classList.add('go');sfx('whoosh')},150);
+  setTimeout(()=>requestAnimationFrame(loop),1100);
 })}
 
 /* «Тень»: держи палец — Катя крадётся. Луч фонаря ходит туда-сюда; когда он рядом — отпусти, иначе заметят */
@@ -4353,8 +4586,16 @@ function flasksUI(c){return new Promise(res=>{
   /* одинаковые соседние слои сливаются в одну ячейку; верхний слой — с волной поверхности */
   const runs=f=>{const r=[];f.forEach((x,k)=>{const l=r[r.length-1];if(l&&l.c===x)l.n++;else r.push({c:x,k,n:1})});return r};
   const SEG=100/H;
-  const draw=()=>{rack.innerHTML=S.map((f,i)=>{const R=runs(f);return `<button class="fl${i===sel?' sel':''}${f.length===H&&f.every(y=>y===f[0])?' full':''}${f.includes('v')?' hasv':''}" data-i="${i}" aria-label="колба ${i+1}"><b class="neck"></b><span class="liq">${R.map((r,j)=>`<i class="${r.c}${j===R.length-1?' top':''}" style="--c:${CC[r.c]};bottom:${r.k*SEG}%;height:${r.n*SEG}%"></i>`).join('')}</span></button>`}).join('');
-    rack.querySelectorAll('.fl').forEach(b=>b.onclick=()=>tap(+b.dataset.i))};
+  /* 1.0.50: две деревянные подставки (3 + 2 гнезда), стеклянные пробирки из ассета, жидкость — кодом под стеклом */
+  const HX=[.239,.4975,.752],ROWS=NF<=3?[[0,1,2].slice(0,NF)]:[[0,1,2],[...Array(NF-3)].map((_,k)=>3+k)];
+  const layout=()=>{const qr=q.getBoundingClientRect(),avail=qr.height-300,rowH=Math.min(avail/ROWS.length,300);
+    const W=Math.min(qr.width*.9,rowH/0.83);rack.style.setProperty('--rw',W+'px');rack.style.setProperty('--th',(W*.7)+'px')};
+  rack.innerHTML=ROWS.map(r=>`<div class="row"><img class="rk" alt="" draggable="false" src="${(A.ui||{}).flask_rack||''}">${r.map((i,k)=>`<button class="fl" data-i="${i}" style="left:${HX[k]*100}%" aria-label="колба ${i+1}"><span class="liq"></span><img class="gl" alt="" draggable="false" src="${(A.ui||{}).flask_glass||''}"><img class="ck" alt="" draggable="false" src="${(A.ui||{}).flask_cork||''}"></button>`).join('')}</div>`).join('');
+  layout();addEventListener('resize',layout);
+  rack.querySelectorAll('.fl').forEach(b=>b.onclick=()=>tap(+b.dataset.i));
+  const draw=()=>{S.forEach((f,i)=>{const b=rack.querySelector(`.fl[data-i="${i}"]`);if(!b)return;const R=runs(f);
+      b.className='fl'+(i===sel?' sel':'')+(f.length===H&&f.every(y=>y===f[0])?' full':'')+(f.includes('v')?' hasv':'');
+      b.querySelector('.liq').innerHTML=R.map((r,j)=>`<i class="${r.c}${j===R.length-1?' top':''}" style="--c:${CC[r.c]};bottom:${r.k*SEG}%;height:${r.n*SEG}%"></i>`).join('')})};
   const tap=async i=>{if(busy||done)return;if(sel<0){if(!S[i].length)return;sel=i;sfx('tick');return draw()}
     if(i===sel){sel=-1;return draw()}
     const m=moves(S).find(m=>m[0]===sel&&m[1]===i);if(!m){vib(60);const b=rack.querySelector(`[data-i="${i}"]`);b.classList.add('no');setTimeout(()=>b.classList.remove('no'),300);sel=-1;return draw()}
@@ -4463,7 +4704,7 @@ function chaseUI(c){return new Promise(res=>{
   requestAnimationFrame(loop);
   q.querySelector('.go').onclick=()=>{q.querySelector('.ov').hidden=true;live=true}})}
 
-W.STEPX=Object.assign(W.STEPX||{},{wc_chase:chaseUI,wc_flasks:flasksUI,wc_group:groupUI,wc_waltz:waltzUI,wc_lock:lockUI,wc_shadow:shadowUI2,wc_prints:printsUI,wc_recall:recallUI,wc_star:starUI,wc_scan:scanUI,wc_paper:paperUI,wc_letter:letterUI,wc_jack:jackUI,wc_sketch:sketchUI,wc_warm:warmUI,wc_crowd:crowdUI,wc_cut:cutUI,wc_board:boardUI,wc_mind:mindUI});
+W.STEPX=Object.assign(W.STEPX||{},{wc_gas:gasUI,wc_chase:chaseUI,wc_flasks:flasksUI,wc_group:groupUI,wc_waltz:waltzUI,wc_lock:lockUI,wc_shadow:shadowUI2,wc_prints:printsUI,wc_recall:recallUI,wc_star:starUI,wc_scan:scanUI,wc_paper:paperUI,wc_letter:letterUI,wc_jack:jackUI,wc_sketch:sketchUI,wc_warm:warmUI,wc_crowd:crowdUI,wc_cut:cutUI,wc_board:boardUI,wc_mind:mindUI});
 W.WC_UI={lock:true,shadow:true,prints:true,recall:true,star:true,scan:true,mind:true,paper:true,cut:true,board:true,crowd:true,warm:true};
 
 /* кнопка «Чертоги» в паузе — после первого открытия */
