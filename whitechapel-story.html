@@ -4180,7 +4180,7 @@ function printsUI(c){return new Promise(res=>{
   const cand=c.cand||[{n:'Доктор Толбот',t:'loop',s:4},{n:'Вышибала',t:'whorl',s:7},{n:'Бармен',t:'arch',s:11}];const tgt=c.target||{t:'loop',s:5};const ans=c.answer==null?-1:c.answer;
   const U=k=>(A.ui||{})[k]||'',OTH=['print_a','print_b','print_c'];let o=0;
   const card=(img,name,flip,cls)=>`<div class="pc${cls?' '+cls:''}"><img alt="" src="${U(img)}"${flip?' style="transform:scaleX(-1)"':''}><i>${esc(name)}</i></div>`;
-  const q=qWrap('wcPrints',`<div class="qh">Дактилоскопия</div><div class="qs">${esc(c.sub||'Кровавый отпечаток с воротника жертвы. Чей?')}</div><div class="tg">${card('print_red',c.tname||'воротник жертвы',0,'red')}</div>
+  const q=qWrap('wcPrints',`<div class="qh">Дактилоскопия</div><div class="qs">${esc(c.sub||'Отпечаток с воротника. Чей?')}</div><div class="tg">${card('print_red',c.tname||'воротник жертвы',0,'red')}</div>
    <div class="cards n${cand.length}">${cand.map((x,i)=>{const m=x.t===tgt.t&&x.s===tgt.s;const im=m?'print_match':OTH[o++%3];return `<button data-i="${i}">${card(im,x.n,!m&&(i%2===1))}</button>`}).join('')}</div><button class="none" data-i="-1">Нет совпадения</button>`);
   q.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;b.classList.add('pick');qEnd(q,i===ans,c,res)});
 })}
