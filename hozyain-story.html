@@ -616,11 +616,13 @@ body.pgOut{opacity:0!important;transition:opacity .3s ease}
 #title h1,#home h1{font-family:"Poiret One","Didot",serif!important;letter-spacing:.06em!important;font-weight:400!important}
 #home h1{font-size:46px!important}
 /* нуар: только фон, спрайты, CG */
-#stage.noir #bgA,#stage.noir #bgB,#stage.noir #bgOver,#stage.noir #bgV,#stage.noir #crowdL,#stage.noir #sprites,#stage.noir .hzQ .ibg,#stage.noir .hzQ .who,#stage.noir .hzIns .fld img,#stage.noir #panoIn>img{filter:url(#hzNoir) grayscale(var(--nfb,0))}
-@supports not (filter:url(#hzNoir)){#stage.noir #bgA,#stage.noir #bgB,#stage.noir #sprites{filter:grayscale(1) contrast(1.35)}}
-#stage.noir::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.16;mix-blend-mode:overlay;
- background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.85) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:hzGrain .5s steps(3) infinite}
-@keyframes hzGrain{0%{background-position:0 0,0 0}50%{background-position:0 0,-40px 30px}100%{background-position:0 0,30px -20px}}
+/* нуар: дешёвый CSS-фильтр без SVG — на iPhone SVG-фильтр тормозил смену спрайтов */
+#stage.noir #bgA,#stage.noir #bgB,#stage.noir #bgOver,#stage.noir #bgV,#stage.noir #crowdL,#stage.noir .spr,#stage.noir .hzQ .ibg,#stage.noir .hzQ .who,#stage.noir .hzIns .fld img{filter:grayscale(1) contrast(1.25)}
+#stage.noir::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.55) 100%)}
+.hzNoirT{position:absolute;top:calc(env(safe-area-inset-top) + 12px);right:14px;z-index:30;display:flex;align-items:center;gap:8px;background:rgba(10,8,14,.72);border:1px solid rgba(214,180,110,.55);border-radius:20px;padding:6px 10px 6px 12px;color:#efe6d6;font:500 13px/1 inherit;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hzNoirT i{width:34px;height:20px;border-radius:10px;background:linear-gradient(90deg,#c33,#d9a84e);position:relative;transition:.25s}
+.hzNoirT i::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.25s}
+.hzNoirT.on i{background:#666}.hzNoirT.on i::after{left:16px}
 #mNoir small{display:block;font-size:11px;opacity:.6}
 
 /* общий каркас */
@@ -800,6 +802,7 @@ body.pgOut{opacity:0!important;transition:opacity .3s ease}
 .hzFrame .cap{margin-top:14px;font-size:14px;opacity:.85;text-align:center;padding:0 22px}
 
 .hzCross .it[hidden]{display:none}
+#home #hNoirT#hNoirT#hNoirT{display:flex!important}
 @font-face{font-family:"Poiret One";src:url(hozyain-font_poiret.c8262c70.woff) format("woff");font-display:block}#title h1{text-transform:none;font-size:min(42px,8.6vw)!important}</style></head>
 <body>
 <div id="stage">
@@ -3150,12 +3153,14 @@ const NOIR_SVG='<svg width="0" height="0" style="position:absolute"><filter id="
 let noirUser=null;try{noirUser=localStorage.getItem('hz_noir')}catch(e){}
 function noirApply(){const s=stage();if(!s)return;const on=ST&&ST.flags&&ST.flags.__noir_forced!=null?!!ST.flags.__noir_forced:noirUser==='1';s.classList.toggle('noir',on)}
 function noirUI(c){if(c.on==null)delete ST.flags.__noir_forced;else ST.flags.__noir_forced=c.on?1:0;noirApply()}
-function noirInit(){if(!document.getElementById('hzNoirSvg')){const d=el('div','',NOIR_SVG);d.id='hzNoirSvg';document.body.appendChild(d)}
-  const m=document.querySelector('#menu .mm,#menu .grid,#menu');const btn=document.getElementById('mNoir');
-  if(m&&!btn){const b=el('button','btn','');b.id='mNoir';const lab=()=>{b.innerHTML='Режим нуара: '+(noirUser==='1'?'вкл':'выкл')+'<small>ч/б, красный остаётся</small>'};lab();
-    b.onclick=()=>{noirUser=noirUser==='1'?'0':'1';try{localStorage.setItem('hz_noir',noirUser)}catch(e){}lab();noirApply()};
+function noirSet(v){noirUser=v?'1':'0';try{localStorage.setItem('hz_noir',noirUser)}catch(e){}noirApply();noirLab()}
+function noirLab(){const on=noirUser==='1';document.querySelectorAll('.hzNoirT').forEach(t=>{t.classList.toggle('on',on);t.querySelector('span').textContent=on?'Ч/Б':'Цвет'});
+  const b=document.getElementById('mNoir');if(b)b.innerHTML='Нуар (ч/б): '+(on?'вкл':'выкл')}
+function noirInit(){
+  const m=document.getElementById('menu');if(m&&!document.getElementById('mNoir')){const b=el('button','btn','');b.id='mNoir';b.onclick=()=>noirSet(noirUser!=='1');
     const ref=document.getElementById('mHome');if(ref&&ref.parentNode)ref.parentNode.insertBefore(b,ref);else m.appendChild(b)}
-  noirApply()}
+  const h=document.getElementById('home');if(h&&!h.querySelector('.hzNoirT')){const t=el('button','hzNoirT','<span></span><i></i>');t.id='hNoirT';t.setAttribute('aria-label','Ч/Б или цвет');t.onclick=e=>{e.stopPropagation();noirSet(noirUser!=='1')};h.appendChild(t)}
+  noirLab();noirApply()}
 
 /* ---------- Лист / улика крупно ---------- */
 function sheetUI(c){return new Promise(res=>{
