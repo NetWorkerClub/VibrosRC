@@ -1,0 +1,204 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>html,body{background:#05030a;color-scheme:dark}</style><link rel="stylesheet" href="fonts.css"><style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}html,body{margin:0}</style></head><body><title>Схема выборов «Хозяина»</title>
+
+
+<script>document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});document.addEventListener("touchmove",e=>{if(e.touches.length>1)e.preventDefault()},{passive:false})</script><style>html,body{touch-action:pan-x pan-y;overscroll-behavior:none}header{display:none!important}body{padding-block:12px 28px!important}.hint{display:none}</style><style>
+/* Two views: the whole story as a sideways chart, and each chapter as a vertical chain of choices down to its ending */
+:root{
+  --bg:#0a0718; --panel:#141026; --line:#2f2752; --fg:#f2ecff; --muted:#a99fcc; --dim:#6f6696;
+  --violet:#9d7bff; --gold:#e8b85a; --red:#e0484f; --lock:#3a3358;
+  --display:"Philosopher",Georgia,serif; --body:"Manrope",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+h1{margin:2px 0 0;font-family:var(--display);font-size:30px;line-height:1.05}
+.lead{margin:6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.5;max-width:60ch}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tabs button{flex:none;border:1px solid var(--line);background:#141026;color:var(--fg);border-radius:999px;padding:8px 14px;font:600 13px var(--body);cursor:pointer}
+.tabs button.on{background:var(--gold);border-color:transparent;color:#1a1208}
+.tabs button.lk{opacity:.45}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px}
+.scroller{overflow-x:auto;border-radius:16px;box-shadow:0 0 0 1px var(--line);-webkit-overflow-scrolling:touch}
+.chart{position:relative;min-width:980px;width:100%;aspect-ratio:1672/940;background:#0b0820 url(206014ad3410.webp) center/100% 100% no-repeat}
+.chart svg{position:absolute;inset:0;width:100%;height:100%}
+.chart text{font-family:var(--body)}
+.node{cursor:pointer}.node:focus{outline:none}
+.node.sel .box{stroke:#fff;stroke-width:3}
+.hint{font-size:12px;color:var(--dim);margin:0}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;max-width:640px}
+.sheet .tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.sheet h2{margin:0;font-family:var(--display);font-size:22px;line-height:1.15}
+.sheet p{margin:0;font-size:14px;line-height:1.5}
+.st{font-size:12px;color:var(--dim)}
+/* chapter chain */
+.chain{position:relative;display:flex;flex-direction:column;gap:0;max-width:680px}
+.step{position:relative;padding:0 0 18px 30px}
+.step::before{content:"";position:absolute;left:9px;top:22px;bottom:-4px;width:2px;background:var(--line)}
+.step.done::before{background:linear-gradient(var(--gold),rgba(232,184,90,.25))}
+.step:last-child::before{display:none}
+.dot{position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);background:#120e24}
+.step.done .dot{border-color:var(--gold);background:radial-gradient(circle,#f6dda0 0 30%,#3a2a10 34%);box-shadow:0 0 12px rgba(232,184,90,.6)}
+.step.open .dot{border-color:var(--violet)}
+.sc{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.q{font-family:var(--display);font-size:19px;margin:2px 0 8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{border:1px solid var(--line);border-radius:14px;padding:9px 12px;background:#141026}
+.opt b{display:block;font-weight:600;font-size:14px}
+.opt small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px;line-height:1.4}
+.opt.pick{border-color:var(--gold);background:rgba(232,184,90,.12);box-shadow:0 0 0 1px rgba(232,184,90,.35)}
+.opt.pick b::before{content:"✓ ";color:var(--gold)}
+.opt.no{opacity:.55}
+.step.lock .opts{filter:blur(3px);opacity:.35;pointer-events:none}
+.step.lock .q::after{content:" 🔒";font-size:14px}
+.endc{margin-left:30px;border:1px solid var(--gold);border-radius:16px;padding:12px 14px;background:linear-gradient(135deg,rgba(232,184,90,.14),rgba(80,55,170,.12))}
+.endc.lock{border-color:var(--line);background:#120e24;color:var(--dim)}
+.endc h3{margin:0 0 4px;font-family:var(--display);font-size:20px}
+.endc p{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Полина · Сент-Ривер, 1930-е</div>
+      <h1>«Хозяин» · схема выборов</h1>
+      <p class="lead">Золотом отмечен ваш путь. В главах видно, какой выбор к чему приводит. Варианты следующей главы загораются, когда вы до неё дойдёте.</p>
+    </div>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <div id="vAll">
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>Ваш путь</span>
+      <span><i style="background:var(--violet)"></i>Открыто</span>
+      <span><i style="background:var(--lock)"></i>Ещё впереди</span>
+    </div>
+    <div class="scroller"><div class="chart"><svg id="svg" viewBox="0 0 1672 940" role="img" aria-label="Схема развилок истории «Хозяин»"></svg></div></div>
+    <p class="hint">На телефоне схема листается пальцем вбок. Нажмите на узел.</p>
+    <section class="sheet" id="sheet" aria-live="polite"></section>
+  </div>
+  <div id="vCh" hidden></div>
+</div>
+
+<script>
+const PR=(()=>{try{return ((JSON.parse(localStorage.getItem('sboi_progress')||'{}').stories||{})[7])||{}}catch(e){return {}}})();
+const FL=n=>(PR['ch'+n]||{}).flags||null;
+const PTS=n=>(PR['ch'+n]||{}).pts||null;
+const DONE=n=>!!FL(n);
+const OPEN=n=>n===1||DONE(n-1);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const CH=[
+ {n:1,name:'Показания',steps:[
+  {sc:'Кабинет',q:'«Твой. Без сахара»',o:[
+   {t:'Скрыть провал',f:'vin_hide1',c:'Контроль растёт. Винсент молчит.'},
+   {t:'Признаться: «Не помню вечер»',f:'vin_honest1',c:'Винсент +1: «иногда ты другой человек».'},
+   {t:'Отшутиться',f:'!vin_hide1&!vin_honest1',c:'Винсент и «одна» +1.'}]},
+  {sc:'Кабинет',q:'Протокол Дугана',o:[
+   {t:'Сначала механик',f:'dug_wait',c:'Время на допрос.'},{t:'Усомниться во времени',f:'time_doubt',c:'Серёга +1.'},
+   {t:'Подписать не глядя',f:'signed_blind',c:'Подпись окажется не твоей.'}]},
+  {sc:'Камера',q:'Допрос Артура',o:[{t:'Расколот',f:'art_int',c:'Записка, катушка, дама в шляпе.'},{t:'Сигарета догорела',f:'!art_open',c:'Меньше улик.'}]},
+  {sc:'«Рекс»',q:'Доказать время 20:14',o:[{t:'Плёнка или часы',f:'time_proof',c:'В главе 2 Артура выпустят под залог.'},{t:'Не доказано',f:'!time_proof',c:'Артур останется в камере.'}]},
+  {sc:'«Красная лампа»',q:'Серёга',o:[{t:'Работать вместе',f:'ser_team',c:'Серёга +1 и союзник.'},{t:'Отказать',f:'!ser_team',c:'Он всё равно будет копать.'}]},
+  {sc:'Пристань',q:'Погоня · QTE',o:[{t:'Почти догнала',f:'chase_ok',c:'«Шалимар».'},{t:'Упустила',f:'!chase_ok',c:'Только дождь.'}]}],
+  end:f=>f.time_proof?'Время подделано — Артура можно вытащить.':'Артур в камере, время не доказано.'},
+ {n:2,name:'Монтаж',steps:[
+  {sc:'Морроу',q:'Люминал',o:[{t:'Принять',f:'pill1_take',c:'Ночи станут чужими.'},{t:'Не принимать',f:'pill1_skip',c:'Провалы реже.'},{t:'На анализ',f:'pill1_lab',c:'В главе 3 — тройная доза.'}]},
+  {sc:'Бал Сестёр',q:'С кем идти',o:[{t:'Винсент — «муж»',f:'ball_vin',c:'Медленный танец.'},{t:'Лука',f:'ball_luk',c:'Танго.'},{t:'Серёга — фотограф',f:'ball_ser',c:'Снимок Веры.'},{t:'Одна — певица',f:'ball_one',c:'Песня. Агата узнаёт голос.'}]},
+  {sc:'Ночь',q:'Таблетки на ночь',o:[{t:'Принять',f:'night2_take',c:'Вера у Кеши: «Как всегда, Хозяйка».'},{t:'Не спать',f:'night2_skip',c:'Звонок Наташи — алиби.'},{t:'На анализ',f:'pill_sample',c:'Тройная доза в главе 3.'}]},
+  {sc:'Будка',q:'Кадр в ложе',o:[{t:'Сжечь',f:'burned_box',c:'Контроль +2.'},{t:'Оставить как улику',f:'kept_box',c:'Пригодится в «Вёрстке».'},{t:'Не нашла склейку',f:'film_later',c:'Без кадра.'}]}],
+  end:f=>f.kept_box?'Книга Эдди и кадр в ложе у Полины.':f.has_book?'Книга Эдди у Полины.':'Плёнка не разгадана.'},
+ {n:3,name:'Чужая роль',steps:[
+  {sc:'Гипноз',q:'Проверка памяти',o:[{t:'Увидела подмену',f:'saw_implant',c:'Улика против Морроу.'},{t:'Поверила',f:'implant_took',c:'Контроль +1.'}]},
+  {sc:'Склад',q:'Как идти',o:[{t:'Налёт с Лукой',f:'raid_luk',c:'Лука +1.'},{t:'Засада с Винсентом',f:'raid_vin',c:'Винсент +1.'},{t:'Одна, «от Хозяина»',f:'raid_one',c:'Контроль +2.'}]},
+  {sc:'Редакция',q:'«Скажи, что это не ты»',o:[{t:'Правда: «Не помню»',f:'ser_trust_truth',c:'Серёга +2. Путь к полной концовке.'},{t:'Ложь: «Это двойник»',f:'ser_lie',c:'Серёга −1.'},{t:'«Не для печати»',f:'ser_badge',c:'Серёга −2, контроль +2.'}]},
+  {sc:'Будка',q:'Артур-эхо',o:[{t:'Перевернуть',f:'art_flipped',c:'Даст показания на последнем сеансе.'},{t:'Использовать',f:'art_used',c:'Мэллоу получит ложный план.'},{t:'Оставить',f:'art_left',c:'Утечка: приказ придёт раньше.'}]},
+  {sc:'Кабинет',q:'Винсент видит приказ',o:[{t:'Правда',f:'vin_honest_order',c:'В типографии он остановит Веру.'},{t:'Ложь или сжечь',f:'vin_lied',c:'Винсент опоздает.'}]}],
+  end:f=>'Приказ: «Журналист знает. Четверг. Убери его. — Х.»'},
+ {n:4,name:'Последний сеанс',steps:[
+  {sc:'Четверг',q:'Что делать с Серёгой',o:[{t:'Защитить и печатать',f:'ser_protect',c:'Лучший путь к «Последнему сеансу».'},{t:'Уговорить молчать',f:'ser_silent',c:'Жив, номер без статьи.'},{t:'Сжечь плёнку',f:'ser_betray',c:'Жив, но предан.'},{t:'Ничего',f:'ser_turn',c:'Решит распределение.'},{t:'Исполнить приказ',f:'order_do',c:'«Пустой стул».'}]},
+  {sc:'21:00',q:'Типография',o:[{t:'Полина сама',f:'pr_kat',c:'Вера, ножницы, «Вёрстка».'},{t:'Союзник',f:'pr_ally',c:'Зависит от доверия.'},{t:'Никто',f:'pr_none',c:'Серёга погибает.'}]},
+  {sc:'«Рекс»',q:'Перекрёстный допрос',o:[{t:'Морроу разоблачён',f:'mor_exposed',c:'Статья бьёт в Морроу.'},{t:'Выкрутился',f:'mor_slip',c:'Правда неполная.'}]},
+  {sc:'Пустой стул',q:'Сесть?',o:[{t:'Отказаться',f:'hz_truth',c:'Правда об Изнанке.'},{t:'Сесть',f:'sat_chair',c:'«Пустой стул».'}]}],
+  end:f=>f.out_full?'Последний сеанс: Морроу арестован, Серёга вспомнил портал.':f.out_fail?'Пустой стул: Хозяин — это должность.':f.out_partial?'Чужая роль: правда неполная.':'—'}
+];
+const has=(f,expr)=>expr.split('&').every(x=>x[0]==='!'?!f[x.slice(1)]:!!f[x]);
+function chView(c){
+  const f=FL(c.n),open=OPEN(c.n);let h=`<div class="chain">`;
+  c.steps.forEach(st=>{
+    const picked=f?st.o.filter(o=>has(f,o.f)):[];const cls=f&&picked.length?'done':open?'open':'lock';
+    h+=`<div class="step ${cls}"><i class="dot"></i><div class="sc">${esc(st.sc)}</div><div class="q">${esc(st.q)}</div><div class="opts">`;
+    st.o.forEach(o=>{const p=f&&has(f,o.f);h+=`<div class="opt ${p?'pick':f?'no':''}"><b>${esc(o.t)}</b><small>→ ${esc(o.c)}</small></div>`});
+    h+=`</div></div>`});
+  h+=`</div><div class="endc ${f?'':'lock'}"><div class="sc">Конец главы ${c.n}</div><h3>${esc(c.name)}</h3><p>${f?esc(c.end(f)):open?'Пройдите главу, чтобы увидеть, чем она кончится.':'Глава ещё не открыта.'}</p></div>`;
+  return h}
+const N={
+ S:{x:120,y:470,t:'Сент-Ривер, 1930-е',d:'Полина просыпается в кабинете №714. В машинке — приказ Хозяина.',kind:'start',col:0},
+ A1:{x:330,y:300,t:'Серёга — союзник',d:'«Красная лампа»: работать вместе.',c:1,col:1,w:f=>f.ser_team},
+ B1:{x:330,y:640,t:'Одна',d:'Серёге отказано.',c:1,col:1,w:f=>!f.ser_team},
+ V2:{x:540,y:180,t:'Бал с Винсентом',d:'«Муж» на один вечер.',c:2,col:2,w:f=>f.ball_vin},
+ L2:{x:540,y:380,t:'Бал с Лукой',d:'Танго.',c:2,col:2,w:f=>f.ball_luk},
+ R2:{x:540,y:580,t:'Бал с Серёгой',d:'Фотограф хроники.',c:2,col:2,w:f=>f.ball_ser},
+ O2:{x:540,y:780,t:'Певица',d:'Одна, на сцене.',c:2,col:2,w:f=>f.ball_one},
+ T3:{x:750,y:260,t:'Правда',d:'«Я не помню. Помоги мне узнать».',c:3,col:3,w:f=>f.ser_trust_truth},
+ X3:{x:750,y:470,t:'Ложь',d:'«Это двойник, я докажу».',c:3,col:3,w:f=>f.ser_lie},
+ Z3:{x:750,y:680,t:'Значок',d:'«Это не для печати».',c:3,col:3,w:f=>f.ser_badge},
+ P4:{x:960,y:200,t:'Защитить',d:'Статья выйдет.',c:4,col:4,w:f=>f.ser_protect},
+ Q4:{x:960,y:380,t:'Молчание',d:'Уговорить или сжечь плёнку.',c:4,col:4,w:f=>f.ser_silent||f.ser_betray},
+ N4:{x:960,y:560,t:'Отвернуться',d:'Пусть решит распределение.',c:4,col:4,w:f=>f.ser_turn},
+ K4:{x:960,y:760,t:'Приказ',d:'Полина поднимает руку.',c:4,col:4,w:f=>f.order_do},
+ M5:{x:1170,y:300,t:'Типография',d:'Ножницы Веры, «Вёрстка».',c:4,col:5,w:f=>f.pr_kat||f.pr_ally},
+ D5:{x:1170,y:620,t:'Никого',d:'Серёга погибает в типографии.',c:4,col:5,w:f=>f.pr_none},
+ E1:{x:1450,y:200,t:'Последний сеанс',d:'Статья против Морроу, Серёга жив и вспомнил портал.',kind:'end',tone:'good',c:4,col:6,w:f=>f.out_full},
+ E2:{x:1450,y:470,t:'Чужая роль',d:'Серёга молчит, предан или погиб — правда неполная. Или статья бьёт в Полину.',kind:'end',c:4,col:6,w:f=>f.out_partial},
+ E3:{x:1450,y:740,t:'Пустой стул',d:'Полина села на стул Хозяина.',kind:'end',tone:'bad',c:4,col:6,w:f=>f.out_fail}
+};
+const COLS=[[330,'Глава 1'],[540,'Глава 2'],[750,'Глава 3'],[960,'Четверг'],[1170,'21:00'],[1450,'Концовка']];
+const PATH=['S'];for(const k in N){const n=N[k];if(n.c&&FL(n.c)&&n.w(FL(n.c)))PATH.push(k)}
+let sel='S';
+const svg=document.getElementById('svg'),sheet=document.getElementById('sheet');
+const st=k=>PATH.includes(k)?'path':(!N[k].c||OPEN(N[k].c))?'seen':'lock';
+function wrap(t,max){const w=t.split(' ');const out=[];let l='';for(const x of w){if((l+' '+x).trim().length>max&&l){out.push(l);l=x}else l=(l+' '+x).trim()}out.push(l);return out}
+const lockI=(x,y)=>`<g fill="none" stroke="#6f6696" stroke-width="2.4"><path d="M${x-6} ${y-2}v-6a6 6 0 0 1 12 0v6"/><rect x="${x-10}" y="${y-2}" width="20" height="15" rx="3" fill="#6f6696" fill-opacity=".35"/></g>`;
+const LATE=[['M5','E1'],['M5','E2'],['M5','E3'],['D5','E2'],['D5','E3'],['K4','E3'],['P4','M5'],['P4','D5'],['Q4','M5'],['Q4','D5'],['N4','M5'],['N4','D5']];
+function edges(){const L=[];const keys=Object.keys(N).filter(k=>N[k].col<=4);
+  keys.forEach(a=>keys.forEach(b=>{const ca=N[a].col,cb=N[b].col;if(cb!==ca+1)return;
+    if(ca===0||N[a].y===N[b].y||PATH.includes(a)&&PATH.includes(b)||cb===4)L.push([a,b])}));return L.concat(LATE)}
+
+function draw(){
+  let s='<defs><filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1672" height="940"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  COLS.forEach(([x,t])=>s+=`<text x="${x}" y="92" text-anchor="middle" font-size="15" letter-spacing="2" fill="#a99fcc">${esc(t.toUpperCase())}</text>`);
+  edges().forEach(([a,b])=>{const A=N[a],B=N[b];const ax=A.x+(A.kind==='start'?38:95),bx=B.x-(B.kind==='end'?62:95);const m=(ax+bx)/2;
+    const both=PATH.includes(a)&&PATH.includes(b);const sa=st(a),sb=st(b);
+    const c=both?'#e8b85a':(sa!=='lock'&&sb!=='lock')?'rgba(157,123,255,.55)':'#3a3358';
+    s+=`<path d="M${ax} ${A.y} C${m} ${A.y} ${m} ${B.y} ${bx} ${B.y}" fill="none" stroke="${c}" stroke-width="${both?3.5:1.6}" ${c==='#3a3358'?'stroke-dasharray="4 6"':''} ${both?'filter="url(#glow)"':''}/>`});
+  for(const k in N){const n=N[k],S=st(k),lock=S==='lock';
+    const stroke=S==='path'?'#e8b85a':lock?'#3a3358':n.tone==='bad'?'#e0484f':'#9d7bff';
+    const fill=S==='path'?'rgba(232,184,90,.16)':lock?'rgba(30,25,52,.75)':'rgba(80,55,170,.28)';
+    let g=`<g class="node${sel===k?' sel':''}" data-k="${k}" tabindex="0" role="button">`;
+    if(n.kind==='start'){g+=`<circle class="box" cx="${n.x}" cy="${n.y}" r="38" fill="rgba(232,184,90,.25)" stroke="#e8b85a" stroke-width="2.5" filter="url(#glow)"/><text x="${n.x}" y="${n.y+7}" text-anchor="middle" font-size="22" fill="#f6dda0">✦</text><text x="${n.x}" y="${n.y+70}" text-anchor="middle" font-size="15" fill="#f2ecff">${esc(n.t)}</text>`}
+    else if(n.kind==='end'){const r=62,p=[0,1,2,3,4,5].map(i=>{const a=Math.PI/3*i-Math.PI/2;return(n.x+r*Math.cos(a)).toFixed(1)+','+(n.y+r*Math.sin(a)).toFixed(1)}).join(' ');
+      g+=`<polygon class="box" points="${p}" fill="${fill}" stroke="${stroke}" stroke-width="2.5" ${S==='path'?'filter="url(#glow)"':''}/>`;
+      if(lock)g+=lockI(n.x,n.y);else wrap(n.t,10).forEach((l,i,a)=>g+=`<text x="${n.x}" y="${n.y+6+(i-(a.length-1)/2)*20}" text-anchor="middle" font-size="16" font-weight="700" fill="#f2ecff">${esc(l)}</text>`)}
+    else{g+=`<rect class="box" x="${n.x-95}" y="${n.y-30}" width="190" height="60" rx="30" fill="${fill}" stroke="${stroke}" stroke-width="2.2" ${S==='path'?'filter="url(#glow)"':''}/>`;
+      if(lock)g+=lockI(n.x,n.y);else wrap(n.t,19).forEach((l,i,a)=>g+=`<text x="${n.x}" y="${n.y+6+(i-(a.length-1)/2)*19}" text-anchor="middle" font-size="15" fill="#f2ecff">${esc(l)}</text>`)}
+    s+=g+'</g>'}
+  svg.innerHTML=s}
+function show(k){sel=k;const n=N[k],S=st(k);draw();
+  if(S==='lock'){sheet.innerHTML=`<div class="tag">Ещё впереди</div><h2>Эта развилка в следующих главах</h2><p>Дойдите до главы ${n.c}, чтобы открыть её.</p>`;return}
+  sheet.innerHTML=`<div class="tag">${n.c?'Глава '+n.c:'Начало'}</div><h2>${esc(n.t)}</h2><p>${esc(n.d)}</p><div class="st">${S==='path'?'Ваш путь':'Открыто, но вы выбрали иначе или ещё не прошли'}</div>`}
+svg.addEventListener('click',e=>{const g=e.target.closest('.node');if(g)show(g.dataset.k)});
+
+/* ---------- tabs ---------- */
+const tabs=document.getElementById('tabs'),vAll=document.getElementById('vAll'),vCh=document.getElementById('vCh');
+const T=[['all','Вся история']].concat(CH.map(c=>['c'+c.n,'Глава '+c.n]));
+function tab(id){[...tabs.children].forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  if(id==='all'){vAll.hidden=false;vCh.hidden=true;show(sel)}else{vAll.hidden=true;vCh.hidden=false;vCh.innerHTML=chView(CH[+id.slice(1)-1])}}
+T.forEach(([id,t])=>{const b=document.createElement('button');b.dataset.id=id;b.textContent=t;if(id!=='all'&&!OPEN(+id.slice(1)))b.classList.add('lk');b.onclick=()=>tab(id);tabs.appendChild(b)});
+{const want=(window.__TAB||location.hash.slice(1)||'all');tab(T.some(t=>t[0]===want)?want:'all')}
+{const e=PATH.find(k=>N[k].kind==='end');if(e&&!window.__TAB){show(e);const sc=document.querySelector('.scroller');if(sc)setTimeout(()=>{sc.scrollLeft=sc.scrollWidth},50)}}
+</script>
+</body></html>
