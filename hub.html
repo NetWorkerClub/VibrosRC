@@ -821,7 +821,7 @@ function close(){$('sheet').classList.remove('on');$('scrim').classList.remove('
 $('close').onclick=close;$('scrim').onclick=close;
 addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-z]');if(b){const z=Z.find(q=>q.id===b.dataset.z);if(b.parentElement.id==='quick')glide((z.x[0]+z.x[2])/2);open(z.id);return}
+  const b=e.target.closest('[data-z]');if(b&&b.dataset.z==='portal'&&PDEAD()){powerAsk();return}if(b){const z=Z.find(q=>q.id===b.dataset.z);if(b.parentElement.id==='quick')glide((z.x[0]+z.x[2])/2);open(z.id);return}
   const ar=e.target.closest('[data-arc]');if(ar){openArc(ar.dataset.arc);return}
   const mg=e.target.closest('[data-mini]');if(mg){try{parent.postMessage('sboi:story:'+mg.dataset.mini,'*')}catch(_){}return}
   const s=e.target.closest('[data-s]');if(s){const t=$('toast');const si=+s.dataset.s,nm=STORIES[si][0],g=AVAIL[FS_IDS[si]];t.textContent=g&&g.files&&g.files.length?'Портал открывается: «'+nm+'»':'«'+nm+'» ещё в пути. История скоро появится в портале.';if(g&&g.files&&g.files.length)setTimeout(()=>{try{parent.postMessage('sboi:story:'+FS_IDS[si],'*')}catch(e){}},900);t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
@@ -1140,4 +1140,25 @@ Promise.all([imB.decode(),imC.decode(),(room.querySelector('img')||{decode:()=>P
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{centered?(drawPortal(),edges()):layout()},150)});
 })();
 </script>
-<script>document.querySelector(".top .ib").addEventListener("click",()=>parent.postMessage("sboi:menu","*"));</script></body></html>
+
+<style>
+.room.dead #portal{opacity:.28;filter:grayscale(.7) brightness(.6);animation:pdFl 3.2s steps(1) infinite}
+.room.dead #bolts{display:none}
+@keyframes pdFl{0%,100%{opacity:.28}47%{opacity:.12}49%{opacity:.34}52%{opacity:.18}}
+#pAsk{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(3,2,8,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#pAsk.on{display:flex}
+#pAsk .bx{width:min(340px,86vw);padding:22px 20px 18px;border:1px solid rgba(168,85,247,.45);border-radius:14px;background:linear-gradient(#120c1f,#07050c);box-shadow:0 0 40px rgba(168,85,247,.25);text-align:center;color:#e8dcff;font-family:'PT Mono',monospace}
+#pAsk h3{margin:0 0 8px;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#ff5a6a}
+#pAsk p{margin:0 0 16px;font-size:14px;line-height:1.5;color:#cbbbe6}
+#pAsk button{display:block;width:100%;margin-top:8px;padding:12px;border-radius:10px;font:inherit;font-size:14px;cursor:pointer}
+#pAsk .go{border:1px solid #a855f7;background:rgba(88,40,140,.6);color:#fff}
+#pAsk .no{border:1px solid rgba(255,255,255,.12);background:none;color:#a99}
+</style>
+<div id="pAsk" role="dialog" aria-label="Портал обесточен"><div class="bx"><h3>Портал обесточен</h3><p>Цепь питания разорвана. Без неё портал не откроется.</p><button class="go">Восстановить питание</button><button class="no">Позже</button></div></div>
+<script>
+function PDEAD(){try{return localStorage.getItem('sboi_prologue')==='hub'}catch(e){return false}}
+function powerAsk(){document.getElementById('pAsk').classList.add('on')}
+(function(){const r=document.getElementById('room');if(PDEAD())r.classList.add('dead');
+ const a=document.getElementById('pAsk');a.querySelector('.no').onclick=()=>a.classList.remove('on');
+ a.querySelector('.go').onclick=()=>{a.classList.remove('on');try{parent.postMessage('sboi:power','*')}catch(e){}};})();
+</script><script>document.querySelector(".top .ib").addEventListener("click",()=>parent.postMessage("sboi:menu","*"));</script></body></html>
