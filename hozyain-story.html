@@ -1014,6 +1014,120 @@ body.pgOut{opacity:0!important;transition:opacity .3s ease}
 .hzRec .tok .fc{width:30px;height:30px}
 .hzRec .tok b{font-size:9px}
 .hzRec .hb .chk,.hzRec .hb button{padding:7px 14px;font-size:13px;margin:5px 4px}
+
+/* ===== Перестрелка ===== */
+.hzShoot{background:#000;user-select:none;-webkit-user-select:none}
+.hzShoot .bgi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(1.05)}
+.hzShoot .spt{position:absolute;width:calc(var(--s)*100vh*.62);transform:translate(-50%,0);height:calc(var(--s)*100vh);pointer-events:none}
+.hzShoot .spt .cv{position:absolute;left:0;bottom:0;width:100%;z-index:2;filter:brightness(.5) contrast(1.1) drop-shadow(0 10px 8px rgba(0,0,0,.8))}
+.hzShoot .man{position:absolute;left:8%;right:8%;bottom:28%;height:100%;overflow:hidden;z-index:1;pointer-events:none}
+.hzShoot .man img{position:absolute;left:50%;bottom:-100%;height:92%;transform:translateX(-50%);transition:bottom .3s ease-out,transform .35s,opacity .35s;filter:brightness(.8)}
+.hzShoot .man.on{pointer-events:auto}.hzShoot .man.on img{bottom:-8%}
+.hzShoot .man.fall img{transform:translateX(-50%) rotate(-24deg) translateY(30%);opacity:0}
+.hzShoot .man.gone img{opacity:0}
+.hzShoot .man .ring{position:absolute;left:50%;top:14%;width:56%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;border:3px solid rgba(220,40,30,.9);opacity:0;pointer-events:none}
+.hzShoot .man.aim.on .ring{animation:hzRing var(--aim) linear forwards}
+@keyframes hzRing{0%{opacity:.2;transform:translateX(-50%) scale(1.8)}90%{opacity:1}100%{opacity:1;transform:translateX(-50%) scale(.55)}}
+.hzShoot .pol{position:absolute;left:-6%;bottom:0;height:33vh;z-index:5;pointer-events:none;transition:height .18s,bottom .18s}
+.hzShoot .pol img{height:100%;display:block}
+.hzShoot .pol.stand{height:50vh;bottom:0;left:-4%}
+.hzShoot .fg{position:absolute;left:-10%;bottom:-1%;width:66%;z-index:6;pointer-events:none;filter:brightness(.8)}
+.hzShoot .fx{position:absolute;transform:translate(-50%,-50%);z-index:8;pointer-events:none;animation:hzFx .5s ease-out forwards}
+.hzShoot .fx.add{mix-blend-mode:screen}
+@keyframes hzFx{0%{opacity:1;transform:translate(-50%,-50%) scale(.6)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.25)}}
+.hzShoot .hud{position:absolute;top:max(14px,env(safe-area-inset-top));left:14px;right:14px;display:flex;justify-content:space-between;z-index:9;font:400 20px 'Poiret One',serif;color:#f3e7cf;text-shadow:0 2px 6px #000}
+.hzShoot .hp i{display:inline-block;width:18px;height:18px;margin-right:6px;border-radius:50%;background:#b3261e;box-shadow:0 0 8px #b3261e}.hzShoot .hp i.off{background:#3a2a2a;box-shadow:none}
+.hzShoot .am{position:absolute;right:20px;bottom:calc(118px + env(safe-area-inset-bottom));z-index:9;display:flex;gap:5px}
+.hzShoot .am i{width:7px;height:20px;border-radius:3px 3px 1px 1px;background:linear-gradient(#d9b45a,#8a6a26)}.hzShoot .am i.off{opacity:.2}
+.hzShoot .up{position:absolute;right:16px;bottom:calc(22px + env(safe-area-inset-bottom));z-index:10;width:92px;height:92px;border-radius:50%;border:2px solid #d9b45a;background:rgba(20,14,10,.75);color:#f3e7cf;font:400 17px 'Poiret One',serif;letter-spacing:.04em}
+.hzShoot .up.on{background:rgba(120,24,18,.85);border-color:#e9a090}
+.hzShoot .dmg{position:absolute;inset:0;z-index:7;pointer-events:none;box-shadow:inset 0 0 0 0 rgba(180,0,0,0);transition:box-shadow .25s}
+.hzShoot.hurt .dmg{box-shadow:inset 0 0 120px 40px rgba(180,0,0,.75)}
+.hzShoot .msg{position:absolute;left:50%;top:22%;transform:translateX(-50%);z-index:9;font:400 20px 'Poiret One',serif;color:#f3e7cf;background:rgba(0,0,0,.6);padding:6px 14px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.hzShoot .msg.on{opacity:1}
+.hzShoot .irules,.hzBomb .irules{position:absolute;inset:0;z-index:20;background:rgba(8,6,6,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.hzShoot .irules h3{font:400 24px/1.2 'Poiret One',serif;color:#f3e7cf;margin:0 0 14px}
+.hzShoot .irules p{font-size:15px;line-height:1.45;max-width:340px;margin:0 0 10px;opacity:.9}
+.hzShoot .irules button{margin-top:12px;padding:10px 26px;border:1px solid #d9b45a;background:none;color:#f3e7cf;font:400 18px 'Poiret One',serif;border-radius:4px}
+/* ===== Бомба ===== */
+.hzBomb{background:#000}
+.hzBomb .bx{position:absolute;top:50%;left:50%;width:min(100vw,calc(100vh*.5625));aspect-ratio:1008/1792;transform:translate(-50%,-50%)}
+.hzBomb .bx>img{width:100%;height:100%;display:block}
+.hzBomb svg{position:absolute;inset:0;width:100%;height:100%}
+.hzBomb .wr{fill:none;stroke-width:22;stroke-linecap:round;stroke-linejoin:round}
+.hzBomb .hl{fill:none;stroke:rgba(255,235,210,.22);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.hzBomb .fe{fill:#0d0a08;stroke:none;filter:drop-shadow(0 2px 2px #000)}
+.hzBomb .cu{fill:#b08a4a}
+.hzBomb .sh{fill:none;stroke:rgba(0,0,0,.7);stroke-width:26;stroke-linecap:round;stroke-linejoin:round;filter:blur(4px)}
+.hzBomb .hit{fill:none;stroke:transparent;stroke-width:70;pointer-events:stroke;cursor:pointer}
+.hzBomb .nd{stroke:#b3261e;stroke-width:6;stroke-linecap:round}
+.hzBomb .tmr{position:absolute;left:50%;top:calc(560/1792*100%);transform:translateX(-50%);font:700 30px 'HZ Type',monospace;color:#f3e7cf;background:rgba(0,0,0,.65);padding:2px 12px;border-radius:4px;letter-spacing:.08em}
+.hzBomb .tmr.red{color:#ff5a4a;animation:hzBlink .5s infinite alternate}
+@keyframes hzBlink{to{opacity:.45}}
+.hzBomb .ct{position:absolute;width:64px;transform:translate(-30%,-12%) rotate(-25deg);opacity:0;pointer-events:none}
+.hzBomb .ct.snap{animation:hzSnap .5s ease-out}
+@keyframes hzSnap{0%{opacity:1;transform:translate(-30%,-12%) rotate(-25deg) scale(1.2)}40%{transform:translate(-30%,-12%) rotate(-10deg) scale(1)}100%{opacity:0}}
+.hzBomb .qh,.hzBomb .qs{position:relative;z-index:3;text-shadow:0 2px 8px #000}
+.hzBomb .qs{font-size:14px;opacity:.85;text-align:center;padding:0 20px}
+.hzBomb.jolt .bx{animation:hzJolt .35s}
+@keyframes hzJolt{25%{transform:translate(calc(-50% - 8px),-50%)}75%{transform:translate(calc(-50% + 8px),-50%)}}
+.hzBomb.boom::after{content:'';position:absolute;inset:0;background:#fff;animation:hzBoom .9s forwards;z-index:30}
+@keyframes hzBoom{0%{opacity:1}100%{opacity:.85;background:#300}}
+.hzShoot .man.fall .ring,.hzShoot .man.gone .ring{display:none}
+
+#stage.hzDrunk #world{animation:hzSway 5s ease-in-out infinite;filter:blur(1.6px) saturate(1.2)}
+#stage.hzDrunk::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.6));animation:hzSwayV 3.3s ease-in-out infinite}
+@keyframes hzSway{0%,100%{translate:0 0;rotate:0deg}25%{translate:-14px 4px;rotate:-.8deg}50%{translate:6px -3px;rotate:.4deg}75%{translate:14px 5px;rotate:.9deg}}
+@keyframes hzSwayV{50%{opacity:.6}}
+
+/* ===== Песня ===== */
+.hzSong{background:#000}
+.hzSong .sl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease}
+.hzSong .sl img.on{opacity:1}
+.hzSong .sl img.on.k0{animation:hzKb0 14s ease-out forwards}.hzSong .sl img.on.k1{animation:hzKb1 14s ease-out forwards}.hzSong .sl img.on.k2{animation:hzKb2 14s ease-out forwards}
+@keyframes hzKb0{from{transform:scale(1.02)}to{transform:scale(1.14)}}
+@keyframes hzKb1{from{transform:scale(1.14) translateY(-2%)}to{transform:scale(1.03) translateY(1%)}}
+@keyframes hzKb2{from{transform:scale(1.06) translateX(2%)}to{transform:scale(1.12) translateX(-2%)}}
+.hzSong .vg{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent 22%,transparent 52%,rgba(0,0,0,.88) 82%)}
+.hzSong .pt{position:absolute;top:max(18px,env(safe-area-inset-top));left:0;right:0;text-align:center;font:400 13px 'Poiret One',serif;letter-spacing:.3em;text-transform:uppercase;color:#d9b45a;opacity:.85}
+.hzSong .ly{position:absolute;left:18px;right:18px;bottom:calc(64px + env(safe-area-inset-bottom));text-align:center;font-family:'HZ Serif',Georgia,serif;font-style:italic}
+.hzSong .ly p{margin:6px 0;transition:all .4s}
+.hzSong .ly .p0{font-size:15px;opacity:.32;color:#efe6d6}
+.hzSong .ly .p1{font-size:clamp(21px,6vw,26px);line-height:1.25;color:#fff3dc;text-shadow:0 0 18px rgba(217,120,90,.55),0 2px 8px #000}
+.hzSong .ly .p2{font-size:15px;opacity:.45;color:#efe6d6}
+.hzSong .ly.mv .p1{animation:hzLy .6s ease-out}
+@keyframes hzLy{from{opacity:0;transform:translateY(10px);letter-spacing:.04em}to{opacity:1;transform:none}}
+.hzSong .eye{position:absolute;right:16px;top:30%;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;color:#f3e7cf;font:400 14px 'Poiret One',serif}
+.hzSong .eye i{width:64px;height:64px;border-radius:50%;border:2px solid #d9b45a;background:rgba(20,10,8,.6) radial-gradient(circle,#d9b45a 0 7px,transparent 8px);box-shadow:0 0 20px rgba(217,180,90,.5)}
+.hzSong .eye.pulse i{animation:hzEye 1s ease-in-out infinite}
+@keyframes hzEye{50%{transform:scale(1.12);box-shadow:0 0 34px rgba(217,180,90,.9)}}
+.hzSong .lk{position:absolute;left:16px;right:16px;top:16%;display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(10,6,6,.82);border-left:3px solid #b3261e;color:#f3e7cf;font-size:15px;line-height:1.35;opacity:0;transform:translateY(-8px);transition:all .4s;pointer-events:none}
+.hzSong .lk.on{opacity:1;transform:none}
+.hzSong .lk span{flex:0 0 52px;height:52px;border-radius:50%;background-size:cover;background-position:center 20%;border:1px solid #d9b45a}
+.hzSong .skp{position:absolute;right:12px;top:calc(max(14px,env(safe-area-inset-top)) + 22px);background:none;border:0;color:#efe6d6;opacity:.55;font:400 14px 'Poiret One',serif}
+.hzSong .bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08)}.hzSong .bar i{display:block;height:100%;width:0;background:#b3261e}
+.hzSong .eye[hidden]{display:none}
+/* реконструкция v4: кнопки наверху, план по высоте экрана */
+.hzRec .top{position:relative;width:100%;justify-content:center;min-height:52px;padding:0 96px}
+.hzRec .top .qh{font-size:17px;text-align:center}
+.hzRec .top .stg{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%)}
+.hzRec .top .hb{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
+.hzRec .top .hb button{margin:0!important;padding:6px 10px!important;font-size:12px!important;min-width:84px}
+.hzRec .trs{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#c9b48a;text-align:center;line-height:1.6}
+.hzRec .trs i{display:inline-block;width:11px;height:11px;margin:0 2px;border-radius:50%;background:#c9a35d;box-shadow:0 0 6px #c9a35d}
+.hzRec .trs i.off{background:#3a2e24;box-shadow:none}
+.hzRec .qs{margin-top:6px}
+.hzRec .plan{width:min(96vw,calc((100vh - 250px) * .5625))!important}
+@supports (height:100dvh){.hzRec .plan{width:min(96vw,calc((100dvh - 250px) * .5625))!important}}
+.hzRec .tok{flex-wrap:nowrap;gap:4px;margin-top:6px;padding-bottom:max(6px,env(safe-area-inset-bottom))}
+.hzRec .tok button{width:44px;padding:3px 1px}
+.hzRec .tok .fc{width:28px;height:28px}
+.hzRec .tok b{font-size:8.5px;max-width:42px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.hzSong .ttl{position:absolute;left:0;right:0;top:38%;text-align:center;opacity:0;transition:opacity 1.2s;pointer-events:none;text-shadow:0 2px 12px #000}
+.hzSong.intro .ttl{opacity:1}
+.hzSong .ttl small{display:block;font:400 13px 'Poiret One',serif;letter-spacing:.25em;text-transform:uppercase;color:#d9b45a}
+.hzSong .ttl b{display:block;font:italic 400 34px 'HZ Serif',Georgia,serif;color:#fff3dc;margin-top:6px}
 @font-face{font-family:"Poiret One";src:url(hozyain-font_poiret.c8262c70.woff) format("woff");font-display:block}@font-face{font-family:"HZ Type";src:url(hozyain-font_plexmono.634997db.woff) format("woff");font-display:block}@font-face{font-family:"HZ Serif";src:url(hozyain-font_loraital.b1af068d.woff) format("woff");font-display:block}@font-face{font-family:"HZ Hand";src:url(hozyain-font_caveat.f5ba90e1.woff) format("woff");font-display:block}#title h1{text-transform:none;font-size:min(42px,8.6vw)!important}</style></head>
 <body>
 <div id="stage">
@@ -1035,7 +1149,7 @@ body.pgOut{opacity:0!important;transition:opacity .3s ease}
   <button class="btn" id="mRestart">Начать сцену заново</button>
   <button class="btn" id="mHome">В меню демо</button></div>
  <div id="log"><div id="logList"></div><button class="btn" id="logClose" style="margin:0 auto 24px;max-width:260px">Закрыть</button></div>
- <div id="home" class="chapsel" style="--homebg:url(hozyain-bg_bg_hz_menu.e1accb0a.webp)">
+ <div id="home" class="chapsel" style="--homebg:url(hozyain-bg_bg_hz_menu.4a0d78a8.webp)">
   <h1>Хозяин</h1><div class="tag">Глава 1 · Показания</div><div class="ctag">Выбери главу</div>
   <div class="grid chaps" id="hChaps"></div>
   <button class="btn gold" id="hStart">Начать главу<small>с самого начала</small></button>
@@ -1062,7 +1176,7 @@ window.GAME={
    if(window.STORY_CAST)s.cast=window.STORY_CAST(st);if(window.STORY_FACTS)s.facts=window.STORY_FACTS(st,ch,ch>=4);if(window.STORY_DECISIONS)s.decisions=window.STORY_DECISIONS(st);if(st.mind)s.mind=st.mind;s['ch'+ch]={pts:st.pts,flags:st.flags,clues:st.clues,mind:st.mind}})},
  exit(){try{stop()}catch(e){}try{parent.postMessage('sboi:story-exit','*')}catch(e){}}
 };
-</script><script>window.ASSETS={"bg":{"bg_hz_alley_rain":"hozyain-bg_bg_hz_alley_rain.3ade66ad.webp","bg_hz_aurora_gondola":"hozyain-bg_bg_hz_aurora_gondola.69c4142e.webp","bg_hz_ball_garden":"hozyain-bg_bg_hz_ball_garden.50b1a811.webp","bg_hz_ball_hall":"hozyain-bg_bg_hz_ball_hall.8633d88b.webp","bg_hz_ball_study":"hozyain-bg_bg_hz_ball_study.f5f061e3.webp","bg_hz_boat_deck":"hozyain-bg_bg_hz_boat_deck.8d3419d3.webp","bg_hz_booth":"hozyain-bg_bg_hz_booth.58a72271.webp","bg_hz_booth_night":"hozyain-bg_bg_hz_booth_night.c00c5464.webp","bg_hz_cell":"hozyain-bg_bg_hz_cell.495519e1.webp","bg_hz_kesha_den":"hozyain-bg_bg_hz_kesha_den.a902b464.webp","bg_hz_mayfair_roof":"hozyain-bg_bg_hz_mayfair_roof.54cde641.webp","bg_hz_menu":"hozyain-bg_bg_hz_menu.e1accb0a.webp","bg_hz_morrow_office":"hozyain-bg_bg_hz_morrow_office.b5f25ee4.webp","bg_hz_office_board":"hozyain-bg_bg_hz_office_board.42847944.webp","bg_hz_office_dawn":"hozyain-bg_bg_hz_office_dawn.e4a414bf.webp","bg_hz_office_night":"hozyain-bg_bg_hz_office_night.d94deb41.webp","bg_hz_office_night_red":"hozyain-bg_bg_hz_office_night_red.81c9b95a.webp","bg_hz_pier9_cargo":"hozyain-bg_bg_hz_pier9_cargo.6ef26e34.webp","bg_hz_pier9_night":"hozyain-bg_bg_hz_pier9_night.6491ab3c.webp","bg_hz_redlamp":"hozyain-bg_bg_hz_redlamp.a4585dca.webp","bg_hz_rex_backdoor":"hozyain-bg_bg_hz_rex_backdoor.9296db2b.webp","bg_hz_rex_hall":"hozyain-bg_bg_hz_rex_hall.3836fadf.webp","bg_hz_rex_hall_dark":"hozyain-bg_bg_hz_rex_hall_dark.8d260fbb.webp","bg_hz_rex_hall_lit":"hozyain-bg_bg_hz_rex_hall_lit.fd17fee0.webp","bg_hz_rex_lobby":"hozyain-bg_bg_hz_rex_lobby.e5a7e188.webp","bg_hz_street_dawn":"hozyain-bg_bg_hz_street_dawn.7517041d.webp","bg_hz_street_rain":"hozyain-bg_bg_hz_street_rain.8525679b.webp","bg_hz_warehouse":"hozyain-bg_bg_hz_warehouse.34eadd6a.webp","bg_hz_warehouse_roof":"hozyain-bg_bg_hz_warehouse_roof.f7f7d048.webp","cg_hz_aurora":"hozyain-bg_cg_hz_aurora.a6eafd08.webp","cg_hz_aurora_alley":"hozyain-bg_cg_hz_aurora_alley.04063820.webp","cg_hz_aurora_burn":"hozyain-bg_cg_hz_aurora_burn.3add6c07.webp","cg_hz_aurora_saved":"hozyain-bg_cg_hz_aurora_saved.ac83c59a.webp","cg_hz_crystals":"hozyain-bg_cg_hz_crystals.32547d8f.webp","cg_hz_double":"hozyain-bg_cg_hz_double.732292f9.webp","cg_hz_empty_chair":"hozyain-bg_cg_hz_empty_chair.c1aabd3e.webp","cg_hz_end_luk":"hozyain-bg_cg_hz_end_luk.0e32d030.webp","cg_hz_end_power":"hozyain-bg_cg_hz_end_power.b4dccbef.webp","cg_hz_end_vin":"hozyain-bg_cg_hz_end_vin.2cddaa45.webp","cg_hz_film_self":"hozyain-bg_cg_hz_film_self.a059b1d9.webp","cg_hz_mem_chalk":"hozyain-bg_cg_hz_mem_chalk.2040f840.webp","cg_hz_mem_ribbon_black":"hozyain-bg_cg_hz_mem_ribbon_black.7b906c15.webp","cg_hz_mem_ribbon_red":"hozyain-bg_cg_hz_mem_ribbon_red.74d8c470.webp","cg_hz_mem_sidecar":"hozyain-bg_cg_hz_mem_sidecar.235ad9f6.webp","cg_hz_mem_whisky":"hozyain-bg_cg_hz_mem_whisky.4f33ac3c.webp","cg_hz_rift":"hozyain-bg_cg_hz_rift.46e41f55.webp","cg_hz_sing":"hozyain-bg_cg_hz_sing.e4c65548.webp","cg_hz_title":"hozyain-bg_cg_hz_title.7c3628bf.webp","cg_hz_wake":"hozyain-bg_cg_hz_wake.05592fef.webp","film_meet_01":"hozyain-bg_film_meet_01.56d6359f.webp","film_meet_empty":"hozyain-bg_film_meet_empty.8a4a7377.webp","film_night_01":"hozyain-bg_film_night_01.7208cffd.webp","film_night_02":"hozyain-bg_film_night_02.a55359b5.webp","film_night_03":"hozyain-bg_film_night_03.828c6e48.webp","bg_hz_newsroom":"hozyain-bg_bg_hz_newsroom.15200aa7.webp","bg_hz_print":"hozyain-bg_bg_hz_print.aa566440.webp","film_meet_box":"hozyain-bg_film_meet_box.49225410.webp","film_night_04":"hozyain-bg_film_night_04.ead843de.webp","film_night_05":"hozyain-bg_film_night_05.65748c98.webp","bg_hz_desk_pov":"hozyain-bg_bg_hz_desk_pov.bcae377e.webp","cg_hz_vin_coffee":"hozyain-bg_cg_hz_vin_coffee.ea90c63a.webp","cg_hz_vin_coffee2":"hozyain-bg_cg_hz_vin_coffee2.b4b58d20.webp","cg_hz_double_empty":"hozyain-bg_cg_hz_double_empty.6ca46b29.webp"},"sp":{"aga":{"neutral":"hozyain-sp_aga_neutral.161bf722.webp"},"art":{"angry":"hozyain-sp_art_angry.67e49736.webp","film":"hozyain-sp_art_film.fc932001.webp","neutral":"hozyain-sp_art_neutral.223baed7.webp","smile":"hozyain-sp_art_smile.fc37cdd2.webp","smoke":"hozyain-sp_art_smoke.490bcef5.webp","cuffed":"hozyain-sp_art_cuffed.2eebb94b.webp"},"dot":{"angry":"hozyain-sp_dot_angry.100082e2.webp","neutral":"hozyain-sp_dot_neutral.bebd8180.webp","sad":"hozyain-sp_dot_sad.aeb1f472.webp","smile":"hozyain-sp_dot_smile.66db02a2.webp"},"dug":{"angry":"hozyain-sp_dug_angry.8441f697.webp","neutral":"hozyain-sp_dug_angry.8441f697.webp"},"kat":{"back":"hozyain-sp_kat_back.08a76657.webp","badge":"hozyain-sp_kat_badge.9d4192c7.webp","camera":"hozyain-sp_kat_camera.618f9063.webp","determined":"hozyain-sp_kat_determined.5f7b42a5.webp","gown":"hozyain-sp_kat_gown.3f36e5ab.webp","ironic":"hozyain-sp_kat_ironic.4955d6b5.webp","neutral":"hozyain-sp_kat_neutral.5be5e0ad.webp","nurse_neutral":"hozyain-sp_kat_nurse_neutral.12e70151.webp","nurse_scared":"hozyain-sp_kat_nurse_scared.88dc686d.webp","sad":"hozyain-sp_kat_sad.9e2c16fc.webp","scared":"hozyain-sp_kat_sad.9e2c16fc.webp","singer":"hozyain-sp_kat_singer.398b4793.webp","smoke":"hozyain-sp_kat_smoke.56b4ad26.webp","tears":"hozyain-sp_kat_tears.65c1f097.webp","tender":"hozyain-sp_kat_tender.40041f8d.webp"},"kav":{"determined":"hozyain-sp_kav_determined.73dc5725.webp","neutral":"hozyain-sp_kav_neutral.641c24d7.webp","scared":"hozyain-sp_kav_scared.e5248bca.webp"},"kes":{"neutral":"hozyain-sp_kes_neutral.b9dd5c22.webp"},"luk":{"cold":"hozyain-sp_luk_cold.599bf80c.webp","neutral":"hozyain-sp_luk_neutral.44226dd5.webp"},"mal":{"angry":"hozyain-sp_mal_angry.4639ab56.webp","neutral":"hozyain-sp_mal_neutral.fbf62ff8.webp","sad":"hozyain-sp_mal_sad.d2fdb5aa.webp","smile":"hozyain-sp_mal_smile.251ac16a.webp"},"mor":{"cold":"hozyain-sp_mor_cold.323954e9.webp","neutral":"hozyain-sp_mor_neutral.3ed881c4.webp","smile":"hozyain-sp_mor_smile.3699b43a.webp"},"nat":{"angry":"hozyain-sp_nat_angry.2305eba2.webp","neutral":"hozyain-sp_nat_neutral.73e608c0.webp","sad":"hozyain-sp_nat_sad.00b78560.webp","smile":"hozyain-sp_nat_smile.87513feb.webp"},"noa":{"neutral":"hozyain-sp_noa_neutral.e1bc87c2.webp","scared":"hozyain-sp_noa_scared.54dee4b9.webp","smile":"hozyain-sp_noa_smile.73194fe9.webp"},"obr":{"neutral":"hozyain-sp_obr_neutral.cfd5e4bb.webp"},"sam":{"neutral":"hozyain-sp_sam_neutral.5612ec44.webp"},"ser":{"angry":"hozyain-sp_ser_angry.1dfa14d4.webp","neutral":"hozyain-sp_ser_neutral.5e340b94.webp","smile":"hozyain-sp_ser_smile.cd94a0ab.webp"},"ver":{"angry":"hozyain-sp_ver_angry.13d11559.webp","attack":"hozyain-sp_ver_attack.91ed57cb.webp","neutral":"hozyain-sp_ver_neutral.78bb910e.webp","smile":"hozyain-sp_ver_smile.e3fb414c.webp"},"vin":{"neutral":"hozyain-sp_vin_neutral.a0878c90.webp","tux_neutral":"hozyain-sp_vin_tux_neutral.5063eb25.webp","tux_smirk":"hozyain-sp_vin_tux_smirk.12eb7287.webp"},"wid":{"neutral":"hozyain-sp_wid_neutral.57c52625.webp"}},"ui":{"board_hz_26":"hozyain-ui_board_hz_26.21cfc35c.webp","board_hz_31":"hozyain-ui_board_hz_31.f9649c14.webp","board_hz_33":"hozyain-ui_board_hz_33.be7427a5.webp","crowd_hz_ball":"hozyain-ui_crowd_hz_ball.c9b21913.webp","crowd_hz_dockers":"hozyain-ui_crowd_hz_dockers.1b9da147.webp","crowd_hz_guards":"hozyain-ui_crowd_hz_guards.78889346.webp","crowd_hz_morelli":"hozyain-ui_crowd_hz_morelli.eb497546.webp","sheet_hz_cargo":"hozyain-ui_sheet_hz_cargo.4ede9f1e.webp","sheet_hz_docs":"hozyain-ui_sheet_hz_docs.111bb2fd.webp","sheet_hz_docs_old":"hozyain-ui_sheet_hz_docs_old.ea1ac034.webp","sheet_hz_evidence":"hozyain-ui_sheet_hz_evidence.9928cdbd.webp","sheet_hz_kesha":"hozyain-ui_sheet_hz_kesha.7de813ff.webp","sheet_hz_news_verdict_a":"hozyain-ui_sheet_hz_news_verdict_a.a9662ad4.webp","sheet_hz_papers":"hozyain-ui_sheet_hz_papers.86f3d872.webp","ui_hz_cig":"hozyain-ui_ui_hz_cig.a0240e97.webp","ui_hz_cork":"hozyain-ui_ui_hz_cork.1f40e966.webp","ui_hz_editing_table":"hozyain-ui_ui_hz_editing_table.16a788f6.webp","ui_hz_folder":"hozyain-ui_ui_hz_folder.469b2533.webp","ui_hz_plan_city":"hozyain-ui_ui_hz_plan_city.fcd6cb89.webp","ui_hz_plan_rex":"hozyain-ui_ui_hz_plan_rex.072d8b21.webp","ui_hz_tactics":"hozyain-ui_ui_hz_tactics.af333ccb.webp","ui_hz_layout":"hozyain-ui_ui_hz_layout.ccf50f31.webp","sheet_hz_pills":"hozyain-ui_sheet_hz_pills.73b24620.webp","film_meet_ov":"hozyain-ui_film_meet_ov.2a8a7640.webp","film_meet_box_pol":"hozyain-ui_film_meet_box_pol.12e57596.webp","ov_clock1":"hozyain-ui_ov_clock1.84978e22.webp","ov_clock2":"hozyain-ui_ov_clock2.54835b91.webp","ov_cig":"hozyain-ui_ov_cig.09b0375b.webp","ov_smoke":"hozyain-ui_ov_smoke.20daaf5d.webp","ov_man1":"hozyain-ui_ov_man1.c3559ac6.webp","ov_man2":"hozyain-ui_ov_man2.bbaac42c.webp","cig1":"hozyain-ui_cig1.762441e5.webp","cig2":"hozyain-ui_cig2.170d68f0.webp","cig3":"hozyain-ui_cig3.2169fb86.webp","cig4":"hozyain-ui_cig4.bb62954e.webp","cig5":"hozyain-ui_cig5.9607dbb0.webp","it_crystals":"hozyain-ui_it_crystals.b41815da.webp","it_case":"hozyain-ui_it_case.8cb7c152.webp","it_bomb":"hozyain-ui_it_bomb.1ebca360.webp","it_revolver":"hozyain-ui_it_revolver.9335cbcc.webp","it_satchel":"hozyain-ui_it_satchel.cd3ae005.webp","it_scissors":"hozyain-ui_it_scissors.fef8b319.webp","it_wig":"hozyain-ui_it_wig.149439ee.webp","paper_manifest":"hozyain-ui_paper_manifest.3a4510e8.webp","it_ribbon_red":"hozyain-ui_it_ribbon_red.2e14f4b4.webp","it_perfume":"hozyain-ui_it_perfume.f00d0374.webp","it_hair":"hozyain-ui_it_hair.9e32b816.webp","it_letters":"hozyain-ui_it_letters.1bb47f73.webp","paper_protocol":"hozyain-ui_paper_protocol.e5f34340.webp","it_oldpapers":"hozyain-ui_it_oldpapers.145dd5e0.webp","it_ribbon_bicolor":"hozyain-ui_it_ribbon_bicolor.c1b42dc9.webp","it_decanter":"hozyain-ui_it_decanter.1b69f4a8.webp","it_badge":"hozyain-ui_it_badge.8265fb00.webp","it_key_lamp":"hozyain-ui_it_key_lamp.8af15245.webp","it_knife":"hozyain-ui_it_knife.d902af74.webp","it_reel":"hozyain-ui_it_reel.bfc962a1.webp","paper_note":"hozyain-ui_paper_note.ef415edc.webp","it_ashtray":"hozyain-ui_it_ashtray.ddfaedd7.webp","it_butt_white":"hozyain-ui_it_butt_white.f0f07c27.webp","it_cipher_notes":"hozyain-ui_it_cipher_notes.ede90c01.webp","it_pen":"hozyain-ui_it_pen.eddcf195.webp","it_cipher_wheel":"hozyain-ui_it_cipher_wheel.33e96973.webp","it_envelope":"hozyain-ui_it_envelope.d8e12ce3.webp","it_ring":"hozyain-ui_it_ring.f14e5b25.webp","paper_card":"hozyain-ui_paper_card.3fac8700.webp","it_mask":"hozyain-ui_it_mask.fc783b1b.webp","paper_news_a":"hozyain-ui_paper_news_a.8655f40b.webp","paper_news_b":"hozyain-ui_paper_news_b.aded3728.webp","paper_news_columbia":"hozyain-ui_paper_news_columbia.74a9d6bf.webp","paper_lined":"hozyain-ui_paper_lined.468fa8b4.webp","it_poster_aurora":"hozyain-ui_it_poster_aurora.96bd656c.webp","paper_ticket":"hozyain-ui_paper_ticket.32ff2d33.webp","paper_folder":"hozyain-ui_paper_folder.16aa0cd2.webp","it_photo_artur":"hozyain-ui_it_photo_artur.78a985c1.webp","it_pills_bottle":"hozyain-ui_it_pills_bottle.9db9dd54.webp","paper_rx":"hozyain-ui_paper_rx.382ce118.webp","it_pill":"hozyain-ui_it_pill.d82e27db.webp","paper_sticky":"hozyain-ui_paper_sticky.09a4c398.webp","it_photo_group":"hozyain-ui_it_photo_group.14372f4d.webp","desk_wood":"hozyain-ui_desk_wood.889e89cc.webp","tac0":"hozyain-ui_tac0.f9badab5.webp","tac1":"hozyain-ui_tac1.f0d0e094.webp","tac2":"hozyain-ui_tac2.9750b5f5.webp","tac3":"hozyain-ui_tac3.ad8b88f7.webp","tac4":"hozyain-ui_tac4.e4963571.webp","tac5":"hozyain-ui_tac5.62beac28.webp","tac6":"hozyain-ui_tac6.819b8692.webp","tac7":"hozyain-ui_tac7.6bf16779.webp","it_chalk":"hozyain-ui_it_chalk.62f3de62.webp"},"mu":{"hz_ball":"hozyain-mu_hz_ball.b6fede70.mp3","hz_chase":"hozyain-mu_hz_chase.2c970543.mp3","hz_docks":"hozyain-mu_hz_docks.fe88a28c.mp3","hz_epilogue":"hozyain-mu_hz_epilogue.1d36c294.mp3","hz_film":"hozyain-mu_hz_film.01e6e600.mp3","hz_finale":"hozyain-mu_hz_finale.ba3b57b0.mp3","hz_interrog":"hozyain-mu_hz_interrog.7a3a2fa5.mp3","hz_jazz":"hozyain-mu_hz_jazz.240b5e6e.mp3","hz_memory":"hozyain-mu_hz_memory.dee596f9.mp3","hz_rain_piano":"hozyain-mu_hz_rain_piano.539c3ef7.mp3","hz_recon":"hozyain-mu_hz_recon.a59c4ed9.mp3","hz_rift_song":"hozyain-mu_hz_rift_song.8e48c1b3.mp3","hz_song_singer":"hozyain-mu_hz_song_singer.a9f11492.mp3","hz_theme":"hozyain-mu_hz_theme.1efda8ff.mp3","sfx_lighter":"hozyain-mu_sfx_lighter.00ec45c3.mp3","sfx_radio_tune":"hozyain-mu_sfx_radio_tune.a02d34f5.mp3","sfx_typewriter":"hozyain-mu_sfx_typewriter.d98b62b2.mp3","amb_rain_street":"hozyain-mu_amb_rain_street.8b8f3c87.mp3","sfx_explosion_far":"hozyain-mu_sfx_explosion_far.02c71cc1.mp3","sfx_shutter":"hozyain-mu_sfx_shutter.9665eba9.mp3","amb_rain":"hozyain-mu_amb_rain.71261529.mp3","sfx_cig_inhale":"hozyain-mu_sfx_cig_inhale.4dcdf12b.mp3","sfx_reel_change":"hozyain-mu_sfx_reel_change.0520bbe7.mp3","sfx_fire_roar":"hozyain-mu_sfx_fire_roar.deb3015f.mp3","door":"hozyain-mu_door.86d1391d.mp3","sfx_pills":"hozyain-mu_sfx_pills.5ef880f5.mp3","sfx_heartbeat":"hozyain-mu_sfx_heartbeat.94453ef0.mp3","amb_car":"hozyain-mu_amb_car.9dae3459.mp3"},"font":{"poiret":"hozyain-font_poiret.c8262c70.woff","plexmono":"hozyain-font_plexmono.634997db.woff","loraital":"hozyain-font_loraital.b1af068d.woff","caveat":"hozyain-font_caveat.f5ba90e1.woff"},"nbg":{"bg_hz_alley_rain":"hozyain-bg_bg_hz_alley_rain__n.2bb1bc8a.webp","bg_hz_aurora_gondola":"hozyain-bg_bg_hz_aurora_gondola__n.fb1de6a0.webp","bg_hz_ball_garden":"hozyain-bg_bg_hz_ball_garden__n.525e6771.webp","bg_hz_ball_hall":"hozyain-bg_bg_hz_ball_hall__n.9e2a3304.webp","bg_hz_ball_study":"hozyain-bg_bg_hz_ball_study__n.8e02b253.webp","bg_hz_boat_deck":"hozyain-bg_bg_hz_boat_deck__n.729dec09.webp","bg_hz_booth":"hozyain-bg_bg_hz_booth__n.cbb8c232.webp","bg_hz_booth_night":"hozyain-bg_bg_hz_booth_night__n.2a32c5c2.webp","bg_hz_cell":"hozyain-bg_bg_hz_cell__n.cd2f6ddc.webp","bg_hz_kesha_den":"hozyain-bg_bg_hz_kesha_den__n.e2edd3cb.webp","bg_hz_mayfair_roof":"hozyain-bg_bg_hz_mayfair_roof__n.71de2a5e.webp","bg_hz_menu":"hozyain-bg_bg_hz_menu__n.af4f6986.webp","bg_hz_morrow_office":"hozyain-bg_bg_hz_morrow_office__n.80ca154a.webp","bg_hz_office_board":"hozyain-bg_bg_hz_office_board__n.c565254d.webp","bg_hz_office_dawn":"hozyain-bg_bg_hz_office_dawn__n.b7e50794.webp","bg_hz_office_night":"hozyain-bg_bg_hz_office_night__n.a3ea13cf.webp","bg_hz_office_night_red":"hozyain-bg_bg_hz_office_night_red__n.1501da33.webp","bg_hz_pier9_cargo":"hozyain-bg_bg_hz_pier9_cargo__n.f93c3f36.webp","bg_hz_pier9_night":"hozyain-bg_bg_hz_pier9_night__n.396c6f07.webp","bg_hz_redlamp":"hozyain-bg_bg_hz_redlamp__n.0927108a.webp","bg_hz_rex_backdoor":"hozyain-bg_bg_hz_rex_backdoor__n.ed0a96f4.webp","bg_hz_rex_hall":"hozyain-bg_bg_hz_rex_hall__n.bc8ec730.webp","bg_hz_rex_hall_dark":"hozyain-bg_bg_hz_rex_hall_dark__n.b050e724.webp","bg_hz_rex_hall_lit":"hozyain-bg_bg_hz_rex_hall_lit__n.4f710bf3.webp","bg_hz_rex_lobby":"hozyain-bg_bg_hz_rex_lobby__n.8b78c37e.webp","bg_hz_street_dawn":"hozyain-bg_bg_hz_street_dawn__n.8d7e533b.webp","bg_hz_street_rain":"hozyain-bg_bg_hz_street_rain__n.44074ed9.webp","bg_hz_warehouse":"hozyain-bg_bg_hz_warehouse__n.01c54c69.webp","bg_hz_warehouse_roof":"hozyain-bg_bg_hz_warehouse_roof__n.c7ea3e57.webp","cg_hz_aurora":"hozyain-bg_cg_hz_aurora__n.336f15e8.webp","cg_hz_aurora_alley":"hozyain-bg_cg_hz_aurora_alley__n.2671b566.webp","cg_hz_aurora_burn":"hozyain-bg_cg_hz_aurora_burn__n.46e47f33.webp","cg_hz_aurora_saved":"hozyain-bg_cg_hz_aurora_saved__n.02fc480b.webp","cg_hz_crystals":"hozyain-bg_cg_hz_crystals__n.b593605c.webp","cg_hz_double":"hozyain-bg_cg_hz_double__n.f523a53b.webp","cg_hz_empty_chair":"hozyain-bg_cg_hz_empty_chair__n.6765a4be.webp","cg_hz_end_luk":"hozyain-bg_cg_hz_end_luk__n.fc9c29f3.webp","cg_hz_end_power":"hozyain-bg_cg_hz_end_power__n.380a62ca.webp","cg_hz_end_vin":"hozyain-bg_cg_hz_end_vin__n.6ab8f9d6.webp","cg_hz_film_self":"hozyain-bg_cg_hz_film_self__n.4510a176.webp","cg_hz_mem_chalk":"hozyain-bg_cg_hz_mem_chalk__n.48f6a0a6.webp","cg_hz_mem_ribbon_black":"hozyain-bg_cg_hz_mem_ribbon_black__n.0fa5f6b8.webp","cg_hz_mem_ribbon_red":"hozyain-bg_cg_hz_mem_ribbon_red__n.d81a8a17.webp","cg_hz_mem_sidecar":"hozyain-bg_cg_hz_mem_sidecar__n.382b14c9.webp","cg_hz_mem_whisky":"hozyain-bg_cg_hz_mem_whisky__n.7bf40d02.webp","cg_hz_rift":"hozyain-bg_cg_hz_rift__n.844e9427.webp","cg_hz_sing":"hozyain-bg_cg_hz_sing__n.4d3e7ecc.webp","cg_hz_title":"hozyain-bg_cg_hz_title__n.548ea74a.webp","cg_hz_wake":"hozyain-bg_cg_hz_wake__n.88c40fef.webp","film_meet_01":"hozyain-bg_film_meet_01__n.394a2b8e.webp","film_meet_empty":"hozyain-bg_film_meet_empty__n.ca34ca5c.webp","film_night_01":"hozyain-bg_film_night_01__n.df3aab13.webp","film_night_02":"hozyain-bg_film_night_02__n.b7971c0b.webp","film_night_03":"hozyain-bg_film_night_03__n.ac58cbfe.webp","bg_hz_newsroom":"hozyain-bg_bg_hz_newsroom__n.1dc8e485.webp","bg_hz_print":"hozyain-bg_bg_hz_print__n.a7c41403.webp","film_meet_box":"hozyain-bg_film_meet_box__n.98df32f5.webp","film_night_04":"hozyain-bg_film_night_04__n.616ff996.webp","film_night_05":"hozyain-bg_film_night_05__n.1c75c599.webp","bg_hz_desk_pov":"hozyain-bg_bg_hz_desk_pov__n.29affe42.webp","cg_hz_vin_coffee":"hozyain-bg_cg_hz_vin_coffee__n.16cde5db.webp","cg_hz_vin_coffee2":"hozyain-bg_cg_hz_vin_coffee2__n.aa54d142.webp","cg_hz_double_empty":"hozyain-bg_cg_hz_double_empty__n.1b9cda49.webp"},"nsp":{"aga":{"neutral":"hozyain-sp_aga_neutral__n.83508586.webp"},"art":{"angry":"hozyain-sp_art_angry__n.f8689ed7.webp","film":"hozyain-sp_art_film__n.70ec955f.webp","neutral":"hozyain-sp_art_neutral__n.4c7a562a.webp","smile":"hozyain-sp_art_smile__n.8ef4f02b.webp","smoke":"hozyain-sp_art_smoke__n.dcd03904.webp","cuffed":"hozyain-sp_art_cuffed__n.020117ef.webp"},"dot":{"angry":"hozyain-sp_dot_angry__n.631670a6.webp","neutral":"hozyain-sp_dot_neutral__n.fdcdc59e.webp","sad":"hozyain-sp_dot_sad__n.cd9a3adb.webp","smile":"hozyain-sp_dot_smile__n.07124cac.webp"},"dug":{"angry":"hozyain-sp_dug_angry__n.b7b3bbd7.webp","neutral":"hozyain-sp_dug_angry__n.b7b3bbd7.webp"},"kat":{"back":"hozyain-sp_kat_back__n.fc1df84a.webp","badge":"hozyain-sp_kat_badge__n.bcb96f8f.webp","camera":"hozyain-sp_kat_camera__n.f51bb88b.webp","determined":"hozyain-sp_kat_determined__n.911cf7eb.webp","gown":"hozyain-sp_kat_gown__n.28c55dc4.webp","ironic":"hozyain-sp_kat_ironic__n.06478750.webp","neutral":"hozyain-sp_kat_neutral__n.7ec69bcc.webp","nurse_neutral":"hozyain-sp_kat_nurse_neutral__n.4cd356fb.webp","nurse_scared":"hozyain-sp_kat_nurse_scared__n.03f8d596.webp","sad":"hozyain-sp_kat_sad__n.4b7897e5.webp","scared":"hozyain-sp_kat_sad__n.4b7897e5.webp","singer":"hozyain-sp_kat_singer__n.e7038090.webp","smoke":"hozyain-sp_kat_smoke__n.cbf2fba1.webp","tears":"hozyain-sp_kat_tears__n.ad56fe1c.webp","tender":"hozyain-sp_kat_tender__n.d6b654fb.webp"},"kav":{"determined":"hozyain-sp_kav_determined__n.8cd49251.webp","neutral":"hozyain-sp_kav_neutral__n.f512e7ac.webp","scared":"hozyain-sp_kav_scared__n.405ce9a8.webp"},"kes":{"neutral":"hozyain-sp_kes_neutral__n.4223cc0e.webp"},"luk":{"cold":"hozyain-sp_luk_cold__n.eab092dc.webp","neutral":"hozyain-sp_luk_neutral__n.5dede3f8.webp"},"mal":{"angry":"hozyain-sp_mal_angry__n.fd704b69.webp","neutral":"hozyain-sp_mal_neutral__n.5e67dc81.webp","sad":"hozyain-sp_mal_sad__n.18f5ba74.webp","smile":"hozyain-sp_mal_smile__n.a0c12b73.webp"},"mor":{"cold":"hozyain-sp_mor_cold__n.02a34dfe.webp","neutral":"hozyain-sp_mor_neutral__n.43ad4fce.webp","smile":"hozyain-sp_mor_smile__n.4ef93aad.webp"},"nat":{"angry":"hozyain-sp_nat_angry__n.aede5905.webp","neutral":"hozyain-sp_nat_neutral__n.93e693dd.webp","sad":"hozyain-sp_nat_sad__n.620ccb35.webp","smile":"hozyain-sp_nat_smile__n.333f7d65.webp"},"noa":{"neutral":"hozyain-sp_noa_neutral__n.8cde36af.webp","scared":"hozyain-sp_noa_scared__n.25dc5064.webp","smile":"hozyain-sp_noa_smile__n.2b381ddb.webp"},"obr":{"neutral":"hozyain-sp_obr_neutral__n.09c635f0.webp"},"sam":{"neutral":"hozyain-sp_sam_neutral__n.f40a1eda.webp"},"ser":{"angry":"hozyain-sp_ser_angry__n.36be3d57.webp","neutral":"hozyain-sp_ser_neutral__n.2a89746f.webp","smile":"hozyain-sp_ser_smile__n.eea83098.webp"},"ver":{"angry":"hozyain-sp_ver_angry__n.49f1152b.webp","attack":"hozyain-sp_ver_attack__n.f371be6b.webp","neutral":"hozyain-sp_ver_neutral__n.25ea15c8.webp","smile":"hozyain-sp_ver_smile__n.2baf230f.webp"},"vin":{"neutral":"hozyain-sp_vin_neutral__n.20e36b4f.webp","tux_neutral":"hozyain-sp_vin_tux_neutral__n.1a7e8d5f.webp","tux_smirk":"hozyain-sp_vin_tux_smirk__n.800db854.webp"},"wid":{"neutral":"hozyain-sp_wid_neutral__n.831e0397.webp"}},"pt":{"dot":"hozyain-pt_dot.ed9b19b0.webp","sam":"hozyain-pt_sam.0ca36925.webp","dug":"hozyain-pt_dug.f52948fc.webp","kes":"hozyain-pt_kes.a91e244d.webp","mal":"hozyain-pt_mal.c9bd84e0.webp","aga":"hozyain-pt_aga.24079637.webp","kat":"hozyain-pt_kat.93cdfe70.webp","ver":"hozyain-pt_ver.c10b4a10.webp","mor":"hozyain-pt_mor.b6570505.webp","art":"hozyain-pt_art.5febca6d.webp","ser":"hozyain-pt_ser.71317775.webp","noa":"hozyain-pt_noa.bde7b2a5.webp","vin":"hozyain-pt_vin.2f2dd770.webp","luk":"hozyain-pt_luk.d4aa602c.webp","nat":"hozyain-pt_nat.6bd51e5b.webp"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
+</script><script>window.ASSETS={"bg":{"bg_hz_alley_rain":"hozyain-bg_bg_hz_alley_rain.6ae6935b.webp","bg_hz_aurora_gondola":"hozyain-bg_bg_hz_aurora_gondola.e8b64f8d.webp","bg_hz_ball_garden":"hozyain-bg_bg_hz_ball_garden.61d3ba37.webp","bg_hz_ball_hall":"hozyain-bg_bg_hz_ball_hall.20636137.webp","bg_hz_ball_study":"hozyain-bg_bg_hz_ball_study.0995ac51.webp","bg_hz_boat_deck":"hozyain-bg_bg_hz_boat_deck.c416b9bd.webp","bg_hz_booth":"hozyain-bg_bg_hz_booth.e7236d29.webp","bg_hz_booth_night":"hozyain-bg_bg_hz_booth_night.ea7c2a1d.webp","bg_hz_cell":"hozyain-bg_bg_hz_cell.dca1545d.webp","bg_hz_kesha_den":"hozyain-bg_bg_hz_kesha_den.9efe6746.webp","bg_hz_mayfair_roof":"hozyain-bg_bg_hz_mayfair_roof.54cde641.webp","bg_hz_menu":"hozyain-bg_bg_hz_menu.4a0d78a8.webp","bg_hz_morrow_office":"hozyain-bg_bg_hz_morrow_office.96181a95.webp","bg_hz_office_board":"hozyain-bg_bg_hz_office_board.804ddf1d.webp","bg_hz_office_dawn":"hozyain-bg_bg_hz_office_dawn.ef3b05d7.webp","bg_hz_office_night":"hozyain-bg_bg_hz_office_night.5b1572b3.webp","bg_hz_office_night_red":"hozyain-bg_bg_hz_office_night_red.1df0d5ae.webp","bg_hz_pier9_cargo":"hozyain-bg_bg_hz_pier9_cargo.70f06e1b.webp","bg_hz_pier9_night":"hozyain-bg_bg_hz_pier9_night.3c9a8f19.webp","bg_hz_redlamp":"hozyain-bg_bg_hz_redlamp.d005a4f5.webp","bg_hz_rex_backdoor":"hozyain-bg_bg_hz_rex_backdoor.a7ab0179.webp","bg_hz_rex_hall":"hozyain-bg_bg_hz_rex_hall.23718b5d.webp","bg_hz_rex_hall_dark":"hozyain-bg_bg_hz_rex_hall_dark.443d4ea2.webp","bg_hz_rex_hall_lit":"hozyain-bg_bg_hz_rex_hall_lit.6154a308.webp","bg_hz_rex_lobby":"hozyain-bg_bg_hz_rex_lobby.3694199a.webp","bg_hz_street_dawn":"hozyain-bg_bg_hz_street_dawn.cc0c9667.webp","bg_hz_street_rain":"hozyain-bg_bg_hz_street_rain.96c979da.webp","bg_hz_warehouse":"hozyain-bg_bg_hz_warehouse.0137d50d.webp","bg_hz_warehouse_roof":"hozyain-bg_bg_hz_warehouse_roof.485a2519.webp","cg_hz_aurora":"hozyain-bg_cg_hz_aurora.63a9f809.webp","cg_hz_aurora_alley":"hozyain-bg_cg_hz_aurora_alley.2fc0571d.webp","cg_hz_aurora_burn":"hozyain-bg_cg_hz_aurora_burn.98e39f23.webp","cg_hz_aurora_saved":"hozyain-bg_cg_hz_aurora_saved.678dad91.webp","cg_hz_crystals":"hozyain-bg_cg_hz_crystals.9c059449.webp","cg_hz_double":"hozyain-bg_cg_hz_double.1d7bfb18.webp","cg_hz_empty_chair":"hozyain-bg_cg_hz_empty_chair.85b09d53.webp","cg_hz_end_luk":"hozyain-bg_cg_hz_end_luk.0e32d030.webp","cg_hz_end_power":"hozyain-bg_cg_hz_end_power.91e15637.webp","cg_hz_end_vin":"hozyain-bg_cg_hz_end_vin.2cddaa45.webp","cg_hz_film_self":"hozyain-bg_cg_hz_film_self.a059b1d9.webp","cg_hz_mem_chalk":"hozyain-bg_cg_hz_mem_chalk.b25eac6e.webp","cg_hz_mem_ribbon_black":"hozyain-bg_cg_hz_mem_ribbon_black.9db86904.webp","cg_hz_mem_ribbon_red":"hozyain-bg_cg_hz_mem_ribbon_red.c02ca80a.webp","cg_hz_mem_sidecar":"hozyain-bg_cg_hz_mem_sidecar.8375325e.webp","cg_hz_mem_whisky":"hozyain-bg_cg_hz_mem_whisky.161b95c1.webp","cg_hz_rift":"hozyain-bg_cg_hz_rift.46e41f55.webp","cg_hz_sing":"hozyain-bg_cg_hz_sing.ded9ea1d.webp","cg_hz_title":"hozyain-bg_cg_hz_title.7c3628bf.webp","cg_hz_wake":"hozyain-bg_cg_hz_wake.4c2e6f79.webp","film_meet_01":"hozyain-bg_film_meet_01.56d6359f.webp","film_meet_empty":"hozyain-bg_film_meet_empty.8a4a7377.webp","film_night_01":"hozyain-bg_film_night_01.7208cffd.webp","film_night_02":"hozyain-bg_film_night_02.a55359b5.webp","film_night_03":"hozyain-bg_film_night_03.828c6e48.webp","bg_hz_newsroom":"hozyain-bg_bg_hz_newsroom.9c5e3b21.webp","bg_hz_print":"hozyain-bg_bg_hz_print.20fdb951.webp","film_meet_box":"hozyain-bg_film_meet_box.49225410.webp","film_night_04":"hozyain-bg_film_night_04.ead843de.webp","film_night_05":"hozyain-bg_film_night_05.65748c98.webp","bg_hz_desk_pov":"hozyain-bg_bg_hz_desk_pov.bcae377e.webp","cg_hz_vin_coffee":"hozyain-bg_cg_hz_vin_coffee.ea90c63a.webp","cg_hz_vin_coffee2":"hozyain-bg_cg_hz_vin_coffee2.b4b58d20.webp","cg_hz_double_empty":"hozyain-bg_cg_hz_double_empty.6ca46b29.webp","bg_hz_shoot_dock":"hozyain-bg_bg_hz_shoot_dock.a729ebf0.webp","cg_hz_bomb":"hozyain-bg_cg_hz_bomb.f5de1a53.webp","cg_hz_bomb_v1":"hozyain-bg_cg_hz_bomb_v1.c832ed33.webp","bg_hz_mast_night":"hozyain-bg_bg_hz_mast_night.297efa88.webp","bg_hz_mayfair_party":"hozyain-bg_bg_hz_mayfair_party.98ab665c.webp","cg_hz_cards":"hozyain-bg_cg_hz_cards.1cf98823.webp","bg_hz_aurora_salon":"hozyain-bg_bg_hz_aurora_salon.2ed5bf66.webp","cg_hz_window":"hozyain-bg_cg_hz_window.112371ea.webp","bg_hz_street_across":"hozyain-bg_bg_hz_street_across.28425f2e.webp","bg_hz_street_across_empty":"hozyain-bg_bg_hz_street_across_empty.222b437b.webp","bg_hz_pier_raid":"hozyain-bg_bg_hz_pier_raid.cd5e0e3e.webp","cg_hz_lab":"hozyain-bg_cg_hz_lab.027bd94c.webp","cg_hz_night_typing":"hozyain-bg_cg_hz_night_typing.10619250.webp","slide_song_03":"hozyain-bg_slide_song_03.d29400fe.webp","slide_song_04":"hozyain-bg_slide_song_04.ca22f704.webp","slide_song_05":"hozyain-bg_slide_song_05.1999999c.webp","slide_song_07":"hozyain-bg_slide_song_07.0903ad59.webp","slide_song_06":"hozyain-bg_slide_song_06.e3b19777.webp","slide_song_08":"hozyain-bg_slide_song_08.559087ad.webp","slide_song_11":"hozyain-bg_slide_song_11.16131b33.webp","slide_song_09":"hozyain-bg_slide_song_09.a228f22e.webp","slide_song_10":"hozyain-bg_slide_song_10.e4dad717.webp","slide_song_02":"hozyain-bg_slide_song_02.7b72a404.webp","slide_song_01":"hozyain-bg_slide_song_01.e096f62b.webp"},"sp":{"aga":{"neutral":"hozyain-sp_aga_neutral.161bf722.webp"},"art":{"angry":"hozyain-sp_art_angry.67e49736.webp","film":"hozyain-sp_art_film.fc932001.webp","neutral":"hozyain-sp_art_neutral.223baed7.webp","smile":"hozyain-sp_art_smile.fc37cdd2.webp","smoke":"hozyain-sp_art_smoke.490bcef5.webp","cuffed":"hozyain-sp_art_cuffed.2eebb94b.webp"},"dot":{"angry":"hozyain-sp_dot_angry.100082e2.webp","neutral":"hozyain-sp_dot_neutral.bebd8180.webp","sad":"hozyain-sp_dot_sad.aeb1f472.webp","smile":"hozyain-sp_dot_smile.66db02a2.webp"},"dug":{"angry":"hozyain-sp_dug_angry.8441f697.webp","neutral":"hozyain-sp_dug_angry.8441f697.webp"},"kat":{"back":"hozyain-sp_kat_back.08a76657.webp","badge":"hozyain-sp_kat_badge.9d4192c7.webp","camera":"hozyain-sp_kat_camera.618f9063.webp","determined":"hozyain-sp_kat_determined.5f7b42a5.webp","gown":"hozyain-sp_kat_gown.3f36e5ab.webp","ironic":"hozyain-sp_kat_ironic.4955d6b5.webp","neutral":"hozyain-sp_kat_neutral.5be5e0ad.webp","nurse_neutral":"hozyain-sp_kat_nurse_neutral.12e70151.webp","nurse_scared":"hozyain-sp_kat_nurse_scared.88dc686d.webp","sad":"hozyain-sp_kat_sad.9e2c16fc.webp","scared":"hozyain-sp_kat_sad.9e2c16fc.webp","singer":"hozyain-sp_kat_singer.398b4793.webp","smoke":"hozyain-sp_kat_smoke.56b4ad26.webp","tears":"hozyain-sp_kat_tears.65c1f097.webp","tender":"hozyain-sp_kat_tender.40041f8d.webp"},"kav":{"determined":"hozyain-sp_kav_determined.73dc5725.webp","neutral":"hozyain-sp_kav_neutral.641c24d7.webp","scared":"hozyain-sp_kav_scared.e5248bca.webp"},"kes":{"neutral":"hozyain-sp_kes_neutral.b9dd5c22.webp"},"luk":{"cold":"hozyain-sp_luk_cold.599bf80c.webp","neutral":"hozyain-sp_luk_neutral.44226dd5.webp"},"mal":{"angry":"hozyain-sp_mal_angry.4639ab56.webp","neutral":"hozyain-sp_mal_neutral.fbf62ff8.webp","sad":"hozyain-sp_mal_sad.d2fdb5aa.webp","smile":"hozyain-sp_mal_smile.251ac16a.webp"},"mor":{"cold":"hozyain-sp_mor_cold.323954e9.webp","neutral":"hozyain-sp_mor_neutral.3ed881c4.webp","smile":"hozyain-sp_mor_smile.3699b43a.webp"},"nat":{"angry":"hozyain-sp_nat_angry.2305eba2.webp","neutral":"hozyain-sp_nat_neutral.73e608c0.webp","sad":"hozyain-sp_nat_sad.00b78560.webp","smile":"hozyain-sp_nat_smile.87513feb.webp"},"noa":{"neutral":"hozyain-sp_noa_neutral.e1bc87c2.webp","scared":"hozyain-sp_noa_scared.54dee4b9.webp","smile":"hozyain-sp_noa_smile.73194fe9.webp"},"obr":{"neutral":"hozyain-sp_obr_neutral.cfd5e4bb.webp"},"sam":{"neutral":"hozyain-sp_sam_neutral.5612ec44.webp"},"ser":{"angry":"hozyain-sp_ser_angry.1dfa14d4.webp","neutral":"hozyain-sp_ser_neutral.5e340b94.webp","smile":"hozyain-sp_ser_smile.cd94a0ab.webp"},"ver":{"angry":"hozyain-sp_ver_angry.13d11559.webp","attack":"hozyain-sp_ver_attack.91ed57cb.webp","neutral":"hozyain-sp_ver_neutral.78bb910e.webp","smile":"hozyain-sp_ver_smile.e3fb414c.webp"},"vin":{"neutral":"hozyain-sp_vin_neutral.a0878c90.webp","tux_neutral":"hozyain-sp_vin_tux_neutral.5063eb25.webp","tux_smirk":"hozyain-sp_vin_tux_smirk.12eb7287.webp"},"wid":{"neutral":"hozyain-sp_wid_neutral.57c52625.webp"}},"ui":{"board_hz_26":"hozyain-ui_board_hz_26.21cfc35c.webp","board_hz_31":"hozyain-ui_board_hz_31.f9649c14.webp","board_hz_33":"hozyain-ui_board_hz_33.be7427a5.webp","crowd_hz_ball":"hozyain-ui_crowd_hz_ball.c9b21913.webp","crowd_hz_dockers":"hozyain-ui_crowd_hz_dockers.1b9da147.webp","crowd_hz_guards":"hozyain-ui_crowd_hz_guards.78889346.webp","crowd_hz_morelli":"hozyain-ui_crowd_hz_morelli.eb497546.webp","sheet_hz_cargo":"hozyain-ui_sheet_hz_cargo.4ede9f1e.webp","sheet_hz_docs":"hozyain-ui_sheet_hz_docs.111bb2fd.webp","sheet_hz_docs_old":"hozyain-ui_sheet_hz_docs_old.ea1ac034.webp","sheet_hz_evidence":"hozyain-ui_sheet_hz_evidence.9928cdbd.webp","sheet_hz_kesha":"hozyain-ui_sheet_hz_kesha.7de813ff.webp","sheet_hz_news_verdict_a":"hozyain-ui_sheet_hz_news_verdict_a.a9662ad4.webp","sheet_hz_papers":"hozyain-ui_sheet_hz_papers.86f3d872.webp","ui_hz_cig":"hozyain-ui_ui_hz_cig.a0240e97.webp","ui_hz_cork":"hozyain-ui_ui_hz_cork.1f40e966.webp","ui_hz_editing_table":"hozyain-ui_ui_hz_editing_table.16a788f6.webp","ui_hz_folder":"hozyain-ui_ui_hz_folder.469b2533.webp","ui_hz_plan_city":"hozyain-ui_ui_hz_plan_city.fcd6cb89.webp","ui_hz_plan_rex":"hozyain-ui_ui_hz_plan_rex.072d8b21.webp","ui_hz_tactics":"hozyain-ui_ui_hz_tactics.af333ccb.webp","ui_hz_layout":"hozyain-ui_ui_hz_layout.ccf50f31.webp","sheet_hz_pills":"hozyain-ui_sheet_hz_pills.73b24620.webp","film_meet_ov":"hozyain-ui_film_meet_ov.2a8a7640.webp","film_meet_box_pol":"hozyain-ui_film_meet_box_pol.12e57596.webp","ov_clock1":"hozyain-ui_ov_clock1.84978e22.webp","ov_clock2":"hozyain-ui_ov_clock2.54835b91.webp","ov_cig":"hozyain-ui_ov_cig.09b0375b.webp","ov_smoke":"hozyain-ui_ov_smoke.20daaf5d.webp","ov_man1":"hozyain-ui_ov_man1.c3559ac6.webp","ov_man2":"hozyain-ui_ov_man2.bbaac42c.webp","cig1":"hozyain-ui_cig1.762441e5.webp","cig2":"hozyain-ui_cig2.170d68f0.webp","cig3":"hozyain-ui_cig3.2169fb86.webp","cig4":"hozyain-ui_cig4.bb62954e.webp","cig5":"hozyain-ui_cig5.9607dbb0.webp","it_crystals":"hozyain-ui_it_crystals.b41815da.webp","it_case":"hozyain-ui_it_case.8cb7c152.webp","it_bomb":"hozyain-ui_it_bomb.1ebca360.webp","it_revolver":"hozyain-ui_it_revolver.9335cbcc.webp","it_satchel":"hozyain-ui_it_satchel.cd3ae005.webp","it_scissors":"hozyain-ui_it_scissors.fef8b319.webp","it_wig":"hozyain-ui_it_wig.149439ee.webp","paper_manifest":"hozyain-ui_paper_manifest.3a4510e8.webp","it_ribbon_red":"hozyain-ui_it_ribbon_red.2e14f4b4.webp","it_perfume":"hozyain-ui_it_perfume.f00d0374.webp","it_hair":"hozyain-ui_it_hair.9e32b816.webp","it_letters":"hozyain-ui_it_letters.1bb47f73.webp","paper_protocol":"hozyain-ui_paper_protocol.e5f34340.webp","it_oldpapers":"hozyain-ui_it_oldpapers.145dd5e0.webp","it_ribbon_bicolor":"hozyain-ui_it_ribbon_bicolor.c1b42dc9.webp","it_decanter":"hozyain-ui_it_decanter.1b69f4a8.webp","it_badge":"hozyain-ui_it_badge.8265fb00.webp","it_key_lamp":"hozyain-ui_it_key_lamp.8af15245.webp","it_knife":"hozyain-ui_it_knife.d902af74.webp","it_reel":"hozyain-ui_it_reel.bfc962a1.webp","paper_note":"hozyain-ui_paper_note.ef415edc.webp","it_ashtray":"hozyain-ui_it_ashtray.cfff06d2.webp","it_butt_white":"hozyain-ui_it_butt_white.f0f07c27.webp","it_cipher_notes":"hozyain-ui_it_cipher_notes.ede90c01.webp","it_pen":"hozyain-ui_it_pen.eddcf195.webp","it_cipher_wheel":"hozyain-ui_it_cipher_wheel.33e96973.webp","it_envelope":"hozyain-ui_it_envelope.d8e12ce3.webp","it_ring":"hozyain-ui_it_ring.f14e5b25.webp","paper_card":"hozyain-ui_paper_card.3fac8700.webp","it_mask":"hozyain-ui_it_mask.fc783b1b.webp","paper_news_a":"hozyain-ui_paper_news_a.8655f40b.webp","paper_news_b":"hozyain-ui_paper_news_b.aded3728.webp","paper_news_columbia":"hozyain-ui_paper_news_columbia.74a9d6bf.webp","paper_lined":"hozyain-ui_paper_lined.468fa8b4.webp","it_poster_aurora":"hozyain-ui_it_poster_aurora.96bd656c.webp","paper_ticket":"hozyain-ui_paper_ticket.32ff2d33.webp","paper_folder":"hozyain-ui_paper_folder.16aa0cd2.webp","it_photo_artur":"hozyain-ui_it_photo_artur.78a985c1.webp","it_pills_bottle":"hozyain-ui_it_pills_bottle.9db9dd54.webp","paper_rx":"hozyain-ui_paper_rx.382ce118.webp","it_pill":"hozyain-ui_it_pill.d82e27db.webp","paper_sticky":"hozyain-ui_paper_sticky.09a4c398.webp","it_photo_group":"hozyain-ui_it_photo_group.14372f4d.webp","desk_wood":"hozyain-ui_desk_wood.889e89cc.webp","tac0":"hozyain-ui_tac0.f9badab5.webp","tac1":"hozyain-ui_tac1.f0d0e094.webp","tac2":"hozyain-ui_tac2.9750b5f5.webp","tac3":"hozyain-ui_tac3.ad8b88f7.webp","tac4":"hozyain-ui_tac4.e4963571.webp","tac5":"hozyain-ui_tac5.62beac28.webp","tac6":"hozyain-ui_tac6.819b8692.webp","tac7":"hozyain-ui_tac7.6bf16779.webp","it_chalk":"hozyain-ui_it_chalk.62f3de62.webp","ui_hz_cover":"hozyain-ui_ui_hz_cover.6d69009d.webp","ui_hz_cover2":"hozyain-ui_ui_hz_cover2.b02891bd.webp","sh_kat_crouch":"hozyain-ui_sh_kat_crouch.ebfa1849.webp","sh_kat_aim":"hozyain-ui_sh_kat_aim.be50dfe0.webp","sh_kat_shot":"hozyain-ui_sh_kat_shot.96700949.webp","sh_kat_hit":"hozyain-ui_sh_kat_hit.e0b7a3f4.webp","sh_gang_tommy":"hozyain-ui_sh_gang_tommy.3c1666c9.webp","sh_gang_shotgun":"hozyain-ui_sh_gang_shotgun.848cb89d.webp","sh_gang_cap":"hozyain-ui_sh_gang_cap.04ba3a3c.webp","sh_gang_cap2":"hozyain-ui_sh_gang_cap2.1a7bddd6.webp","sh_docker":"hozyain-ui_sh_docker.65be0536.webp","it_cutters":"hozyain-ui_it_cutters.830c0662.webp","it_butt_chapman":"hozyain-ui_it_butt_chapman.7ed8da50.webp","fx_flash1":"hozyain-ui_fx_flash1.7b19a1b7.webp","fx_flash2":"hozyain-ui_fx_flash2.28015c8a.webp","fx_flash3":"hozyain-ui_fx_flash3.7e89429b.webp","fx_burst":"hozyain-ui_fx_burst.5caba999.webp","fx_smoke":"hozyain-ui_fx_smoke.bb99e1c4.webp","fx_smoke2":"hozyain-ui_fx_smoke2.c77e9dfc.webp","fx_spark":"hozyain-ui_fx_spark.8044bee9.webp","fx_shatter":"hozyain-ui_fx_shatter.14358a53.webp","fx_debris":"hozyain-ui_fx_debris.9c9049a2.webp","sh_gang_tommy_up":"hozyain-ui_sh_gang_tommy_up.2a1d8483.webp","sh_gang_shotgun_up":"hozyain-ui_sh_gang_shotgun_up.5281ea6d.webp"},"mu":{"hz_ball":"hozyain-mu_hz_ball.b6fede70.mp3","hz_chase":"hozyain-mu_hz_chase.2c970543.mp3","hz_docks":"hozyain-mu_hz_docks.fe88a28c.mp3","hz_epilogue":"hozyain-mu_hz_epilogue.1d36c294.mp3","hz_film":"hozyain-mu_hz_film.01e6e600.mp3","hz_finale":"hozyain-mu_hz_finale.ba3b57b0.mp3","hz_interrog":"hozyain-mu_hz_interrog.7a3a2fa5.mp3","hz_jazz":"hozyain-mu_hz_jazz.240b5e6e.mp3","hz_memory":"hozyain-mu_hz_memory.dee596f9.mp3","hz_rain_piano":"hozyain-mu_hz_rain_piano.539c3ef7.mp3","hz_recon":"hozyain-mu_hz_recon.a59c4ed9.mp3","hz_rift_song":"hozyain-mu_hz_rift_song.8e48c1b3.mp3","hz_song_singer":"hozyain-mu_hz_song_singer.a9f11492.mp3","hz_theme":"hozyain-mu_hz_theme.1efda8ff.mp3","sfx_lighter":"hozyain-mu_sfx_lighter.00ec45c3.mp3","sfx_radio_tune":"hozyain-mu_sfx_radio_tune.a02d34f5.mp3","sfx_typewriter":"hozyain-mu_sfx_typewriter.d98b62b2.mp3","amb_rain_street":"hozyain-mu_amb_rain_street.8b8f3c87.mp3","sfx_explosion_far":"hozyain-mu_sfx_explosion_far.02c71cc1.mp3","sfx_shutter":"hozyain-mu_sfx_shutter.9665eba9.mp3","amb_rain":"hozyain-mu_amb_rain.71261529.mp3","sfx_cig_inhale":"hozyain-mu_sfx_cig_inhale.4dcdf12b.mp3","sfx_reel_change":"hozyain-mu_sfx_reel_change.0520bbe7.mp3","sfx_fire_roar":"hozyain-mu_sfx_fire_roar.deb3015f.mp3","door":"hozyain-mu_door.86d1391d.mp3","sfx_pills":"hozyain-mu_sfx_pills.5ef880f5.mp3","sfx_heartbeat":"hozyain-mu_sfx_heartbeat.94453ef0.mp3","amb_car":"hozyain-mu_amb_car.9dae3459.mp3","sfx_ice":"hozyain-mu_sfx_ice.cbc29bf7.mp3","sfx_gunshot":"hozyain-mu_sfx_gunshot.2e45e8a2.mp3","sfx_shotgun":"hozyain-mu_sfx_shotgun.04ab0507.mp3","sfx_tommy":"hozyain-mu_sfx_tommy.7211d37d.mp3","sfx_ricochet":"hozyain-mu_sfx_ricochet.b632049e.mp3","sfx_tick":"hozyain-mu_sfx_tick.0fd21edc.mp3","sfx_snip":"hozyain-mu_sfx_snip.165cc6bb.mp3","sfx_reload":"hozyain-mu_sfx_reload.a6d95ad4.mp3"},"font":{"poiret":"hozyain-font_poiret.c8262c70.woff","plexmono":"hozyain-font_plexmono.634997db.woff","loraital":"hozyain-font_loraital.b1af068d.woff","caveat":"hozyain-font_caveat.f5ba90e1.woff"},"nbg":{"bg_hz_alley_rain":"hozyain-bg_bg_hz_alley_rain__n.a478e7a7.webp","bg_hz_aurora_gondola":"hozyain-bg_bg_hz_aurora_gondola__n.cfde461e.webp","bg_hz_ball_garden":"hozyain-bg_bg_hz_ball_garden__n.536347ca.webp","bg_hz_ball_hall":"hozyain-bg_bg_hz_ball_hall__n.51cb0acc.webp","bg_hz_ball_study":"hozyain-bg_bg_hz_ball_study__n.40fa38f0.webp","bg_hz_boat_deck":"hozyain-bg_bg_hz_boat_deck__n.216e8aca.webp","bg_hz_booth":"hozyain-bg_bg_hz_booth__n.09b4a1da.webp","bg_hz_booth_night":"hozyain-bg_bg_hz_booth_night__n.48058477.webp","bg_hz_cell":"hozyain-bg_bg_hz_cell__n.7e826954.webp","bg_hz_kesha_den":"hozyain-bg_bg_hz_kesha_den__n.7c2f2b4a.webp","bg_hz_mayfair_roof":"hozyain-bg_bg_hz_mayfair_roof__n.71de2a5e.webp","bg_hz_menu":"hozyain-bg_bg_hz_menu__n.0f97ea0c.webp","bg_hz_morrow_office":"hozyain-bg_bg_hz_morrow_office__n.9293b809.webp","bg_hz_office_board":"hozyain-bg_bg_hz_office_board__n.63d8f149.webp","bg_hz_office_dawn":"hozyain-bg_bg_hz_office_dawn__n.f85368c6.webp","bg_hz_office_night":"hozyain-bg_bg_hz_office_night__n.7a4c9866.webp","bg_hz_office_night_red":"hozyain-bg_bg_hz_office_night_red__n.b5858839.webp","bg_hz_pier9_cargo":"hozyain-bg_bg_hz_pier9_cargo__n.18227bee.webp","bg_hz_pier9_night":"hozyain-bg_bg_hz_pier9_night__n.18691b17.webp","bg_hz_redlamp":"hozyain-bg_bg_hz_redlamp__n.8587bc88.webp","bg_hz_rex_backdoor":"hozyain-bg_bg_hz_rex_backdoor__n.cff38e53.webp","bg_hz_rex_hall":"hozyain-bg_bg_hz_rex_hall__n.c3c6ea27.webp","bg_hz_rex_hall_dark":"hozyain-bg_bg_hz_rex_hall_dark__n.f3950a40.webp","bg_hz_rex_hall_lit":"hozyain-bg_bg_hz_rex_hall_lit__n.852c72a2.webp","bg_hz_rex_lobby":"hozyain-bg_bg_hz_rex_lobby__n.3abbe69a.webp","bg_hz_street_dawn":"hozyain-bg_bg_hz_street_dawn__n.db017bee.webp","bg_hz_street_rain":"hozyain-bg_bg_hz_street_rain__n.0ba1fd56.webp","bg_hz_warehouse":"hozyain-bg_bg_hz_warehouse__n.29cdf0cb.webp","bg_hz_warehouse_roof":"hozyain-bg_bg_hz_warehouse_roof__n.d4341f61.webp","cg_hz_aurora":"hozyain-bg_cg_hz_aurora__n.4251d2a7.webp","cg_hz_aurora_alley":"hozyain-bg_cg_hz_aurora_alley__n.5c5d6556.webp","cg_hz_aurora_burn":"hozyain-bg_cg_hz_aurora_burn__n.e35852cb.webp","cg_hz_aurora_saved":"hozyain-bg_cg_hz_aurora_saved__n.1265dd8e.webp","cg_hz_crystals":"hozyain-bg_cg_hz_crystals__n.3e01bd98.webp","cg_hz_double":"hozyain-bg_cg_hz_double__n.9d19f17f.webp","cg_hz_empty_chair":"hozyain-bg_cg_hz_empty_chair__n.88560875.webp","cg_hz_end_luk":"hozyain-bg_cg_hz_end_luk__n.fc9c29f3.webp","cg_hz_end_power":"hozyain-bg_cg_hz_end_power__n.c5eee2e6.webp","cg_hz_end_vin":"hozyain-bg_cg_hz_end_vin__n.6ab8f9d6.webp","cg_hz_film_self":"hozyain-bg_cg_hz_film_self__n.4510a176.webp","cg_hz_mem_chalk":"hozyain-bg_cg_hz_mem_chalk__n.05e80026.webp","cg_hz_mem_ribbon_black":"hozyain-bg_cg_hz_mem_ribbon_black__n.8dcceffe.webp","cg_hz_mem_ribbon_red":"hozyain-bg_cg_hz_mem_ribbon_red__n.67170fc5.webp","cg_hz_mem_sidecar":"hozyain-bg_cg_hz_mem_sidecar__n.73df12d9.webp","cg_hz_mem_whisky":"hozyain-bg_cg_hz_mem_whisky__n.af654644.webp","cg_hz_rift":"hozyain-bg_cg_hz_rift__n.844e9427.webp","cg_hz_sing":"hozyain-bg_cg_hz_sing__n.98743ffe.webp","cg_hz_title":"hozyain-bg_cg_hz_title__n.548ea74a.webp","cg_hz_wake":"hozyain-bg_cg_hz_wake__n.29cae72d.webp","film_meet_01":"hozyain-bg_film_meet_01__n.394a2b8e.webp","film_meet_empty":"hozyain-bg_film_meet_empty__n.ca34ca5c.webp","film_night_01":"hozyain-bg_film_night_01__n.df3aab13.webp","film_night_02":"hozyain-bg_film_night_02__n.b7971c0b.webp","film_night_03":"hozyain-bg_film_night_03__n.ac58cbfe.webp","bg_hz_newsroom":"hozyain-bg_bg_hz_newsroom__n.4b29a220.webp","bg_hz_print":"hozyain-bg_bg_hz_print__n.c6b52e55.webp","film_meet_box":"hozyain-bg_film_meet_box__n.98df32f5.webp","film_night_04":"hozyain-bg_film_night_04__n.616ff996.webp","film_night_05":"hozyain-bg_film_night_05__n.1c75c599.webp","bg_hz_desk_pov":"hozyain-bg_bg_hz_desk_pov__n.29affe42.webp","cg_hz_vin_coffee":"hozyain-bg_cg_hz_vin_coffee__n.16cde5db.webp","cg_hz_vin_coffee2":"hozyain-bg_cg_hz_vin_coffee2__n.aa54d142.webp","cg_hz_double_empty":"hozyain-bg_cg_hz_double_empty__n.1b9cda49.webp","bg_hz_shoot_dock":"hozyain-bg_bg_hz_shoot_dock__n.120a6ae7.webp","cg_hz_bomb":"hozyain-bg_cg_hz_bomb__n.b12578b0.webp","cg_hz_bomb_v1":"hozyain-bg_cg_hz_bomb_v1__n.d3f793ae.webp","bg_hz_mast_night":"hozyain-bg_bg_hz_mast_night__n.64f28c87.webp","bg_hz_mayfair_party":"hozyain-bg_bg_hz_mayfair_party__n.67ec5f72.webp","cg_hz_cards":"hozyain-bg_cg_hz_cards__n.c423bb81.webp","bg_hz_aurora_salon":"hozyain-bg_bg_hz_aurora_salon__n.681e68c1.webp","cg_hz_window":"hozyain-bg_cg_hz_window__n.7f60d66f.webp","bg_hz_street_across":"hozyain-bg_bg_hz_street_across__n.b25761e5.webp","bg_hz_street_across_empty":"hozyain-bg_bg_hz_street_across_empty__n.a49ac8f4.webp","bg_hz_pier_raid":"hozyain-bg_bg_hz_pier_raid__n.a50ad124.webp","cg_hz_lab":"hozyain-bg_cg_hz_lab__n.23bcd526.webp","cg_hz_night_typing":"hozyain-bg_cg_hz_night_typing__n.9d1b7a5e.webp","slide_song_03":"hozyain-bg_slide_song_03__n.43910d1d.webp","slide_song_04":"hozyain-bg_slide_song_04__n.a17de925.webp","slide_song_05":"hozyain-bg_slide_song_05__n.cf1d1bcf.webp","slide_song_07":"hozyain-bg_slide_song_07__n.6e2b1392.webp","slide_song_06":"hozyain-bg_slide_song_06__n.ace47375.webp","slide_song_08":"hozyain-bg_slide_song_08__n.502474d4.webp","slide_song_11":"hozyain-bg_slide_song_11__n.06a24eee.webp","slide_song_09":"hozyain-bg_slide_song_09__n.1a269f4e.webp","slide_song_10":"hozyain-bg_slide_song_10__n.e64a8ce8.webp","slide_song_02":"hozyain-bg_slide_song_02__n.2f9b7f2b.webp","slide_song_01":"hozyain-bg_slide_song_01__n.28760af9.webp"},"nsp":{"aga":{"neutral":"hozyain-sp_aga_neutral__n.83508586.webp"},"art":{"angry":"hozyain-sp_art_angry__n.f8689ed7.webp","film":"hozyain-sp_art_film__n.70ec955f.webp","neutral":"hozyain-sp_art_neutral__n.4c7a562a.webp","smile":"hozyain-sp_art_smile__n.8ef4f02b.webp","smoke":"hozyain-sp_art_smoke__n.dcd03904.webp","cuffed":"hozyain-sp_art_cuffed__n.020117ef.webp"},"dot":{"angry":"hozyain-sp_dot_angry__n.631670a6.webp","neutral":"hozyain-sp_dot_neutral__n.fdcdc59e.webp","sad":"hozyain-sp_dot_sad__n.cd9a3adb.webp","smile":"hozyain-sp_dot_smile__n.07124cac.webp"},"dug":{"angry":"hozyain-sp_dug_angry__n.b7b3bbd7.webp","neutral":"hozyain-sp_dug_angry__n.b7b3bbd7.webp"},"kat":{"back":"hozyain-sp_kat_back__n.fc1df84a.webp","badge":"hozyain-sp_kat_badge__n.bcb96f8f.webp","camera":"hozyain-sp_kat_camera__n.f51bb88b.webp","determined":"hozyain-sp_kat_determined__n.911cf7eb.webp","gown":"hozyain-sp_kat_gown__n.28c55dc4.webp","ironic":"hozyain-sp_kat_ironic__n.06478750.webp","neutral":"hozyain-sp_kat_neutral__n.7ec69bcc.webp","nurse_neutral":"hozyain-sp_kat_nurse_neutral__n.4cd356fb.webp","nurse_scared":"hozyain-sp_kat_nurse_scared__n.03f8d596.webp","sad":"hozyain-sp_kat_sad__n.4b7897e5.webp","scared":"hozyain-sp_kat_sad__n.4b7897e5.webp","singer":"hozyain-sp_kat_singer__n.e7038090.webp","smoke":"hozyain-sp_kat_smoke__n.cbf2fba1.webp","tears":"hozyain-sp_kat_tears__n.ad56fe1c.webp","tender":"hozyain-sp_kat_tender__n.d6b654fb.webp"},"kav":{"determined":"hozyain-sp_kav_determined__n.8cd49251.webp","neutral":"hozyain-sp_kav_neutral__n.f512e7ac.webp","scared":"hozyain-sp_kav_scared__n.405ce9a8.webp"},"kes":{"neutral":"hozyain-sp_kes_neutral__n.4223cc0e.webp"},"luk":{"cold":"hozyain-sp_luk_cold__n.eab092dc.webp","neutral":"hozyain-sp_luk_neutral__n.5dede3f8.webp"},"mal":{"angry":"hozyain-sp_mal_angry__n.fd704b69.webp","neutral":"hozyain-sp_mal_neutral__n.5e67dc81.webp","sad":"hozyain-sp_mal_sad__n.18f5ba74.webp","smile":"hozyain-sp_mal_smile__n.a0c12b73.webp"},"mor":{"cold":"hozyain-sp_mor_cold__n.02a34dfe.webp","neutral":"hozyain-sp_mor_neutral__n.43ad4fce.webp","smile":"hozyain-sp_mor_smile__n.4ef93aad.webp"},"nat":{"angry":"hozyain-sp_nat_angry__n.aede5905.webp","neutral":"hozyain-sp_nat_neutral__n.93e693dd.webp","sad":"hozyain-sp_nat_sad__n.620ccb35.webp","smile":"hozyain-sp_nat_smile__n.333f7d65.webp"},"noa":{"neutral":"hozyain-sp_noa_neutral__n.8cde36af.webp","scared":"hozyain-sp_noa_scared__n.25dc5064.webp","smile":"hozyain-sp_noa_smile__n.2b381ddb.webp"},"obr":{"neutral":"hozyain-sp_obr_neutral__n.09c635f0.webp"},"sam":{"neutral":"hozyain-sp_sam_neutral__n.f40a1eda.webp"},"ser":{"angry":"hozyain-sp_ser_angry__n.36be3d57.webp","neutral":"hozyain-sp_ser_neutral__n.2a89746f.webp","smile":"hozyain-sp_ser_smile__n.eea83098.webp"},"ver":{"angry":"hozyain-sp_ver_angry__n.49f1152b.webp","attack":"hozyain-sp_ver_attack__n.f371be6b.webp","neutral":"hozyain-sp_ver_neutral__n.25ea15c8.webp","smile":"hozyain-sp_ver_smile__n.2baf230f.webp"},"vin":{"neutral":"hozyain-sp_vin_neutral__n.20e36b4f.webp","tux_neutral":"hozyain-sp_vin_tux_neutral__n.1a7e8d5f.webp","tux_smirk":"hozyain-sp_vin_tux_smirk__n.800db854.webp"},"wid":{"neutral":"hozyain-sp_wid_neutral__n.831e0397.webp"}},"pt":{"dot":"hozyain-pt_dot.ed9b19b0.webp","sam":"hozyain-pt_sam.0ca36925.webp","dug":"hozyain-pt_dug.f52948fc.webp","kes":"hozyain-pt_kes.a91e244d.webp","mal":"hozyain-pt_mal.c9bd84e0.webp","aga":"hozyain-pt_aga.24079637.webp","kat":"hozyain-pt_kat.93cdfe70.webp","ver":"hozyain-pt_ver.c10b4a10.webp","mor":"hozyain-pt_mor.b6570505.webp","art":"hozyain-pt_art.5febca6d.webp","ser":"hozyain-pt_ser.71317775.webp","noa":"hozyain-pt_noa.bde7b2a5.webp","vin":"hozyain-pt_vin.2f2dd770.webp","luk":"hozyain-pt_luk.d4aa602c.webp","nat":"hozyain-pt_nat.6bd51e5b.webp"}};</script><script>/* ===== Выброс · движок истории (сцены, диалоги, выборы, QTE, мини-игры) ===== */
 const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const A=window.ASSETS||{bg:{},sp:{},kp:{}};
@@ -2060,12 +2174,12 @@ const inc=(k,d)=>st=>{st.flags[k]=(st.flags[k]||0)+d};
 H.ctrl=d=>inc('CTRL',d);H.ser=d=>inc('SER',d);H.art=d=>inc('ART',d);H.morSus=d=>inc('hz_mor_sus',d);
 H.put=(k,v)=>st=>{st.flags[k]=v};
 /* сцены Веры: подмена набора спрайтов героини, табличка пустая, нуар принудительно */
-H.vera=on=>[st=>{window.KAT_SET=on?'kav':null;window.KAT_LABEL=on?'Детектив':''},{c:'noir',on:on?true:null}];
+H.vera=on=>[st=>{window.KAT_SET=on?'kav':null;window.KAT_LABEL=on?'Детектив':''}];
 H.noir=on=>({c:'noir',on});
 /* шаги механик */
 const mk=c=>o=>Object.assign({c},o||{});
 H.FRAME=mk('hz_frame');H.DESK=mk('hz_desk');H.SPOTS=mk('hz_spots');H.order=t=>({c:'hz_order',text:t});H.sheet=mk('hz_sheet');H.INT=mk('hz_interrog');H.INS=mk('hz_inspect');H.REC=mk('hz_recon');H.PILLS=mk('hz_pills');
-H.FILM=mk('hz_film');H.CHAIN=mk('hz_chain');H.MEM=mk('hz_memory');H.MASKS=mk('hz_masks');H.ASSIGN=mk('hz_assign');H.CROSS=mk('hz_cross');H.LAYOUT=mk('hz_layout');H.MONTAGE=mk('hz_montage');
+H.FILM=mk('hz_film');H.CHAIN=mk('hz_chain');H.MEM=mk('hz_memory');H.MASKS=mk('hz_masks');H.ASSIGN=mk('hz_assign');H.CROSS=mk('hz_cross');H.LAYOUT=mk('hz_layout');H.MONTAGE=mk('hz_montage');H.SHOOT=mk('hz_shoot');H.SONG=mk('hz_song');H.BOMB=mk('hz_bomb');
 /* осмотр места выбором: «что посмотреть», обязательные пункты до выхода */
 H.look=(q,items,exitT)=>async st=>{const seen=new Set();for(;;){
   const left=items.filter((it,i)=>!seen.has(i)&&(!it.when||it.when(st)));const reqLeft=left.filter(it=>it.req).length;
@@ -2130,13 +2244,13 @@ const SC1=[
  SPOTS({bg:'bg_hz_desk_pov',hint:'Стол',exit:'Хватит. Кто-то идёт',start:.5,spots:[
   {x:72,y:83,label:'жетон',img:'it_badge',req:1,cap:'Жетон в кожаной обложке. Под ним — удостоверение с моей фотографией.',
    then:[th('«Полиция Сент-Ривер. Отдел убийств. Детектив П. Устинова. №714».','determined'),th('Устинова. Полина Устинова. Хоть фамилия нашлась.','neutral'),th('Детектив. Я. В городе, о котором я никогда не слышала.','sad'),set('saw_badge')]},
-  {x:56,y:47,label:'машинка',then:[th('Пишущая машинка. В каретке — чистый лист. Ни слова.','neutral')]},
+  {x:56,y:47,label:'машинка',req:1,then:[bg('cg_hz_mem_ribbon_black',{t:900}),cam(50,1.08,48,4200,{ease:'ease-out'}),sfx('sfx_typewriter',{vol:.5}),th('Рапорт. Обрывается на полуслове.','neutral'),set('saw_report'),clue('hz_report','Рапорт в машинке: «Пристань 9… человек в шляпе… Я пошла»'),bg('bg_hz_desk_pov',{t:700,z:1.12,y:60}),cam(50,1.06,55,10)]},
   {x:33,y:93,label:'записка',img:'paper_lined',text:ORDER1,req:1,cap:'Лист среди бумаг. Отпечатано красной лентой.',
    then:[th('Груз. Пристань. «Х.». Ни одно слово ни о чём мне не говорит.','determined'),th('Но лист лежит на этом столе. На моём, если верить жетону.','sad'),
     clue('hz_order1','Записка на столе: «груз в четверг, пристань 9 — Х.»'),set('saw_order1')]},
-  {x:12,y:93,label:'газеты',img:'paper_news_a',text:'<b>ГОРОД В СТРАХЕ:\nКТО ТАКОЙ ХОЗЯИН?</b>\nС. Воробьёв',
+  {x:12,y:93,label:'газеты',img:'paper_news_a',text:'<b>ГОРОД В СТРАХЕ:\nКТО ТАКОЙ ХОЗЯИН?</b>\nС. Воробьелли',
    cap:'«Порт держат Сёстры, небо — Морелли. Но обе семьи кланяются одному имени, которого никто не произносит вслух…»',
-   then:[th('Хозяин. Чей-то хозяин. Чей-то город.','neutral'),clue('c1','Газета «Город в страхе: кто такой Хозяин?» за подписью С. Воробьёва')]},
+   then:[th('Хозяин. Чей-то хозяин. Чей-то город.','neutral'),clue('c1','Газета «Город в страхе: кто такой Хозяин?» за подписью С. Воробьелли')]},
   {x:6,y:70,label:'папки',then:[th('Папки дел. На полях — пометки карандашом. Почерк ровный, с наклоном. Мой? Не знаю.','neutral')]},
   {x:22,y:84,label:'ключ',img:'it_key_lamp',cap:'Латунный ключ с красной каплей на брелоке. На обороте выбито: «Красная лампа».',
    then:[th('Брелок затёрт пальцами. Этим ключом пользуются часто.','neutral'),set('key_lamp')]},
@@ -2242,6 +2356,9 @@ const SC4=[
  NM,mus('hz_rain_piano',{fade:1}),
  ...H.drive('bg_hz_street_rain',[scr('Машина Кейна пахнет бензином и вчерашними сигаретами. Город за стеклом — мокрый, неоновый, чужой.'),
  th('Я пытаюсь запоминать улицы. Каждая — как страница из книги, которую я никогда не читала.','neutral')]),
+ bg('bg_hz_rex_backdoor',{t:900}),
+ scr('Служебный вход «Рекса». Под козырьком — мокрый окурок.'),
+ sheet({img:'it_butt_chapman',cap:'Окурок у служебной двери.'}),
  bg('bg_hz_rex_lobby',{t:900,kat:30,katE:'neutral'}),mus('hz_jazz',{fade:1,vol:.45}),amb(null,{fade:.5}),
  scr('Кинотеатр «Рекс». Утром фойе пустое. Пахнет пылью и вчерашним попкорном.'),
  show('dot','neutral',72),
@@ -2360,9 +2477,13 @@ const SC5=[
  say('nat','Полли! Наконец-то. Тебе как обычно?','smile'),
  th('Она меня знает. Обнимает взглядом, как старую подругу. А я не знаю даже, как её зовут.','scared'),
  choice([
-  {t:'«Как обычно»',then:[scr('На стойку ложится коктейль. Кисло-сладкий, крепкий. Совсем не мой вкус — или мой, просто я не помню.'),set('nat_usual')]},
-  {t:'«Просто кофе»',then:[say('nat','Кофе? В баре? Ты сегодня точно не ты.','neutral'),set('nat_coffee')]}
+  {t:'«Как обычно»',then:[say('nat','Джимми, для Полли — как обычно!','smile'),set('nat_usual')]},
+  {t:'«Просто кофе»',then:[say('nat','Кофе? В баре? Полли, что с тобой?','sad'),say('nat','Нет уж. Вот это тебя приведёт в чувство. Джимми — как обычно!','neutral'),set('nat_coffee')]}
  ]),
+ hide('nat'),sfx('sfx_ice',{vol:.7}),bg('cg_hz_mem_sidecar',{t:1000}),cam(50,1.06,52,4500,{ease:'ease-out'}),
+ scr('Шейкер, лёд, сахарная кромка. Бокал на тонкой ножке ложится под красную лампу.'),
+ th('Коктейль. Кисло-сладкий, крепкий. Совсем не мой вкус — или мой, просто я не помню.','sad'),
+ bg('bg_hz_redlamp',{t:900,kat:28,katE:'neutral'}),show('nat','neutral',72),
  choice([
   {t:'Признаться: «Прости… я не помню твоего имени»',then:[say('nat','…Наташа. Полли, ты меня пугаешь. Ты что, головой ударилась?','sad'),know('nat'),set('nat_told'),
     say('nat','Ладно. Не здесь. Если что — я рядом. Как всегда.','neutral')]},
@@ -2374,8 +2495,9 @@ const SC5=[
  show('ser','neutral',70),
  say('ser','Детектив, а я вас всё ищу! Что случилось в «Рексе»?','neutral'),
  th('Парень с камерой на плече. Говорит так, будто мы знакомы.','determined'),
- say('ser','Простите. Сергей Воробьёв, «Сент-Ривер Курьер». Можно Серёга.','smile'),know('ser'),
- th('Воробьёв. Подпись под газетой с моего стола.','determined'),
+ say('ser','Я Серджио Воробьелли, журналист.','smile'),
+ th('Только этот долбоёб мог такое имя себе придумать. Буду звать тебя Серёга.','ironic'),know('ser'),
+ th('Воробьелли. Подпись под газетой с моего стола.','determined'),
  say('ser','Эдди Палмер позвонил мне в редакцию вчера, около восьми. Попросил найти вас и связаться с вами. Сказал, вы можете ему помочь — вы одна.','neutral'),
  say('ser','Через час его не стало.','neutral'),
  th('Помочь. Он надеялся на меня. Или на ту, кем я была.','sad'),
@@ -2403,6 +2525,7 @@ const SC5=[
 const SC6=[
  NM,bg('bg_hz_pier9_night',{t:1000,kat:30,katE:'neutral'}),mus('hz_docks',{fade:1.2}),amb('amb_rain_street',{vol:.5}),
  scr('Пристань девять. 22:00. Дождь, сходни, катер под парами.'),
+ sheet({img:'it_butt_chapman',cap:'На кнехте у сходней — окурок.'}),
  show('noa','neutral',72),
  say('kat','Капитан. Детектив Устинова, полиция. Эдди Палмер — вы его знали?','determined'),
  say('noa','Я вас первый раз вижу. И с полицией не работаю. Всего доброго.','scared'),know('noa'),
@@ -2502,6 +2625,7 @@ const SC0=[
  scr('Женщина в тренче открывает дверь своим ключом. Вешает тренч на вешалку, не глядя — рука сама находит крючок.'),
  sfx('sfx_lighter'),
  scr('Она садится за стол. Достаёт из ящика чистый лист, заправляет в машинку. Переключает ленту на красную половину.'),
+ bg('cg_hz_night_typing',{t:1200}),cam(50,1.06,45,5000,{ease:'ease-out'}),
  sfx('sfx_typewriter'),wait(900),sfx('sfx_typewriter'),
  scr('Лист она складывает вчетверо и кладёт под пресс-папье. Пепел стряхивает в пепельницу на столе.'),
  scr('Уходя, гасит лампу. Как гасят свет у себя дома.'),
@@ -2584,7 +2708,7 @@ const SC2=[
 /* ---------- 3. Архив «Курьера» с Серёгой ---------- */
 const SC3=[
  MET,
- th('Воробьёв говорил: его серия о Хозяине — пять статей. Если кто-то в этом городе помнит больше меня, то газета.','determined'),
+ th('Воробьелли говорил: его серия о Хозяине — пять статей. Если кто-то в этом городе помнит больше меня, то газета.','determined'),
  ...H.drive('bg_hz_street_dawn',[]),
  bg('bg_hz_newsroom',{t:1000,kat:28,katE:'neutral'}),mus('hz_jazz',{fade:1,vol:.45}),sfx('sfx_typewriter'),
  scr('Редакция «Сент-Ривер Курьер». Двадцать машинок стучат вразнобой, как дождь по жести.'),
@@ -2607,7 +2731,7 @@ const SC3=[
  choice([
   {t:'Позволить',then:[pts({C:1}),ser(1),scr('Он стирает чернила большим пальцем. Медленно. Дольше, чем нужно.'),say('ser','Ну вот. Теперь похожи на честного копа. Почти.','smile'),set('ser_touch')]},
   {t:'«Я сама»',then:[ctrl(1),say('ser','Сама так сама. Вы всё сами, да?','neutral')]},
-  {t:'«Не отвлекайтесь, Воробьёв»',then:[say('ser','Вы как мой редактор. Только красивее и с пистолетом.','smile')]}
+  {t:'«Не отвлекайтесь, Воробьелли»',then:[say('ser','Вы как мой редактор. Только красивее и с пистолетом.','smile')]}
  ]),
  say('ser','Слушайте. В городе есть человек, который читает шифры Сестёр. Кеша. Сидит в подвале под прачечной на Канальной. Если кто-то пишет приказы — Кеша их видел.','neutral'),
  hide('ser'),
@@ -2703,8 +2827,15 @@ const SC5=[
     {t:'«Снимайте её, не меня»',then:[say('ser','Есть. Хотя вы на снимках выходите лучше.','smile')]}
    ]),hide('ser')];
   return [
-   bg('cg_hz_sing',{t:1200}),mus('hz_song_singer',{fade:.8}),
+   bg('cg_hz_sing',{t:1200}),
    scr('Сцена. Прожектор. Полина поёт — голосом, которого у неё, как ей казалось, никогда не было.'),
+   H.SONG({id:'ball_song',song:'hz_song_singer',dur:210,data:{"lines": [[13.5, "Милые господа…"], [17.6, "Не стоит так пристально смотреть."], [21.8, "Впрочем…"], [24.4, "Я не против."], [30.5, "У каждого в городе есть секрет,"], [34.1, "У каждого в сердце двойное дно."], [37.6, "Один покупает чужой билет,"], [41.4, "Другой продаёт своё имя давно."], [45.5, "Кто-то прячет карты в рукаве,"], [48.6, "Кто-то прячет правду за словом «честь»."], [51.1, "Но пока вы думаете обо мне,"], [55.9, "Я уже знаю, кто вы есть."], [60.3, "Тише, милый, не спеши,"], [63.2, "Не рассказывай душе."], [66.0, "Все мужчины хороши,"], [68.9, "Пока карты на столе."], [71.8, "Кто-то правит, кто-то врёт,"], [74.7, "Кто-то платит за грехи."], [77.6, "Но запомни наперёд:"], [80.5, "Не у всех есть право на ключи."], [88.8, "У одной — бриллианты и шёлк,"], [92.0, "У другой — револьвер под пальто."], [94.8, "Кто-то думает, будто он бог,"], [98.1, "Но не знает, кто держит его."], [101.0, "Можно купить себе новый дом,"], [104.4, "Можно купить себе целый порт."], [107.9, "Только нельзя заказать на потом"], [111.5, "Тот разговор, что ведёт тебя в морг."], [113.0, "Тише, милый, не спеши,"], [116.4, "Не рассказывай душе."], [120.1, "Все мужчины хороши,"], [123.7, "Пока карты на столе."], [127.2, "Кто-то правит, кто-то врёт,"], [129.9, "Кто-то платит за грехи."], [133.1, "Но запомни наперёд:"], [137.8, "Не у всех есть право на ключи."], [140.3, "А если снять с меня лицо,"], [145.2, "И свет погаснет в зеркалах,"], [150.2, "Кому тогда не повезло?"], [156.4, "Кому останется мой страх?"], [160.6, "Тише, милый, не спеши,"], [164.3, "Ночь ещё не сочтена."], [167.9, "Все мы носим миражи,"], [171.6, "И у каждого цена."], [175.3, "Кто-то правит, кто-то врёт,"], [179.0, "Кто-то просит, кто-то ждёт."], [182.7, "Только тот, кто держит ключ,"], [186.3, "Знает, кто сюда войдёт."], [190.9, "Спасибо, господа."], [195.9, "И помните…"], [201.0, "Не всякая дверь заперта снаружи."]], "slides": [[0, "slide_song_01", "bg_hz_ball_hall"], [13.5, "slide_song_02", "cg_hz_sing"], [30.5, "slide_song_03", "bg_hz_ball_hall"], [45.5, "slide_song_04", "cg_hz_sing"], [60.3, "slide_song_05", "cg_hz_cards"], [88.8, "slide_song_06", "bg_hz_mayfair_party"], [101.0, "slide_song_07", "bg_hz_ball_hall"], [113.0, "slide_song_11", "bg_hz_ball_hall"], [127.2, "slide_song_03", "bg_hz_ball_hall"], [140.3, "slide_song_08", "cg_hz_window"], [160.6, "slide_song_09", "bg_hz_mayfair_party"], [175.3, "slide_song_04", "cg_hz_sing"], [190.9, "slide_song_10", "cg_hz_sing"]], "parts": [[0, "Вступление"], [30.5, "Куплет"], [60.3, "Припев"], [88.8, "Куплет"], [113, "Припев"], [140.3, ""], [160.6, "Припев"], [190.9, ""]]},
+    looks:[{t:24.4,ch:'aga',txt:'Агата не хлопает. Смотрит, как смотрят на товар.',f:'look_aga'},
+     {t:82,ch:'luk',txt:'Лука поднимает бокал. Только мне.',f:'look_luk'},
+     {t:138,ch:'mor',txt:'У колонны — человек в очках. Записывает что-то в блокнот.',f:'look_mor'},
+     {t:150.2,txt:'В зеркале за залом — женщина в тренче. Моргнула — только моё отражение.',f:'look_mirror'},
+     {t:189,ch:'ver',txt:'У двери кабинета — женщина в чёрном. Ждёт, когда я закончу.',f:'look_ver'}]}),
+   bg('cg_hz_sing',{t:800}),
    th('Слова приходят сами. Как сигарета в пальцах утром. Тело помнит.','tender'),
    show('aga','neutral',72),say('aga','Голос… знакомый. Мы раньше не встречались, милочка?','neutral'),hide('aga'),
    set('sang'),ctrl(1),mus('hz_ball',{fade:1,vol:.5})]}),
@@ -2729,7 +2860,15 @@ const SC5=[
    say(who,who==='vin'?'Поехали отсюда. Я отвезу.':who==='luk'?'Вера. Ножницы — её визитная карточка. Машина ждёт.':'Вера. Я же говорил — тень. Поехали, я угощаю кофе.',who==='vin'?'tux_smirk':'smile'),
    when(()=>who!=='vin',[know('ver')]),
    pts(who==='vin'?{A:1}:who==='luk'?{B:1}:{C:1}),hide(who)]}),
- outfit(null)
+ outfit(null),
+ R(st=>{const w=st.flags.ball_with,who=w==='vin'||w==='luk'||w==='ser'?w:null;
+  return [bg('bg_hz_street_across',{t:1000}),amb('amb_rain_street',{vol:.5}),
+   scr('Улица у особняка. Дождь. Через дорогу, под фонарём, — женщина в тренче и шляпе. Курит.'),
+   ...(who?[show(who,who==='vin'?'tux_neutral':'neutral',70),say('kat','Смотри. Там, под фонарём.','scared'),
+     say(who,who==='vin'?'Где? Полли, там пусто.':who==='luk'?'Где, детектив? Там только дождь.':'Где? Там никого нет.','neutral'),hide(who)]
+    :[th('Она смотрит прямо на меня.','scared'),sfx('sfx_heartbeat',{vol:.6,dur:1.6})]),
+   bg('bg_hz_street_across_empty',{t:700}),
+   th('Никого. Фонарь, дождь и мокрая мостовая.','sad')]})
 ];
 
 /* ---------- 6. Ночь: таблетки ---------- */
@@ -2746,7 +2885,7 @@ const SC6=[
   show('kes','neutral',72),
   say('kes','Как всегда. Ключ тот же. Днём детектив приходила, спрашивала. Я ничего, честно.','neutral'),
   scr('Женщина в шляпе кладёт на стол сложенный лист и конверт. Кеша пересчитывает деньги, не поднимая глаз.'),
-  say('kat','Утром — в «Курьер». Лично Воробьёву.','neutral'),
+  say('kat','Утром — в «Курьер». Лично Воробьелли.','neutral'),
   hide('kes'),veil(1,900),...vera(false),
   bg('bg_hz_office_dawn',{t:800,kat:30,katE:'sad'}),veil(0,900),
   th('Утро. Я спала как убитая. На ботинках — засохшая мыльная пена. Я не выходила. Я точно не выходила.','sad'),set('soap_shoes')
@@ -2837,7 +2976,7 @@ window.STORY_CAST=C1.STORY_CAST;
 (()=>{
 const H=window.HZ_H;const C1=window.__C[1];window.CHARS=H.CHARS;
 const {bg,say,th,scr,show,hide,choice,when,set,pts,clue,wait,flash,veil,shake,memo,title,sfx,amb,mus,cam,glitch,vib,qteShake,end}=S;
-const {F,NF,G,ctrl,ser,art,morSus,put,vera,noir,order,sheet,INT,REC,PILLS,FILM,FRAME,CHAIN,MEM,look,know,met}=H;
+const {F,NF,G,ctrl,ser,art,morSus,put,vera,noir,order,sheet,INT,REC,PILLS,FILM,FRAME,CHAIN,MEM,SHOOT,look,know,met}=H;
 const MET=met('vin','dug','art','dot','mal','sam','luk','nat','ser','noa','mor','kes','aga');
 const R=steps=>st=>window.RUNSTEPS(steps(st));
 
@@ -2867,13 +3006,15 @@ const SC2=[
  when(F('pill_sample'),[R(st=>[th(st.flags.pill_ser?'Серёга вчера звонил: аптекарь сказал — в таблетке втрое больше люминала, чем на этикетке.':'Кейн вчера сказал: лаборатория управления нашла в таблетке тройную дозу люминала.','determined'),
    morSus(1),set('pill_triple'),clue('hz_pill_triple','Таблетки Морроу: тройная доза люминала')])]),
  scr('Маятник. Тик. Так. Голос доктора становится тёплым и далёким, как радио в соседней квартире.'),
+ glitch(300),bg('cg_hz_lab',{t:60}),wait(500),
  bg('cg_hz_mem_ribbon_red',{t:1600}),
  say('mor','Вы сидите за машинкой. Лента красная. Вы печатаете… «Груз в четверг». Вы помните это, детектив?','neutral'),
  th('Не помню. Он рассказывает мне мою память — уверенно, как читают протокол.','determined'),
+ say('mor','Потом вы идёте в «Красную лампу». Берёте виски со льдом. Как всегда.','smile'),
+ bg('cg_hz_mem_whisky',{t:1400}),cam(50,1.06,52,4500,{ease:'ease-out'}),
+ bg('cg_hz_mem_ribbon_red',{t:1200}),
  MEM({id:'mem3',hint:'Проверка памяти',marks:3,
-  pairs:[['Я печатаю отчёты чёрной лентой','В машинке переключено на красную половину','cg_hz_mem_ribbon_black'],
-   ['В «Лампе» я заказываю кофе','Наташа сама ставит передо мной коктейль','cg_hz_mem_sidecar'],
-   ['Кейн пьёт со мной после смены','Кейн пьёт один, у окна','cg_hz_mem_whisky'],
+  pairs:[['Кейн пьёт со мной после смены','Кейн пьёт один, у окна'],
    ['Мел у прохода в «Рексе» — Эдди','Контур обвели до приезда полиции','cg_hz_mem_chalk']],
   ok:[th('Стоп. Эти картинки — не мои. Он вставляет их, как кадры в чужую плёнку.','determined'),morSus(1),set('saw_implant'),clue('hz_implant','Морроу подсовывает Полине «воспоминания» под гипнозом')],
   fail:[th('Я помню… Помню красную ленту. Помню, как печатаю «Х.». Или он помнит за меня?','sad'),ctrl(1),set('implant_took')]}),
@@ -2934,6 +3075,7 @@ const SC4=[
   fail:[scr('Удар — и Полину швыряет на леер. Бэрроу вытягивает её за ворот. Камера уплыла за борт.'),set('storm_fail'),set('camera_lost')]}),
  bg('bg_hz_warehouse',{t:1000,kat:30,katE:'determined'}),mus('hz_chase',{fade:1,vol:.7}),
  scr('Склад Сестёр. Ящики до потолка, запах соли и машинного масла. На каждом ящике — красная метка.'),
+ sheet({img:'it_butt_chapman',cap:'Между ящиками — окурок, втоптанный в опилки.'}),
  R(st=>{const r=st.flags.raid;
   if(r==='luk')return [show('luk','neutral',72),say('luk','Мои ребята держат ворота. У вас десять минут, детектив. Потом Сёстры решат, что Морелли объявили войну. И будут правы.','cold'),pts({B:1}),hide('luk')];
   if(r==='vin')return [show('vin','neutral',72),say('vin','Ордер у меня. Если кто спросит — мы здесь по делу Палмера. Если не спросят — нас тут нет.','neutral'),pts({A:1}),hide('vin')];
@@ -2941,12 +3083,11 @@ const SC4=[
  sheet({img:'paper_manifest',text:'14 ящ. «лиловая соль»\nЧетверг, 21:00\nПристань 9 → «Аврора»,\nмачта «Мэйфера»\nСопровожд.: Морелли\nПолучатель: Х.',cap:'Накладная: «Груз — 14 ящиков "лиловой соли". Четверг, 21:00. Пристань 9 → дирижабль "Аврора", мачта "Мэйфера". Сопровождение — Морелли. Получатель — Х.»'}),
  clue('hz_waybill','Накладная: груз на «Аврору» в четверг 21:00, получатель — Х.'),
  th('«Лиловая соль». И «Аврора». Схема из будки, отметка у мачты. Это не просто груз.','determined'),
- bg('bg_hz_warehouse_roof',{t:800,kat:30,katE:'sad'}),sfx('sfx_explosion_far',{vol:.3}),
- scr('Выстрел. Охрана Сестёр. Крыша склада — единственный выход.'),
- qteShake({bg:'bg_hz_warehouse_roof',n:6,allow:1,hint:'Перестрелка на крыше',sub:'Свайп по стрелке — из-под огня',rulesTitle:'Крыши',
-  rules:['По тебе стреляют. Свайпай туда, куда показывает стрелка, — от укрытия к укрытию.','Одну ошибку можно простить.'],
-  ok:[scr('Прыжок на соседнюю крышу. Пули крошат черепицу за спиной.'),set('roof_ok')],
-  fail:[scr('Пуля обжигает плечо. Полина скатывается по водостоку в темноту.'),set('wounded'),R(st=>st.flags.raid==='luk'?[set('luk_wounded_men')]:[])]})
+ sfx('sfx_gunshot',{vol:.8}),
+ scr('Выстрел. Охрана Сестёр. Полина падает за ящики.'),
+ SHOOT({id:'store',need:8,hp:3,rulesTitle:'Перестрелка на складе',
+  ok:[bg('bg_hz_warehouse_roof',{t:800,kat:30,katE:'determined'}),scr('Последний из охраны роняет ствол. Через люк — на крышу, по черепице — к соседнему пакгаузу.'),set('roof_ok')],
+  fail:[bg('bg_hz_warehouse_roof',{t:800,kat:30,katE:'sad'}),scr('Пуля обжигает плечо. Полина вываливается через люк на крышу и скатывается по водостоку в темноту.'),set('wounded'),R(st=>st.flags.raid==='luk'?[set('luk_wounded_men')]:[])]})
 ];
 
 /* ---------- 5. Разлом и плёнка Серёги ---------- */
@@ -2961,6 +3102,10 @@ const SC5=[
  bg('bg_hz_redlamp',{t:900,kat:28,katE:'determined'}),
  show('nat','neutral',72),
  say('nat','Полли, ты опять как стеклянная. Что ты увидела?','neutral'),
+ say('nat','Держи. Виски со льдом — ты же всегда его пьёшь.','smile'),
+ hide('nat'),sfx('sfx_ice',{vol:.6}),bg('cg_hz_mem_whisky',{t:1000}),
+ wait(1800),
+ bg('bg_hz_redlamp',{t:800,kat:28,katE:'determined'}),show('nat','neutral',72),
  choice([{t:'«Ничего. Устала»',then:[ctrl(1)]},{t:'«Не знаю. Что-то, чего здесь нет»',then:[say('nat','Ты это уже говорила. Месяц назад. А потом неделю делала вид, что не говорила.','sad')]}]),
  say('nat',' Серёга звонил, просил тебя срочно в редакцию. Сказал — «плёнка».','neutral'),
  when(F('nat_call'),[say('nat','И… та, что сидела у меня за стойкой той ночью. Уходя, сказала: «до четверга». Я не знаю, что это значит. Мне страшно.','sad'),set('nat_trust')]),
@@ -2968,10 +3113,17 @@ const SC5=[
   {t:'Рассказать Наташе, что ничего не помнит',then:[set('nat_trust'),say('nat','Я видела, что ты не узнала меня. Думала — обиделась. Ладно. Значит, будем знакомиться заново. Я с тобой, Полли.','neutral')]},
   {t:'Промолчать',then:[ctrl(1)]}])]),
  hide('nat'),
+ bg('bg_hz_street_rain',{t:1200,kat:40,katE:'sad'}),amb('amb_rain_street',{vol:.5}),{c:'hz_drunk',on:true},
+ scr('Улица качается. Фонари двоятся, вывески плывут.'),
+ glitch(250),bg('cg_hz_lab',{t:60}),wait(400),bg('bg_hz_street_rain',{t:300,kat:40,katE:'sad'}),
+ bg('cg_hz_window',{t:1400}),
+ th('Витрина. Женщина в стекле — в моей шляпе, с моим лицом.','sad'),
+ th('Можно ли ей верить? Можно ли верить себе?','sad'),
+ {c:'hz_drunk',on:false},
  when(F('night3_take'),[
   ...vera(true),
   bg('bg_hz_newsroom',{t:900,kat:30,katE:'neutral'}),
-  scr('Редакция «Курьера», ночь. Женщина в тренче роется в столе Воробьёва и фотографирует его заметки маленькой камерой.'),
+  scr('Редакция «Курьера», ночь. Женщина в тренче роется в столе Воробьелли и фотографирует его заметки маленькой камерой.'),
   sfx('sfx_shutter'),
   veil(1,700),...vera(false),veil(0,600),set('ver_newsroom')
  ]),
@@ -2999,7 +3151,7 @@ const SC5=[
   {t:'Правда: «Я не помню. Помоги мне узнать»',then:[pts({C:2}),ser(2),set('ser_trust_truth'),say('ser','…Это самое страшное, что вы могли сказать. И единственное, во что я верю.','neutral'),
     say('ser','Ладно. Статья выйдет в четверг — я не могу её остановить, редактор уже видел снимки. Но пока есть время — ищем, кто стоит за вами.','neutral')]},
   {t:'Ложь: «Это двойник, я докажу»',then:[pts({C:0}),ser(-1),set('ser_lie'),say('ser','Двойник. Удобно. Докажите до четверга. В четверг номер идёт в печать.','angry')]},
-  {t:'Значок: «Это не для печати, Воробьёв»',then:[pts({A:1,S:1}),ser(-2),ctrl(2),set('ser_badge'),say('ser','Вот как. Значок. Я думал, вы другая. А вы — как все.','angry')]}
+  {t:'Значок: «Это не для печати, Воробьелли»',then:[pts({A:1,S:1}),ser(-2),ctrl(2),set('ser_badge'),say('ser','Вот как. Значок. Я думал, вы другая. А вы — как все.','angry')]}
  ]),
  when(s=>s.flags.ser_trust_truth&&(s.flags.SER||0)>=3,[
   say('ser','Иди сюда.','neutral'),scr('Он обнимает её посреди редакции, среди стука машинок. Как человек, который боится потерять то, чего ещё нет.'),pts({C:1}),set('ser_hug')]),
@@ -3040,23 +3192,7 @@ const SC6=[
   {t:'Ложь: «Черновик для засады. Ловушка для Хозяина»',then:[ctrl(1),set('vin_lied'),say('vin','Ловушка. Красной лентой. Ты же не печатаешь красной.','neutral'),say('vin','Ладно, Полли. Как скажешь.','neutral'),th('Он не поверил. Я это вижу. И он видит, что я вижу.','sad')]},
   {t:'Сжечь лист у него на глазах',then:[ctrl(2),pts({S:1}),set('vin_lied'),sfx('sfx_lighter'),say('vin','…Я ничего не видел. Только запомни: шесть лет я многого не видел. Ради тебя.','neutral'),set('vin_knows_two')]}
  ]),
- hide('vin')
-];
-
-/* ---------- 7. Вера «Зеркало» ---------- */
-const SC7=[
- ...vera(true),
- bg('bg_hz_rex_backdoor',{t:1000,kat:50,katE:'neutral'}),mus('hz_rain_piano',{fade:1}),amb('amb_rain',{vol:.5}),
- scr('Ночь. Гримёрка за сценой «Рекса». Зеркало в лампочках, половина перегорела.'),
- sfx('sfx_lighter'),
- scr('Женщина в тренче садится перед зеркалом. Долго курит, глядя себе в глаза.'),
- scr('Она снимает федору. Потом — платиновый парик, аккуратно, как снимают чужую кожу.'),
- hide('kat'),st=>{window.KAT_SET=null},
- show('ver','neutral',50),
- scr('Тёмные волосы падают на плечи. Лицо круглее. Глаза — без грима — усталые и злые.'),
- say('ver','Вера. Просто Вера. «Ножницы», если угодно Сёстрам.','neutral'),
- say('ver','Приказ ушёл. Если детектив не сделает — сделаю я. Как всегда.','angry'),
- hide('ver'),veil(1,1600),noir(null),
+ hide('vin'),veil(1,1600),
  end({h:'Конец главы 3',p:'Чужая роль',clues:14,next:4,nextName:'Последний сеанс'})
 ];
 
@@ -3066,8 +3202,7 @@ window.SCENES=[
  {name:'Мой вечер',tag:'Глава 3 · Реконструкция',steps:SC3},
  {name:'Шторм',tag:'Глава 3 · «Чайка»',steps:SC4},
  {name:'Плёнка Серёги',tag:'Глава 3 · Разлом',steps:SC5},
- {name:'Приказ',tag:'Глава 3 · Приказ',steps:SC6},
- {name:'Зеркало',tag:'Глава 3 · Зеркало',steps:SC7}
+ {name:'Приказ',tag:'Глава 3 · Приказ',steps:SC6}
 ];
 window.PRESET=i=>({pts:{A:2,B:1,C:2,S:0},flags:{know_ver:1,vin_honest1:1,time_proof:1,art_free:1,ser_team:1,SER:2,ART:1,has_book:1,key714:1,met_mor:1,met_ver:1,kept_box:1},clues:[],choices:0,qteOk:0,qteAll:0,diamonds:0,path:[]});
 window.MINI=[{name:'Хроника «Колумбии»',steps:[bg('bg_hz_newsroom',{t:600}),mus('hz_film'),SC5.find(x=>x&&x.c==='hz_film')]}];
@@ -3079,7 +3214,7 @@ window.STORY_CAST=C1.STORY_CAST;
 (()=>{
 const H=window.HZ_H;const C1=window.__C[1];window.CHARS=H.CHARS;
 const {bg,say,th,scr,show,hide,choice,when,set,pts,clue,wait,flash,veil,shake,memo,title,sfx,amb,mus,cam,glitch,vib,qteShake,qteBreath,end}=S;
-const {F,NF,G,ctrl,ser,art,morSus,put,vera,noir,order,sheet,FRAME,ASSIGN,CROSS,LAYOUT,MONTAGE,look}=H;
+const {F,NF,G,ctrl,ser,art,morSus,put,vera,noir,order,sheet,FRAME,ASSIGN,CROSS,LAYOUT,MONTAGE,BOMB,look}=H;
 const R=steps=>st=>window.RUNSTEPS(steps(st));
 const MET=H.met('vin','dug','art','dot','mal','sam','luk','nat','ser','noa','mor','kes','aga','ver');
 const AS=(f,who)=>s=>s.flags['as_'+f]===who;
@@ -3106,7 +3241,7 @@ const SC0=[
   scr('Полина поднимает руку.'),
   veil(1,300),sfx('sfx_explosion_far',{vol:.2}),wait(1400),hide('ser'),
   bg('bg_hz_street_dawn',{t:10}),veil(0,1600),
-  sheet({img:'paper_news_b',text:'Пятница. Погода: дождь. Происшествий нет.\n<i>Статьи С. Воробьёва в номере нет.</i>'}),
+  sheet({img:'paper_news_b',text:'Пятница. Погода: дождь. Происшествий нет.\n<i>Статьи С. Воробьелли в номере нет.</i>'}),
   set('ser_dead'),set('out_fail'),set('sat_chair'),
   scr('Город проснулся, как обычно. В кабинете №714 на стуле сидит женщина с платиновыми волосами. Кофе — без сахара.'),
   bg('cg_hz_end_power',{t:1600}),
@@ -3224,7 +3359,7 @@ const FRONTS=[
   return [scr('Пристань 9. Никого. Груз уходит целиком — в ночь, в небо, к «Авроре».'),set('cargo_lost')]})]),
  /* мачта */
  R(st=>{const w=st.flags.as_mast||'none',f=st.flags;let saved;
-  if(w==='luk')saved=true;else if(w==='vin')saved=!!f.hz_aurora_plan||true;else if(w==='kat')saved=true;else if(w==='nat')saved=!f.cargo_lost;else saved=false;
+  if(w==='luk')saved=true;else if(w==='vin')saved=!!f.hz_aurora_plan||true;else if(w==='kat')saved=!f.bomb_fail;else if(w==='nat')saved=!f.cargo_lost;else saved=false;
   return saved?[bg('cg_hz_aurora_saved',{t:1400}),mus('hz_finale',{fade:1}),
     scr(w==='vin'?'Мачта «Мэйфера». Винсент находит бомбу по схеме из будки — ровно там, где стоит красная отметка.':w==='luk'?'Мачта «Мэйфера». Лука знает, где Морелли прячут «посылки». Бомбу выносят на руках.':w==='nat'?'Мачта «Мэйфера». Наташа поднимает охрану. Без груза бомба никому не нужна — её бросают.':'Мачта «Мэйфера». Полина сама снимает таймер. Пальцы не дрожат.'),
     scr('«Аврора» уходит в ночь целой. Огни на брюхе — белые.'),set('aurora_saved')]
@@ -3295,12 +3430,12 @@ const SC6=[
   ok:[set('montage_ok'),th('Плёнка склеена. Кадр за кадром — от мачты до ложи. На каждом — не я. Она. И он рядом.','determined')],
   fail:[th('Склейка вышла рваной. Но и так видно главное.','sad')]}),
  R(st=>{const f=st.flags;let txt,head;
-  if(f.ser_dead&&!(f.mor_exposed||f.ver_testify)){head='НОЧЬ НАД «МЭЙФЕРОМ»';txt='Номер вышел без статьи. Журналист С. Воробьёв найден мёртвым в типографии.'}
-  else if(f.ser_dead){head='ХОЗЯИН — ДОКТОР МОРРОУ';txt='Статью дописала редакция по материалам погибшего С. Воробьёва. Доказательства — в номере.'}
-  else if(f.ser_silent||f.ser_betray){head='ДОЖДЬ. ПРОИСШЕСТВИЙ НЕТ';txt='Статья С. Воробьёва в номер не вошла.'}
-  else if(f.layout==='mor'){head='ХОЗЯИН — ДОКТОР МОРРОУ';txt='Люминал втрое, приказы красной лентой, двойник детектива №714. Автор — С. Воробьёв.'}
-  else if(f.layout==='pol'){head='ХОЗЯИН НОСИТ ЗНАЧОК №714';txt='Снимки у мачты «Колумбии», книга Эдди Палмера. Автор — С. Воробьёв.'}
-  else {head='КТО ТАКОЙ ХОЗЯИН?';txt='Автор — С. Воробьёв. Продолжение следует.'}
+  if(f.ser_dead&&!(f.mor_exposed||f.ver_testify)){head='НОЧЬ НАД «МЭЙФЕРОМ»';txt='Номер вышел без статьи. Журналист С. Воробьелли найден мёртвым в типографии.'}
+  else if(f.ser_dead){head='ХОЗЯИН — ДОКТОР МОРРОУ';txt='Статью дописала редакция по материалам погибшего С. Воробьелли. Доказательства — в номере.'}
+  else if(f.ser_silent||f.ser_betray){head='ДОЖДЬ. ПРОИСШЕСТВИЙ НЕТ';txt='Статья С. Воробьелли в номер не вошла.'}
+  else if(f.layout==='mor'){head='ХОЗЯИН — ДОКТОР МОРРОУ';txt='Люминал втрое, приказы красной лентой, двойник детектива №714. Автор — С. Воробьелли.'}
+  else if(f.layout==='pol'){head='ХОЗЯИН НОСИТ ЗНАЧОК №714';txt='Снимки у мачты «Колумбии», книга Эдди Палмера. Автор — С. Воробьелли.'}
+  else {head='КТО ТАКОЙ ХОЗЯИН?';txt='Автор — С. Воробьелли. Продолжение следует.'}
   st.flags.paper=head;
   return [bg('bg_hz_street_dawn',{t:1000}),mus('hz_rain_piano',{fade:1}),
    sheet({img:st.flags.pol_arrested||head.indexOf('714')>=0?'paper_news_b':'paper_news_a',text:'<b>'+head+'</b>\n'+txt})]}),
@@ -3374,7 +3509,13 @@ const SC7=[
 
 const SC_FRONT=[
  MET, R(st=>st.flags.as_print==='kat'?PRINT_KAT:st.flags.as_docks==='kat'?DOCKS_KAT:
-  [bg('cg_hz_aurora_alley',{t:1000,kat:40,katE:'determined'}),mus('hz_chase',{fade:1}),scr('Полина бежит к мачте «Мэйфера». Дирижабль висит над крышами, огни — красный, красный, белый.')]),
+  [bg('cg_hz_aurora_alley',{t:1000,kat:40,katE:'determined'}),mus('hz_chase',{fade:1}),scr('Полина бежит к мачте «Мэйфера». Дирижабль висит над крышами, огни — красный, красный, белый.'),
+   bg('bg_hz_mast_night',{t:1200}),amb('amb_rain',{vol:.7}),
+   scr('Площадка мачты. Дождь хлещет по стали. Над головой — серебряное брюхо «Авроры».'),
+   scr('На балке, под ремнями, — красные шашки и будильник. Стрелка идёт.'),
+   BOMB({hint:'Бомба на мачте',time:45,id:'mast',
+    ok:[sfx('sfx_snip'),scr('Последний провод. Будильник щёлкает — и замолкает.'),set('bomb_ok')],
+    fail:[set('bomb_fail')]})]),
  ...FRONTS
 ];
 
@@ -3601,9 +3742,10 @@ function reconUI(c){return new Promise(res=>{
   const tok=id=>c.tokens.find(t=>t.id===id);
   const face=t=>t&&t.ch?`style="background-image:url('${PT(t.ch,t.e)}')"`:'';
   const COL={eddie:'#8a8a8a',kav:'#f2efe6',art:'#c8432f',mal:'#2f6db8',sam:'#3f9a3f',dot:'#c99a12'};const hist={};
-  const q=qWrap('hzRec',`<div class="top"><div class="qh"></div><div class="stg"></div></div><div class="qs"></div><button class="stab">Показания и улики ▾</button><div class="says"></div>
+  const q=qWrap('hzRec',`<div class="top"><span class="trs"></span><div class="qh"></div><div class="stg"></div><div class="hb"><button class="und">Сбросить</button><button class="chk">Проверить</button></div></div><div class="qs"></div><button class="stab">Показания и улики ▾</button><div class="says"></div>
    <div class="plan"><img alt="" src="${U(c.plan)}"><svg class="rt" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>${c.slots.map(s=>`<button class="slot" data-s="${s.id}" style="left:${s.x}%;top:${s.y}%"><div class="fs"></div><span>${esc(s.name)}</span></button>`).join('')}</div>
-   <div class="tok"></div><div class="hb"><button class="und">Сбросить</button><button class="chk">Проверить</button></div>`);
+   <div class="tok"></div>`);
+  const trs=()=>{const e=q.querySelector('.trs');if(e)e.innerHTML='Попытки<br>'+'<i></i>'.repeat(Math.max(0,tries))+'<i class="off"></i>'.repeat(Math.max(0,(c.tries||3)-tries))};
   const tokEl=q.querySelector('.tok'),qh=q.querySelector('.qh'),qs=q.querySelector('.qs'),stg=q.querySelector('.stg');
   const says=q.querySelector('.says'),svg=q.querySelector('.rt'),stab=q.querySelector('.stab');
   stab.onclick=e=>{e.stopPropagation();const o=says.classList.toggle('on');stab.textContent=o?'Скрыть показания ▴':'Показания и улики ▾'};says.onclick=()=>{says.classList.remove('on');stab.textContent='Показания и улики ▾'};const SL=id=>c.slots.find(x=>x.id===id);
@@ -3613,8 +3755,8 @@ function reconUI(c){return new Promise(res=>{
        h+=`<path d="M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}" stroke="${col}" marker-end="url(#ah_${k})"/>`}});
      svg.innerHTML='<defs>'+Object.keys(COL).map(k=>`<marker id="ah_${k}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0L10,5L0,10z" fill="${COL[k]}"/></marker>`).join('')+'</defs>'+h};
   const pushHist=S=>{Object.keys(S.answer).forEach(k=>{(hist[k]=hist[k]||[]).push([S.answer[k],S.t.split(' ')[0]])});route()};
-  const setStage=()=>{const S=ST_[si];place={};sel=null;tries=c.tries||3;delete q.dataset.busy;
-    qh.textContent=S.t;qs.textContent=(S.sub||'Нажми человека, потом место на плане.')+' Попыток: '+tries+'.';
+  const setStage=()=>{const S=ST_[si];place={};sel=null;tries=c.tries||3;trs();delete q.dataset.busy;
+    qh.textContent=S.t;qs.textContent=(S.sub||'Нажми человека, потом место на плане.')+'';
     says.innerHTML=(S.says||[]).map(([k,t])=>{if(k==='ev')return `<p class="ev"><i class="fc ev"></i><b>Улика:</b> ${esc(t)}</p>`;const tk=tok(k);return `<p><i class="fc${tk&&tk.ch?'':' sil'}" ${face(tk)}></i><b style="color:${COL[k]||'#e6b867'}">${esc(tk?tk.name:k)}:</b> ${esc(t)}</p>`}).join('')+'<small>нажмите, чтобы закрыть</small>';says.classList.add('on');stab.textContent='Скрыть показания ▴';
     stg.innerHTML=ST_.map((x,i)=>`<i class="${i<si?'ok':i===si?'cur':''}"></i>`).join('');
     tokEl.innerHTML=S.tokens.map(id=>{const t=tok(id);return `<button data-t="${id}" style="border-color:${COL[id]||'#5a4a36'}"><span class="fc${t.ch?'':' sil'}" ${face(t)}></span><b>${esc(t.name)}</b></button>`}).join('');
@@ -3629,12 +3771,12 @@ function reconUI(c){return new Promise(res=>{
     qh.textContent='Маршруты';says.innerHTML='';qs.textContent='Кто куда шёл: 20:05 → 20:14 → 20:40.';tokEl.innerHTML='';place={};draw();await wait(3200);
     done=true;const okAll=score>=Math.ceil(ST_.length*.66);flag((c.id||'recon')+'_rec',okAll?2:1);await qEnd(q,okAll,c,res,false)};
   q.querySelector('.chk').onclick=async()=>{if(done||!ST_[si]||q.dataset.busy)return;q.dataset.busy=1;const S=ST_[si];const keys=Object.keys(S.answer);
-    if(keys.some(k=>!place[k])){qs.textContent='Расставь всех. Попыток: '+tries+'.';delete q.dataset.busy;return}
+    if(keys.some(k=>!place[k])){qs.textContent='Расставь всех.';delete q.dataset.busy;return}
     const right=keys.filter(k=>place[k]===S.answer[k]);
     q.querySelectorAll('.slot').forEach(s=>{const here=Object.keys(place).filter(k=>place[k]===s.dataset.s);if(here.length)s.classList.add(here.every(k=>S.answer[k]===s.dataset.s)?'good':'badp')});
     if(right.length===keys.length){snd('ok');qs.textContent=S.ok||'Сходится.';flag((c.id||'recon')+'_st'+si);return next(true)}
-    tries--;snd('hit');vib(80);
-    if(tries>0){qs.textContent='Не сходится: верно '+right.length+' из '+keys.length+'. Неверных сняла с плана. Попыток: '+tries+'.';await wait(900);
+    tries--;trs();snd('hit');vib(80);
+    if(tries>0){qs.textContent='Не сходится: верно '+right.length+' из '+keys.length+'. Неверных сняла с плана.';await wait(900);
       keys.forEach(k=>{if(place[k]!==S.answer[k])delete place[k]});draw();delete q.dataset.busy;return}
     qs.textContent='Не сложилось. Вот как было на самом деле.';Object.assign(place,S.answer);draw();await wait(2200);next(false)};
   W.__hzSolve=ok=>{if(done||!ST_[si]||q.dataset.busy)return;const S=ST_[si];if(ok!==false){place=Object.assign({},S.answer);draw();q.querySelector('.chk').onclick()}else{tries=1;place={};S.tokens.forEach(t=>place[t]=c.slots[0].id);q.querySelector('.chk').onclick()}};
@@ -3792,7 +3934,7 @@ function montageUI(c){return filmUI(Object.assign({mode:'order',hint:c.hint||'Ф
 /* ---------- Доска расследования: всё, что найдено, на пробке; нить между связанными уликами ----------
    Открывается кнопкой справа вверху в любой момент. Карточки — вырезанные улики (бумаги с текстом), люди — полароиды. */
 const BRD={
- c1:{img:'paper_news_a',text:'<b>ГОРОД В СТРАХЕ:\nКТО ТАКОЙ ХОЗЯИН?</b>\nС. Воробьёв',w:30},
+ c1:{img:'paper_news_a',text:'<b>ГОРОД В СТРАХЕ:\nКТО ТАКОЙ ХОЗЯИН?</b>\nС. Воробьелли',w:30},
  hz_order1:{img:'paper_lined',text:'<span class="r">…груз в четверг.\nПристань 9.\nЛишних не брать.\n\n— Х.</span>',w:26},
  hz_note_mallow:{img:'paper_note',text:'Мэллоу ждёт\nу служебного входа',w:26},
  hz_burn:{img:'it_reel',lb:'обрыв плёнки: 20:14',w:22},
@@ -3859,10 +4001,120 @@ function boardInit(){const top=document.getElementById('top');if(!top||document.
   b.id='boardBtn';b.setAttribute('aria-label','Доска расследования');b.onclick=ev=>{ev.stopPropagation();boardOpen()};
   const last=top.lastElementChild;if(last&&last.tagName==='SPAN'&&!last.id)top.replaceChild(b,last);else top.appendChild(b)}
 document.addEventListener('DOMContentLoaded',boardInit);setTimeout(boardInit,300);
+
+/* ---------- Перестрелка из-за ящиков (вид сзади): кнопка — встать/укрыться, тап по гангстеру — выстрел.
+   c:{need:8, hp:3, time, rulesTitle, hint, id, ok, fail} ---------- */
+const SPOTS_SH=[{x:54,y:40,s:.13},{x:72,y:39,s:.12},{x:89,y:43,s:.16},{x:64,y:48,s:.21},{x:86,y:51,s:.23}];
+function shootUI(c){return new Promise(res=>{
+  const need=c.need||8;let hp=c.hp||3,kills=0,ammo=6,up=false,done=false,civ=0,rel=null,busyShot=false;const live=new Map();
+  const E=['sh_gang_tommy_up','sh_gang_shotgun_up','sh_gang_cap','sh_gang_cap2'];
+  const q=qWrap('hzShoot',`<img class="bgi" alt="" src="${U(c.bg||'bg_hz_shoot_dock')}">
+   ${SPOTS_SH.map((p,i)=>`<div class="spt" data-i="${i}" style="left:${p.x}%;top:${p.y}%;--s:${p.s}"><div class="man"></div><img class="cv" alt="" src="${U('ui_hz_cover2')}"></div>`).join('')}
+   <div class="pol"><img alt="" src="${U('sh_kat_crouch')}"></div><img class="fg" alt="" src="${U('ui_hz_cover')}">
+   <div class="hud"><span class="hp">${'<i></i>'.repeat(hp)}</span><span class="kc">0 / ${need}</span></div><div class="am">${'<i></i>'.repeat(6)}</div>
+   <button class="up">Встать</button><div class="dmg"></div><div class="msg"></div>`);
+  const me=q.querySelector('.pol'),mi=me.querySelector('img'),btn=q.querySelector('.up'),msg=q.querySelector('.msg');
+  const sp=k=>{mi.src=U(k)};const hud=()=>{q.querySelectorAll('.hp i').forEach((x,i)=>x.classList.toggle('off',i>=hp));q.querySelector('.kc').textContent=kills+' / '+need;q.querySelectorAll('.am i').forEach((x,i)=>x.classList.toggle('off',i>=ammo))};
+  const say_=(t,ms=900)=>{msg.textContent=t;msg.classList.add('on');clearTimeout(say_.t);say_.t=setTimeout(()=>msg.classList.remove('on'),ms)};
+  const fx=(k,x,y,w,cls)=>{const f=el('img','fx '+(cls||''));f.src=U(k);f.style.cssText=`left:${x}px;top:${y}px;width:${w}px`;q.appendChild(f);setTimeout(()=>f.remove(),700)};
+  const stand=v=>{if(done||up===v)return;up=v;me.classList.toggle('stand',v);sp(v?'sh_kat_aim':'sh_kat_crouch');btn.textContent=v?'Укрыться':'Встать';btn.classList.toggle('on',v);
+    clearTimeout(rel);if(!v&&ammo<6){rel=setTimeout(()=>{if(!up&&!done){ammo=6;hud();snd('sfx_reload')}},900)}};
+  btn.onpointerdown=e=>{e.preventDefault();e.stopPropagation();stand(!up)};
+  const fire=async(x,y,tgt)=>{if(done)return;if(!up){say_('Сначала встань');return}if(ammo<=0){say_('Пусто — укройся, перезарядись');snd('sfx_tick');return}
+    ammo--;hud();snd('sfx_gunshot');vib(25);sp('sh_kat_shot');const r=mi.getBoundingClientRect(),qr=q.getBoundingClientRect();fx('fx_flash1',r.left-qr.left+r.width*.66,r.top-qr.top+r.height*.19,70,'add');
+    setTimeout(()=>{if(up&&!done)sp('sh_kat_aim')},140);
+    if(tgt){const o=live.get(tgt);if(!o||o.dead)return;o.dead=true;clearTimeout(o.t1);clearTimeout(o.t2);
+      fx('fx_burst',x,y,90,'add');if(o.civ){civ++;hp--;hud();q.classList.add('hurt');setTimeout(()=>q.classList.remove('hurt'),300);say_('Свой! Не стрелять!',1300);tgt.classList.add('gone')}
+      else{kills++;hud();tgt.classList.add('fall')}
+      setTimeout(()=>{tgt.className='man';tgt.innerHTML='';live.delete(tgt)},700);check()}
+    else fx('fx_spark',x,y,70,'add')};
+  q.addEventListener('pointerdown',e=>{if(e.target===btn)return;const m=e.target.closest('.man.on');const qr=q.getBoundingClientRect();fire(e.clientX-qr.left,e.clientY-qr.top,m)});
+  const check=async()=>{if(done)return;if(kills>=need||hp<=0){done=true;const ok=kills>=need;clearTimeout(spawnT);live.forEach((o,m)=>{clearTimeout(o.t1);clearTimeout(o.t2);m.classList.remove('on')});
+    stand(false);flag((c.id||'shoot')+'_shoot',ok?2:1);if(civ)flag('shot_civ');await wait(500);await qEnd(q,ok,c,res)}};
+  let spawnT=null,n=0;
+  const spawn=()=>{if(done)return;const free=[...q.querySelectorAll('.spt .man')].filter(m=>!live.has(m));
+    if(free.length){const m=free[Math.random()*free.length|0];const civT=n>2&&Math.random()<.16;n++;
+      const k=civT?'sh_docker':E[Math.random()*E.length|0];m.innerHTML=`<img alt="" src="${U(k)}"><b class="ring"></b>`;m.className='man';void m.offsetWidth;m.classList.add('on');if(civT)m.classList.add('civ');
+      const o={civ:civT};live.set(m,o);const aim=Math.max(900,1700-kills*70);
+      if(civT){o.t2=setTimeout(()=>{m.classList.remove('on');setTimeout(()=>{m.innerHTML='';live.delete(m)},350)},2200)}
+      else{m.style.setProperty('--aim',aim+'ms');m.classList.add('aim');
+        o.t1=setTimeout(()=>{if(o.dead||done)return;const r=m.getBoundingClientRect(),qr=q.getBoundingClientRect();fx('fx_flash2',r.left-qr.left+r.width*.5,r.top-qr.top+r.height*.45,60,'add');
+          snd(k.indexOf('tommy')>=0?'sfx_tommy':k.indexOf('shotgun')>=0?'sfx_shotgun':'sfx_gunshot');
+          if(up){hp--;hud();vib(160);q.classList.add('hurt');sp('sh_kat_hit');setTimeout(()=>q.classList.remove('hurt'),350);setTimeout(()=>stand(false),350);check()}
+          else{snd('sfx_ricochet');const f=q.querySelector('.fg').getBoundingClientRect();fx('fx_spark',f.left-qr.left+f.width*(.2+Math.random()*.6),f.top-qr.top+20,80,'add')}
+          o.t2=setTimeout(()=>{if(o.dead)return;m.classList.remove('on','aim');setTimeout(()=>{if(!o.dead){m.innerHTML='';live.delete(m)}},350)},700)},aim)}}
+    spawnT=setTimeout(spawn,Math.max(650,1500-kills*80)+Math.random()*500)};
+  const go=()=>{hud();spawnT=setTimeout(spawn,700)};
+  if(!ST.flags.hz_shoot_rules){ST.flags.hz_shoot_rules=1;const r=el('div','irules',`<h3>${esc(c.rulesTitle||'Перестрелка')}</h3><p>«Встать» — Полина поднимается из-за ящиков. «Укрыться» — снова прячется.</p><p>Стоя, жми на гангстеров. Красный круг вокруг — он сейчас выстрелит: успей раньше или укройся.</p><p>Шесть патронов. Перезарядка — только в укрытии. Тех, кто поднимает руки, не трогай.</p><button>Понятно</button>`);q.appendChild(r);r.querySelector('button').onclick=e=>{e.stopPropagation();r.remove();go()}}else go();
+  W.__hzSolve=ok=>{if(done)return;if(ok!==false)kills=need;else hp=0;q.querySelector('.irules')&&q.querySelector('.irules').remove();check()}})}
+
+/* ---------- Разминирование: провода от часов к капсюлям, таймер. c:{time:45, hint, id, ok, fail} ---------- */
+const BT={L:[[112,857],[172,857],[242,855],[112,950],[168,950],[238,948]],R:[[800,855],[870,855],[935,855],[805,950],[880,950],[945,950]],C:[[520,1115],[378,1062],[665,1060]]};
+function bombUI(c){return new Promise(res=>{
+  let left=c.time||45,done=false,cut=0;const COLS=['#5c1712','#1c2638','#2e3322','#3d2a1a','#141414'];
+  const sh=a=>a.slice().sort(()=>Math.random()-.5);const caps=sh(BT.L.concat(BT.R));const cols=sh(COLS);
+  const W_=[];BT.C.forEach((p,i)=>W_.push({a:p,b:caps[i],live:true}));W_.push({a:caps[3],b:caps[4],live:false});W_.push({a:caps[5],b:[Math.random()<.5?70:940,1500+Math.random()*150],live:false});
+  const R=()=>Math.random();
+  W_.forEach((w,i)=>{w.col=cols[i];const y1=1300+R()*380,y2=1300+R()*380;const P=[w.a,[80+R()*850,y1],[80+R()*850,y2],w.b];
+    w.pts=[];const ph=R()*6,am=5+R()*7,fq=3+R()*4;for(let t=0;t<=1.0001;t+=1/70){const u=1-t;const q=[0,1].map(j=>u*u*u*P[0][j]+3*u*u*t*P[1][j]+3*u*t*t*P[2][j]+t*t*t*P[3][j]);const e=Math.sin(Math.PI*t);q[0]+=Math.sin(t*fq*6.28+ph)*am*e;q[1]+=Math.cos(t*fq*4.1+ph)*am*.7*e;w.pts.push(q)}});
+  const pl=a=>a.map(p=>p[0].toFixed(0)+','+p[1].toFixed(0)).join(' ');
+  const seg=(a,col)=>{const sh=a.map(p=>[p[0]+7,p[1]+10]),hl=a.map(p=>[p[0]-2.5,p[1]-3]);return `<polyline class="sh" points="${pl(sh)}"/><polyline class="wr" points="${pl(a)}" style="stroke:${col}"/><polyline class="hl" points="${pl(hl)}"/>`};
+  const draw=()=>W_.map((w,i)=>w.cutAt!=null?seg(w.pts.slice(0,w.cutAt-1),w.col)+seg(w.pts.slice(w.cutAt+2),w.col)+`<circle class="cu" cx="${w.pts[w.cutAt-1][0]}" cy="${w.pts[w.cutAt-1][1]}" r="7"/><circle class="cu" cx="${w.pts[w.cutAt+2][0]}" cy="${w.pts[w.cutAt+2][1]}" r="7"/>`
+    :seg(w.pts,w.col)+`<polyline class="hit" data-i="${i}" points="${pl(w.pts)}"/>`).join('')
+    +W_.map(w=>`<circle class="fe" cx="${w.a[0]}" cy="${w.a[1]}" r="7"/><circle class="fe" cx="${w.b[0]}" cy="${w.b[1]}" r="7"/>`).join('');
+  const q=qWrap('hzBomb',`<div class="bx"><img alt="" src="${U(c.img||'cg_hz_bomb')}"><svg viewBox="0 0 1008 1792" preserveAspectRatio="none"><g class="w">${draw()}</g>
+   <line class="nd" x1="520" y1="872" x2="520" y2="725"/><circle cx="520" cy="872" r="10" fill="#7a1010"/></svg><b class="tmr"></b><img class="ct" alt="" src="${U('it_cutters')}"></div>
+   <div class="qh">${esc(c.hint||'Бомба')}</div><div class="qs">Перекуси провода, что ведут от часов к капсюлям.</div>`);
+  const g=q.querySelector('g.w'),nd=q.querySelector('.nd'),tmr=q.querySelector('.tmr'),ct=q.querySelector('.ct'),bx=q.querySelector('.bx');
+  const upd=()=>{tmr.textContent='0:'+String(Math.max(0,left)).padStart(2,'0');nd.setAttribute('transform',`rotate(${(1-left/(c.time||45))*360} 520 872)`);tmr.classList.toggle('red',left<=10)};
+  const bind=()=>g.querySelectorAll('.hit').forEach(h=>h.onpointerdown=async e=>{if(done)return;e.stopPropagation();const i=+h.dataset.i,w=W_[i];
+    const r=bx.getBoundingClientRect(),sx=(e.clientX-r.left)/r.width*1008,sy=(e.clientY-r.top)/r.height*1792;let bi=0,bd=1e9;w.pts.forEach((p,k)=>{const d=(p[0]-sx)**2+(p[1]-sy)**2;if(d<bd&&k>2&&k<w.pts.length-3){bd=d;bi=k}});
+    w.cutAt=bi;g.innerHTML=draw();bind();snd('sfx_snip');vib(30);ct.style.left=(e.clientX-r.left)+'px';ct.style.top=(e.clientY-r.top)+'px';ct.classList.remove('snap');void ct.offsetWidth;ct.classList.add('snap');
+    if(w.live){cut++;if(cut>=3){done=true;clearInterval(T);flag((c.id||'bomb')+'_bomb',2);nd.classList.add('stop');await wait(700);await qEnd(q,true,c,res)}}
+    else{left=Math.max(1,left-10);upd();q.classList.add('jolt');setTimeout(()=>q.classList.remove('jolt'),400);snd('hit')}});
+  bind();upd();
+  const T=setInterval(async()=>{if(done)return;left--;upd();snd('sfx_tick');if(left<=0){done=true;clearInterval(T);flag((c.id||'bomb')+'_bomb',1);q.classList.add('boom');snd('sfx_explosion_far');vib(400);await wait(600);await qEnd(q,false,c,res)}},1000);
+  W.__hzSolve=async ok=>{if(done)return;done=true;clearInterval(T);flag((c.id||'bomb')+'_bomb',ok!==false?2:1);await qEnd(q,ok!==false,c,res)}})}
+
+
+/* ---------- Песня-клип: слайды + строки + «поймать взгляд». c:{song, data:{lines,slides,parts}, looks:[{t,ch,txt,f}]} ---------- */
+function songUI(c){return new Promise(async res=>{
+  const D=c.data,LN=D.lines,SL=D.slides,LK=c.looks||[];let done=false,t0=0,h=null,si=-1,li=-2,lkOpen=null,caught=0;
+  const im=k=>U(k[1])||U(k[2]);
+  const q=qWrap('hzSong',`<div class="sl"><img class="a" alt=""><img class="b" alt=""></div><div class="vg"></div>
+   <div class="pt"></div><div class="ly"><p class="p0"></p><p class="p1"></p><p class="p2"></p></div>
+   <button class="eye" hidden><i></i><span>Поймать взгляд</span></button><div class="lk"></div><button class="skp" hidden>Пропустить ▸▸</button><div class="ttl"><small>♪ Полина у микрофона</small><b>«Тише, милый»</b></div><div class="bar"><i></i></div>`);
+  const A_=q.querySelector('.sl .a'),B_=q.querySelector('.sl .b'),P=[...q.querySelectorAll('.ly p')],eye=q.querySelector('.eye'),lk=q.querySelector('.lk'),bar=q.querySelector('.bar i');
+  let front=A_;
+  const slide=i=>{const nb=front===A_?B_:A_;nb.src=im(SL[i]);nb.className=(front===A_?'b':'a')+' on k'+(i%3);front.classList.remove('on');front=nb};
+  try{music(null,{fade:1.2})}catch(e){}
+  await wait(900);
+  const ctx=(typeof ac==='function')?ac():null;
+  try{h=await shotSnd(c.song||'hz_song_singer',{vol:.95})}catch(e){h=null}
+  const clock=h&&ctx?(()=>ctx.currentTime-t0):(()=>(performance.now()-t0)/1000);t0=h&&ctx?ctx.currentTime:performance.now();
+  const dur=c.dur||210;
+  const finish=async()=>{if(done)return;done=true;try{h&&h.stop()}catch(e){}flag((c.id||'song')+'_looks',caught);q.classList.remove('on');await wait(500);q.remove();res()};
+  setTimeout(()=>{q.querySelector('.skp').hidden=false},25000);
+  q.querySelector('.skp').onclick=e=>{e.stopPropagation();finish()};
+  eye.onclick=async e=>{e.stopPropagation();if(!lkOpen)return;const o=lkOpen;lkOpen=null;eye.hidden=true;caught++;if(o.f)flag(o.f);
+    lk.innerHTML=(o.ch?`<span style="background-image:url('${PT(o.ch)}')"></span>`:'')+`<b>${esc(o.txt)}</b>`;lk.classList.add('on');setTimeout(()=>lk.classList.remove('on'),4200)};
+  const tick=()=>{if(done)return;const t=clock();bar.style.width=Math.min(100,t/dur*100)+'%';
+    let s=0;while(s+1<SL.length&&SL[s+1][0]<=t)s++;if(s!==si){si=s;slide(s)}
+    let l=-1;while(l+1<LN.length&&LN[l+1][0]<=t)l++;
+    if(l!==li){li=l;const g=k=>k>=0&&k<LN.length?LN[k][1]:'';P[0].textContent=g(l-1);P[1].textContent=g(l);P[2].textContent=g(l+1);
+      const ly=q.querySelector('.ly');ly.classList.remove('mv');void ly.offsetWidth;ly.classList.add('mv');
+      let pp='';(D.parts||[]).forEach(p=>{if(p[0]<=t)pp=p[1]});q.querySelector('.pt').textContent=pp}
+    for(const o of LK){if(!o.shown&&t>=o.t&&t<o.t+4){o.shown=1;if(o.when&&!o.when(ST))continue;lkOpen=o;eye.hidden=false;eye.classList.remove('pulse');void eye.offsetWidth;eye.classList.add('pulse');
+      setTimeout(()=>{if(lkOpen===o){lkOpen=null;eye.hidden=true}},3600)}}
+    q.classList.toggle('intro',t<12);if(t>=dur)return finish();requestAnimationFrame(tick)};
+  requestAnimationFrame(tick);
+  W.__hzSolve=()=>finish()})}
+
+function drunkUI(c){stage().classList.toggle('hzDrunk',!!c.on)}
 W.HZ_BOARD=boardOpen;
 
 W.STEPX=Object.assign(W.STEPX||{},{noir:noirUI,hz_sheet:sheetUI,hz_lights:lightsUI,hz_drive:driveUI,hz_spots:spotsUI,hz_desk:deskUI,hz_frame:frameUI,hz_order:orderUI,hz_interrog:interrogUI,hz_inspect:inspectUI,hz_recon:reconUI,hz_pills:pillsUI,hz_film:filmUI,
-  hz_chain:chainUI,hz_memory:memoryUI,hz_masks:masksUI,hz_assign:assignUI,hz_cross:crossUI,hz_layout:layoutUI,hz_montage:montageUI});
+  hz_chain:chainUI,hz_memory:memoryUI,hz_masks:masksUI,hz_assign:assignUI,hz_cross:crossUI,hz_layout:layoutUI,hz_montage:montageUI,hz_shoot:shootUI,hz_bomb:bombUI,hz_drunk:drunkUI,hz_song:songUI});
 W.HZ={noirApply,noirInit,noirSet:v=>noirSet(v)};
 document.addEventListener('DOMContentLoaded',noirInit);setTimeout(noirInit,300);
 })();
