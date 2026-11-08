@@ -227,7 +227,7 @@ const N1=(()=>{
   {t:'23:40',lb:'23:4_',who:'Артур',x:'Аварийный сброс не проходит! Щит греется! Все в контур — держим!'},
   {t:'23:41',lb:'_:4_',who:'Все',x:'Держим!..'}];
  const X=[{k:'whisper',x:'Пусти… вы же звали… пусти…'},{k:'rev',x:'…лаванз ен ыв ,ытсуП…'},{k:'heart',x:'[низкий гул · тук… тук… тук…]'}];
- let T=[],sel=null,slots=Array(8).fill(null),bin=[],cur=null,busy=false,done=false,ready=false;
+ let checked=false,T=[],sel=null,slots=Array(8).fill(null),bin=[],cur=null,busy=false,done=false,ready=false;
  const tray=$('tray'),osc=$('osc'),ox=osc.getContext('2d');let amp=0,phase=0;
  (function draw(){ox.clearRect(0,0,360,300);ox.strokeStyle='rgba(125,255,154,.9)';ox.lineWidth=3;ox.shadowColor='#7dff9a';ox.shadowBlur=10;ox.beginPath();phase+=.25;
   for(let x=0;x<=360;x+=4){const y=150+Math.sin(x*.05+phase)*amp*60*Math.sin(x*.013)+(amp?(Math.random()-.5)*amp*50:0);x?ox.lineTo(x,y):ox.moveTo(x,y)}ox.stroke();requestAnimationFrame(draw)})();
@@ -238,7 +238,7 @@ const N1=(()=>{
   const S=$('slots');for(let k=0;k<8;k++){const s=document.createElement('button');s.className='slot';s.style.left=(2.8+94.3*(45+108.4*k)/951)+'%';s.dataset.k=k;s.setAttribute('aria-label','Слот '+(k+1));S.appendChild(s)}
   tray.onclick=e=>{const b=e.target.closest('.tp');if(b)pick(b)};
   S.onclick=e=>{const s=e.target.closest('.slot');if(!s)return;const k=+s.dataset.k;
-   if(sel&&sel!==slots[k]){place(sel,k);return}if(slots[k]){const b=slots[k];slots[k]=null;tray.appendChild(b);sel=null;stopAll();click();press($('b2'));upd();toast('Запись вернулась вниз',1200)}};
+   if(sel&&sel!==slots[k]){place(sel,k);return}if(slots[k]){const b=slots[k];slots[k]=null;$('slots').children[k].classList.remove('ok','bad');tray.appendChild(b);sel=null;stopAll();click();press($('b2'));upd();toast('Запись вернулась вниз',1200)}};
   $('bin').onclick=()=>{press($('bin'));if(sel){toBin(sel);return}if(bin.length){const b=bin.pop();tray.appendChild(b);upd();toast('Запись вернулась на стол')}else toast('Сюда — записи, которым не место в журнале')}}
  function upd(){$('binN').textContent=bin.length;$('h1').textContent='записей в журнале: '+slots.filter(Boolean).length+' / 8';document.querySelectorAll('.tp').forEach(t=>t.classList.toggle('sel',t===sel))}
  function stopAll(){if(cur){cur.stop();cur=null}if(voSrc){try{voSrc.stop()}catch(e){}voSrc=null}amp=0;$('rL').classList.remove('run','fast');$('rR').classList.remove('run','fast');$('lamp').classList.remove('on')}
@@ -249,13 +249,13 @@ const N1=(()=>{
   const cap=$('cap');cap.classList.add('on');$('hb').classList.remove('on');cap.classList.toggle('x',i>=8);cap.innerHTML=`<b>${i<8?(r.t.slice(0,4)+'?  ·  '+r.who):'запись без метки'}</b><span></span>`;const sp=cap.querySelector('span');
   const id=id0;const t0=performance.now();
   while(performance.now()-t0<dur*1000){if(play.id!==id)return;const p=(performance.now()-t0)/(dur*1000-500);sp.textContent=txt.slice(0,Math.ceil(txt.length*Math.min(1,p)));amp=.6+Math.random()*.6;await wait(40)}
-  if(play.id!==id)return;sp.textContent=txt;stopAll();if(!done)musVol(.5);await glitch(380);setTimeout(()=>{if(play.id===id&&!$('hb').classList.contains('on'))cap.classList.remove('on')},1800)}
+  if(play.id!==id)return;sp.textContent=txt;stopAll();if(!done){musVol(.5);await glitch(380)}setTimeout(()=>{if(play.id===id&&!$('hb').classList.contains('on'))cap.classList.remove('on')},1800)}
  function pick(b){if(busy||done)return;sel=b;b.classList.add('played');upd();play(+b.dataset.i)}
  function place(b,k){const prev=slots[k];const from=slots.indexOf(b);if(from>=0)slots[from]=null;const bi=bin.indexOf(b);if(bi>=0)bin.splice(bi,1);
   if(prev&&prev!==b){if(from>=0){slots[from]=prev;$('slots').children[from].appendChild(prev)}else tray.appendChild(prev)}
-  slots[k]=b;$('slots').children[k].appendChild(b);sel=null;click();press($('b3'));upd();if(slots.every(Boolean))check()}
+  slots[k]=b;$('slots').children[k].appendChild(b);sel=null;click();press($('b3'));upd();if(checked){const sl=$('slots').children[k];sl.classList.remove('ok','bad');void sl.offsetWidth;sl.classList.add(+b.dataset.i===k?'ok':'bad')}if(slots.every(Boolean))check()}
  function toBin(b){const from=slots.indexOf(b);if(from>=0)slots[from]=null;b.remove();bin.push(b);sel=null;stopAll();click();upd();toast(+b.dataset.i>=8?'Запись в «Шуме». Лоток на миг вспыхивает лиловым.':'Это голос из лаборатории. Уверены, что это шум?')}
- async function check(){busy=true;await wait(300);const sl=[...$('slots').children];let bad=0,alien=false;
+ async function check(){busy=true;checked=true;await wait(300);const sl=[...$('slots').children];let bad=0,alien=false;
   slots.forEach((b,k)=>{const i=+b.dataset.i;const ok=i===k;sl[k].classList.remove('ok','bad');void sl[k].offsetWidth;sl[k].classList.add(ok?'ok':'bad');if(!ok)bad++;if(i>=8)alien=true});
   if(alien){await wait(500);play(8,true);toast('В журнале чужой голос. Он отвечает, когда его слушают.',3200);busy=false;return}
   if(bad){toast('Не сходится: '+bad+' из 8 не на своём месте. Переслушайте записи с красной рамкой.',3200);busy=false;return}

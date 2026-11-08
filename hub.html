@@ -783,12 +783,17 @@ function relRow(r){
 }
 function NODEBTN(){const n=[0,1,2,3,4,5,6,7,8].filter(DONE).length;let seen={};try{seen={1:localStorage.getItem('sboi_node1'),2:localStorage.getItem('sboi_node2')}}catch(e){}
   const b=(k,t,sub)=>`<button class="sbtn" data-node="${k}"><span>${t}${seen[k]?'':' <span class="new">новое</span>'}</span><small>${sub}</small></button>`;
-  return (n>=3?b(1,'Узел 1 · Вспышка','журнал записей 08.03'):'<div class="note">Узел 1 откроется после трёх пройденных историй.</div>')+(n>=6?b(2,'Узел 2 · За минуту до','камеры наблюдения'):n>=3?'<div class="note">Узел 2 откроется после шести историй.</div>':'')}
-function openNode(k){$('vT').textContent=k==1?'Узел 1 · Вспышка':'Узел 2 · За минуту до';$('vS').textContent='Лаборатория · 08.03, 23:41';$('vBody').innerHTML='';const f=document.createElement('iframe');f.title='Узел';f.allow='autoplay; fullscreen';f.src='node.html#n'+k;$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
+  return (n>=3?b(1,'Узел 1 · Вспышка','журнал записей 08.03'):'<div class="note">Узел 1 откроется после трёх пройденных историй.</div>')+b(2,'Узел 2 · За минуту до','камеры наблюдения')}
+function NODEGATE(){const n=[0,1,2,3,4,5,6,7,8].filter(DONE).length;let s1=0,s2=0;try{s1=localStorage.getItem('sboi_node1');s2=localStorage.getItem('sboi_node2')}catch(e){}
+  const g=(k,t,sub)=>`<div class="note" style="padding:6px 0 12px">${t}</div><button class="sbtn" data-node="${k}"><span>${sub} <span class="new">новое</span></span><small>сначала узел</small></button>`;
+  if(n>=3&&!s1)return g(1,'Портал не пускает дальше. Система восстановила журнал записей той ночи — прослушайте его, прежде чем идти в следующий мир.','Узел 1 · Вспышка');
+  if(n>=6&&!s2)return g(2,'Портал снова заблокирован. Записи камер наблюдения за 23:40 восстановлены — сначала посмотрите их.','Узел 2 · За минуту до');return ''}
+function openNode(k){try{parent.postMessage('sboi:node-open','*')}catch(e){}$('sheet').style.visibility='hidden';$('vT').textContent=k==1?'Узел 1 · Вспышка':'Узел 2 · За минуту до';$('vS').textContent='Лаборатория · 08.03, 23:41';$('vBody').innerHTML='';const f=document.createElement('iframe');f.title='Узел';f.allow='autoplay; fullscreen';f.src='node.html#n'+k;$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-node]');if(b){e.stopPropagation();openNode(+b.dataset.node)}},true);
-addEventListener('message',e=>{if(e.data==='sboi:node-close'){$('viewer').classList.remove('on');$('vBody').innerHTML=''}});
+addEventListener('message',e=>{if(e.data==='sboi:node-close'){$('viewer').classList.remove('on');$('vBody').innerHTML='';close();setTimeout(()=>{$('sheet').style.visibility=''},400);try{parent.postMessage('sboi:node-close','*')}catch(_){}if(/sboi_node/.test('x'))0;setTimeout(()=>location.reload(),450)}});
 function body(id){
   const s=sel[id];
+  if(id==='portal'&&NODEGATE())return NODEGATE();
   if(id==='portal')return '<div class="cards">'+STORIES.map((s,i)=>`<button class="story" data-s="${i}"><img src="${s[2]}" alt=""><b>${esc(s[0])}</b><i>${esc(s[1])}</i><em>${esc(s[3])}</em></button>`).join('')+'</div>'+NODEBTN();
   if(id==='ties'){
     const one=i=>CAST[i]?CAST[i].map(relRow).join(''):empty(i);
@@ -974,6 +979,12 @@ const REAL=[
  {n:"Анатолий",ini:'А',who:"обеспечил «Параллель миров» топливом и энергией",at:'лаборатория, 8 марта, 21:01',status:'без вести пропал',like:["фастфуд и новые вкусы известных брендов", "юмор ниже пояса", "большие объёмы, и не только молярные"],hate:["когда его игнорируют", "когда маску озорника путают с его настоящей натурой"],always:"Вечно под маской весёлого озорника — и маска стала натурой.",seen:[['Тихая гавань','матрос',0],['Уайтчепел','патологоанатом',0],['Нулевой пациент','химик','после узла 1']],pen:"от пиццы не откажется"},
  {n:"Иван",ini:'И',who:"техническая реализация «Параллели миров»",at:'лаборатория, 8 марта, 21:01',status:'без вести пропал',like:["курить кальян", "искренность", "честность", "открытость"],hate:["недожжённые угли", "притворство"],always:"Большую часть времени молчит, потому что все мысли угнетающие. Привык делать, а не говорить.",seen:[['Уайтчепел','без памяти у места преступления',0],['Обет','маг','после узла 2'],['Подвал','фиксер','после узла 2']],pen:"кальян. всегда."}
 ];
+(()=>{let n1=0,n2=0;try{n1=localStorage.getItem('sboi_node1')==='1';n2=localStorage.getItem('sboi_node2')==='1'}catch(e){}
+ const Q={'Артур':'«Все в контур — держим!»','Серёга-учитель':'«Фон чуть выше расчётного… но в допуске».','Анатолий':'«С той стороны что-то давит на кольцо».','Кристиан':'«Это кто-то пытается войти».','Иван':'«Держим проход закрытым изнутри».','Сергей Воробьёв':'«Оно смотрит».'};
+ REAL.forEach(g=>{if(n1){g.at='лаборатория, 23:31–23:41 · в контуре портала';g.status='остался в контуре';if(Q[g.n])g.pen=Q[g.n]}
+  g.seen=(g.seen||[]).map(x=>(n1&&x[2]==='после узла 1')||(n2&&x[2]==='после узла 2')?[x[0],x[1],0]:x)});
+ if(n2){REAL.push({n:'Неизвестный №7',ini:'?',who:'седьмой в контуре портала',at:'CAM 1–4, 08.03, 23:40:37',status:'не опознан',like:[],hate:[],always:'Повторяет движения. Смотрит в камеру.',seen:[],pen:'нас было шестеро'});try{RAV['Неизвестный №7']='node-unknown7.webp'}catch(e){}}})();
+
 const STI={b1:['cdacd78281a5.webp','88e6ee0b6c86.webp'],b2:['6ab2b13ce934.webp'],b3:['a25b4e18bcb7.webp','4241f06f20aa.webp'],b9:['947fb4ce41d0.webp','8af733e8e251.webp'],mud:['745c3383b46f.webp','055f1badbfdb.webp','b28fa4ac70e8.webp'],water:['1a0f12d12904.webp','69cb4b84cce4.webp'],burn:['4ae1a4aad124.webp','447acfe00ddd.webp'],ink:['7803f55b3ed7.webp','158a84ee4225.webp']};
 const hs=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
 const stImg=(k,css)=>{const l=STI[k];return `<img class="st" alt="" src="${l[hs(css)%l.length]}" style="${css}">`};
@@ -1103,7 +1114,7 @@ function setBody(){const S=getS();const sw=(k,b,i)=>`<div class="str"><span clas
   const rg=(k,l,min,max,st,suf)=>`<div class="srg"><label for="s_${k}">${l}</label><input type="range" id="s_${k}" data-rg="${k}" min="${min}" max="${max}" step="${st}" value="${S[k]}"><span>${S[k]}${suf}</span></div>`;
   return `<div class="sgrp"><div class="sgl">Качество графики</div>${seg('q',[['auto','Авто'],['высокое','Высокое'],['стандартное','Стандарт'],['экономное','Эконом']])}</div>
   <div class="sgrp"><div class="sgl">Сложность QTE</div>${seg('d',[['easy','Лёгкая'],['normal','Обычная'],['hard','Сложная']])}<p class="sgh">${DHT[S.d]}</p></div>
-  <div class="sgrp"><div class="sgl">Сюжет</div>${sw('imm','Иммерсивный режим','Таймер на историю, QTE ускоряются. Можно выключить в любой момент.')}${sw('fn','Сноски выборов','«Артур это запомнит», «Это отразится на финале».')}${sw('soft','Смягчённый режим','Убирает жёсткие сцены и пикантные намёки.')}</div>
+  <div class="sgrp"><div class="sgl">Сюжет</div>${sw('fn','Сноски выборов','«Артур это запомнит», «Это отразится на финале».')}</div>
   <div class="sgrp"><div class="sgl">Текст и звук</div>${rg('text','Скорость текста',1,5,1,'')}${rg('mus','Музыка',0,100,5,'%')}${rg('sfx','Звуки',0,100,5,'%')}${sw('vib','Вибрация в QTE','Если телефон поддерживает.')}</div>
   <div class="sgrp"><div class="sgl">Файлы игры</div><div class="fsbox" id="fsBox">${fsHTML(null,'sbtn')}</div></div>
   <div class="sgrp" style="border:0"><div class="sgl">Сохранение</div>
@@ -1119,20 +1130,25 @@ function saveCode(){return 'SBOI1-'+btoa(unescape(encodeURIComponent(JSON.string
 const b64u={enc:u=>{let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
  dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const s=atob(t),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u}};
 async function saveCode2(){if(typeof CompressionStream==='undefined')return saveCode();
- const o=saveObj();Object.keys(o).forEach(k=>{if(/_snap$/.test(k)||k==='sboi_settings'&&0)delete o[k]});
- const st=new Blob([JSON.stringify(o)]).stream().pipeThrough(new CompressionStream('deflate-raw'));const buf=new Uint8Array(await new Response(st).arrayBuffer());return 'SBOI2-'+b64u.enc(buf)}
-async function readCode(v){v=v.trim().replace(/\s+/g,'');if(v.indexOf('SBOI2-')===0){const st=new Blob([b64u.dec(v.slice(6))]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return JSON.parse(await new Response(st).text())}
+ const o=saveObj();Object.keys(o).forEach(k=>{if(/_snap$/.test(k))delete o[k]});
+ try{const P=JSON.parse(o.sboi_progress||'{}');Object.values(P.stories||{}).forEach(x=>{delete x.cast;delete x.facts;delete x.decisions;delete x.mind});
+  if(P.clueBook){const cb={};Object.keys(P.clueBook).forEach(id=>{const c=P.clueBook[id];cb[id]={s:c.s,t:c.t}});P.clueBook=cb}o.sboi_progress=JSON.stringify(P)}catch(e){}
+ Object.keys(o).forEach(k=>{if(/^sboi_[a-z]+$/.test(k)&&k!=='sboi_progress'&&k!=='sboi_settings'&&k!=='sboi_prologue'){try{const v=JSON.parse(o[k]);if(v&&v.st){delete v.st.clueInfo;o[k]=JSON.stringify(v)}}catch(e){}}});
+ const st=new Blob([JSON.stringify(o)]).stream().pipeThrough(new CompressionStream('deflate-raw'));const buf=new Uint8Array(await new Response(st).arrayBuffer());return 'SBOI3-'+u14.enc(buf)}
+const u14={C:c=>String.fromCharCode(0x4E00+c),enc(u){let o=this.C(u.length>>14)+this.C(u.length&0x3FFF),acc=0,n=0;for(const x of u){acc=(acc<<8)|x;n+=8;while(n>=14){n-=14;o+=this.C((acc>>n)&0x3FFF)}acc&=(1<<n)-1}if(n)o+=this.C((acc<<(14-n))&0x3FFF);return o},
+ dec(t){const L=((t.charCodeAt(0)-0x4E00)<<14)|(t.charCodeAt(1)-0x4E00);const out=new Uint8Array(L);let acc=0,n=0,k=0;for(let i=2;i<t.length&&k<L;i++){acc=(acc<<14)|(t.charCodeAt(i)-0x4E00);n+=14;while(n>=8&&k<L){n-=8;out[k++]=(acc>>n)&255}acc&=(1<<n)-1}return out}};
+async function readCode(v){v=v.trim().replace(/\s+/g,'');if(v.indexOf('SBOI3-')===0){const st=new Blob([u14.dec(v.slice(6))]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return JSON.parse(await new Response(st).text())}if(v.indexOf('SBOI2-')===0){const st=new Blob([b64u.dec(v.slice(6))]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return JSON.parse(await new Response(st).text())}
  return JSON.parse(decodeURIComponent(escape(atob(v.replace(/^SBOI1-/,'')))))}
 $('shB').addEventListener('click',e=>{if(openId!=='settings')return;const S=getS();
   const sg=e.target.closest('[data-seg]');if(sg){S[sg.dataset.seg]=sg.dataset.v;putS(S);reSet();return}
   const w=e.target.closest('[data-sw]');if(w){S[w.dataset.sw]=!S[w.dataset.sw];putS(S);reSet();return}
   const fb=e.target.closest('[data-fs]');if(fb){fsRun(fb.dataset.fs,$('fsBox'),'sbtn');return}
   const a=e.target.closest('[data-act]');if(!a)return;const act=a.dataset.act;
-  if(act==='copy'){const pr=saveCode2();const done=c=>{saveMsg='Код скопирован ('+Math.ceil(c.length/1024)+' КБ). Сохраните его в заметках.';reSet()};const fail=c=>{saveMsg='Не удалось скопировать автоматически. Код: '+c;reSet()};
+  if(act==='copy'){const pr=saveCode2();const done=c=>{saveMsg='Код скопирован ('+c.length+' знаков). Сохраните его в заметках.';reSet()};const fail=c=>{saveMsg='Не удалось скопировать автоматически. Код: '+c;reSet()};
     try{if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){navigator.clipboard.write([new ClipboardItem({'text/plain':pr.then(c=>new Blob([c],{type:'text/plain'}))})]).then(()=>pr.then(done),()=>pr.then(c=>navigator.clipboard.writeText(c).then(()=>done(c),()=>fail(c))))}
      else pr.then(c=>navigator.clipboard.writeText(c).then(()=>done(c),()=>fail(c)))}catch(err){pr.then(fail)}}
   if(act==='load'){saveOpen=!saveOpen;reSet()}
-  if(act==='apply'){const v=($('scode')||{}).value||'';readCode(v).then(o=>{Object.keys(o).forEach(k=>{if(k.startsWith('sboi_'))localStorage.setItem(k,o[k])});saveOpen=false;saveMsg='Сохранение загружено.';putS(getS());reSet()}).catch(()=>{saveMsg='Код не подошёл. Проверьте, что он скопирован целиком, начиная с SBOI.';reSet()})}
+  if(act==='apply'){const v=($('scode')||{}).value||'';readCode(v).then(o=>{try{const cb=(JSON.parse(o.sboi_progress||'{}').clueBook)||{};Object.keys(o).forEach(k=>{if(/^sboi_[a-z]+$/.test(k)){try{const v=JSON.parse(o[k]);if(v&&v.st&&v.st.clues&&!v.st.clueInfo){v.st.clueInfo={};v.st.clues.forEach(id=>{if(cb[id])v.st.clueInfo[id]={t:cb[id].t,b:''}});o[k]=JSON.stringify(v)}}catch(e){}}})}catch(e){}Object.keys(o).forEach(k=>{if(k.startsWith('sboi_'))localStorage.setItem(k,o[k])});saveOpen=false;saveMsg='Сохранение загружено.';putS(getS());reSet()}).catch(()=>{saveMsg='Код не подошёл. Проверьте, что он скопирован целиком, начиная с SBOI.';reSet()})}
   if(act==='reset'){conf=true;reSet()}
   if(act==='reset-no'){conf=null;reSet()}
   if(act==='reset-yes'){conf=null;try{const ks=['sboi_prologue','sboi_progress'];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&/^sboi_(morok|whitechapel|obet|patient|zvezda|podval|gavan|hozyain|zoloto)/.test(k))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}catch(err){}close();try{parent.postMessage('sboi:restart','*')}catch(err){}}
