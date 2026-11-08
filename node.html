@@ -1,0 +1,312 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}*{box-sizing:border-box}html,body{margin:0}</style><title>Узлы лаборатории</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Caveat:wght@500;700&family=Poiret+One&display=swap">
+<style>
+/* Один экран-сцена 9:16; тёмная лаборатория, зелёный фосфор + лиловая Изнанка */
+:root{--bg:#050407;--ink:#d8e8d0;--dim:#7d8a78;--phos:#7dff9a;--vio:#a855f7;--red:#ff4a3d;--paper:#ddd5c4;
+ --mono:'PT Mono',ui-monospace,Menlo,monospace;--hand:'Caveat','Segoe Print',cursive;--disp:'Poiret One',Georgia,serif;color-scheme:dark}
+html,body{height:100%;background:var(--bg);color:var(--ink);overflow:hidden}
+body{font-family:var(--mono);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));user-select:none;-webkit-user-select:none}
+#app{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.st{position:relative;height:100%;max-height:100%;aspect-ratio:1008/1792;max-width:100vw;overflow:hidden;background:#000;container-type:size}
+.v{position:absolute;inset:0;display:none}.v.on{display:block}
+.abs{position:absolute}
+img{max-width:none;display:block;pointer-events:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--phos);outline-offset:2px}
+/* меню */
+#menu{background:#000 url(node-lab.webp) center/cover}
+#menu .in{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:2.4cqh;padding:0 7cqw 10cqh;background:linear-gradient(transparent 40%,rgba(0,0,0,.85))}
+#menu h1{font:400 7.5cqw/1.1 var(--disp);margin:0;color:#efe6ff;text-wrap:balance}
+#menu p{margin:0;font-size:3.2cqw;color:var(--dim);line-height:1.5}
+.mb{display:flex;justify-content:space-between;align-items:center;padding:3.2cqw 4cqw;border:1px solid rgba(168,85,247,.55);border-radius:2cqw;background:rgba(20,10,30,.7);font-size:3.6cqw;color:#efe6ff}
+.mb small{color:var(--dim);font-size:2.8cqw}
+.hb{position:absolute;z-index:30;right:3cqw;top:calc(2cqh + env(safe-area-inset-top,0px));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #3a4a3a;color:var(--phos)}
+.hb.on{background:var(--phos);color:#04140a}
+.back{position:absolute;z-index:30;left:3cqw;top:calc(2cqh + env(safe-area-inset-top,0px));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #333;color:var(--dim)}
+/* общий глитч */
+.glitch{position:absolute;inset:0;width:100%;height:100%;z-index:40;pointer-events:none;opacity:0;image-rendering:pixelated}
+.glitch.on{opacity:1}
+.shake{animation:shk .35s linear}
+@keyframes shk{20%{transform:translate(-1.2%,.6%)}40%{transform:translate(1%,-.8%)}60%{transform:translate(-.6%,1%)}80%{transform:translate(.8%,-.4%)}}
+.toast{position:absolute;z-index:35;left:6cqw;right:6cqw;top:8cqh;padding:2.6cqw 3.6cqw;background:rgba(5,8,5,.88);border:1px solid rgba(125,255,154,.35);border-radius:1.5cqw;font-size:3.1cqw;line-height:1.45;color:var(--ink);opacity:0;transition:opacity .3s;pointer-events:none;text-align:center}
+.toast.on{opacity:1}
+.endc{position:absolute;inset:0;z-index:45;display:none;flex-direction:column;justify-content:center;align-items:center;gap:3cqh;padding:0 9cqw;background:rgba(0,0,0,.86);text-align:center}
+.endc.on{display:flex}
+.endc h2{font:400 7cqw/1.15 var(--disp);color:#efe6ff;margin:0}
+.endc p{margin:0;font-size:3.3cqw;line-height:1.55;color:#c9c0d8;max-width:60ch}
+.endc .mb{width:100%}
+/* ===== Узел 1 ===== */
+#n1{background:#000 url(node-recorder.webp) 0 0/100% 100%}
+.reel{width:30.2%;top:19.7%}
+.reel.run{animation:spin 1.6s linear infinite}
+.reel.fast{animation-duration:.5s}
+@keyframes spin{to{transform:rotate(360deg)}}
+#osc{left:42.8%;top:31.7%;width:17.6%;height:8.4%;mix-blend-mode:screen}
+#lamp{left:60.6%;top:56.2%;width:3%;aspect-ratio:1;border-radius:50%;background:radial-gradient(#ff8a7a,#c01a10 60%,transparent 70%);opacity:.3;transition:opacity .2s;box-shadow:0 0 0 #f00}
+#lamp.on{opacity:1;box-shadow:0 0 3cqw #ff3020}
+.btnp{position:absolute;border-radius:.6cqw}
+.btnp.press{animation:prs .25s}
+@keyframes prs{40%{transform:translateY(.35cqh);filter:brightness(.6);box-shadow:inset 0 0 1cqw #000}}
+#cap{left:6%;right:6%;top:8.4%;opacity:0;transition:opacity .3s;pointer-events:none;min-height:9cqh;padding:2.4cqw 3.4cqw;background:rgba(3,6,3,.82);border:1px solid rgba(125,255,154,.25);border-radius:1.2cqw;font-size:3.3cqw;line-height:1.45;color:var(--ink)}
+#cap b{display:block;font-weight:400;color:var(--phos);font-size:2.6cqw;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8cqh}
+#cap.x b{color:var(--vio)}#cap.x span{color:#d9b8ff;font-style:italic;letter-spacing:.04em}
+#tl{left:2.8%;top:61.6%;width:94.3%}
+.slot{position:absolute;top:66.6%;width:9.4%;height:7.1%;border-radius:.6cqw}
+.slot.sel{box-shadow:0 0 0 .5cqw var(--phos)}
+.slot.ok{box-shadow:0 0 1.6cqw .4cqw #2f9}
+.slot.bad{box-shadow:0 0 1.6cqw .4cqw var(--red);animation:shk .35s}
+.slot .tp{width:100%;height:100%}
+#tray{left:0;right:17%;bottom:0;height:16%;display:flex;gap:2.2cqw;align-items:flex-end;padding:0 3cqw 1.6cqh;overflow-x:auto;scrollbar-width:none;background:linear-gradient(transparent,rgba(0,0,0,.7) 30%)}
+#tray::-webkit-scrollbar{display:none}
+.tp{position:relative;flex:none;width:12.2cqw;height:20.6cqw}
+.tp img{width:100%;height:100%;object-fit:contain}
+.tp .lb{position:absolute;left:12%;right:12%;top:55%;height:17%;background:var(--paper);border-radius:2px;transform:rotate(-2deg);font:700 3.4cqw/1 var(--hand);color:#222;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.tp.xt .lb{display:none}
+.tp.sel{transform:translateY(-1.4cqh);filter:drop-shadow(0 0 1.4cqw var(--phos))}
+.tp.played::after{content:'';position:absolute;right:6%;top:6%;width:1.6cqw;height:1.6cqw;border-radius:50%;background:var(--phos);box-shadow:0 0 1cqw var(--phos)}
+.slot .tp{position:absolute;inset:0;width:100%;height:100%;transform:none}.slot .tp .lb{font-size:2.6cqw}
+#bin{right:1.5%;bottom:1.2%;width:14%}
+#bin img{width:100%}
+#bin i{position:absolute;right:-1%;top:-1%;min-width:4cqw;height:4cqw;border-radius:99px;background:var(--vio);color:#fff;font:400 2.6cqw/4cqw var(--mono);text-align:center;font-style:normal}
+#bin.sel{filter:drop-shadow(0 0 1.6cqw var(--vio))}
+#cap.on{opacity:1}
+.hint{position:absolute;left:50%;transform:translateX(-50%);top:62.6%;z-index:3;font-size:2.7cqw;color:var(--ink);background:rgba(0,0,0,.72);border:1px solid rgba(125,255,154,.3);padding:.4cqh 2.6cqw;border-radius:99px;white-space:nowrap;letter-spacing:.04em}
+/* ===== Узел 2 ===== */
+#n2{background:#000}
+#wall{left:0;top:-9.5%;width:100%;z-index:2}
+.cam{position:absolute;z-index:1;overflow:hidden;background:#020}
+.cam video,.cam .an{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam video{filter:contrast(1.08) saturate(.9)}
+.cam .an{opacity:0;transition:opacity .08s}
+.cam .an.on{opacity:1}
+.cam::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 3px);pointer-events:none}
+.tc{position:absolute;z-index:3;font-size:2.5cqw;color:var(--phos);background:rgba(0,0,0,.6);padding:.2cqh 1.2cqw;border-radius:.6cqw;text-shadow:0 0 1cqw rgba(125,255,154,.6);pointer-events:none}
+.tc.sync{color:#04140a;background:var(--phos)}
+.hit{position:absolute;z-index:4;border-radius:2cqw}
+.mk{position:absolute;z-index:5;width:9cqw;pointer-events:none;animation:mk .4s ease-out}
+@keyframes mk{from{transform:scale(1.8);opacity:0}}
+#ctl{left:0;right:0;bottom:0;height:22.5%;z-index:3;background:linear-gradient(#0b0a0e,#060508);border-top:1px solid #222}
+#wheel{left:3%;top:9%;width:31%;aspect-ratio:1;touch-action:none}
+#wheel>img{width:100%;height:100%}
+#knob{position:absolute;left:15%;top:15%;width:70%;aspect-ratio:1;touch-action:none}
+#knob img{width:100%;height:100%}
+#sl{left:40%;right:3%;top:4%;height:40%;display:flex;justify-content:space-around}
+.sld{position:relative;width:16%;display:flex;flex-direction:column;align-items:center;gap:.6cqh;font-size:2.6cqw;color:var(--dim)}
+.sld .tr{position:relative;flex:1;width:1.6cqw;border-radius:99px;background:#000;box-shadow:inset 0 0 0 1px #333;touch-action:none}
+.sld .tr::before{content:'';position:absolute;left:-1.6cqw;right:-1.6cqw;top:50%;height:1px;background:#3a3a3a}
+.sld .kn{position:absolute;left:50%;width:7cqw;height:3.6cqw;margin:-1.8cqw 0 0 -3.5cqw;border-radius:.6cqw;background:linear-gradient(#8a8a8a,#3a3a3a 45%,#262626 55%,#5a5a5a);box-shadow:0 .4cqw .8cqw #000,inset 0 1px 0 #bbb;transition:box-shadow .1s}
+.sld .kn::after{content:'';position:absolute;left:12%;right:12%;top:46%;height:2px;background:#ddd;opacity:.7}
+.sld.lock .kn{background:linear-gradient(#555,#222);opacity:.5}
+.sld.ok b{color:var(--phos)}
+#btns{left:43%;right:3%;bottom:7%;height:42%;display:flex;justify-content:space-between;align-items:center;gap:3%}
+#btns .btnp{position:relative;flex:1;height:100%;display:flex;align-items:center;justify-content:center}
+#btns .btnp img{height:100%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 .6cqw .8cqw #000)}
+#btns .btnp.press img{transform:translateY(.5cqh) scale(.96);filter:brightness(.7) drop-shadow(0 .2cqw .3cqw #000)}
+.phase{opacity:0;pointer-events:none;transition:opacity .3s;position:absolute;z-index:6;left:3%;right:3%;top:calc(8cqh + env(safe-area-inset-top,0px));padding:1.6cqw 3cqw;font-size:2.8cqw;line-height:1.4;color:var(--ink);background:rgba(0,0,0,.72);border-radius:1.2cqw;min-height:5cqh}
+.phase b{color:var(--phos);font-weight:400}
+.phase.on{opacity:1}
+#lastv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:20;display:none}
+@media (prefers-reduced-motion:reduce){.reel.run{animation-duration:6s}.shake{animation:none}}
+</style>
+
+<div id="app"><div class="st" id="st">
+ <canvas class="glitch" id="gl"></canvas>
+ <div class="toast" id="toast"></div>
+
+ <section class="v on" id="menu"><div class="in">
+  <h1>Журнал ночи 8 марта</h1>
+  <p>Демо двух узлов. Голоса пока заменены субтитрами; звук — синтезированный: шипение плёнки, помехи, Изнанка.</p>
+  <button class="mb" data-go="n1">Узел 1 · Вспышка <small>собрать журнал</small></button>
+  <button class="mb" data-go="n2">Узел 2 · За минуту до <small>камеры</small></button>
+ </div></section>
+
+ <!-- УЗЕЛ 1 -->
+ <section class="v" id="n1">
+  <img class="abs reel" id="rL" src="node-reelL.webp" alt="" style="left:10.8%">
+  <img class="abs reel" id="rR" src="node-reelR.webp" alt="" style="left:61.4%">
+  <canvas class="abs" id="osc" width="360" height="300"></canvas>
+  <div class="abs" id="lamp"></div>
+  <div class="btnp" id="b1" style="left:14.8%;top:49.2%;width:5%;height:3.6%"></div>
+  <div class="btnp" id="b2" style="left:20.1%;top:49.2%;width:5%;height:3.6%"></div>
+  <div class="btnp" id="b3" style="left:61.6%;top:49.2%;width:4%;height:3.6%"></div>
+  <div class="abs" id="cap"><b>Журнал 08.03</b><span>Нажмите на запись внизу, чтобы прослушать. Расставьте записи по времени. Чужие голоса — в «Шум».</span></div>
+  <div class="hint" id="h1">записей в журнале: 0 / 8</div>
+  <img class="abs" id="tl" src="node-timeline.webp" alt="">
+  <div id="slots"></div>
+  <div class="abs" id="tray"></div>
+  <button class="abs" id="bin" aria-label="Шум"><img src="node-bin.webp" alt=""><i id="binN">0</i></button>
+  <div class="endc" id="e1"><h2>Узел 1 пройден</h2><p>В 23:36 с той стороны что-то начало давить на кольцо. Перегрузка, сброс не прошёл — и шестеро остались в контуре, чтобы не пустить это сюда.</p><p style="color:#d9b8ff">Пусти… вы же звали…</p><button class="mb" data-go="n2">Дальше · Узел 2</button><button class="mb" data-go="menu">В меню</button></div>
+ </section>
+
+ <!-- УЗЕЛ 2 -->
+ <section class="v" id="n2">
+  <div id="cams"></div>
+  <img class="abs" id="wall" src="node-monitors.webp" alt="">
+  <div class="phase" id="ph"></div>
+  <div class="abs" id="ctl">
+   <div class="abs" id="wheel"><img src="node-wheel.webp" alt=""><div id="knob"><img src="node-knob.webp" alt=""></div></div>
+   <div class="abs" id="sl"></div>
+   <div class="abs" id="btns">
+    <button class="btnp" id="bPlay" aria-label="Воспроизведение"><img src="node-b_play.webp" alt=""></button>
+    <button class="btnp" id="bStop" aria-label="С начала"><img src="node-b_rest.webp" alt=""></button>
+    <button class="btnp" id="bFreeze" aria-label="Стоп-кадр"><img src="node-b_frz.webp" alt=""></button>
+   </div>
+  </div>
+  <video id="lastv" src="node-last.mp4" playsinline muted preload="auto"></video>
+  <div class="endc" id="e2"><h2>Узел 2 пройден</h2><p>За минуту до вспышки в лаборатории было семеро. Седьмой стоял у пульта — и смотрел прямо в камеру.</p><button class="mb" data-go="n1">Узел 1</button><button class="mb" data-go="menu">В меню</button></div>
+ </section>
+ <button class="back" id="back" hidden>‹ меню</button><button class="hb" id="hb" hidden>Подсказка</button>
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id),st=$('st');const EMB=/^#n[12]$/.test(location.hash);
+
+/* музыка узлов */
+const MUS={n1:new Audio('node-mus1.mp3'),n2:new Audio('node-mus2.mp3')};Object.values(MUS).forEach(a=>{a.loop=true;a.volume=.5;a.preload='auto'});
+let musOn=null;function musPlay(id){Object.entries(MUS).forEach(([k,a])=>{if(k!==id){a.pause()}});const a=MUS[id];if(!a){musOn=null;return}musOn=a;a.volume=.5;const p=a.play();if(p&&p.catch)p.catch(()=>{const go=()=>{a.play().catch(()=>{});removeEventListener('pointerdown',go)};addEventListener('pointerdown',go)})}
+function musVol(v,ms=600){const a=musOn;if(!a)return;const v0=a.volume,t0=performance.now();(function st(){const k=Math.min(1,(performance.now()-t0)/ms);a.volume=Math.max(0,Math.min(1,v0+(v-v0)*k));if(k<1)requestAnimationFrame(st)})()}
+const doneN=n=>{try{localStorage.setItem('sboi_node'+n,'1')}catch(e){}};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const toast=(t,ms=2200)=>{const e=$('toast');e.innerHTML=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),ms)};
+const press=el=>{el.classList.remove('press');void el.offsetWidth;el.classList.add('press');vib(15)};
+const vib=ms=>{try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
+
+/* ---------- звук (синтез) ---------- */
+let AC=null,hissN=null;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC}
+function noiseBuf(sec){const a=ac(),b=a.createBuffer(1,a.sampleRate*sec,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b}
+function src(buf,loop){const s=AC.createBufferSource();s.buffer=buf;s.loop=!!loop;return s}
+function tone(kind,dur){/* запись на плёнке: шипение+гул; Изнанка: шёпот/реверс/сердце */
+ const a=ac();if(!a)return{stop(){}};const t=a.currentTime,g=a.createGain();g.connect(a.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(1,t+.15);
+ const nodes=[];const nb=noiseBuf(2);
+ const hs=src(nb,1),bp=a.createBiquadFilter();bp.type='highpass';bp.frequency.value=2500;const hg=a.createGain();hg.gain.value=.05;hs.connect(bp).connect(hg).connect(g);hs.start();nodes.push(hs);
+ const hum=a.createOscillator();hum.frequency.value=50;const hu=a.createGain();hu.gain.value=.02;hum.connect(hu).connect(g);hum.start();nodes.push(hum);
+ if(kind==='voice'){/* «голос» — неразборчивый формантный бубнёж под субтитры */
+  const o=a.createOscillator();o.type='sawtooth';o.frequency.value=115;const f=a.createBiquadFilter();f.type='bandpass';f.Q.value=6;f.frequency.value=700;const vg=a.createGain();vg.gain.value=0;o.connect(f).connect(vg).connect(g);o.start();nodes.push(o);
+  for(let x=0;x<dur;x+=.13){const on=Math.random()<.78;vg.gain.setValueAtTime(on?.05+Math.random()*.04:0,t+x);f.frequency.setValueAtTime(500+Math.random()*900,t+x);o.frequency.setValueAtTime(100+Math.random()*40,t+x)}}
+ if(kind==='whisper'){const w=src(nb,1),f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=3200;f.Q.value=1.5;const wg=a.createGain();wg.gain.value=0;w.connect(f).connect(wg).connect(g);w.start();nodes.push(w);
+  for(let x=0;x<dur;x+=.25)wg.gain.setTargetAtTime(Math.random()<.6?.35:.02,t+x,.06)}
+ if(kind==='rev'){const o=a.createOscillator();o.type='sawtooth';const f=a.createBiquadFilter();f.type='bandpass';f.Q.value=5;const vg=a.createGain();vg.gain.value=.0;o.connect(f).connect(vg).connect(g);o.start();nodes.push(o);
+  for(let x=0;x<dur;x+=.18){vg.gain.setValueAtTime(0,t+x);vg.gain.linearRampToValueAtTime(.07,t+x+.16);f.frequency.setValueAtTime(1400-Math.random()*900,t+x);o.frequency.setValueAtTime(90+Math.random()*30,t+x)}}
+ if(kind==='heart'){const o=a.createOscillator();o.frequency.value=48;const hg2=a.createGain();hg2.gain.value=0;o.connect(hg2).connect(g);o.start();nodes.push(o);
+  const dr=a.createOscillator();dr.frequency.value=37;const dg=a.createGain();dg.gain.value=.12;dr.connect(dg).connect(g);dr.start();nodes.push(dr);
+  for(let x=0;x<dur;x+=.9){hg2.gain.setValueAtTime(.6,t+x);hg2.gain.exponentialRampToValueAtTime(.001,t+x+.18);hg2.gain.setValueAtTime(.4,t+x+.25);hg2.gain.exponentialRampToValueAtTime(.001,t+x+.42)}}
+ return{stop(){const n=a.currentTime;g.gain.cancelScheduledValues(n);g.gain.setValueAtTime(g.gain.value,n);g.gain.linearRampToValueAtTime(0,n+.08);nodes.forEach(x=>{try{x.stop(n+.1)}catch(e){}})}}}
+const VOB={};function vbuf(u){if(!VOB[u])VOB[u]=fetch(u).then(r=>r.arrayBuffer()).then(ab=>new Promise((res,rej)=>ac().decodeAudioData(ab,res,rej))).catch(()=>null);return VOB[u]}
+let voSrc=null;function voPlay(buf,vol){const a=ac();const s=a.createBufferSource();s.buffer=buf;const g=a.createGain();g.gain.value=vol||1;s.connect(g).connect(a.destination);s.start();voSrc=s;return s}
+function staticBurst(ms=450,vol=.5){const a=ac();if(!a)return;const t=a.currentTime,s=src(noiseBuf(ms/1000+.1)),g=a.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+ms/1000);s.connect(g).connect(a.destination);s.start();
+ const c=a.createOscillator();c.type='square';c.frequency.setValueAtTime(1800,t);c.frequency.exponentialRampToValueAtTime(60,t+ms/1000);const cg=a.createGain();cg.gain.setValueAtTime(.06,t);cg.gain.exponentialRampToValueAtTime(.001,t+ms/1000);c.connect(cg).connect(a.destination);c.start();c.stop(t+ms/1000)}
+function tick(){const a=ac();if(!a)return;const t=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.value=900;g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.0001,t+.035);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.04)}
+function click(){const a=ac();if(!a)return;const t=a.currentTime,s=src(noiseBuf(.05)),g=a.createGain(),f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.001,t+.05);s.connect(f).connect(g).connect(a.destination);s.start()}
+
+/* ---------- помехи на экране ---------- */
+const gl=$('gl'),gx=gl.getContext('2d');
+async function glitch(ms=450,sound=true){if(sound)staticBurst(ms);gl.width=180;gl.height=320;gl.classList.add('on');st.classList.add('shake');const t0=performance.now();
+ while(performance.now()-t0<ms){const im=gx.createImageData(180,320),d=im.data;for(let i=0;i<d.length;i+=4){const v=Math.random()*255;d[i]=v*.85;d[i+1]=v;d[i+2]=v*(Math.random()<.02?2:.9);d[i+3]=Math.random()<.5?200:120}
+  gx.putImageData(im,0,0);for(let k=0;k<4;k++){gx.fillStyle=Math.random()<.5?'rgba(168,85,247,.5)':'rgba(0,0,0,.7)';gx.fillRect(0,Math.random()*320,180,4+Math.random()*16)}await wait(40)}
+ gl.classList.remove('on');st.classList.remove('shake')}
+
+/* ---------- навигация ---------- */
+function show(id){document.querySelectorAll('.v').forEach(v=>v.classList.toggle('on',v.id===id));$('back').hidden=id==='menu';$('hb').hidden=id==='menu';$('hb').classList.remove('on');$('cap').classList.remove('on');$('ph').classList.remove('on');musPlay(id);if(id==='n1')N1.init();if(id==='n2')N2.init();if(id!=='n2')N2.stop()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){ac();click();if(EMB&&b.dataset.go==='menu'){try{parent.postMessage('sboi:node-close','*')}catch(_){}return}show(b.dataset.go)}});
+if(EMB){document.getElementById('back').textContent='‹ назад';document.getElementById('menu').classList.remove('on');setTimeout(()=>show(location.hash.slice(1)),0);document.querySelectorAll('#e1 [data-go=n2],#e2 [data-go=n1]').forEach(b=>b.remove());document.querySelectorAll('.endc [data-go=menu]').forEach(b=>b.textContent='В лабораторию')}
+$('back').onclick=()=>{N1.stopAll();if(EMB){try{parent.postMessage('sboi:node-close','*')}catch(e){}return}show('menu')};
+$('hb').onclick=()=>{click();const on=!$('hb').classList.contains('on');$('hb').classList.toggle('on',on);if($('n1').classList.contains('on')){const c=$('cap');if(on){c.classList.remove('x');c.innerHTML='<b>Журнал 08.03</b><span>Нажмите на запись внизу, чтобы прослушать. Нажмите на слот — запись встанет туда; нажмите на поставленную запись — она вернётся вниз. Чужие голоса — в «Шум».</span>'}c.classList.toggle('on',on)}else $('ph').classList.toggle('on',on)};
+
+/* ================= УЗЕЛ 1 ================= */
+const N1=(()=>{
+ const R=[
+  {t:'23:31',lb:'23:3_',who:'Артур',x:'Запуск по графику. Контур замкнут, шесть человек на позициях. Пишем журнал.'},
+  {t:'23:34',lb:'_3:34',who:'Серёга-учитель',x:'Стабилизатор в норме. Фон чуть выше расчётного… но в допуске.'},
+  {t:'23:36',lb:'23:_6',who:'Толя',x:'Это не наш фон. Входящий поток. С той стороны что-то давит на кольцо.'},
+  {t:'23:37',lb:'2_:3_',who:'Кристиан',x:'Нагрузка сто двадцать… сто сорок… Это не обратная связь. Это кто-то пытается войти.'},
+  {t:'23:38',lb:'23:3_',who:'Иван',x:'Если отключим питание — оно останется по эту сторону. Держим проход закрытым изнутри.'},
+  {t:'23:39',lb:'_:39',who:'Серёга-фильмы',x:'Камеры ловят силуэт в вихре. Оно повторяет наши движения… Нет. Оно смотрит.'},
+  {t:'23:40',lb:'23:4_',who:'Артур',x:'Аварийный сброс не проходит! Щит греется! Все в контур — держим!'},
+  {t:'23:41',lb:'_:4_',who:'Все',x:'Держим!..'}];
+ const X=[{k:'whisper',x:'Пусти… вы же звали… пусти…'},{k:'rev',x:'…лаванз ен ыв ,ытсуП…'},{k:'heart',x:'[низкий гул · тук… тук… тук…]'}];
+ let T=[],sel=null,slots=Array(8).fill(null),bin=[],cur=null,busy=false,done=false,ready=false;
+ const tray=$('tray'),osc=$('osc'),ox=osc.getContext('2d');let amp=0,phase=0;
+ (function draw(){ox.clearRect(0,0,360,300);ox.strokeStyle='rgba(125,255,154,.9)';ox.lineWidth=3;ox.shadowColor='#7dff9a';ox.shadowBlur=10;ox.beginPath();phase+=.25;
+  for(let x=0;x<=360;x+=4){const y=150+Math.sin(x*.05+phase)*amp*60*Math.sin(x*.013)+(amp?(Math.random()-.5)*amp*50:0);x?ox.lineTo(x,y):ox.moveTo(x,y)}ox.stroke();requestAnimationFrame(draw)})();
+ function mkTape(i){const r=i<8?R[i]:X[i-8];const b=document.createElement('button');b.className='tp'+(i>=8?' xt':'');b.dataset.i=i;
+  b.innerHTML=`<img src="node-${i<8?'tape':'tape_x'}.webp" alt=""><span class="lb">${i<8?r.lb:''}</span>`;b.setAttribute('aria-label',i<8?'Запись '+r.lb:'Запись без метки');return b}
+ function init(){if(ready)return;ready=true;try{for(let k=1;k<=8;k++)vbuf('node-vo'+k+'.mp3');vbuf('node-vo-x1.mp3');vbuf('node-vo-x2.mp3')}catch(e){}
+  const order=[...Array(11).keys()].sort(()=>Math.random()-.5);T=order.map(mkTape);T.forEach(t=>tray.appendChild(t));
+  const S=$('slots');for(let k=0;k<8;k++){const s=document.createElement('button');s.className='slot';s.style.left=(2.8+94.3*(45+108.4*k)/951)+'%';s.dataset.k=k;s.setAttribute('aria-label','Слот '+(k+1));S.appendChild(s)}
+  tray.onclick=e=>{const b=e.target.closest('.tp');if(b)pick(b)};
+  S.onclick=e=>{const s=e.target.closest('.slot');if(!s)return;const k=+s.dataset.k;
+   if(sel&&sel!==slots[k]){place(sel,k);return}if(slots[k]){const b=slots[k];slots[k]=null;tray.appendChild(b);sel=null;stopAll();click();press($('b2'));upd();toast('Запись вернулась вниз',1200)}};
+  $('bin').onclick=()=>{press($('bin'));if(sel){toBin(sel);return}if(bin.length){const b=bin.pop();tray.appendChild(b);upd();toast('Запись вернулась на стол')}else toast('Сюда — записи, которым не место в журнале')}}
+ function upd(){$('binN').textContent=bin.length;$('h1').textContent='записей в журнале: '+slots.filter(Boolean).length+' / 8';document.querySelectorAll('.tp').forEach(t=>t.classList.toggle('sel',t===sel))}
+ function stopAll(){if(cur){cur.stop();cur=null}if(voSrc){try{voSrc.stop()}catch(e){}voSrc=null}amp=0;$('rL').classList.remove('run','fast');$('rR').classList.remove('run','fast');$('lamp').classList.remove('on')}
+ async function play(i,dist){stopAll();const r=i<8?R[i]:X[i-8];let kind=i<8?(dist?'whisper':'voice'):r.k;const txt=dist?X[0].x:r.x;let dur=Math.max(2.4,txt.length*.055+.8);
+  const vu=dist||(i>=8&&r.k==='whisper')?'node-vo-x1.mp3':i<8?'node-vo'+(i+1)+'.mp3':r.k==='rev'?'node-vo-x2.mp3':null;const id0=Symbol();play.id=id0;const buf=vu?await vbuf(vu):null;if(play.id!==id0)return;
+  if(buf){dur=buf.duration+.35;kind=kind==='heart'?'heart':'tape'}
+  click();press($('b1'));if(buf)voPlay(buf,i>=8||dist?.9:1);musVol(.18);$('rL').classList.add('run');$('rR').classList.add('run');$('lamp').classList.add('on');amp=1;cur=tone(kind,dur);
+  const cap=$('cap');cap.classList.add('on');$('hb').classList.remove('on');cap.classList.toggle('x',i>=8);cap.innerHTML=`<b>${i<8?(r.t.slice(0,4)+'?  ·  '+r.who):'запись без метки'}</b><span></span>`;const sp=cap.querySelector('span');
+  const id=id0;const t0=performance.now();
+  while(performance.now()-t0<dur*1000){if(play.id!==id)return;const p=(performance.now()-t0)/(dur*1000-500);sp.textContent=txt.slice(0,Math.ceil(txt.length*Math.min(1,p)));amp=.6+Math.random()*.6;await wait(40)}
+  if(play.id!==id)return;sp.textContent=txt;stopAll();if(!done)musVol(.5);await glitch(380);setTimeout(()=>{if(play.id===id&&!$('hb').classList.contains('on'))cap.classList.remove('on')},1800)}
+ function pick(b){if(busy||done)return;sel=b;b.classList.add('played');upd();play(+b.dataset.i)}
+ function place(b,k){const prev=slots[k];const from=slots.indexOf(b);if(from>=0)slots[from]=null;const bi=bin.indexOf(b);if(bi>=0)bin.splice(bi,1);
+  if(prev&&prev!==b){if(from>=0){slots[from]=prev;$('slots').children[from].appendChild(prev)}else tray.appendChild(prev)}
+  slots[k]=b;$('slots').children[k].appendChild(b);sel=null;click();press($('b3'));upd();if(slots.every(Boolean))check()}
+ function toBin(b){const from=slots.indexOf(b);if(from>=0)slots[from]=null;b.remove();bin.push(b);sel=null;stopAll();click();upd();toast(+b.dataset.i>=8?'Запись в «Шуме». Лоток на миг вспыхивает лиловым.':'Это голос из лаборатории. Уверены, что это шум?')}
+ async function check(){busy=true;await wait(300);const sl=[...$('slots').children];let bad=0,alien=false;
+  slots.forEach((b,k)=>{const i=+b.dataset.i;const ok=i===k;sl[k].classList.remove('ok','bad');void sl[k].offsetWidth;sl[k].classList.add(ok?'ok':'bad');if(!ok)bad++;if(i>=8)alien=true});
+  if(alien){await wait(500);play(8,true);toast('В журнале чужой голос. Он отвечает, когда его слушают.',3200);busy=false;return}
+  if(bad){toast('Не сходится: '+bad+' из 8 не на своём месте. Переслушайте записи с красной рамкой.',3200);busy=false;return}
+  final()}
+ async function final(){done=true;musVol(.35,1500);toast('Журнал собран. Воспроизведение…',2000);await wait(1200);
+  for(let k=0;k<8;k++){await play(k);await wait(250)}
+  $('rL').classList.add('run','fast');$('rR').classList.add('run','fast');musVol(.9,400);await glitch(900);musVol(0,2500);const c=tone('whisper',3);const cap=$('cap');cap.classList.add('x');cap.innerHTML='<b>23:41:07 · ???</b><span>Пусти… вы же звали… пусти…</span>';await wait(3000);c.stop();await glitch(500);stopAll();doneN(1);$('e1').classList.add('on')}
+ return{init,stopAll}})();
+
+/* ================= УЗЕЛ 2 ================= */
+const N2=(()=>{
+ const S=[[165,365,470,705],[553,365,855,705],[165,885,470,1215],[553,885,855,1215]];/* экраны в координатах 1008×1792 */
+ const V=['node-cam1','node-cam2','node-cam3','node-cam4'],AN=['node-a1','node-a2','node-a3','node-a4'];
+ const WIN=[[1.2,2.1],[2.4,3.2],[3.2,4.0],[.4,1.2]];/* когда видна аномалия (сек синхронного времени) */
+ const DUR=4.9,Y0=-170,PT=[[.5,.42],[.56,.26],[.42,.64],[.8,.42]];let off=[0,1.1,-.9,.7],T=2.2,playing=false,phase=1,frozen=false,found=new Set(),vids=[],ready=false,raf=0,last=0;
+ const pct=(v,a)=>v/a*100+'%';
+ function init(){if(!ready){ready=true;const C=$('cams');
+  S.forEach((r,i)=>{const d=document.createElement('div');d.className='cam';Object.assign(d.style,{left:pct(r[0],1008),top:pct(r[1]+Y0,1792),width:pct(r[2]-r[0],1008),height:pct(r[3]-r[1],1792)});
+   d.innerHTML=`<video src="${V[i]}.mp4" muted playsinline preload="auto"></video><img class="an" src="${AN[i]}.webp" alt="">`;C.appendChild(d);vids.push(d.querySelector('video'));
+   const tc=document.createElement('div');tc.className='tc';tc.id='tc'+i;Object.assign(tc.style,{left:pct(r[0]+8,1008),top:pct(r[1]+Y0+8,1792)});C.appendChild(tc);
+   const h=document.createElement('button');h.className='hit';h.dataset.c=i;h.setAttribute('aria-label','Камера '+(i+1));Object.assign(h.style,{left:pct(r[0],1008),top:pct(r[1]+Y0,1792),width:pct(r[2]-r[0],1008),height:pct(r[3]-r[1],1792)});C.appendChild(h)});
+  C.onclick=e=>{const h=e.target.closest('.hit');if(h)mark(+h.dataset.c)};
+  const sl=$('sl');for(let i=0;i<4;i++){const d=document.createElement('div');d.className='sld'+(i===0?' lock':'');d.innerHTML=`<b>${i+1}</b><div class="tr"><div class="kn"></div></div>`;sl.appendChild(d);if(i)drag(d.querySelector('.tr'),i)}
+  wheel();$('bPlay').onclick=()=>{press($('bPlay'));click();frozen=false;playing=!playing;last=performance.now()};
+  $('bStop').onclick=()=>{press($('bStop'));click();frozen=false;T=0;seek();playing=true;last=performance.now();toast('С начала')};
+  $('bFreeze').onclick=()=>{press($('bFreeze'));click();if(phase!==2){toast('Сначала синхронизируйте камеры ползунками 2–4');return}playing=false;frozen=true;toast('Стоп-кадр. Нажмите на экран, где что-то не так.')}}
+  T=2.2;seek();playing=false;phaseText();cancelAnimationFrame(raf);loop()}
+ function phaseText(){$('ph').innerHTML=phase===1?'<b>Шаг 1.</b> Камеры идут вразнобой. Ползунками 2–4 подгоните время на экранах под CAM 1.':phase===2?`<b>Шаг 2.</b> Крутите колесо или «▶II», «■» — с начала. Увидели то, чего не должно быть — красная «СТОП-КАДР» и нажмите на экран. Найдено: ${found.size} / 4`:'…'}
+ function drag(tr,i){const kn=tr.querySelector('.kn');const set=()=>{kn.style.top=(50-off[i]/2*45)+'%';tr.parentNode.classList.toggle('ok',Math.abs(off[i])<.12)};set();
+  tr.addEventListener('pointerdown',e=>{if(phase!==1)return;tr.setPointerCapture(e.pointerId);const mv=ev=>{if(phase!==1)return;const r=tr.getBoundingClientRect();let v=((r.top+r.height/2)-ev.clientY)/(r.height*.45)*2;v=Math.round(Math.max(-2,Math.min(2,v))*10)/10;if(Math.abs(v)<.15)v=0;if(Math.round(v*10)!==Math.round(off[i]*10))click();off[i]=v;set();seek();syncCheck()};mv(e);tr.onpointermove=mv;tr.onpointerup=()=>{tr.onpointermove=null}})}
+ function syncCheck(){if(phase===1&&off.every(o=>o===0)){phase=2;off=[0,0,0,0];document.querySelectorAll('.sld .kn').forEach(k=>k.style.top='50%');seek();vib(40);toast('Синхронно. Все четыре камеры показывают одно и то же время.');phaseText()}}
+ function wheel(){const w=$('wheel'),k=$('knob');let a0=0,ang=0,acc=0;const A=e=>{const r=w.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))};
+  w.addEventListener('pointerdown',e=>{w.setPointerCapture(e.pointerId);a0=A(e);playing=false;frozen=false;
+   w.onpointermove=ev=>{const a=A(ev);let d=a-a0;if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;a0=a;ang+=d;k.style.transform=`rotate(${ang}rad)`;T=Math.max(0,Math.min(DUR,T+d/(2*Math.PI)*2));acc+=Math.abs(d);if(acc>.35){acc=0;tick()}seek()};
+   w.onpointerup=()=>{w.onpointermove=null}})}
+ function seek(){vids.forEach((v,i)=>{const t=Math.max(0,Math.min(DUR,T+off[i]));if(Math.abs(v.currentTime-t)>.04){try{v.currentTime=t}catch(e){}}})}
+ function loop(){const now=performance.now();if(playing){T+=(now-(last||now))/1000;if(T>=DUR){T=DUR;playing=false}seek()}last=now;
+  vids.forEach((v,i)=>{const t=Math.max(0,Math.min(DUR,T+off[i]));const tc=$('tc'+i);const tt=12+T+off[i];tc.textContent='23:40:'+tt.toFixed(1).padStart(4,'0');tc.classList.toggle('sync',phase>=2||(i>0&&off[i]===0));
+   const an=v.parentNode.querySelector('.an');an.classList.toggle('on',phase===2&&!found.has(i)&&T>=WIN[i][0]&&T<=WIN[i][1])});
+  raf=requestAnimationFrame(loop)}
+ function mark(i){if(phase!==2)return;if(!frozen){toast('Сначала «СТОП-КАДР»');return}
+  const vis=T>=WIN[i][0]&&T<=WIN[i][1]&&!found.has(i);
+  if(!vis){toast('На этой камере ничего необычного');return}
+  found.add(i);vib(60);click();const r=S[i];const m=document.createElement('img');m.className='mk';m.src='node-marker.webp';m.alt='';Object.assign(m.style,{left:pct((r[0]+r[2])/2-50,1008),top:pct((r[1]+r[3])/2+Y0-60,1792)});$('cams').appendChild(m);
+  const P=PT[i],box=S[i],bw=box[2]-box[0],bh=box[3]-box[1],vf=bh/(bw/.5625),py=(P[1]-(1-vf)/2)/vf;m.style.left=pct(box[0]+bw*P[0]-45,1008);m.style.top=pct(box[1]+Y0+bh*Math.max(.08,Math.min(.92,py))-50,1792);
+  const msg=['На камере 1 у портала семеро.','Он стоит у рычага — и у дальнего края пульта. Одновременно.','Тень тянется к свету, а не от него.','Отражение в окне повернулось к камере.'][i];toast(msg+'<br><b style="color:var(--phos);font-weight:400">Найдено: '+found.size+' / 4</b>',2600);phaseText();frozen=false;
+  if(found.size===4)setTimeout(final,2800)}
+ async function final(){phase=3;phaseText();playing=false;await glitch(500);const lv=$('lastv');lv.style.display='block';lv.currentTime=0;lv.playbackRate=.4;try{await lv.play()}catch(e){}
+  lv.ontimeupdate=()=>{if(lv.currentTime>3.1&&lv.playbackRate<1){lv.playbackRate=1.7;staticBurst(300,.25)}};
+  await new Promise(r=>{lv.onended=r;setTimeout(r,11000)});await glitch(1200);lv.style.display='none';doneN(2);$('e2').classList.add('on')}
+ function stop(){playing=false;cancelAnimationFrame(raf)}
+ return{init,stop}})();
+</script>
+</html>

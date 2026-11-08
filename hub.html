@@ -781,9 +781,15 @@ function relRow(r){
   const ph=r[5]?` style="background:#1b1426 url('${r[5]}') 50% ${r[6]!=null?r[6]:6}%/${r[7]||240}% auto no-repeat;color:transparent"`:'';
   return `<div class="rel"><div class="av ${stt==='ok'?'':stt}"${ph} aria-label="${esc(n)}: ${stt==='ok'?'жив':stt==='dead'?'мёртв':'предан'}">${esc(ini)}${lbl}</div><div class="relm"><div class="nm"><span>${esc(n)}</span><small>${esc(role)}</small></div><div class="att" aria-label="Отношение ${att}">${bar}</div>${romH}</div></div>`;
 }
+function NODEBTN(){const n=[0,1,2,3,4,5,6,7,8].filter(DONE).length;let seen={};try{seen={1:localStorage.getItem('sboi_node1'),2:localStorage.getItem('sboi_node2')}}catch(e){}
+  const b=(k,t,sub)=>`<button class="sbtn" data-node="${k}"><span>${t}${seen[k]?'':' <span class="new">новое</span>'}</span><small>${sub}</small></button>`;
+  return (n>=3?b(1,'Узел 1 · Вспышка','журнал записей 08.03'):'<div class="note">Узел 1 откроется после трёх пройденных историй.</div>')+(n>=6?b(2,'Узел 2 · За минуту до','камеры наблюдения'):n>=3?'<div class="note">Узел 2 откроется после шести историй.</div>':'')}
+function openNode(k){$('vT').textContent=k==1?'Узел 1 · Вспышка':'Узел 2 · За минуту до';$('vS').textContent='Лаборатория · 08.03, 23:41';$('vBody').innerHTML='';const f=document.createElement('iframe');f.title='Узел';f.allow='autoplay; fullscreen';f.src='node.html#n'+k;$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-node]');if(b){e.stopPropagation();openNode(+b.dataset.node)}},true);
+addEventListener('message',e=>{if(e.data==='sboi:node-close'){$('viewer').classList.remove('on');$('vBody').innerHTML=''}});
 function body(id){
   const s=sel[id];
-  if(id==='portal')return '<div class="cards">'+STORIES.map((s,i)=>`<button class="story" data-s="${i}"><img src="${s[2]}" alt=""><b>${esc(s[0])}</b><i>${esc(s[1])}</i><em>${esc(s[3])}</em></button>`).join('')+'</div><div class="note">Узел 1 откроется после трёх пройденных историй.</div>';
+  if(id==='portal')return '<div class="cards">'+STORIES.map((s,i)=>`<button class="story" data-s="${i}"><img src="${s[2]}" alt=""><b>${esc(s[0])}</b><i>${esc(s[1])}</i><em>${esc(s[3])}</em></button>`).join('')+'</div>'+NODEBTN();
   if(id==='ties'){
     const one=i=>CAST[i]?CAST[i].map(relRow).join(''):empty(i);
     const h=s==='all'?Object.keys(CAST).map(i=>`<div class="grp">${esc(STORIES[i][0])} · ${esc(STORIES[i][1])}</div>`+one(+i)).join(''):one(s);
@@ -1113,7 +1119,7 @@ function saveCode(){return 'SBOI1-'+btoa(unescape(encodeURIComponent(JSON.string
 const b64u={enc:u=>{let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
  dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const s=atob(t),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u}};
 async function saveCode2(){if(typeof CompressionStream==='undefined')return saveCode();
- const o=saveObj();Object.keys(o).forEach(k=>{if(/_snap$/.test(k)){try{const v=JSON.parse(o[k]);const ks=Object.keys(v).map(Number).sort((a,b)=>a-b);const keep={};ks.forEach((n,j)=>{keep[n]=v[n]});o[k]=JSON.stringify(keep)}catch(e){}}});
+ const o=saveObj();Object.keys(o).forEach(k=>{if(/_snap$/.test(k)||k==='sboi_settings'&&0)delete o[k]});
  const st=new Blob([JSON.stringify(o)]).stream().pipeThrough(new CompressionStream('deflate-raw'));const buf=new Uint8Array(await new Response(st).arrayBuffer());return 'SBOI2-'+b64u.enc(buf)}
 async function readCode(v){v=v.trim().replace(/\s+/g,'');if(v.indexOf('SBOI2-')===0){const st=new Blob([b64u.dec(v.slice(6))]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return JSON.parse(await new Response(st).text())}
  return JSON.parse(decodeURIComponent(escape(atob(v.replace(/^SBOI1-/,'')))))}
@@ -1170,4 +1176,25 @@ function powerAsk(){document.getElementById('pAsk').classList.add('on')}
 (function(){const r=document.getElementById('room');if(PDEAD())r.classList.add('dead');
  const a=document.getElementById('pAsk');a.querySelector('.no').onclick=()=>a.classList.remove('on');
  a.querySelector('.go').onclick=()=>{a.classList.remove('on');try{parent.postMessage('sboi:power','*')}catch(e){}};})();
+</script><script>(()=>{const st=document.createElement('style');st.textContent=`.swH{position:absolute;left:50%;bottom:30%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:10px;padding:7px 14px;border-radius:99px;background:rgba(8,5,16,.45);color:rgba(255,255,255,.82);font:500 12px/1 system-ui,-apple-system,sans-serif;letter-spacing:.06em;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}.swH.on{opacity:.75}.swH i{font-style:normal;font-size:16px;animation:swHl 1.4s ease-in-out infinite}.swH i:last-child{animation-name:swHr}@keyframes swHl{50%{transform:translateX(-5px)}}@keyframes swHr{50%{transform:translateX(5px)}}`;document.head.appendChild(st);
+let el=null,host=null;
+const show=(h,t)=>{if(host===h)return;hide();el=document.createElement('div');el.className='swH';el.innerHTML='<i>‹</i><span>'+t+'</span><i>›</i>';if(getComputedStyle(h).position==='static')h.style.position='relative';h.appendChild(el);host=h;const e=el;setTimeout(()=>e.classList.add('on'),400)};
+const hide=()=>{if(el){const e=el;e.classList.remove('on');setTimeout(()=>e.remove(),500)}el=null;host=null};
+const HUB=!!document.getElementById('room');
+if(HUB){const p=document.getElementById('pano');if(!p)return;let base=null;
+ setTimeout(()=>{base=p.scrollLeft;show(document.querySelector('.app')||document.body,'листайте лабораторию');if(el)el.style.bottom='11%'},1400);
+ p.addEventListener('scroll',()=>{if(base!=null&&Math.abs(p.scrollLeft-base)>25)hide()},{passive:true});document.addEventListener('click',()=>setTimeout(()=>{if(document.querySelector('#viewer.on,.sheet.on,[aria-hidden=false].sheet'))hide()},50),true);return}
+let panoBase=null,panoDone=false,drag=null;
+setInterval(()=>{const p=document.getElementById('pano');
+ if(p&&p.classList.contains('on')){if(!panoDone&&host!==p.parentNode){panoBase=p.scrollLeft;show(p.parentNode,'двигайте экран')}}
+ else if(panoBase!=null){panoBase=null;panoDone=false;if(host&&host.id!=='swq')hide()}
+ const q=document.querySelector('.hzQ.on.hzSpots,.hzQ.on.hzIns');
+ if(q&&!q.dataset.swh&&host!==q)show(q,'двигайте экран');
+ if(host&&!document.body.contains(host))hide();
+ if(host&&host.classList&&host.classList.contains('hzQ')&&!host.classList.contains('on')&&!q)hide()},350);
+document.addEventListener('scroll',e=>{const p=document.getElementById('pano');if(e.target===p&&panoBase!=null&&Math.abs(p.scrollLeft-panoBase)>25){panoDone=true;hide()}},{capture:true,passive:true});
+document.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY]},true);
+document.addEventListener('pointermove',e=>{if(!drag||!host||!host.classList||!host.classList.contains('hzQ'))return;if(Math.abs(e.clientX-drag[0])+Math.abs(e.clientY-drag[1])>25){host.dataset.swh=1;hide()}},true);
+document.addEventListener('pointerup',()=>{drag=null},true);
+})();
 </script><script>document.querySelector(".top .ib").addEventListener("click",()=>parent.postMessage("sboi:menu","*"));</script></body></html>

@@ -3276,4 +3276,25 @@ if(__C[n]){Object.assign(window,__C[n])}else{window.CHARS=__C[4].CHARS;window.ST
  window.SCENES=[{name:'Продолжение следует',tag:TAGS[n],steps:[S.title('Морок',TAGS[n],3200),S.scr('Эта глава ещё в работе. Продолжение появится в одном из следующих обновлений.'),()=>{window.GAME.exit()}]}]}
 const tg=document.querySelector('#home .tag');if(tg)tg.textContent=TAGS[n]||TAGS[1];})();
 initUI();</script>
-</body></html>
+<script>(()=>{const st=document.createElement('style');st.textContent=`.swH{position:absolute;left:50%;bottom:30%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:10px;padding:7px 14px;border-radius:99px;background:rgba(8,5,16,.45);color:rgba(255,255,255,.82);font:500 12px/1 system-ui,-apple-system,sans-serif;letter-spacing:.06em;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}.swH.on{opacity:.75}.swH i{font-style:normal;font-size:16px;animation:swHl 1.4s ease-in-out infinite}.swH i:last-child{animation-name:swHr}@keyframes swHl{50%{transform:translateX(-5px)}}@keyframes swHr{50%{transform:translateX(5px)}}`;document.head.appendChild(st);
+let el=null,host=null;
+const show=(h,t)=>{if(host===h)return;hide();el=document.createElement('div');el.className='swH';el.innerHTML='<i>‹</i><span>'+t+'</span><i>›</i>';if(getComputedStyle(h).position==='static')h.style.position='relative';h.appendChild(el);host=h;const e=el;setTimeout(()=>e.classList.add('on'),400)};
+const hide=()=>{if(el){const e=el;e.classList.remove('on');setTimeout(()=>e.remove(),500)}el=null;host=null};
+const HUB=!!document.getElementById('room');
+if(HUB){const p=document.getElementById('pano');if(!p)return;let base=null;
+ setTimeout(()=>{base=p.scrollLeft;show(document.querySelector('.app')||document.body,'листайте лабораторию');if(el)el.style.bottom='11%'},1400);
+ p.addEventListener('scroll',()=>{if(base!=null&&Math.abs(p.scrollLeft-base)>25)hide()},{passive:true});document.addEventListener('click',()=>setTimeout(()=>{if(document.querySelector('#viewer.on,.sheet.on,[aria-hidden=false].sheet'))hide()},50),true);return}
+let panoBase=null,panoDone=false,drag=null;
+setInterval(()=>{const p=document.getElementById('pano');
+ if(p&&p.classList.contains('on')){if(!panoDone&&host!==p.parentNode){panoBase=p.scrollLeft;show(p.parentNode,'двигайте экран')}}
+ else if(panoBase!=null){panoBase=null;panoDone=false;if(host&&host.id!=='swq')hide()}
+ const q=document.querySelector('.hzQ.on.hzSpots,.hzQ.on.hzIns');
+ if(q&&!q.dataset.swh&&host!==q)show(q,'двигайте экран');
+ if(host&&!document.body.contains(host))hide();
+ if(host&&host.classList&&host.classList.contains('hzQ')&&!host.classList.contains('on')&&!q)hide()},350);
+document.addEventListener('scroll',e=>{const p=document.getElementById('pano');if(e.target===p&&panoBase!=null&&Math.abs(p.scrollLeft-panoBase)>25){panoDone=true;hide()}},{capture:true,passive:true});
+document.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY]},true);
+document.addEventListener('pointermove',e=>{if(!drag||!host||!host.classList||!host.classList.contains('hzQ'))return;if(Math.abs(e.clientX-drag[0])+Math.abs(e.clientY-drag[1])>25){host.dataset.swh=1;hide()}},true);
+document.addEventListener('pointerup',()=>{drag=null},true);
+})();
+</script></body></html>

@@ -120,4 +120,4 @@ function fit(){
 addEventListener('resize',fit);
 $('nb').onclick=start;$('go').onclick=()=>{try{parent.postMessage('sboi:power-ok','*')}catch(e){}};
 start();
-</script></body></html>
+</script><script>(()=>{const a=new Audio('node-mus2.mp3');a.loop=true;a.volume=.55;const go=()=>a.play().catch(()=>{});go();addEventListener('pointerdown',go,{once:true});addEventListener('message',()=>{});window.addEventListener('pagehide',()=>a.pause())})()</script></body></html>
