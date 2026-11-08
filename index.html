@@ -129,7 +129,7 @@ button[data-fs]:disabled{opacity:.45;cursor:default}
 #hubWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 @media (prefers-reduced-motion:reduce){.tap{animation:none;opacity:1}.bg{transition:opacity .4s}}
 #storyFr{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:5;background:#000;opacity:0;transform:scale(1.04);transition:opacity .45s ease,transform .45s ease,filter .35s}#storyFr.on{opacity:1;transform:none}#storyFr.leaving{filter:brightness(.25) blur(3px)}#storyLoad{position:absolute;inset:0;z-index:7;background:#05030a center/cover no-repeat;opacity:0;transition:opacity .5s;display:flex;align-items:flex-end;justify-content:center}#storyLoad.on{opacity:1}#storyLoad::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(5,3,10,.85))}#storyLoad .sl{position:relative;margin-bottom:calc(env(safe-area-inset-bottom) + 70px);text-align:center;color:#f3eadb;font:600 13px Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}#storyLoad .sl b{display:block;font:700 32px Philosopher,serif;letter-spacing:.02em;text-transform:none;margin-bottom:14px;color:#f6dda0;text-shadow:0 0 18px rgba(232,184,90,.5)}#storyLoad .sl i{display:block;width:160px;height:3px;margin:0 auto 12px;border-radius:2px;background:linear-gradient(90deg,transparent,#b07cff,#e8c25a,transparent);background-size:200% 100%;animation:slbar 1.2s linear infinite}@keyframes slbar{from{background-position:200% 0}to{background-position:-200% 0}}#hubWrap iframe:not(#storyFr){transition:opacity .4s}
-#prolog.gs{padding:0;background:#000;z-index:95}#prolog.gs .pl-text,#prolog.gs .pl-next{display:none}#prolog.gs .pl-top{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;left:auto;z-index:9}#prolog.gs .pl-top span{display:none}#gScene{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .7s}#gScene.in{opacity:1}#gScene.out{opacity:0}#gScene .gbg{position:absolute;inset:-3%;background:#05030a url(prolog-lab.webp) center/cover;animation:gbgf 4.2s steps(1) infinite}@keyframes gbgf{0%,100%{filter:brightness(1)}61%{filter:brightness(.7)}63%{filter:brightness(1.05)}66%{filter:brightness(.8)}}#gScene .gsp{position:absolute;inset:0}#gScene .gg{position:absolute;bottom:-6%;height:74%;transform:translateX(-50%) translateY(20px);opacity:0;transition:opacity .45s,transform .45s,filter .3s,left .5s;pointer-events:none;filter:drop-shadow(0 0 30px rgba(0,0,0,.6))}#gScene .gg.on{opacity:1;transform:translateX(-50%)}#gScene .gg.dim{filter:brightness(.42) saturate(.6)}#gScene .gbox{position:absolute;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:8;min-height:120px;padding:26px 18px 18px;border-radius:14px;background:linear-gradient(rgba(14,9,26,.92),rgba(6,4,12,.96));border:1px solid rgba(168,85,247,.35);box-shadow:0 10px 40px rgba(0,0,0,.6)}#gScene .gn{position:absolute;top:-14px;left:16px;padding:4px 14px;border-radius:99px;background:#2a1748;border:1px solid rgba(201,163,93,.7);color:#e8c98a;font:600 14px var(--display,serif)}#gScene .gt{margin:0;font:400 18px/1.45 var(--display,serif);color:#f1e8ff}#gScene .gbox.nar .gt{font-style:italic;color:#c9b8e6;text-align:center}#gScene .gnx{position:absolute;right:14px;bottom:8px;color:#c9a35d;font-style:normal;animation:gnx 1s infinite alternate}@keyframes gnx{to{transform:translateY(3px);opacity:.5}}#prolog.vid{padding:0;background:#000;z-index:95}#prolog.vid .pl-text,#prolog.vid .pl-next{display:none}#prolog.vid .pl-top{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;left:auto;z-index:3}#prolog.vid .pl-top span{display:none}#plVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}#prolog.over{z-index:95;background:#000;padding:0}#prolog.over .pl-top,#prolog.over .pl-text,#prolog.over .pl-next{display:none}#plPow{position:absolute;inset:0;width:100%;height:100%;border:0}</style>
+#prolog.gs{padding:0;background:#000;z-index:95}#prolog.gs .pl-text,#prolog.gs .pl-next{display:none}#prolog.gs .pl-top{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;left:auto;z-index:9}#prolog.gs .pl-top span{display:none}#gScene{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .7s}#gScene.in{opacity:1}#gScene.out{opacity:0}#gScene .gbg{position:absolute;inset:-3%;background:#05030a url(prolog-lab.webp) center/cover;animation:gbgf 4.2s steps(1) infinite}@keyframes gbgf{0%,100%{filter:brightness(1)}61%{filter:brightness(.7)}63%{filter:brightness(1.05)}66%{filter:brightness(.8)}}#gScene .gsp{position:absolute;inset:0}#gScene .gg{position:absolute;bottom:-4%;height:60%;max-width:58vw;object-fit:contain;object-position:bottom;transform:translateX(-50%) translateY(20px);opacity:0;transition:opacity .45s,transform .45s,filter .3s,left .5s;pointer-events:none;filter:drop-shadow(0 0 30px rgba(0,0,0,.6))}#gScene .gg.on{opacity:1;transform:translateX(-50%)}#gScene .gg.dim{filter:brightness(.42) saturate(.6)}#gScene .gbox{position:absolute;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:8;min-height:120px;padding:26px 18px 18px;border-radius:14px;background:linear-gradient(rgba(14,9,26,.92),rgba(6,4,12,.96));border:1px solid rgba(168,85,247,.35);box-shadow:0 10px 40px rgba(0,0,0,.6)}#gScene .gn{position:absolute;top:-14px;left:16px;padding:4px 14px;border-radius:99px;background:#2a1748;border:1px solid rgba(201,163,93,.7);color:#e8c98a;font:600 14px var(--display,serif)}#gScene .gt{margin:0;font:400 18px/1.45 var(--display,serif);color:#f1e8ff}#gScene .gbox.nar .gt{font-style:italic;color:#c9b8e6;text-align:center}#gScene .gnx{position:absolute;right:14px;bottom:8px;color:#c9a35d;font-style:normal;animation:gnx 1s infinite alternate}@keyframes gnx{to{transform:translateY(3px);opacity:.5}}#prolog.vid{padding:0;background:#000;z-index:95}#prolog.vid .pl-text,#prolog.vid .pl-next{display:none}#prolog.vid .pl-top{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;left:auto;z-index:3}#prolog.vid .pl-top span{display:none}#plVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}#prolog.over{z-index:95;background:#000;padding:0}#prolog.over .pl-top,#prolog.over .pl-text,#prolog.over .pl-next{display:none}#plPow{position:absolute;inset:0;width:100%;height:100%;border:0}</style>
 
 
 <div class="stage" id="stage">
@@ -145,7 +145,7 @@ button[data-fs]:disabled{opacity:.45;cursor:default}
   <div class="scrim"></div>
 
   <div class="top">
-    <span class="chip" id="ver">v1.0.66</span>
+    <span class="chip" id="ver">v1.0.72</span>
     <span class="chip" id="prof">…</span>
   </div>
 
@@ -516,7 +516,7 @@ let plI=0;
 function plDone(){const pw=$('plPow');if(pw)pw.remove();try{localStorage.setItem('sboi_prologue','1')}catch(e){}$('prolog').hidden=true;menuSub();openHub()}
 function plStep(){if(plI>=PL.length){plPower();return}const p=document.createElement('p');p.textContent=PL[plI];const box=$('plText');box.querySelectorAll('p').forEach(x=>x.classList.add('dim'));box.appendChild(p);while(box.children.length>3)box.removeChild(box.firstChild);plI++;$('plNext').textContent=plI>=PL.length?'Восстановить питание':'Дальше'}
 function plPower(){const f=document.createElement('iframe');f.id='plPow';f.title='Цепь питания';f.src='prolog-power.html';$('prolog').appendChild(f)}
-addEventListener('message',e=>{if(e.data==='sboi:power'){const pr=$('prolog');pr.classList.add('over');pr.hidden=false;plPower();return}
+addEventListener('message',e=>{if(e.data==='sboi:power'){mStop();const pr=$('prolog');pr.classList.add('over');pr.hidden=false;plPower();return}
  if(e.data==='sboi:power-ok'){const f=$('plPow');if(f)f.remove();const pr=$('prolog');pr.classList.remove('over');mStop();plVideo('prolog-launch.mp4',()=>{try{localStorage.setItem('sboi_prologue','1')}catch(e){}pr.hidden=true;menuSub();if(hubEl){hubEl.src='hub.html'}mPlay('hub');burst(6);if(!reduce)flash.animate([{opacity:1},{opacity:0}],{duration:900})})}});
 $('plNext').onclick=plStep;$('plSkip').onclick=()=>{const pr=$('prolog');if(pr._end&&(pr.classList.contains('vid')||pr.classList.contains('gs'))){pr._end();return}plDone()};
 function prologDone(){try{const v=localStorage.getItem('sboi_prologue');return v==='1'||v==='hub'}catch(e){return false}}
@@ -524,34 +524,31 @@ function menuSub(){$('mSub').textContent=prologDone()?'лаборатория':'
 menuSub();
 function plVideo(src,done){const pr=$('prolog');pr.classList.add('vid');pr.hidden=false;let v=$('plVid');if(v)v.remove();v=document.createElement('video');v.id='plVid';v.setAttribute('playsinline','');v.playsInline=true;v.preload='auto';v.src=src;pr.appendChild(v);let fin=false;const end=()=>{if(fin)return;fin=true;v.pause();v.remove();pr.classList.remove('vid');done()};v.onended=end;v.onerror=end;pr._end=end;const p=v.play();if(p&&p.catch)p.catch(()=>{v.muted=true;v.play().catch(end)})}
 const GN={agn:'Агния',kbe:'Катя Белокрылина',kbl:'Катя Близнюк',kzu:'Катя Зубкова',nsh:'Наташа Шиняева',pol:'Полина',rim:'Рима',sve:'Света',nba:'Наташа Бабенко'};
-const GL=[[[],0,'Тишина. Мигает аварийная лампа. Портал мёртвый.'],
-[['kzu','agn','rim'],'agn','Кто-нибудь помнит, как мы тут уснули?'],
-[['kzu','agn','rim'],'rim','Я помню шампанское. Потом — свет. Потом пол.'],
-[['kzu','agn','rim'],'kzu','Где мальчики?'],
-[['kzu','agn','rim'],0,'Пауза. Все переглядываются.'],
-[['sve','pol','kbe'],'pol','Серёг? Вань?.. …Никого.'],
-[['sve','pol','kbe'],'sve','Куртки на месте. Телефоны на месте. Кружка Артура ещё тёплая… была.'],
-[['sve','pol','kbe'],'kbe','Значит, ушли недавно. Выйти они не могли — дверь заперта изнутри.'],
-[['nsh','kbl'],'nsh','Тогда остаётся только одна дверь.'],
-[['nsh','kbl'],0,'Наташа кивает на портал.'],
-[['nsh','kbl'],'kbl','Не смешно, Наташ.'],
-[['nsh','kbl'],'nsh','А я и не смеюсь.'],
-[[],0,'Скрип двери. Входит Наташа Бабенко — в зелёном платье, с пакетом из круглосуточного.'],
-[['nba'],'nba','Я за кофе выходила на десять минут. Что здесь было?!'],
-[['agn','nba'],'agn','Ты нам скажи. Ты единственная, кого тут не было.'],
-[['agn','nba'],'nba','Я слышала хлопок. Весь квартал без света. А потом… он светился. Изнутри. Как будто кто-то стучал.'],
-[['kzu','nba'],'kzu','Кто-то… или они?'],
-[['rim','sve'],'rim','Журнал на терминале. Последняя запись — 23:41. «Запуск. Шесть человек в контуре».'],
-[['rim','sve'],'sve','Шесть. Их было шесть.'],
-[['kbe','pol'],'kbe','Значит, портал их забрал. И, может, вернёт — если его включить.'],
-[['kbe','pol'],'pol','Щит мёртвый. Цепь питания порвана.'],
-[['kbl','agn'],'kbl','Так почините её. Я никуда не уйду, пока они там.'],
-[['kbl','agn'],'agn','Никто не уйдёт.']];
+const GL=[[[],0,'Вспышка. Портал выплёвывает их одну за другой — на холодный бетон лаборатории.'],
+[['nsh','kzu'],'nsh','Все живы? Голос подайте.'],
+[['nsh','kzu'],'kzu','Живы… Кажется. Это был не сон?'],
+[['agn','rim'],'agn','Мы были там. Все. А потом нас вышвырнуло обратно.'],
+[['agn','rim'],'rim','Где парни? Они же шли за нами.'],
+[['pol','sve'],'pol','Серёг! Вань! Артур!.. …Никого.'],
+[['pol','sve'],'sve','Их куртки. Телефоны. Всё здесь. Кроме них.'],
+[['kbe','kbl'],'kbe','Портал мёртвый. Ни света, ни гула.'],
+[['kbe','kbl'],'kbl','Он их не отпустил. Нас выкинул — а их оставил.'],
+[[],0,'Скрип двери. На пороге — Наташа Бабенко в зелёном платье, запыхавшаяся.'],
+[['nba'],'nba','Девочки?! Вы живы! Что здесь случилось?'],
+[['agn','nba'],'agn','Мы хотели спросить у тебя. Ты что-нибудь знаешь?'],
+[['agn','nba'],'nba','Нет. По всему городу скачет свет, полквартала без электричества. А отсюда било фиолетовым — прямо в небо. Я пошла на свет.'],
+[['kzu','nba'],'kzu','Фиолетовым… Значит, портал ещё жив. Где-то внутри.'],
+[['rim','sve'],'rim','Журнал на терминале. Последняя запись — 23:41. «Шесть человек в контуре».'],
+[['rim','sve'],'sve','Шесть. Все наши.'],
+[['pol','kbe'],'pol','Щит выбило. Цепь питания разорвана.'],
+[['pol','kbe'],'kbe','Если запустить портал — поймём, что произошло. И куда их забросило.'],
+[['nsh','agn'],'nsh','Тогда чего стоим? Включаем.'],
+[['nsh','agn'],'agn','Включаем. И возвращаем их.']];
 function plGirls(next){const pr=$('prolog');pr.classList.add('gs');pr.hidden=false;
  const st=document.createElement('div');st.id='gScene';st.innerHTML='<div class="gbg"></div><div class="gsp"></div><div class="gbox"><b class="gn"></b><p class="gt"></p><i class="gnx">▾</i></div>';pr.appendChild(st);
  const sp=st.querySelector('.gsp'),gn=st.querySelector('.gn'),gt=st.querySelector('.gt'),box=st.querySelector('.gbox');const els={};
  Object.keys(GN).forEach(k=>{const i=document.createElement('img');i.src='prolog-g-'+k+'.webp';i.alt=GN[k];i.className='gg';sp.appendChild(i);els[k]=i});
- let i=-1,typing=null,full='';const POS={1:[50],2:[28,72],3:[18,50,82]};
+ let i=-1,typing=null,full='';const POS={1:[50],2:[29,71],3:[20,50,80]};
  const show=()=>{const [who,spk,t]=GL[i];const ps=POS[who.length]||[];Object.keys(els).forEach(k=>{const e=els[k],j=who.indexOf(k);if(j<0){e.classList.remove('on');return}e.style.left=ps[j]+'%';e.style.zIndex=k===spk?5:2+j;e.classList.add('on');e.classList.toggle('dim',!!spk&&k!==spk)});
   gn.textContent=spk?GN[spk]:'';gn.hidden=!spk;box.classList.toggle('nar',!spk);full=t;gt.textContent='';let n=0;clearInterval(typing);typing=setInterval(()=>{n+=2;gt.textContent=full.slice(0,n);if(n>=full.length){clearInterval(typing);typing=null}},22)};
  const fin=()=>{st.classList.add('out');setTimeout(()=>{st.remove();pr.classList.remove('gs');pr._end=null;next()},700)};
