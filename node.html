@@ -8,8 +8,8 @@
  --mono:'PT Mono',ui-monospace,Menlo,monospace;--hand:'Caveat','Segoe Print',cursive;--disp:'Poiret One',Georgia,serif;color-scheme:dark}
 html,body{height:100%;background:var(--bg);color:var(--ink);overflow:hidden}
 body{font-family:var(--mono);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));user-select:none;-webkit-user-select:none}
-#app{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
-.st{position:relative;height:100%;max-height:100%;aspect-ratio:1008/1792;max-width:100vw;overflow:hidden;background:#000;container-type:size}
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.st{position:relative;flex:none;width:min(100vw,calc(100vh*1008/1792));height:auto;aspect-ratio:1008/1792;overflow:hidden;background:#000;container-type:size}
 .v{position:absolute;inset:0;display:none}.v.on{display:block}
 .abs{position:absolute}
 img{max-width:none;display:block;pointer-events:none}
@@ -22,9 +22,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #menu p{margin:0;font-size:3.2cqw;color:var(--dim);line-height:1.5}
 .mb{display:flex;justify-content:space-between;align-items:center;padding:3.2cqw 4cqw;border:1px solid rgba(168,85,247,.55);border-radius:2cqw;background:rgba(20,10,30,.7);font-size:3.6cqw;color:#efe6ff}
 .mb small{color:var(--dim);font-size:2.8cqw}
-.hb{position:absolute;z-index:30;right:3cqw;top:calc(2cqh + env(safe-area-inset-top,0px));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #3a4a3a;color:var(--phos)}
+.hb{position:absolute;z-index:30;right:3cqw;top:max(2cqh,calc(env(safe-area-inset-top,0px) - (100vh - 100cqh)/2 + 1cqh));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #3a4a3a;color:var(--phos)}
 .hb.on{background:var(--phos);color:#04140a}
-.back{position:absolute;z-index:30;left:3cqw;top:calc(2cqh + env(safe-area-inset-top,0px));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #333;color:var(--dim)}
+.back{position:absolute;z-index:30;left:3cqw;top:max(2cqh,calc(env(safe-area-inset-top,0px) - (100vh - 100cqh)/2 + 1cqh));font-size:3cqw;padding:1.5cqw 3cqw;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid #333;color:var(--dim)}
 /* общий глитч */
 .glitch{position:absolute;inset:0;width:100%;height:100%;z-index:40;pointer-events:none;opacity:0;image-rendering:pixelated}
 .glitch.on{opacity:1}
@@ -72,6 +72,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #bin i{position:absolute;right:-1%;top:-1%;min-width:4cqw;height:4cqw;border-radius:99px;background:var(--vio);color:#fff;font:400 2.6cqw/4cqw var(--mono);text-align:center;font-style:normal}
 #bin.sel{filter:drop-shadow(0 0 1.6cqw var(--vio))}
 #cap.on{opacity:1}
+#cap.fin{top:auto;bottom:3%;right:6%;min-height:12cqh}
 .hint{position:absolute;left:50%;transform:translateX(-50%);top:62.6%;z-index:3;font-size:2.7cqw;color:var(--ink);background:rgba(0,0,0,.72);border:1px solid rgba(125,255,154,.3);padding:.4cqh 2.6cqw;border-radius:99px;white-space:nowrap;letter-spacing:.04em}
 /* ===== Узел 2 ===== */
 #n2{background:#000}
@@ -209,7 +210,7 @@ async function glitch(ms=450,sound=true){if(sound)staticBurst(ms);gl.width=180;g
  gl.classList.remove('on');st.classList.remove('shake')}
 
 /* ---------- навигация ---------- */
-function show(id){document.querySelectorAll('.v').forEach(v=>v.classList.toggle('on',v.id===id));$('back').hidden=id==='menu';$('hb').hidden=id==='menu';$('hb').classList.remove('on');$('cap').classList.remove('on');$('ph').classList.remove('on');musPlay(id);if(id==='n1')N1.init();if(id==='n2')N2.init();if(id!=='n2')N2.stop()}
+function show(id){document.querySelectorAll('.v').forEach(v=>v.classList.toggle('on',v.id===id));$('back').hidden=id==='menu';$('hb').hidden=id==='menu';$('hb').classList.remove('on');$('cap').classList.remove('on','fin');$('tray').style.visibility='';$('bin').style.visibility='';$('ph').classList.remove('on');musPlay(id);if(id==='n1')N1.init();if(id==='n2')N2.init();if(id!=='n2')N2.stop()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){ac();click();if(EMB&&b.dataset.go==='menu'){try{parent.postMessage('sboi:node-close','*')}catch(_){}return}show(b.dataset.go)}});
 if(EMB){document.getElementById('back').textContent='‹ назад';document.getElementById('menu').classList.remove('on');setTimeout(()=>show(location.hash.slice(1)),0);document.querySelectorAll('#e1 [data-go=n2],#e2 [data-go=n1]').forEach(b=>b.remove());document.querySelectorAll('.endc [data-go=menu]').forEach(b=>b.textContent='В лабораторию')}
 $('back').onclick=()=>{N1.stopAll();if(EMB){try{parent.postMessage('sboi:node-close','*')}catch(e){}return}show('menu')};
@@ -260,7 +261,7 @@ const N1=(()=>{
   if(alien){await wait(500);play(8,true);toast('В журнале чужой голос. Он отвечает, когда его слушают.',3200);busy=false;return}
   if(bad){toast('Не сходится: '+bad+' из 8 не на своём месте. Переслушайте записи с красной рамкой.',3200);busy=false;return}
   final()}
- async function final(){done=true;musVol(.35,1500);toast('Журнал собран. Воспроизведение…',2000);await wait(1200);
+ async function final(){done=true;$('cap').classList.add('fin');$('tray').style.visibility='hidden';$('bin').style.visibility='hidden';musVol(.35,1500);toast('Журнал собран. Воспроизведение…',2000);await wait(1200);
   for(let k=0;k<8;k++){await play(k);await wait(250)}
   $('rL').classList.add('run','fast');$('rR').classList.add('run','fast');musVol(.9,400);await glitch(900);musVol(0,2500);const c=tone('whisper',3);const cap=$('cap');cap.classList.add('x');cap.innerHTML='<b>23:41:07 · ???</b><span>Пусти… вы же звали… пусти…</span>';await wait(3000);c.stop();await glitch(500);stopAll();doneN(1);$('e1').classList.add('on')}
  return{init,stopAll}})();
@@ -274,11 +275,13 @@ const N2=(()=>{
  const pct=(v,a)=>v/a*100+'%';
  function init(){if(!ready){ready=true;const C=$('cams');
   S.forEach((r,i)=>{const d=document.createElement('div');d.className='cam';Object.assign(d.style,{left:pct(r[0],1008),top:pct(r[1]+Y0,1792),width:pct(r[2]-r[0],1008),height:pct(r[3]-r[1],1792)});
-   d.innerHTML=`<video src="${V[i]}.mp4" muted playsinline preload="auto"></video><img class="an" src="${AN[i]}.webp" alt="">`;C.appendChild(d);vids.push(d.querySelector('video'));
+   d.innerHTML=`<video src="${V[i]}.mp4" muted playsinline preload="auto"></video><img class="an" src="${AN[i]}.webp" alt="">`;C.appendChild(d);const vv=d.querySelector('video');vv.muted=true;vids.push(vv);
    const tc=document.createElement('div');tc.className='tc';tc.id='tc'+i;Object.assign(tc.style,{left:pct(r[0]+8,1008),top:pct(r[1]+Y0+8,1792)});C.appendChild(tc);
    const h=document.createElement('button');h.className='hit';h.dataset.c=i;h.setAttribute('aria-label','Камера '+(i+1));Object.assign(h.style,{left:pct(r[0],1008),top:pct(r[1]+Y0,1792),width:pct(r[2]-r[0],1008),height:pct(r[3]-r[1],1792)});C.appendChild(h)});
   C.onclick=e=>{const h=e.target.closest('.hit');if(h)mark(+h.dataset.c)};
   const sl=$('sl');for(let i=0;i<4;i++){const d=document.createElement('div');d.className='sld'+(i===0?' lock':'');d.innerHTML=`<b>${i+1}</b><div class="tr"><div class="kn"></div></div>`;sl.appendChild(d);if(i)drag(d.querySelector('.tr'),i)}
+  vids.forEach(v=>{v.load();const p=v.play();if(p&&p.then)p.then(()=>{v.pause();seek()}).catch(()=>{})});
+  const unl=()=>{vids.forEach(v=>{if(v.readyState<2||v.dataset.u)return;v.dataset.u=1;const p=v.play();if(p&&p.then)p.then(()=>{v.pause();seek()}).catch(()=>{})})};$('n2').addEventListener('pointerdown',unl,true);
   wheel();$('bPlay').onclick=()=>{press($('bPlay'));click();frozen=false;playing=!playing;last=performance.now()};
   $('bStop').onclick=()=>{press($('bStop'));click();frozen=false;T=0;seek();playing=true;last=performance.now();toast('С начала')};
   $('bFreeze').onclick=()=>{press($('bFreeze'));click();if(phase!==2){toast('Сначала синхронизируйте камеры ползунками 2–4');return}playing=false;frozen=true;toast('Стоп-кадр. Нажмите на экран, где что-то не так.')}}
