@@ -7,6 +7,7 @@
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05030a;color:#efe8ff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#05030a}
 #wrap{position:relative;height:100%;width:min(100vw,56.25vh);max-width:100vw;overflow:hidden}
+#stage{background:radial-gradient(ellipse at 50% 50%,#160a2a 0%,#05030a 70%)}
 #c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 #ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 22px calc(env(safe-area-inset-bottom,0px) + 26px);background:linear-gradient(180deg,rgba(6,2,12,.55),rgba(6,2,12,.86) 30%,rgba(6,2,12,.97));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:5;text-align:center;overflow-y:auto}
 #ov.menu{justify-content:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 30px)}
@@ -46,7 +47,7 @@ summary{font:700 13px system-ui;color:#cdb6f2;cursor:pointer}
    ==================================================================== */
 const W=540,H=960,TAU=Math.PI*2,D2R=Math.PI/180;
 const RES=Math.min(2,Math.max(1.5,(window.devicePixelRatio||1)*.75));
-const cv=document.getElementById('c');cv.width=Math.round(W*RES);cv.height=Math.round(H*RES);
+const cv=document.getElementById('c');let OFF=0,HC=H;function fitCv(){const w=document.getElementById('wrap');const r=w?w.getBoundingClientRect():{width:innerWidth,height:innerHeight};OFF=Math.max(0,Math.round((W*r.height/Math.max(1,r.width)-H)/2));HC=H+OFF*2;cv.width=Math.round(W*RES);cv.height=Math.round(HC*RES)}fitCv();addEventListener('resize',()=>{fitCv()});
 const g=cv.getContext('2d');
 const $=id=>document.getElementById(id);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t,rnd=(a,b)=>a+Math.random()*(b-a);
@@ -137,16 +138,16 @@ function drawFxAmbient(){g.save();g.globalCompositeOperation='lighter';
   g.restore()}
 function drawFxFront(){if(!FXSP.length)return;g.save();g.globalCompositeOperation='lighter';
   for(const p of FXSP){g.globalAlpha=1-p.T/p.t;g.fillStyle=p.col;g.fillRect(p.x,p.y,2.2,2.2)}g.restore()}
-function drawBg(dim=.6,cr=1){g.fillStyle='#07040c';g.fillRect(0,0,W,H);
+function drawBg(dim=.6,cr=1){g.fillStyle='#07040c';g.fillRect(0,-OFF,W,HC);
   const sp=packImg('shared','space');const bg=sp||(ok(IMG.bg)?IMG.bg:null);
-  if(bg)g.drawImage(bg,0,0,W,H);
+  if(bg){const k=HC/H,bw=W*k;g.drawImage(bg,(W-bw)/2,-OFF,bw,HC)}
   const d=sp?clamp(dim*.4,.24,.46):dim;
-  g.fillStyle=`rgba(6,2,12,${d})`;g.fillRect(0,0,W,H);
+  g.fillStyle=`rgba(6,2,12,${d})`;g.fillRect(0,-OFF,W,HC);
   if(cr>0){g.save();g.globalCompositeOperation='lighter';g.lineCap='round';
     const k=sp?0.4:1;
     for(const c of CRACKS){const a=(.2+.16*Math.sin(clock*1.7+c.ph))*cr*k;g.strokeStyle=`rgba(138,60,255,${a})`;g.lineWidth=5;g.beginPath();c.pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.stroke();g.strokeStyle=`rgba(220,190,255,${a*.9})`;g.lineWidth=1.4;g.stroke()}g.restore()}
   drawFxAmbient();
-  const vg=g.createRadialGradient(W/2,H/2,H*.22,W/2,H/2,H*.78);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(3,1,8,.62)');g.fillStyle=vg;g.fillRect(0,0,W,H)}
+  const vg=g.createRadialGradient(W/2,H/2,H*.22,W/2,H/2,HC*.78);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(3,1,8,.62)');g.fillStyle=vg;g.fillRect(0,-OFF,W,HC)}
 function crystal(x,y,s,flip){g.save();g.translate(x,y);if(flip)g.scale(1,-1);g.globalCompositeOperation='lighter';
   const sh=[[-14,0,-6,-36,2,0],[-4,0,6,-52,14,0],[8,0,18,-30,24,0],[-22,0,-18,-20,-10,0]];
   for(const t of sh){g.beginPath();g.moveTo(t[0]*s,0);g.lineTo(t[2]*s,t[3]*s);g.lineTo(t[4]*s,0);g.closePath();const gr=g.createLinearGradient(0,t[3]*s,0,0);gr.addColorStop(0,'rgba(230,200,255,.95)');gr.addColorStop(1,'rgba(120,40,230,.6)');g.fillStyle=gr;g.fill()}
@@ -601,11 +602,11 @@ const G_LOCK={id:'lock',n:'Замок Сердца',genre:'кольца-шест
     const before=Math.round((R.a-da)/R.step),after=Math.round(R.a/R.step);
     if(before!==after){
       const now=!R.decoy&&R.t&&s.alignErr(R)<R.step*0.28;
-      if(now)sfx('clickTrue');else if(!R.decoy&&R.t){const dd=Math.round(s.alignErr(R)/R.step);sfx('clickNear',dd)}else sfx('click');
+      if(!R.decoy&&R.t){const dd=Math.round(s.alignErr(R)/R.step);sfx('clickNear',Math.max(1,dd))}else sfx('click');
       R._click=!!now}
     else if(!R.decoy&&R.t)R._click=s.alignErr(R)<R.step*0.28},
   up(p){const s=this,d=s.drag;if(!d)return;s.drag=null;if(d.i==='key'){if(clock-d.t<.6)s.tryKey();return}
-    for(const R of s.rings){R.a=angN(Math.round(R.a/R.step)*R.step);if(!R.decoy&&R.t)R._click=s.alignErr(R)<R.step*0.22}
+    const dr=typeof d.i==='number'?s.rings[d.i]:null;for(const R of s.rings){R.a=angN(Math.round(R.a/R.step)*R.step);if(!R.decoy&&R.t)R._click=s.alignErr(R)<R.step*0.22}if(dr&&!dr.decoy&&dr.t&&dr._click)setTimeout(()=>{if(!s.done&&dr._click)sfx('clickTrue')},280);
     sfx('snap')},
   tryKey(){const s=this;if(s.done)return;const need=s.rings.filter(R=>!R.decoy);const n=need.filter(R=>s.under(R)===R.t).length;
     if(n===need.length){s.done=true;sfx('good');glitch(.3);return}
@@ -622,7 +623,7 @@ const G_LOCK={id:'lock',n:'Замок Сердца',genre:'кольца-шест
       const nT=Math.round(R.r1/6);for(let k=0;k<nT;k++){const a=k/nT*TAU+ar;g.fillStyle='rgba(120,90,170,.6)';g.save();g.rotate(a);g.fillRect(R.r1+ex-1,-3,5,6);g.restore()}
       if(false){g.save();g.globalCompositeOperation='lighter';g.strokeStyle=`rgba(255,210,140,${0.35+0.45*R.glow})`;g.lineWidth=4;g.shadowColor='#ffd27a';g.shadowBlur=14;g.beginPath();g.arc(0,0,R.r1+ex,0,TAU);g.stroke();g.restore()}
       const rm=(R.r0+R.r1)/2+ex,gs=Math.min(26,(R.r1-R.r0)*.55);
-      R.ord.forEach((id,j)=>{const a=-Math.PI/2+j*R.step+ar;const x=Math.cos(a)*rm,y=Math.sin(a)*rm;const w=WB[id];const o=R.t?out(R.t):'fail';const hl=!R.decoy&&id===R.t&&o!=='fail';
+      R.ord.forEach((id,j)=>{const a=-Math.PI/2+j*R.step+ar;const x=Math.cos(a)*rm,y=Math.sin(a)*rm;const w=WB[id];const o=R.t?out(R.t):'fail';const hl=!R.decoy&&id===R.t&&o==='full'&&s.tries<3;
         let col=R.decoy?`rgba(210,140,255,${.4+.4*Math.random()})`:'rgba(220,210,240,.55)';
         if(hl){g.save();g.globalCompositeOperation='lighter';const g2=g.createRadialGradient(x,y,0,x,y,gs);g2.addColorStop(0,w.c);g2.addColorStop(1,'rgba(0,0,0,0)');g.globalAlpha=.55+.25*Math.sin(clock*4);g.fillStyle=g2;g.beginPath();g.arc(x,y,gs,0,TAU);g.fill();g.restore();col=w.c}
         glyph(id,x,y,gs*.95,col,3.2);
@@ -640,7 +641,7 @@ const G_LOCK={id:'lock',n:'Замок Сердца',genre:'кольца-шест
       g.fillStyle='#efe8ff';g.font='800 16px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('Повернуть ключ',kb.x+kb.w/2,kb.y+kb.h/2);g.textBaseline='alphabetic'}
     hud('5 · Замок Сердца',0,0,`Попыток: ${s.tries} · колец: ${s.rings.filter(R=>!R.decoy).length}${s.decoy?' + чужое':''}`);
     if(s.msgT>0&&s.msg)tipText(s.msg,kb?kb.y+kb.h+28:c.y+310,'#ffb27a');
-    else if(!s.done&&s.t<8)tipText('Слушай щелчки: ниже тон — ближе · глухой удар — встал',kb?kb.y+kb.h+28:c.y+310,'#d9c2ff');
+    else if(!s.done&&s.t<8)tipText('Ниже щелчок — ближе · отпусти: глухой удар — встал',kb?kb.y+kb.h+28:c.y+310,'#d9c2ff');
     if(s.decoy){g.font='600 12px system-ui';g.fillStyle='#d9a2ff';g.textAlign='center';g.fillText('Внешнее чужое кольцо — обманка (path_star_soft)',W/2,H-62)}
     const saved=WORLDS.filter(w=>out(w.id)!=='fail').length;g.font='600 12px system-ui';g.fillStyle='#a998c4';g.textAlign='center';g.fillText(`Спасено миров: ${saved}/9 · подсказок на кольцах: ${s.rings.filter(R=>R.t&&out(R.t)!=='fail').length}/4`,W/2,H-40)},
   hint(){const s=this,kb=s.keyBtn||{x:110,y:s.c.y+286,w:320,h:58};return {cx:s.c.x,cy:s.c.y,kx:kb.x+kb.w/2,ky:kb.y+kb.h/2,rings:s.rings.map(R=>({rm:(R.r0+R.r1)/2,a:R.a,step:R.step,need:R.t?angN(s.solveA(R)-R.a):0,decoy:R.decoy,pin:R.pin,click:!!R._click,hinted:!!(R.t&&out(R.t)!=='fail')})),tries:s.tries,done:s.done}}};
@@ -649,7 +650,7 @@ const G_LOCK={id:'lock',n:'Замок Сердца',genre:'кольца-шест
    ===================================================================== */
 const GAMES=[G_BEAR,G_STAR,G_BRIDGE,G_GAP,G_LOCK];
 let CUR=null,mode='menu',chain=false,results={},curIdx=0,pdown=false;
-function toLogical(e){const r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H}}
+function toLogical(e){const r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*HC-OFF}}
 cv.addEventListener('pointerdown',e=>{audioInit();if(mode!=='play')return;pdown=true;try{cv.setPointerCapture(e.pointerId)}catch(_){}CUR.down&&CUR.down(toLogical(e))});
 cv.addEventListener('pointermove',e=>{if(mode!=='play'||!pdown)return;CUR.move&&CUR.move(toLogical(e))});
 cv.addEventListener('pointerup',e=>{if(mode!=='play'||!pdown)return;pdown=false;CUR.up&&CUR.up(toLogical(e))});
@@ -696,7 +697,7 @@ function summary(){mode='summary';const fl=Object.keys(S.path).filter(k=>S.path[
   <div class="res">${GAMES.map(G=>{const r=results[G.id];return `${G.n}: <b>${r?r.ok?'чисто':'с ценой':'—'}</b>${r&&!r.ok?` <code>${G.flag}</code>`:''}`}).join('<br>')}</div>
   <p style="font-size:12px;color:#a998c4">Дальше три фазы боя: Человек → Пустота в маске → Шестирукий.</p><button class="btn" id="mn">В меню</button>`);$('mn').onclick=()=>menu()}
 let last=0;
-function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;clock+=dt;g.setTransform(RES,0,0,RES,0,0);
+function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;clock+=dt;g.setTransform(RES,0,0,RES,0,OFF*RES);
   try{fxTick(dt);if(mode==='play'&&CUR)CUR.update(dt);
     if(CUR&&(mode==='play'||mode==='result'||mode==='intro')){CUR.draw();drawFloats(dt);drawFxFront()}else{drawBg(.45,1);drawFxFront()}
     drawGlitch(dt)}catch(err){console.error(err)}
