@@ -747,6 +747,7 @@ const Z=[
  {id:'gallery',name:'Аркада',x:[0,328,152,655],sub:'Аркадный автомат и бонусные арты'},
  {id:'dossier',name:'Досье',x:[122,356,515,668],sub:'Все, кого вы встретили в историях'},
  {id:'portal',name:'Истории',below:true,x:[590,170,930,690],sub:'Девять миров, порядок любой'},
+ ...(([0,1,2,3,4,5,6,7,8].filter(i=>{try{return ((JSON.parse(localStorage.getItem('sboi_progress')||'{}').stories||{})[i]||{}).state==='done'}catch(e){return false}}).length>=3)?[{id:'room2',name:'Серверная',x:[500,372,592,600],sub:'Дверь за порталом открыта',isNew:(()=>{try{return !localStorage.getItem('sboi_room2')}catch(e){return false}})()}]:[]),
  {id:'board',name:'Расследование',x:[812,318,1142,540],sub:'Улики о ночи взрыва',isNew:NEWCLUES},
  {id:'ties',name:'Отношения',x:[1150,292,1312,505],sub:'Отношение к героине и романтика'},
  {id:'stats',name:'Статистика',x:[1316,285,1536,705],sub:'Ваши выборы и прогресс'}
@@ -788,8 +789,8 @@ function NODEBTN(){const n=[0,1,2,3,4,5,6,7,8].filter(DONE).length;let seen={};t
   return (n>=3?b(1,'Узел 1 · Вспышка','журнал записей 08.03'):'<div class="note">Узел 1 откроется после трёх пройденных историй.</div>')+b(2,'Узел 2 · За минуту до','камеры наблюдения')}
 function NODEGATE(){const n=[0,1,2,3,4,5,6,7,8].filter(DONE).length;let s1=0,s2=0;try{s1=localStorage.getItem('sboi_node1');s2=localStorage.getItem('sboi_node2')}catch(e){}
   const g=(k,t,sub)=>`<div class="note" style="padding:6px 0 12px">${t}</div><button class="sbtn" data-node="${k}"><span>${sub} <span class="new">новое</span></span><small>сначала узел</small></button>`;
-  if(n>=3&&!s1)return g(1,'Портал не пускает дальше. Система восстановила журнал записей той ночи — прослушайте его, прежде чем идти в следующий мир.','Узел 1 · Вспышка');
-  if(n>=6&&!s2)return g(2,'Портал снова заблокирован. Записи камер наблюдения за 23:40 восстановлены — сначала посмотрите их.','Узел 2 · За минуту до');return ''}
+  if(n>=3&&!s1)return g(1,'Портал не пускает дальше. В серверной за дверью ожил регистратор: он восстановил журнал записей той ночи — прослушайте его, прежде чем идти в следующий мир.','Узел 1 · Вспышка')+'<button class="sbtn" data-z="room2" style="margin-top:8px"><span>Пройти в серверную</span><small>дверь слева</small></button>';
+  if(n>=6&&!s2)return g(2,'Портал снова заблокирован. В серверной включились мониторы: записи камер за 23:40 восстановлены — сначала посмотрите их.','Узел 2 · За минуту до')+'<button class="sbtn" data-z="room2" style="margin-top:8px"><span>Пройти в серверную</span><small>дверь слева</small></button>';return ''}
 function openNode(k){if(parent!==window){try{parent.postMessage('sboi:node'+k,'*');return}catch(e){}}$('viewer').classList.add('nodev');try{parent.postMessage('sboi:node-open','*')}catch(e){}$('sheet').style.visibility='hidden';$('vT').textContent=k==1?'Узел 1 · Вспышка':'Узел 2 · За минуту до';$('vS').textContent='Лаборатория · 08.03, 23:41';$('vBody').innerHTML='';const f=document.createElement('iframe');f.title='Узел';f.allow='autoplay; fullscreen';f.src='node.html#n'+k;$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-node]');if(b){e.stopPropagation();openNode(+b.dataset.node)}},true);
 addEventListener('message',e=>{if(e.data==='sboi:node-close'){$('viewer').classList.remove('on');$('vBody').innerHTML='';close();try{parent.postMessage('sboi:node-close','*')}catch(_){}if(/sboi_node/.test('x'))0;setTimeout(()=>location.reload(),350)}});
@@ -832,7 +833,7 @@ function toastH(s){let e=document.getElementById('htoast');if(!e){e=document.cre
 let openId=null;
 function open(id){
   if(id==='settings'){$('sheet').style.minHeight='';openId=id;$('shT').textContent='Настройки';$('shS').textContent='То же, что в главном меню';$('shB').innerHTML=setBody();$('sheet').classList.add('on');$('scrim').classList.add('on');return}
-  if(id==='board'){openBoard();return}
+  if(id==='room2'){try{localStorage.setItem('sboi_room2','1')}catch(e){}if(parent!==window){try{parent.postMessage('sboi:room','*');return}catch(e){}}location.href='room.html';return}if(id==='board'){openBoard();return}
   if(id==='dossier'){openDossier();return}
   $('sheet').style.minHeight='';openId=id;const z=Z.find(q=>q.id===id);$('shT').textContent=z.name;$('shS').textContent=z.sub;
   $('shB').innerHTML=body(id);$('sheet').classList.add('on');$('scrim').classList.add('on');
