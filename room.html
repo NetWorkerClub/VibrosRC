@@ -50,6 +50,7 @@ html,body{height:100%;margin:0;background:var(--night);color:var(--ink);overflow
 .stage img{position:absolute;left:0;top:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;max-width:none}
 .vinfo{padding:10px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid rgba(150,240,180,.2);font-size:13.5px;line-height:1.5}
 .vinfo p{margin:0}.vinfo .odd{margin-top:6px;color:var(--term);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+#finFr{position:absolute;inset:0;z-index:40;background:#05020a}#finFr iframe{position:absolute;inset:0;width:100%;height:100%;border:0}#finX{position:absolute;left:50%;transform:translateX(-50%);top:calc(6px + env(safe-area-inset-top,0px));z-index:2;font:inherit;font-size:11px;letter-spacing:.06em;padding:5px 12px;border-radius:99px;border:1px solid rgba(243,238,255,.25);background:rgba(7,5,15,.7);color:#d9cff5;cursor:pointer}
 .hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:11px;color:var(--dim);background:rgba(3,6,4,.8);padding:3px 10px;border-radius:99px;pointer-events:none;transition:opacity .4s}
 </style></head><body>
 <div class="app">
@@ -99,6 +100,9 @@ function render(){S=st();const b=S.n>=9&&S.n2?'stab':S.n2?'cam':S.n1?'vdr':'off'
  const nw={servers:newArc,vdr:S.n>=3&&!S.n1,cams:S.n1&&!S.n2};
  const off={cams:!S.n1};
  $('spots').innerHTML=Z.map(z=>{const[x0,y0,x1,y1]=z.x;return`<button class="spot${z.below?' below':''}" data-z="${z.id}" style="left:${x0/16}%;top:${y0/9}%;width:${(x1-x0)/16}%;height:${(y1-y0)/9}%" aria-label="${z.name}"><span class="tagl${off[z.id]?' off':''}">${z.name}${nw[z.id]?'<span class="new">новое</span>':''}</span></button>`}).join('')}
+const FIN=[['Поиск изнанки','5 мини-игр','fin0.html'],['Фаза 1','разговор с Изнанкой','fin1.html'],['Фаза 2','прятки от Изнанки','fin2.html'],['Фаза 3','стражи','fin3.html']];
+function openFin(i){close();let f=$('finFr');if(f)f.remove();const w=document.createElement('div');w.id='finFr';w.innerHTML='<iframe allow="autoplay; fullscreen" title="Финал"></iframe><button id="finX" aria-label="Выйти в серверную">✕ выйти</button>';w.querySelector('iframe').src=FIN[i][2];document.querySelector('.app').appendChild(w);$('finX').onclick=closeFin;try{parent.postMessage('sboi:node-open','*')}catch(e){}}
+function closeFin(){const f=$('finFr');if(f)f.remove();try{parent.postMessage('sboi:node-close','*')}catch(e){}}
 function sheet(t,sub,body){$('shT').textContent=t;$('shS').textContent=sub;$('shB').innerHTML=body;$('sheet').classList.add('on');$('scrim').classList.add('on')}
 function close(){$('sheet').classList.remove('on');$('scrim').classList.remove('on')}
 const nodeBtn=(k,t,sub,nw)=>`<button class="sbtn" data-node="${k}"><span>${t}${nw?' <span class="new">новое</span>':''}</span><small>${sub}</small></button>`;
@@ -106,7 +110,7 @@ function openZ(id){S=st();
  if(id==='door'){back();return}
  if(id==='vdr'){sheet('Регистратор данных','Катушечный, на столе справа',S.n>=3?`<p class="txt">${S.n1?'Плёнка снова на начале. Журнал той ночи можно прослушать ещё раз.':'Катушки дрогнули и пошли. Регистратор восстановил журнал записей той ночи.'}</p>`+nodeBtn(1,'Узел 1 · Вспышка','журнал записей 08.03',!S.n1):`<p class="txt">Регистратор молчит. Ему не хватает данных.</p><p class="note">Оживёт после трёх пройденных историй (сейчас: ${S.n}).</p>`);return}
  if(id==='cams'){sheet('Мониторы','Четыре камеры наблюдения',S.n1?`<p class="txt">${S.n2?'Записи камер за 23:40 сохранены.':'Экраны мигнули. Камеры наблюдения восстановили записи за 23:40.'}</p>`+nodeBtn(2,'Узел 2 · За минуту до','камеры наблюдения',!S.n2):`<p class="txt">Экраны тёмные. Мониторы питаются от того же контура, что и регистратор.</p><p class="note">Сначала запустите регистратор.</p>`);return}
- if(id==='stab'){const n=S.n,full=n>=9;sheet('Стабилизатор измерений','СИ-1 · контур удержания',`<div class="meter">ЯКОРЕЙ ПОДКЛЮЧЕНО: ${n} / 9<i><b style="width:${n/9*100}%"></b></i></div><p class="txt">${full?(S.n2?'Контур замкнут. Стабилизатор гудит ровно и ждёт оператора.':'Контур замкнут, но мониторы ещё не показали всё, что видели.'):'Стабилизатор холоден. Каждый пройденный мир даёт ему ещё одну точку опоры.'}</p>${full&&S.n2?'<p class="note">Переход откроется в одном из следующих обновлений.</p>':''}`);return}
+ if(id==='stab'){const n=S.n,full=n>=9;sheet('Стабилизатор измерений','СИ-1 · контур удержания',`<div class="meter">ЯКОРЕЙ ПОДКЛЮЧЕНО: ${n} / 9<i><b style="width:${n/9*100}%"></b></i></div><p class="txt">${full?(S.n2?'Контур замкнут. Стабилизатор гудит ровно и ждёт оператора.':'Контур замкнут, но мониторы ещё не показали всё, что видели.'):'Стабилизатор холоден. Каждый пройденный мир даёт ему ещё одну точку опоры.'}</p>${full&&S.n2?'<p class="note">Переход откроется в одном из следующих обновлений.</p>':''}<p class="note" style="margin-top:6px">Испытательные прогоны финала:</p>${FIN.map((f,i)=>`<button class="sbtn" data-fin="${i}"><span>${f[0]}</span><small>${f[1]}</small></button>`).join('')}`);return}
  if(id==='servers'){arch();return}}
 function arch(){S=st();const sn=seenA();const n=ARC.filter(a=>open_(a,S)).length;
  sheet('Архив схем',`Восстановлено ${n} из ${ARC.length}`,'<div class="grid">'+ARC.map((a,i)=>open_(a,S)?`<button class="tile" data-a="${i}"><img src="${SCH[a.k+'t']}" alt="" loading="lazy">${sn.includes(a.k)?'':'<span class="new">новое</span>'}<span>${a.t}</span></button>`:`<div class="tile lock"><div class="ph">СЕКТОР ПОВРЕЖДЁН</div><span>${a.s!=null?'После истории «'+SN[a.s]+'»':'После узла 1'}</span></div>`).join('')+'</div>')}
@@ -132,7 +136,8 @@ $('back').onclick=back;$('close').onclick=close;$('scrim').onclick=close;
 addEventListener('keydown',e=>{if(e.key==='Escape'){if($('viewer').classList.contains('on'))$('vBack').click();else close()}});
 document.addEventListener('click',e=>{const z=e.target.closest('[data-z]');if(z){openZ(z.dataset.z);return}
  const nb=e.target.closest('[data-node]');if(nb){close();try{if(parent!==window){parent.postMessage('sboi:node'+nb.dataset.node,'*');return}}catch(_){}location.href='node.html#n'+nb.dataset.node;return}
- const t=e.target.closest('[data-a]');if(t){view(+t.dataset.a)}});
+ const t=e.target.closest('[data-a]');if(t){view(+t.dataset.a);return}
+ const fb=e.target.closest('[data-fin]');if(fb){openFin(+fb.dataset.fin)}});
 function refresh(){render();if($('sheet').classList.contains('on')&&$('shT').textContent==='Архив схем')arch()}
 addEventListener('storage',refresh);addEventListener('message',e=>{if(e.data==='sboi:room-refresh')refresh()});
 render();requestAnimationFrame(()=>{const p=$('pano'),r=$('room');p.scrollLeft=(r.clientWidth-p.clientWidth)*0.5});

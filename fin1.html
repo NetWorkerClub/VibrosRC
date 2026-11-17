@@ -1,0 +1,152 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Выброс — Фаза I</title>
+<style>
+:root{--ink:#f1e9ff;--vio:#b48cf3;--dim:#8f7fb3;--panel:rgba(12,6,24,.86);color-scheme:dark}
+html,body{margin:0;height:100%;background:#05020a;color:var(--ink);overflow:hidden;font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-user-select:none;user-select:none}
+#app{position:relative;height:100%;max-width:520px;margin:0 auto;overflow:hidden;background:#05020a}
+#bg{position:absolute;inset:-3%;background:center/cover no-repeat;filter:brightness(.8);animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.04) translate(0,0)}to{transform:scale(1.08) translate(-1.5%,-1%)}}
+.iz{position:absolute;left:50%;bottom:17%;height:66%;transform:translateX(-50%);opacity:0;transition:opacity 1.2s,filter .6s;pointer-events:none;filter:drop-shadow(0 0 24px rgba(150,80,255,.35))}
+.iz.on{opacity:1}
+#izG{transition:opacity 1.6s}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 40%,rgba(5,2,10,.85) 100%);pointer-events:none}
+#fb{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .7s;background:#000}
+#fb.on{opacity:1}
+#fbImg{position:absolute;inset:-4%;background:center/cover no-repeat;filter:grayscale(.55) sepia(1) hue-rotate(225deg) saturate(2.4) contrast(1.15) brightness(.72);animation:jit 3.2s steps(1) infinite}
+#fb::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px),radial-gradient(ellipse,rgba(120,40,220,.15),rgba(20,0,40,.75));pointer-events:none}
+@keyframes jit{0%{transform:translate(0,0) scale(1.02)}23%{transform:translate(-4px,1px) scale(1.02)}24%{transform:translate(3px,-2px) scale(1.03)}61%{transform:translate(0,0) scale(1.02)}62%{transform:translate(6px,0) scale(1.02);filter:grayscale(.55) sepia(1) hue-rotate(250deg) saturate(3) contrast(1.4) brightness(.9)}63%{transform:translate(0,0) scale(1.02)}}
+#fbQ{position:absolute;left:max(24px,env(safe-area-inset-left,0px));right:max(24px,env(safe-area-inset-right,0px));top:38%;text-align:center;font-family:"Philosopher",Georgia,serif;font-style:italic;font-size:21px;line-height:1.4;color:#efe0ff;text-shadow:0 2px 14px #000,0 0 22px rgba(150,80,255,.6);z-index:2;opacity:0;transition:opacity 1s .5s}
+#fb.on #fbQ{opacity:1}
+#fb.crack #fbImg{animation:crk .5s steps(2) 3;filter:grayscale(1) contrast(2) brightness(1.2) hue-rotate(260deg)}
+@keyframes crk{0%{transform:translate(-10px,4px) scale(1.06)}50%{transform:translate(12px,-6px) scale(1.04)}100%{transform:none}}
+#box{position:absolute;left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--panel);border:1px solid rgba(180,140,243,.35);border-radius:16px;padding:14px 16px 16px;min-height:96px;box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:5;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s}
+#box.on{opacity:1;transform:none}
+#who{font-family:"Philosopher",Georgia,serif;font-weight:700;font-size:15px;letter-spacing:.06em;color:var(--vio);margin-bottom:6px;min-height:18px}
+#who.g{color:#ffd9a8}
+#txt{font-size:16.5px;line-height:1.5;min-height:50px}
+#txt.th{font-style:italic;color:#d8cdf0}
+#more{position:absolute;right:14px;bottom:8px;font-size:12px;color:var(--dim);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+#ch{position:absolute;left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;z-index:6}
+#ch button{font:inherit;font-size:15.5px;text-align:left;padding:14px 16px;border-radius:14px;border:1px solid rgba(180,140,243,.5);background:rgba(28,12,52,.92);color:var(--ink);cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+#ch button.yes{border-color:rgba(255,90,140,.45);background:rgba(44,10,34,.92)}
+#ch button.big{text-align:center;font-family:"Philosopher",Georgia,serif;font-weight:700;font-size:19px;letter-spacing:.04em;border-color:#ffd9a8;color:#ffe9cc}
+#ch button:focus-visible{outline:2px solid #ffd9a8;outline-offset:2px}
+#title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:8;background:rgba(5,2,10,.55);transition:opacity 1s}
+#title.off{opacity:0;pointer-events:none}
+#title small{letter-spacing:.32em;font-size:11px;color:var(--vio)}
+#title h1{margin:0;font-family:"Philosopher",Georgia,serif;font-size:44px;letter-spacing:.08em;text-shadow:0 0 24px rgba(150,80,255,.7)}
+#title p{margin:0;max-width:300px;text-align:center;color:#cbbbe8;font-size:14px;line-height:1.5}
+#title button{margin-top:14px;font:inherit;font-weight:700;font-size:16px;letter-spacing:.08em;padding:13px 34px;border-radius:99px;border:1px solid #b48cf3;background:rgba(80,30,150,.6);color:#fff;cursor:pointer}
+#flash{position:absolute;inset:0;background:#c9a0ff;opacity:0;pointer-events:none;z-index:9;mix-blend-mode:screen}
+#app.shake{animation:sh .45s linear}
+@keyframes sh{0%,100%{transform:none}20%{transform:translate(-8px,3px)}40%{transform:translate(7px,-4px)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-1px)}}
+#snd{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:calc(10px + env(safe-area-inset-top,0px));z-index:10;font:inherit;font-size:11px;padding:6px 10px;border-radius:14px;border:1px solid #7e55c066;background:#12081fb0;color:#cdb6f0}
+#cr{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:calc(14px + env(safe-area-inset-top,0px));z-index:10;font-size:11px;letter-spacing:.14em;color:#ff8fb3;opacity:0;transition:opacity .4s}
+</style></head><body><div id="app">
+<div id="bg"></div>
+<img class="iz" id="izN" alt=""><img class="iz" id="izG" alt="">
+<div id="vig"></div>
+<div id="fb"><div id="fbImg"></div><div id="fbQ"></div></div>
+<div id="cr"></div>
+<div id="ch"></div>
+<div id="box"><div id="who"></div><div id="txt"></div><div id="more">▾</div></div>
+<div id="flash"></div>
+<button id="snd">♫ звук</button>
+<div id="title"><small>ВЫБРОС · ФИНАЛ</small><h1>ФАЗА I</h1><p>Сердце Изнанки. Он ждал вас. Он знает, чем закончился каждый ваш мир.</p><button id="go">ВОЙТИ</button></div>
+</div>
+<script>
+const M={"bg": "fin1-bg.1962f1d8.webp", "iz": "fin1-iz.a63944ad.webp", "izg": "fin1-izg.529f326f.webp"},FB={"cg_w4_dark_end": "whitechapel-bg_cg_w4_dark_end.4d25019e.webp", "cg_w4_kat_dead": "whitechapel-bg_cg_w4_kat_dead.e0d3d591.webp", "cg_w4_ivan_hooks": "whitechapel-bg_cg_w4_ivan_hooks.1f95f380.webp", "cg_w4_ivan_kat": "whitechapel-bg_cg_w4_ivan_kat.b037f71f.webp", "cg_4_art_gor_wolf": "morok-bg_cg_4_art_gor_wolf.4c15c7af.webp", "cg_4_gor_dead": "morok-bg_cg_4_gor_dead.27384dbe.webp", "cg_4_stake_fire": "morok-bg_cg_4_stake_fire.ae71f736.webp", "cg_4_boat_empty": "morok-bg_cg_4_boat_empty.6cef5d99.webp", "cg_4_art_anvil": "morok-bg_cg_4_art_anvil.2003b21f.webp", "cg_4_kat_lift": "morok-bg_cg_4_kat_lift.ffce9ac9.webp", "cg_hz_bomb": "hozyain-bg_cg_hz_bomb.f5de1a53.webp", "cg_hz_empty_chair": "hozyain-bg_cg_hz_empty_chair.85b09d53.webp", "bg_hz_street_dawn": "hozyain-bg_bg_hz_street_dawn.cc0c9667.webp", "cg_hz_double_empty": "hozyain-bg_cg_hz_double_empty.6ca46b29.webp"};
+const $=id=>document.getElementById(id);
+$('bg').style.backgroundImage='url('+M.bg+')';$('izN').src=M.iz;$('izG').src=M.izg;
+/* ---------- прогресс ---------- */
+const NAMES=['Катя Зубкова','Катя Близнюк','Агния','Рима','Света','Катя Белокрылина','Наташа Ш.','Полина','Наташа Б.'];
+const WN=['Уайтчепел','Морок','Обет','Нулевой пациент','Звезда','Подвал','Тихая гавань','Хозяин','Золотое сердце'];
+let P={};try{P=JSON.parse(localStorage.getItem('sboi_progress')||'{}')}catch(e){}
+const ST=P.stories||{};
+function flags(i){const s=ST[i]||{};let f={};for(let c=1;c<=4;c++){const ch=s['ch'+c];if(ch&&ch.flags)f=Object.assign({},f,ch.flags)}return f}
+const DONE=i=>(ST[i]||{}).state==='done';
+const nDone=[0,1,2,3,4,5,6,7,8].filter(DONE).length;
+/* ---------- раунды давления ---------- */
+const R=[];
+(function(){const f=flags(0);if(DONE(0)||f.out_full||f.out_fail||f.out_dark||f.out_hang||f.out_partial){const w='Катя Зубкова';
+ if(f.out_dark||f.dark_end)R.push({who:w,img:FB.cg_w4_dark_end,pre:['Зубкова. Помнишь его руку? Тёплую. Живую. Протянутую вовремя.','Ты выбрала её. А Ваня остался висеть.'],q:'Иван на крюках открывает глаза. Видит, как она уходит. И не может крикнуть.',offer:'Я верну тебе ту ночь. Он снова протянет руку — и в этот раз никто не будет смотреть.',yes:'…Верни.',no:'Нет. Я один раз уже ушла. Хватит.'});
+ else if(f.out_hang||f.kat_dead)R.push({who:w,img:FB.cg_w4_kat_dead,pre:['Там, в Лондоне, ты не дожила до утра, Зубкова.','Миссис Харт нашла дверь открытой. Ты лежала тихо-тихо.'],q:'Утром миссис Харт находит дверь открытой.',offer:'Останься со мной — и той ночи не было. Ни ножа, ни двери.',yes:'Пусть не будет.',no:'Была. И я её помню. Поэтому я здесь.'});
+ else if(f.out_fail||f.fight_lost)R.push({who:w,img:FB.cg_w4_ivan_hooks,pre:['Тварь дошла до Ивана первой.','Ты опять опоздала на смену, Зубкова. Как всегда.'],q:'Цепи звенят и обрываются.',offer:'Я отмотаю. Одна минута — и ты успеешь. Скажи «да».',yes:'Да. Отмотай.',no:'Опоздала. Но больше не опоздаю.'});
+ else R.push({who:w,img:FB.cg_w4_ivan_kat,pre:['Ты его спасла. Молодец.','А он тебя помнит? Имя — и всё. Остальное как в тумане.'],q:'Я помню, что тебя зовут Катя. Остальное — как в тумане.',offer:'Я верну ему каждое ваше утро. Каждое. Отдай мне ключ.',yes:'Возьми ключ.',no:'Вспомнит сам. Я подожду.'})}})();
+(function(){const f=flags(1);if(DONE(1)||f.out_full||f.out_lost||f.out_cast||f.out_burned||f.out_partial){const w='Катя Близнюк';
+ if(f.gor_killed_art)R.push({who:w,img:FB.cg_4_art_gor_wolf,pre:['Артур зарубил зверя колуном. А потом узнал Горислава.','Кто привёл их в одну ночь в одну кузню, Близнюк? Я? Или ты?'],q:'Погиб от колуна Артура. Похоронен у кузни.',offer:'Я сотру ту ночь с его рук. Он никогда не узнает. Останься в деревне — и всё.',yes:'Сотри.',no:'Он узнал. И жил с этим. Я тоже смогу.'});
+ else if(f.gor_dead)R.push({who:w,img:FB.cg_4_gor_dead,pre:['Горислав. Большой, тёплый, пахнет железом.','Закрыл тебя от вил. А ты даже не успела сказать ему «спасибо».'],q:'Закрыл Катю собой от вил и умер у неё на руках.',offer:'Хочешь — он встанет. Просто останься в деревне. Навсегда.',yes:'Пусть встанет.',no:'Он закрыл меня не для того, чтобы я осталась.'});
+ else if(f.out_cast)R.push({who:w,img:FB.cg_4_art_anvil,pre:['Посмотри на Артура. Видишь глаза?','Он уже мой. Взял молот — и взял меня.'],q:'Взял молот Горислава. В глазах фиолетовый свет.',offer:'Отдай мне и себя. Будете вместе. Разве не этого ты хотела?',yes:'Вместе…',no:'Я вытащу его. Из тебя — тоже.'});
+ else if(f.burned)R.push({who:w,img:FB.cg_4_stake_fire,pre:['Огонь, Близнюк. Помнишь, как пахло?','Он поднял голову, будто его окликнули. И не понял, кто.'],q:'Поднял голову, будто его окликнули, и не понял, кто.',offer:'Я верну ему твоё имя. Одно слово — «да».',yes:'Да.',no:'Моё имя я верну ему сама.'});
+ else if(f.out_lost)R.push({who:w,img:FB.cg_4_boat_empty,pre:['Лодка. Туман. Вёсла.','Он уплыл и не обернулся. Ни разу.'],q:'Уплыл в туман и не обернулся.',offer:'Я разверну лодку. Он обернётся. Только останься на берегу.',yes:'Разверни.',no:'Значит, я поплыву следом. Без тебя.'});
+ else R.push({who:w,img:FB.cg_4_kat_lift,pre:['Он вспомнил лабораторию. И тебя.','Думаешь, это подарок? Это я ему оставил. Чтобы было больнее.'],q:'Вспомнил лабораторию. И Катю.',offer:'Я заберу эту память. Будет легче. Обоим.',yes:'Забери.',no:'Мне не нужно легче. Мне нужно — правда.'})}})();
+(function(){const f=flags(7);if(DONE(7)||f.out_full||f.out_fail||f.out_partial){const w='Полина';
+ if(f.order_do||f.ser_dead)R.push({who:w,img:FB.cg_hz_bomb,pre:['Полина. Он показывал тебе вёрстку. Радовался, как мальчишка.','А ты подняла руку.'],q:'Пятница. Погода: дождь. Происшествий нет. Статьи С. Воробьелли в номере нет.',offer:'Я верну его в редакцию. Он даже не узнает. Только сядь на тот стул.',yes:'Сяду.',no:'Я уже сидела на твоём стуле. Больше — нет.'});
+ else if(f.ser_betray)R.push({who:w,img:FB.cg_hz_empty_chair,pre:['Ты сдала его городу, Полина.','Город даже не заметил. Город никогда не замечает.'],q:'Пустой стул. Остывший кофе.',offer:'Я перепишу ту ночь. Ты промолчишь — и он останется. Скажи «да».',yes:'Да.',no:'Я сказала то, что сказала. И отвечу за это сама.'});
+ else R.push({who:w,img:FB.bg_hz_street_dawn,pre:['Город проснулся, как обычно.','Тебя в нём нет, Полина. Никто не спросил, где ты.'],q:'Город проснулся, как обычно.',offer:'Останься здесь. Здесь тебя хотя бы ждут.',yes:'Останусь.',no:'Меня ждут не здесь.'})}})();
+const LAB='10079f768ea9.webp';
+const unplayed=[0,1,2,3,4,5,6,7,8].filter(i=>!DONE(i));
+const GEN=[
+ {who:unplayed.length?NAMES[unplayed[0]]:'Катя',img:LAB,pre:['Девять миров. Девять ключей.',`А у вас — ${nDone}. Остальные миры ещё зовут. А вы здесь, со мной.`],q:'Ночь на восьмое марта. Всё ещё горит.',offer:'Останьтесь — и я сам закрою остальные миры. Вам не придётся никого терять.',yes:'Закрой их.',no:'Свои миры мы закроем сами.'},
+ {who:'Катя',img:LAB,pre:['Вы думаете, вы пришли сюда спасать?','Вы пришли, потому что я позвал. Каждую из вас. По имени.'],q:'Лаборатория. Тишина после вспышки.',offer:'Положи ключ. Уйдёшь домой. Без боли. Без памяти.',yes:'Хорошо.',no:'Без памяти — это не домой.'},
+ {who:'Катя',img:LAB,pre:['Каждая из вас кого-то потеряла по дороге.','Я могу вернуть всех. Одним словом.'],q:'Пустые стулья вокруг стола.',offer:'Скажи «да» — и все стулья снова заняты.',yes:'Да.',no:'Ты возвращаешь только то, что сам забрал.'}];
+for(const g of GEN){if(R.length>=3)break;R.push(g)}
+/* ---------- аудио ---------- */
+let AC=null,soundOn=true,drone=null;
+function audio(){if(AC)return;try{AC=new (window.AudioContext||window.webkitAudioContext)();const g=AC.createGain();g.gain.value=0;g.connect(AC.destination);
+ [55,82.4,110.3].forEach((f,i)=>{const o=AC.createOscillator();o.type=i?'sine':'triangle';o.frequency.value=f;const lf=AC.createOscillator();lf.frequency.value=.07+i*.05;const lg=AC.createGain();lg.gain.value=f*.012;lf.connect(lg).connect(o.frequency);o.connect(g);o.start();lf.start()});
+ g.gain.linearRampToValueAtTime(.06,AC.currentTime+3);drone=g}catch(e){}}
+function hit(f0=90,dur=1.2,v=.25){if(!AC||!soundOn)return;const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f0*.4,t+dur);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+dur+.05)}
+$('snd').onclick=e=>{e.stopPropagation();soundOn=!soundOn;$('snd').textContent=soundOn?'♫ звук':'♫ выкл';if(drone)drone.gain.value=soundOn?.06:0};
+/* ---------- движок ---------- */
+let waitTap=null,typing=null;
+function tapNext(){return new Promise(r=>{waitTap=r})}
+$('app').addEventListener('click',e=>{if(e.target.closest('button'))return;if(typing){typing();return}if(waitTap){const r=waitTap;waitTap=null;r()}});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function say(who,text,cls){const b=$('box');b.classList.add('on');$('who').textContent=who||'';$('who').className=who&&who!=='Изнанка'?'g':'';$('txt').className=cls||'';$('more').style.visibility='hidden';
+ const T=$('txt');T.textContent='';let i=0,stop=false;typing=()=>{stop=true};
+ while(i<text.length&&!stop){T.textContent=text.slice(0,++i);await sleep(text[i-1]===' '?12:22)}
+ T.textContent=text;typing=null;$('more').style.visibility='visible';await tapNext()}
+function iz(on){$('izN').classList.toggle('on',on)}
+async function flash(c,ms){const f=$('flash');f.style.background=c||'#c9a0ff';f.style.transition='none';f.style.opacity=.9;await sleep(30);f.style.transition=`opacity ${ms||700}ms`;f.style.opacity=0}
+function shake(){const a=$('app');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake')}
+async function flashback(img,q){$('box').classList.remove('on');$('fbImg').style.backgroundImage='url('+img+')';$('fbQ').textContent='«'+q+'»';$('fb').classList.add('on');hit(70,2,.18);await sleep(900);await tapNext();}
+function fbOff(){$('fb').classList.remove('on','crack')}
+function choose(opts){return new Promise(r=>{$('box').classList.remove('on');const c=$('ch');c.innerHTML='';opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o.t;if(o.cls)b.className=o.cls;b.onclick=e=>{e.stopPropagation();c.innerHTML='';r(i)};c.appendChild(b)})})}
+let cracks=0;
+function markCrack(){cracks++;const c=$('cr');c.textContent='ТРЕЩИНА ×'+cracks;c.style.opacity=1}
+async function round(r){
+ for(const l of r.pre)await say('Изнанка',l);
+ await flashback(r.img,r.q);
+ await say('Изнанка',r.offer);
+ fbOff();
+ for(;;){const opts=[{t:r.no},{t:r.yes,cls:'yes'}];if(Math.random()<.5)opts.reverse();const k=await choose(opts);const yes=opts[k].cls==='yes';
+  if(!yes){await say(r.who,r.no);hit(140,.6,.12);break}
+  await say(r.who,r.yes,'th');markCrack();shake();hit(48,1.6,.35);
+  $('fbImg').style.backgroundImage='url('+r.img+')';$('fb').classList.add('on','crack');await sleep(1100);
+  await say('Изнанка','Вот видишь. Это было легко.');fbOff();
+  await say('','Картинка трескается и осыпается фиолетовой пылью. Ничего не вернулось. Ничего и не собиралось возвращаться.','th');
+  await say('Голос из темноты','Не слушай его! Он отдаёт только то, что сам забрал. Ответь ему ещё раз.');
+  await say('Изнанка',r.offer)}
+ await say('Изнанка',['Упрямая.','Хм.','Посмотрим, надолго ли.'][Math.floor(Math.random()*3)])}
+async function main(){
+ $('title').classList.add('off');audio();await sleep(700);iz(true);hit(60,2.4,.2);await sleep(1300);
+ await say('Изнанка','Ну здравствуйте, девочки.');
+ await say('Изнанка','Проходите. Не бойтесь, я не кусаюсь. Пока.');
+ await say('Изнанка',`Вы прошли ${nDone} ${nDone===1?'мир':nDone>=2&&nDone<=4?'мира':'миров'}. Я смотрел каждый. С первого ряда.`);
+ for(const r of R.slice(0,3))await round(r);
+ await say('Изнанка','Ну что ж. Тогда последнее предложение. Без подвоха.');
+ await say('Изнанка','Вас девять. Я — один. Уходите сейчас — и я забуду, что вы приходили.');
+ await choose([{t:'Мы тебя победим.',cls:'big'}]);
+ await say('Девочки','Мы тебя победим.');
+ await say('Изнанка','…');
+ await say('Изнанка','Как скажете.');
+ try{localStorage.setItem('sboi_fin1',JSON.stringify({cracks,at:Date.now()}))}catch(e){}
+ $('box').classList.remove('on');shake();hit(40,3,.4);
+ const G=$('izG');G.style.opacity=0;G.classList.add('on');G.style.opacity='';await sleep(80);
+ $('izN').style.transition='opacity 1.6s';$('izN').classList.remove('on');
+ await sleep(1400);shake();await flash('#b46cff',1200);await sleep(1500);
+ const t=$('title');t.querySelector('h1').textContent='ФАЗА II';t.querySelector('p').textContent=cracks?`Трещин: ${cracks}. Он запомнил каждую.`:'Вы ни с чем не согласились. Он сбросил человеческое лицо.';t.querySelector('button').textContent='В БОЙ';t.classList.remove('off');
+ t.querySelector('button').onclick=()=>{location.href='fin2.html'}}
+$('go').onclick=e=>{e.stopPropagation();main()};
+</script></body></html>

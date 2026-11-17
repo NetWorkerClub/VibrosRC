@@ -1209,7 +1209,7 @@ $('shB').addEventListener('click',e=>{if(openId!=='settings')return;const S=getS
 $('shB').addEventListener('input',e=>{const r=e.target.closest('[data-rg]');if(!r||openId!=='settings')return;const S=getS();S[r.dataset.rg]=+r.value;putS(S);r.nextElementSibling.textContent=r.value+(r.dataset.rg==='text'?'':'%')});
 $('gear').onclick=()=>{conf=null;saveOpen=false;saveMsg='';open('settings')};
 /* ---------- full-screen viewers: Изнанка map and branch chart ---------- */
-const ARC=[['rima','Римма: Последний коридор','Нулевой пациент · тир'],['natasha','Чёрные воды','Тихая гавань · путь к Острову Черепа'],['neon','Neon Run: Drift','Подвал · Катя Белокрылина']];
+const ARC=[['rima','Римма: Последний коридор','Нулевой пациент · тир'],['natasha','Чёрные воды','Тихая гавань · путь к Острову Черепа'],['neon','Neon Run: Drift','Подвал · Катя Белокрылина'],['shluz','Шлюз 07','Изнанка · полёт сквозь шлюзы']];
 function openArc(k){const a=ARC.find(q=>q[0]===k);$('vT').textContent=a[1];$('vS').textContent=a[2];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=a[1];f.allow='autoplay; fullscreen';f.src='arcade-'+k+'.html'+(k==='natasha'&&DONE(6)?'?done=1':'');$('vBody').appendChild(f);close();$('viewer').classList.add('on')}
 const VIEWS={map:['Карта Изнанки','девять ключей к сердцу','map.html'],flow:['Схема развилок','Морок · Катя Близнюк','flow-morok.html'],flowwc:['Схема развилок','Уайтчепел · Катя Зубкова','flow-whitechapel.html']};
 function openView(k,tab){const v=VIEWS[k];$('vT').textContent=v[0];$('vS').textContent=v[1];$('vBody').innerHTML='';const f=document.createElement('iframe');f.title=v[0];
