@@ -79,7 +79,8 @@ body{font-family:var(--body)}
 .rowi small{color:var(--dim);font-size:12px}
 .meter{height:6px;border-radius:6px;background:#241d42;overflow:hidden;width:110px;flex:none}
 .meter>div{height:100%;background:linear-gradient(90deg,var(--violet),var(--gold))}
-.lock{border:1px dashed var(--line);border-radius:12px;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--dim);font-size:12px}
+.artc{border:1px solid var(--line);border-radius:12px;aspect-ratio:3/4;padding:0;overflow:hidden;background:#000}.artc img{width:100%;height:100%;object-fit:cover;display:block}.artv{position:absolute;inset:0;overflow:auto;background:#000;display:flex;align-items:center;justify-content:center}.artv img{max-width:100%;max-height:100%;object-fit:contain}#htoast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1b1226ee;color:#f1e6ff;border:1px solid #7e55c0;border-radius:18px;padding:10px 16px;font-size:13px;opacity:0;transition:opacity .25s;z-index:99;pointer-events:none}#htoast.on{opacity:1}
+.lock{font:inherit;background:none;border:1px dashed var(--line);border-radius:12px;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--dim);font-size:12px}
 .lock b{color:#f3cd7c}
 .note{font-size:12px;color:var(--dim)}
 .toast{position:absolute;left:50%;bottom:calc(70px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:10px 14px;font-size:13.5px;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
@@ -818,8 +819,16 @@ function body(id){
     const own=s==='all'?'<div class="rowi"><span>Улики на доске</span><small>'+Object.keys(PR.clueBook||{}).length+'</small></div>':(CAST[s]?'<div class="rowi"><span>Улики из этой истории</span><small>'+Object.values(PR.clueBook||{}).filter(c=>c.s===s).length+'</small></div>':empty(s));
     return chips('board',true)+own+'<div class="rowi"><span>Узел 1 · Вспышка</span><small>после 3 историй</small></div><div class="rowi"><span>Узел 2 · За минуту до</span><small>после 6 историй</small></div><div class="rowi"><span>Узел 3 · Кто был в лаборатории</span><small>после 9 историй</small></div>';
   }
-  if(id==='gallery')return '<div class="grp">Аркадный автомат</div>'+ARC.map(a=>`<button class="sbtn" data-arc="${a[0]}"><span>${a[1]}</span><small>${a[2]}</small></button>`).join('')+chips('gallery',true)+'<div class="cards">'+[3,3,5,5,8,8].map((c,i)=>`<div class="lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Арт ${i+1}<b>${c} алмазов</b></div>`).join('')+'</div>'+(((PS(1).chapter||1)>=2||DONE(1))?'<div class="grp">Морок · мини-игры</div>'+[['QTE «Донеси огонь»',0],['QTE «Искры на крышу»',1],['Мини-игра «Расклад»',2]].map(([n,i])=>`<button class="sbtn" data-mini="morok#mini=${i}"><span>${n}</span><small>сыграть ещё раз</small></button>`).join(''):'<div class="rowi"><span>Мини-игры</span><small>откроются после первой главы</small></div>')+'<div class="note">Алмазы даются за успешные QTE. За них открываются бонусные арты.</div>';
+  if(id==='gallery')return '<div class="grp">Аркадный автомат</div>'+ARC.map(a=>`<button class="sbtn" data-arc="${a[0]}"><span>${a[1]}</span><small>${a[2]}</small></button>`).join('')+chips('gallery',true)+'<div class="cards">'+ARTS.map((a,i)=>a.img&&artOwned(i)?`<button class="artc" data-art="${i}"><img alt="" src="${a.th}"></button>`:`<button class="lock" data-buy="${i}" ${a.img?'':'disabled'}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Арт ${i+1}<b>${a.c} алмазов</b></button>`).join('')+'</div>'+(((PS(1).chapter||1)>=2||DONE(1))?'<div class="grp">Морок · мини-игры</div>'+[['QTE «Донеси огонь»',0],['QTE «Искры на крышу»',1],['Мини-игра «Расклад»',2]].map(([n,i])=>`<button class="sbtn" data-mini="morok#mini=${i}"><span>${n}</span><small>сыграть ещё раз</small></button>`).join(''):'<div class="rowi"><span>Мини-игры</span><small>откроются после первой главы</small></div>')+'<div class="note">Алмазы даются за успешные QTE. За них открываются бонусные арты.</div>';
 }
+const ARTS=[{c:3,img:'art-1.9e5b7d6c.webp',th:'art-1t.da756dc9.webp',t:'Тронный зал'},{c:3},{c:5},{c:5},{c:8},{c:8}];
+function artOwned(i){return (PR.arts||[]).includes(i)}
+function artBuy(i){const a=ARTS[i];if(!a||!a.img||artOwned(i))return;let o={};try{o=JSON.parse(localStorage.getItem('sboi_progress')||'{}')}catch(e){}
+ const have=o.diamonds||0;if(have<a.c){toastH('Нужно '+a.c+' алмазов, у вас '+have);return}
+ o.diamonds=have-a.c;o.arts=Array.from(new Set((o.arts||[]).concat(i)));try{localStorage.setItem('sboi_progress',JSON.stringify(o))}catch(e){}
+ PR.diamonds=o.diamonds;PR.arts=o.arts;document.getElementById('gemN').textContent=PR.diamonds;open('gallery');artView(i)}
+function artView(i){const a=ARTS[i];$('vT').textContent=a.t||('Арт '+(i+1));$('vS').textContent='Бонусный арт';$('vBody').innerHTML='<div class="artv"><img alt="" src="'+a.img+'"></div>';close();$('viewer').classList.add('on')}
+function toastH(s){let e=document.getElementById('htoast');if(!e){e=document.createElement('div');e.id='htoast';document.body.appendChild(e)}e.textContent=s;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
 let openId=null;
 function open(id){
   if(id==='settings'){$('sheet').style.minHeight='';openId=id;$('shT').textContent='Настройки';$('shS').textContent='То же, что в главном меню';$('shB').innerHTML=setBody();$('sheet').classList.add('on');$('scrim').classList.add('on');return}
@@ -834,7 +843,7 @@ $('close').onclick=close;$('scrim').onclick=close;
 addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-z]');if(b&&b.dataset.z==='portal'&&PDEAD()){powerAsk();return}if(b){const z=Z.find(q=>q.id===b.dataset.z);if(b.parentElement.id==='quick')glide((z.x[0]+z.x[2])/2);open(z.id);return}
-  const ar=e.target.closest('[data-arc]');if(ar){openArc(ar.dataset.arc);return}
+  const ar=e.target.closest('[data-arc]');if(ar){openArc(ar.dataset.arc);return}{const bb=e.target.closest('[data-buy]');if(bb){artBuy(+bb.dataset.buy);return}const av=e.target.closest('[data-art]');if(av){artView(+av.dataset.art);return}}
   const mg=e.target.closest('[data-mini]');if(mg){try{parent.postMessage('sboi:story:'+mg.dataset.mini,'*')}catch(_){}return}
   const s=e.target.closest('[data-s]');if(s){const t=$('toast');const si=+s.dataset.s,nm=STORIES[si][0],g=AVAIL[FS_IDS[si]];t.textContent=g&&g.files&&g.files.length?'Портал открывается: «'+nm+'»':'«'+nm+'» ещё в пути. История скоро появится в портале.';if(g&&g.files&&g.files.length)setTimeout(()=>{try{parent.postMessage('sboi:story:'+FS_IDS[si],'*')}catch(e){}},900);t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
 });

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8">
+<html lang="ru"><head><script>/*pause-shim: время стоит, пока приложение свёрнуто*/(function(){if(window.__vp)return;window.__vp=1;var W=window,D=document,P=performance,pn=P.now.bind(P),off=0,hs=0;function vn(){return(hs?hs:pn())-off}D.addEventListener('visibilitychange',function(){if(D.hidden){if(!hs)hs=pn();D.querySelectorAll('video').forEach(function(v){if(!v.paused){v.__vp=1;v.pause()}})}else{if(hs){off+=pn()-hs;hs=0}D.querySelectorAll('video').forEach(function(v){if(v.__vp){v.__vp=0;var p=v.play();p&&p.catch&&p.catch(function(){})}})}},true);P.now=vn;var raf=W.requestAnimationFrame.bind(W);W.requestAnimationFrame=function(f){return raf(function(){f(vn())})};var st=W.setTimeout.bind(W),ct=W.clearTimeout.bind(W),M={},n=0;W.setTimeout=function(f,ms){if(typeof f!=='function'||!(ms>30))return st.apply(W,arguments);var a=[].slice.call(arguments,2),due=vn()+ms,k='v'+(++n);function c(){var r=due-vn();if(D.hidden||r>15){M[k]=st(c,D.hidden?300:r);return}delete M[k];f.apply(W,a)}M[k]=st(c,ms);return k};W.clearTimeout=function(k){if(typeof k==='string'&&k[0]==='v'){if(M[k]!=null){ct(M[k]);delete M[k]}}else ct(k)};var si=W.setInterval.bind(W);W.setInterval=function(f,ms){if(typeof f!=='function')return si.apply(W,arguments);var a=[].slice.call(arguments,2);return si(function(){if(!D.hidden)f.apply(W,a)},ms)}})()</script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#07050f">
 <title>Уайтчепел</title>
@@ -2070,13 +2070,14 @@ function qteRules(kind,c){return new Promise(res=>{c=c||{};const d=QRULES[kind]|
   $('rGo').onclick=ev=>{ev.stopPropagation();r.classList.remove('on');MODE='';setTimeout(res,250)}})}
 
 /* ---------- save / scenes ---------- */
-function save(i){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scene:i,st:ST}))}catch(e){}}
+function chSig(){if(chSig.v)return chSig.v;let h=0;const t=(window.SCENES||[]).map(x=>x.name||'').join('|')+'#'+(window.SCENES||[]).length;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;const r=(h>>>0).toString(36);if((window.SCENES||[]).length)chSig.v=r;return r}
+function save(i){try{localStorage.setItem(SAVE_KEY,JSON.stringify({scene:i,st:ST,v:chSig()}))}catch(e){}}
 function snap(i){try{const o=JSON.parse(localStorage.getItem(SAVE_KEY+'_snap')||'{}');o[i]=ST;localStorage.setItem(SAVE_KEY+'_snap',JSON.stringify(o))}catch(e){}}
 /* сцена из списка: состояние последнего прохождения. Не дошёл до неё — берём самую позднюю сцену до неё; ничего нет — перенос из прошлой главы, и только потом пресет */
 function sceneState(i){for(let k=i;k>=0;k--){const v=snapOf(k);if(v)return v}const s=ST0();const carried=Object.keys(s.flags||{}).length>0;return carried?s:(window.PRESET?window.PRESET(i):s)}
 function pgReload(){try{document.body.classList.add('pgOut')}catch(_){}setTimeout(()=>location.reload(),330)}
 function snapOf(i){try{return (JSON.parse(localStorage.getItem(SAVE_KEY+'_snap')||'{}'))[i]||null}catch(e){return null}}
-function load(){try{return JSON.parse(localStorage.getItem(SAVE_KEY)||'null')}catch(e){return null}}
+function load(){try{const o=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(!o)return null;const S=window.SCENES||[];if((o.v&&o.v!==chSig())||!(o.scene>=0&&o.scene<S.length)){localStorage.removeItem(SAVE_KEY);localStorage.removeItem(SAVE_KEY+'_snap');return null}return o}catch(e){return null}}
 async function resetStage(){window.KAT_MAP=null;try{muStop(.6)}catch(e){}try{voStop();amb(null,{fade:.5})}catch(e){}$('rules')&&$('rules').classList.remove('on');hideBox();$('choices').classList.remove('on');$('qte').classList.remove('on');$('qte').innerHTML='';$('tarot').classList.remove('on');$('pano').classList.remove('on');$('candles').classList.remove('on');$('panoHint').classList.remove('on');fog(0);$('stage').classList.remove('sepia');$('veil').style.opacity=0;Object.values(SPR).forEach(d=>d.remove());for(const k in SPR)delete SPR[k];{const V=$('bgV');if(V){V.classList.remove('on');try{V.pause()}catch(e){}}}$('bgA').classList.remove('on');$('bgB').classList.remove('on');$('bgA').style.filter=$('bgB').style.filter='';$('world').style.filter='';const cl=$('crowdL');if(cl)cl.innerHTML='';$('stage').classList.remove('bars');CAMZ=1;CAMY=50;lastWho='';lineN=0;$('lidT').style.height=$('lidB').style.height='0%'}
 let playing=0;
 async function play(from=0,st,only){
