@@ -67,7 +67,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
  </div>
  <div class="ov" id="menu"><div class="sub">ВЫБРОС · ФИНАЛ · ФАЗА II</div><h1>ИЗНАНКА</h1>
   <p>Она сняла человеческое лицо и смотрит маской. Свет из маски ищет Катю. Камни дают тень, но не выдержат её когтей.<br>Зажги три кристалла-печати.</p>
-  <small>Ведите пальцем в любом месте экрана — Катя идёт туда. Смахните вниз — присесть за низкий камень, вверх — встать, в сторону — рывок.<br>Стой в тени камней. Красное свечение на полу — туда придёт удар. Кристалл зажигается не сразу — стой рядом.</small>
+  <small>Ведите пальцем в любом месте экрана — Катя идёт туда. Смахните вниз — присесть за низкий камень, вверх — встать, в сторону — рывок. Далеко отведёте палец — Катя бежит, но Изнанка слышит бег; чуть-чуть — идёт тихо. Камень выдерживает три удара.<br>Стой в тени камней. Красное свечение на полу — туда придёт удар. Кристалл зажигается не сразу — стой рядом.</small>
   <button class="go" id="go" disabled>ЗАГРУЗКА…</button><div id="load"></div></div>
  <div class="ov" id="fake" hidden><div class="t">ЗАГРУЗКА</div><div class="pb"><i></i></div><div class="err"></div></div>
  <div id="white"></div><div class="ov" id="end" hidden><div class="sub" id="endSub">ФАЗА II</div><h1 id="endT">МАСКА ДРОГНУЛА</h1><p id="endP"></p><button class="go" id="again">ЕЩЁ РАЗ</button></div>
@@ -143,14 +143,14 @@ const LAYOUT=[['window',255,592],['pillar',150,628],['wall',398,622],['statue',7
 const SEALS=[['cr1',62,600,48],['cr2',478,598,70],['cr3',262,664,62]];
 let covers=[],seals=[];
 function mkObj(k,x,y,hh){const im=IM[k],s=ds(y);const h=hh*s,w=h*im.width/im.height;return {k,x,y,h,w,rx:w*.38,ry:Math.max(6,9*s)}}
-function buildWorld(){covers=LAYOUT.map(([k,x,y])=>{const o=mkObj(k,x,y,DEF[k][0]);o.high=!!DEF[k][1];o.hp=1;o.fall=0;return o});
+function buildWorld(){covers=LAYOUT.map(([k,x,y])=>{const o=mkObj(k,x,y,DEF[k][0]);o.high=!!DEF[k][1];o.hp=3;o.maxhp=3;o.hit=0;o.seed=Math.random()*99;o.fall=0;return o});
  seals=SEALS.map(([k,x,y,hh],i)=>{const o=mkObj(k,x,y,hh);o.on=false;o.p=0;o.i=i;return o})}
 // ---------- state ----------
 const K={x:270,y:790,vx:0,vy:0,face:1,crouch:false,dash:0,dcd:0,inv:0,anim:0,hp:3,seen:false,lit:0,hiddenT:0,lastX:270,lastY:790};
-let hunt={t:0,x:270,y:700,since:0},grace=0,state='menu',meter=0,att=null,decals=[],parts=[],shake=0,flash=0,redFlash=0,catches=0,hits=0,tipT=0,tipTxt='',t=0,searchQ=[],spot={x:270,y:640,rx:80,ry:34},emit={x:270,y:226},finT=0,wave=null,sealCount=0,quietT=0,lastSeen=false;
+let noiseM=0,stepT=0,heardT=0,hunt={t:0,x:270,y:700,since:0},grace=0,state='menu',meter=0,att=null,decals=[],parts=[],shake=0,flash=0,redFlash=0,catches=0,hits=0,tipT=0,tipTxt='',t=0,searchQ=[],spot={x:270,y:640,rx:80,ry:34},emit={x:270,y:226},finT=0,wave=null,sealCount=0,quietT=0,lastSeen=false;
 function tip(s,d=1.8){tipTxt=s;tipT=d;$('tip').textContent=s;$('tip').classList.add('on')}
 function nextSearch(){if(!searchQ.length)searchQ=[['look10',false],['look6',false],['look10',true],['idle4',Math.random()<.5],['look10',Math.random()<.5],['look6',true]];const [k,f]=searchQ.shift();playVid(k,f)}
-function reset(full){K.x=270;K.y=790;K.vx=K.vy=0;K.crouch=false;$('bC').classList.remove('on');K.hp=3;K.inv=1.2;K.dash=0;meter=0;att=null;wave=null;parts=[];hunt.t=0;pend=null;
+function reset(full){noiseM=0;K.x=270;K.y=790;K.vx=K.vy=0;K.crouch=false;$('bC').classList.remove('on');K.hp=3;K.inv=1.2;K.dash=0;meter=0;att=null;wave=null;parts=[];hunt.t=0;pend=null;
  if(full){buildWorld();decals=[];catches=0;hits=0;sealCount=0}
  state='search';grace=3.5;nextSearch();tip('Найди три кристалла. Держись в тени.',2.6)}
 // ---------- shadows / light ----------
@@ -173,7 +173,7 @@ function impact(){const a=att;a.imp=true;shake=18;flash=.55;
  parts.push({type:'burst',x:a.z.x,y:a.z.y,w:a.z.rx*3.2,age:0,life:.5});
  for(let i=0;i<46;i++){const an=rnd(Math.PI*1.05,Math.PI*1.95),v=rnd(80,330);parts.push({x:a.z.x+rnd(-a.z.rx*.6,a.z.rx*.6),y:a.z.y+rnd(-6,6),vx:Math.cos(an)*v,vy:Math.sin(an)*v,g:620,life:rnd(.5,1.2),max:1.2,r:rnd(1.5,4.5),c:Math.random()<.35?'#c58bff':'#2c2238'})}
  snd('hit');
- for(const o of covers)if(o.hp>0&&inEl(o.x,o.y,a.z,1.12)){o.hp=0;o.fall=0.001;for(let i=0;i<26;i++)parts.push({x:o.x+rnd(-o.w*.4,o.w*.4),y:o.y-rnd(0,o.h),vx:rnd(-160,160),vy:rnd(-260,-40),g:700,life:rnd(.7,1.4),max:1.4,r:rnd(2,6),c:'#3a2f4a'})}
+ for(const o of covers)if(o.hp>0&&inEl(o.x,o.y,a.z,1.12)){o.hp--;o.hit=.45;if(o.hp>0){for(let i=0;i<10;i++)parts.push({x:o.x+rnd(-o.w*.35,o.w*.35),y:o.y-rnd(o.h*.2,o.h*.9),vx:rnd(-120,120),vy:rnd(-200,-40),g:700,life:rnd(.5,1),max:1,r:rnd(1.5,4),c:'#3a2f4a'});continue}o.fall=0.001;for(let i=0;i<26;i++)parts.push({x:o.x+rnd(-o.w*.4,o.w*.4),y:o.y-rnd(0,o.h),vx:rnd(-160,160),vy:rnd(-260,-40),g:700,life:rnd(.7,1.4),max:1.4,r:rnd(2,6),c:'#3a2f4a'})}
  if(a.wave){wave={r:0,age:0};return}
  if(inEl(K.x,K.y,a.z,1.0))hurt()}
 function hurt(){if(K.inv>0||K.dash>0.05||GOD)return;K.hp--;hits++;K.inv=1.6;redFlash=1;shake=Math.max(shake,14);stage.classList.add('glitch');setTimeout(()=>stage.classList.remove('glitch'),520);snd('hurt');
@@ -226,24 +226,29 @@ $('snd').onclick=()=>{soundOn=!soundOn;$('snd').textContent=soundOn?'♫ зву�
 function update(dt){t+=dt;shake=Math.max(0,shake-dt*45);flash=Math.max(0,flash-dt*2);redFlash=Math.max(0,redFlash-dt*1.6);if(tipT>0){tipT-=dt;if(tipT<=0)$('tip').classList.remove('on')}
  for(const d of decals)d.age+=dt;decals=decals.filter(d=>d.age<d.life);
  for(const p of parts){p.age=(p.age||0)+dt;if(p.type)continue;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.g||0)*dt;p.life-=dt}parts=parts.filter(p=>p.type?p.age<p.life:p.life>0);
- for(const o of covers)if(o.fall>0)o.fall+=dt;
+ for(const o of covers){if(o.fall>0)o.fall+=dt;if(o.hit>0)o.hit=Math.max(0,o.hit-dt)}
  const hp=headPos();{const tr=D.E[curKey];if(tr){const f=clamp(vidTime()*24,0,tr.length-1),i=Math.floor(f),j=Math.min(tr.length-1,i+1),k=f-i;let x=lerp(tr[i][0],tr[j][0],k);if(curFlip)x=W-x;emit.x=x;emit.y=lerp(tr[i][1],tr[j][1],k)}}
  if(state==='final'){finT+=dt;if(finT>1.25&&!fired)blast();tint=[clamp((finT-1.2)*.15,0,.12),0,0];if(finT>1.2)dark=Math.max(.5,dark-dt*.3);{const w=$('white');w.style.opacity=clamp((finT-1.3)/0.9,0,1)}if(finT>2.6&&!toNext){toNext=true;if(musicEl)musicEl.pause();try{localStorage.setItem('sboi_fin2',JSON.stringify({catches,hits}))}catch(_){}location.href='fin3.html#fromwhite'}return}
  if(state!=='search'&&state!=='attack')return;
  // движение
  let mx=joy.x+((keys.ArrowRight||keys.d)?1:0)-((keys.ArrowLeft||keys.a)?1:0),my=joy.y+((keys.ArrowDown||keys.s)?1:0)-((keys.ArrowUp||keys.w)?1:0);const m=Math.hypot(mx,my);if(m>1){mx/=m;my/=m}
  K.dash=Math.max(0,K.dash-dt);K.dcd=Math.max(0,K.dcd-dt);K.inv=Math.max(0,K.inv-dt);
- const s=ds(K.y);let sp=(K.crouch?78:150)*s;if(K.dash>0){sp=360*s;if(m<.1){mx=K.face;my=0}}
+ const s=ds(K.y);K.run=!K.crouch&&m>.55;let sp=(K.crouch?78:K.run?235:120)*s;if(K.dash>0){sp=360*s;if(m<.1){mx=K.face;my=0}}
  const k=1-Math.exp(-dt*12);K.vx=lerp(K.vx,mx*sp,k);K.vy=lerp(K.vy,my*sp*.75,k);
  let nx=K.x+K.vx*dt,ny=K.y+K.vy*dt;if(!inPoly(nx,ny)){if(inPoly(nx,K.y))ny=K.y;else if(inPoly(K.x,ny))nx=K.x;else{nx=K.x;ny=K.y}}
  for(const o of [...covers.filter(c=>c.hp>0),...seals]){const dx=nx-o.x,dy=(ny-o.y),rx=o.rx+8*s,ry=o.ry+5;const v=dx*dx/(rx*rx)+dy*dy/(ry*ry);if(v<1){const sc=1/Math.sqrt(Math.max(v,1e-4));nx=o.x+dx*sc;ny=o.y+dy*sc}}
  if(inPoly(nx,ny)){K.x=nx;K.y=ny}if(Math.abs(mx)>.1)K.face=mx<0?-1:1;
- const moving=Math.hypot(K.vx,K.vy)>8*s;K.anim+=dt*(moving?1:.35);
+ const moving=Math.hypot(K.vx,K.vy)>8*s;K.anim+=dt*(moving?(K.run?1.25:1):.35);
+ /* шум шагов: бег громко, шаг тихо, присед почти беззвучно, стоя — тишина */
+ const noise=!moving?0:K.dash>0?1.2:K.run?1:K.crouch?.1:.3;K.noise=noise;noiseM=clamp(noiseM+dt*(noise*.42-.22),0,1);
+ stepT-=dt;if(moving&&noise>.2&&stepT<=0){stepT=K.run?.3:.5;parts.push({type:'step',x:K.x,y:K.y,w:noise,age:0,life:.7})}
+ if(state==='search'){if(hunt.t<=0&&noiseM>=1&&grace<=0){noiseM=.35;hunt.t=3.5;hunt.since=0;hunt.x=K.x+rnd(-45,45);hunt.y=K.y+rnd(-18,18);snd('seen');tip('ОНА УСЛЫШАЛА ШАГИ',1.3)}
+  else if(hunt.t>0&&noise>=1&&!K.seen){heardT-=dt;if(heardT<=0){heardT=.7;hunt.x=lerp(hunt.x,K.x,.6);hunt.y=lerp(hunt.y,K.y,.6);hunt.t=Math.max(hunt.t,2.5)}}}
  // луч
  if(state==='search'){let tx,ty,spd;
   if(hunt.t>0){const a=hunt.since*1.7;const r=28+18*Math.sin(hunt.since*.9);tx=hunt.x+Math.cos(a)*r*1.4;ty=hunt.y+Math.sin(a)*r*.6;spd=4.5}
-  else{const sweep=.5+.5*Math.sin(t*.55)*Math.sin(t*.21+1);tx=270+(hp.x-270)*3.3;ty=600+sweep*200+(hp.y-206)*1.6;spd=2.2}
-  const kk=1-Math.exp(-dt*spd);spot.x=clamp(lerp(spot.x,tx,kk),50,490);spot.y=clamp(lerp(spot.y,ty,kk),590,775);const ss=ds(spot.y);spot.rx=(hunt.t>0?118:138)*ss;spot.ry=spot.rx*.44}
+  else{const sweep=.5+.5*Math.sin(t*.55)*Math.sin(t*.21+1);tx=270+(hp.x-270)*3.3;ty=600+sweep*225+(hp.y-206)*1.6;spd=2.2}
+  const kk=1-Math.exp(-dt*spd);spot.x=clamp(lerp(spot.x,tx,kk),50,490);spot.y=clamp(lerp(spot.y,ty,kk),590,805);const ss=ds(spot.y);spot.rx=(hunt.t>0?118:138)*ss;spot.ry=spot.rx*.44}
  const S=lightSrc();const hid=hiddenFrom(S,K.x,K.y,K.crouch);
  const inSpot=state==='search'&&inEl(K.x,K.y,spot,1.08);K.seen=inSpot&&!hid;K.hidden=!!hid;K.hv=lerp(K.hv||0,hid?1:0,1-Math.exp(-dt*8));K.lit=lerp(K.lit,K.seen?1:0,1-Math.exp(-dt*10));
  if(state==='search'){
@@ -280,7 +285,7 @@ function update(dt){t+=dt;shake=Math.max(0,shake-dt*45);flash=Math.max(0,flash-d
 function sheetDraw(key,frames,idx,x,y,h,face,alpha=1,src){const im=src||IM[key];if(!im)return;const fw=im.width/frames,fh=im.height,w=h*fw/fh;g.save();g.globalAlpha=alpha;g.translate(x,y);g.scale(face,1);g.drawImage(im,Math.floor(idx)*fw,0,fw,fh,-w/2,-h,w,h);g.restore()}
 function drawKatya(){const s=ds(K.y);const moving=Math.hypot(K.vx,K.vy)>8*s;let key,frames,idx,h;
  if(K.crouch){key='crouch';frames=24;const n=18,f=Math.floor(K.anim*(moving?9:3))%(2*n-2);idx=6+(f<n?f:2*n-2-f);h=70*s}
- else if(K.dash>0){key='run';frames=37;idx=(K.anim*20)%37;h=100*s}
+ else if(K.dash>0||(moving&&K.run)){key='run';frames=37;idx=(K.anim*20)%37;h=100*s}
  else if(moving){key='walk';frames=49;idx=(K.anim*19)%49;h=100*s}else{key='walk';frames=49;idx=9;h=100*s}
  g.save();g.fillStyle='rgba(4,0,10,.55)';g.beginPath();g.ellipse(K.x,K.y,21*s,6*s,0,0,7);g.fill();g.restore();
  const blink=K.inv>0&&Math.floor(t*14)%2;sheetDraw(key,frames,idx,K.x,K.y+2*s,h,K.face,blink?.45:1);
@@ -288,8 +293,10 @@ function drawKatya(){const s=ds(K.y);const moving=Math.hypot(K.vx,K.vy)>8*s;let 
  if(K.lit>.05){g.save();g.globalCompositeOperation='lighter';sheetDraw(key,frames,idx,K.x,K.y+2*s,h,K.face,K.lit*.3);g.restore()}}
 function drawObj(o,lit){const im=IM[o.k];if(!im)return;let a=1,dy=0,rot=0;if(o.fall>0){a=1-sm(.0,.9,o.fall);dy=o.fall*o.fall*120;rot=o.fall*.6;if(a<=0)return}
  g.save();g.globalAlpha=a;g.fillStyle='rgba(4,0,10,.5)';g.beginPath();g.ellipse(o.x,o.y,o.rx*1.15,o.ry*1.2,0,0,7);g.fill();
- g.translate(o.x,o.y+dy);g.rotate(rot);g.drawImage(im,-o.w/2,-o.h,o.w,o.h);
- const L0=state==='final'?.6:litAt(o.x,o.y+o.ry*2);if(DK[o.k]){g.globalAlpha=a*.78*(1-L0);g.drawImage(DK[o.k],-o.w/2,-o.h,o.w,o.h)}
+ g.translate(o.x+(o.hit>0?Math.sin(t*70)*o.hit*7:0),o.y+dy);g.rotate(rot);g.drawImage(im,-o.w/2,-o.h,o.w,o.h);
+ const L0=state==='final'?.6:litAt(o.x,o.y+o.ry*2);if(DK[o.k]){g.globalAlpha=a*.78*(1-L0);g.drawImage(DK[o.k],-o.w/2,-o.h,o.w,o.h)}drawCracks(o,a);
+ function drawCracks(o,a){if(!o.maxhp||o.hp>=o.maxhp||o.hp<=0)return;const n=(o.maxhp-o.hp)*3;g.save();g.globalAlpha=a*.85;g.strokeStyle='rgba(10,4,16,.9)';g.lineWidth=1.6;g.shadowColor='rgba(200,140,255,.5)';g.shadowBlur=4;
+  for(let q=0;q<n;q++){const h=(v=>v-Math.floor(v))(Math.sin(o.seed*13.7+q*7.31)*4375.5);let x=(h-.5)*o.w*.6,y=-o.h*(.25+.6*((q*.37+h)%1));g.beginPath();g.moveTo(x,y);for(let k=0;k<4;k++){x+=(Math.sin(o.seed+q*3+k*1.7))*o.w*.12;y+=o.h*.07*(k%2?1:-0.4)+o.h*.05;g.lineTo(x,y)}g.stroke()}g.restore()}
  if(L0>0.05){g.globalCompositeOperation='lighter';g.globalAlpha=a*L0*.3;g.drawImage(im,-o.w/2,-o.h,o.w,o.h)}g.restore()}
 function drawSeal(o){drawObj(o,0);if(o.on||o.p>0){g.save();g.globalCompositeOperation='source-atop';g.restore()}
  if(o.on){g.save();g.globalCompositeOperation='lighter';const gr=g.createRadialGradient(o.x,o.y-o.h*.5,0,o.x,o.y-o.h*.5,o.h*.9);gr.addColorStop(0,`rgba(255,60,80,${.55+.2*Math.sin(t*4+o.i)})`);gr.addColorStop(1,'rgba(255,0,40,0)');g.fillStyle=gr;g.fillRect(o.x-o.h,o.y-o.h*1.4,o.h*2,o.h*1.8);
@@ -325,7 +332,7 @@ function render(){const z=SC;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,fxc.wid
  // свечение маски
  {g.save();g.globalCompositeOperation='lighter';const r=beamOn?(K.seen?30:22):12;const gr=g.createRadialGradient(emit.x,emit.y,0,emit.x,emit.y,r);gr.addColorStop(0,K.seen?'rgba(255,220,240,.95)':'rgba(240,215,255,.8)');gr.addColorStop(.35,K.seen?'rgba(255,60,170,.55)':'rgba(170,80,255,.45)');gr.addColorStop(1,'rgba(90,0,180,0)');g.fillStyle=gr;g.fillRect(emit.x-r,emit.y-r,r*2,r*2);g.restore()}
  // частицы
- for(const p of parts){if(p.type==='burst'){const a=1-p.age/p.life;g.save();g.globalCompositeOperation='lighter';g.globalAlpha=a;const w=p.w*(.8+p.age);g.drawImage(IM.burst,p.x-w/2,p.y-w*.62,w,w*.667);g.restore();continue}
+ for(const p of parts){if(p.type==='step'){const k=p.age/p.life,sx=ds(p.y);g.save();g.globalAlpha=(1-k)*.5*Math.min(1,p.w);g.strokeStyle='#d9c2ff';g.lineWidth=1.4;g.beginPath();g.ellipse(p.x,p.y,(10+38*k*p.w)*sx,(3+12*k*p.w)*sx,0,0,7);g.stroke();g.restore();continue}if(p.type==='burst'){const a=1-p.age/p.life;g.save();g.globalCompositeOperation='lighter';g.globalAlpha=a;const w=p.w*(.8+p.age);g.drawImage(IM.burst,p.x-w/2,p.y-w*.62,w,w*.667);g.restore();continue}
   g.globalAlpha=clamp(p.life/p.max*1.4,0,1);g.fillStyle=p.c;g.fillRect(p.x-p.r/2,p.y-p.r/2,p.r,p.r)}g.globalAlpha=1;
  // финал
  if(state==='final')drawFinal();
